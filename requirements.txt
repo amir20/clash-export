@@ -1,0 +1,5 @@
+gevent==1.1.2
+greenlet==0.4.10
+grequests==0.3.0
+requests==2.11.1
+XlsxWriter==0.9.3
