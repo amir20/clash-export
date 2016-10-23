@@ -1,9 +1,10 @@
 from flask import Flask, request, redirect, url_for, send_file, render_template
+import os
 from io import BytesIO
 import api
 
 app = Flask(__name__)
-app.debug = True
+app.debug = os.getenv('DEBUG', False)
 
 
 @app.route("/")
