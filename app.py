@@ -16,8 +16,6 @@ def index():
 def search():
     clan = api.clan(request.args.get('tag'))
 
-    print(clan)
-
     if 'tag' in clan:
         return redirect(url_for('clan_detail', tag=clan['tag']))
     else:
