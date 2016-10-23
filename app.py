@@ -33,7 +33,7 @@ def clan_export(tag):
     output = BytesIO()
     api.export(tag, output)
     output.seek(0)
-    return send_file(output, attachment_filename="testing.xlsx", as_attachment=True)
+    return send_file(output, attachment_filename=tag + ".xlsx", as_attachment=True)
 
 
 if __name__ == "__main__":
