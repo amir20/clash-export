@@ -11,7 +11,7 @@
                 </h1>
                 <p class="lead">{{ clan['description'] }}</p>
                 <p class="lead">
-                    <a href="{{ url_for('clan_export', tag=clan['tag']) }}" class="btn btn-primary btn-lg">Export to Excel</a>
+                    <a href="{{ url_for('clan_detail', tag=clan['tag']) }}.xlsx" class="btn btn-primary btn-lg">Export to Excel</a>
                 </p>
             </div>
         </div>

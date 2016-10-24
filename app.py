@@ -22,18 +22,19 @@ def search():
         return 'error'
 
 
-@app.route("/clan/<tag>")
+@app.route("/clan/<path:tag>")
 def clan_detail(tag):
-    clan = api.clan(tag)
-    return render_template('clan.html', clan=clan)
+    if tag.endswith(".xlsx"):
+        return export(tag=tag[:-5], filename=tag)
+    else:
+        return render_template('clan.html', clan=api.clan(tag))
 
 
-@app.route("/clan/<tag>/export")
-def clan_export(tag):
+def export(tag, filename):
     output = BytesIO()
     api.export(tag, output)
     output.seek(0)
-    return send_file(output, attachment_filename=tag + ".xlsx", as_attachment=True)
+    return send_file(output, attachment_filename=filename, as_attachment=True)
 
 
 if __name__ == "__main__":
