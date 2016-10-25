@@ -11,13 +11,12 @@ token = os.getenv('API_TOKEN')
 headers = {'authorization': 'Bearer ' + token}
 
 
-def clan(tag):
+def search_by_tag(tag):
     return requests.get('https://api.clashofclans.com/v1/clans/' + quote(tag), headers=headers).json()
 
 
-def export(tag, stream):
-    c = clan(tag)
-    tags = [member['tag'] for member in c['memberList']]
+def export(clan, stream):
+    tags = [member['tag'] for member in clan['memberList']]
     urls = ['https://api.clashofclans.com/v1/players/' + quote(tag) for tag in tags]
     rs = (grequests.get(u, headers=headers) for u in urls)
     responses = grequests.map(rs)

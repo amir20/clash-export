@@ -8,10 +8,13 @@
         <div class="col-md-8">
             <div class="jumbotron">
                 <h1 class="display-3">Hey, Chief!</h1>
-                <p class="lead">I can help you find your clan and export all member achievements. Let's start by first finding your clan by tag. Type the clan tag and go.</p>
+                <p class="lead">
+                    I can help you find your clan and export all your member achievements.
+                    Let's start finding your clan by <strong>tag</strong>. Enter your clan tag below.
+                </p>
 
                 <p class="lead">
-                    <form class="form-inline" action="{{ url_for('search') }}" method="get">
+                <form class="form-inline" action="{{ url_for('search') }}" method="get">
                     <div class="form-group">
                         <input type="text" class="form-control form-control-lg" id="tag"
                                placeholder="#tag"

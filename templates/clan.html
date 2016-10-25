@@ -7,9 +7,12 @@
         </div>
         <div class="col-md-8">
             <div class="jumbotron">
-                <h1 class="display-3"><img src="{{ clan['badgeUrls']['small'] }}" alt="Barbarian"> {{ clan['name'] }}
+                <h1 class="display-3">
+                    <img src="{{ clan['badgeUrls']['small'] }}" alt="Barbarian"> {{ clan['name'] }}
                 </h1>
                 <p class="lead">{{ clan['description'] }}</p>
+                <hr class="my-2">
+                <p class="lead">Congrats! I found your clan. Click the button below to export to a spreadsheet.</p>
                 <p class="lead">
                     <a href="{{ url_for('clan_detail', tag=clan['tag']) }}.xlsx" class="btn btn-primary btn-lg">Export to Excel</a>
                 </p>

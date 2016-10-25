@@ -14,25 +14,30 @@ def index():
 
 @app.route("/search")
 def search():
-    clan = api.clan(request.args.get('tag'))
-
-    if 'tag' in clan:
-        return redirect(url_for('clan_detail', tag=clan['tag']))
-    else:
-        return 'error'
+    return redirect(url_for('clan_detail', tag=request.args.get('tag')))
 
 
 @app.route("/clan/<path:tag>")
 def clan_detail(tag):
+    is_export = False
+
     if tag.endswith(".xlsx"):
-        return export(tag=tag[:-5], filename=tag)
+        tag = tag[:-5]
+        is_export = True
+
+    clan = api.search_by_tag(tag)
+
+    if 'tag' not in clan:
+        return render_template('error.html'), 404
+    elif is_export:
+        return export(clan=clan, filename='%s.xlsx' % tag)
     else:
-        return render_template('clan.html', clan=api.clan(tag))
+        return render_template('clan.html', clan=clan)
 
 
-def export(tag, filename):
+def export(clan, filename):
     output = BytesIO()
-    api.export(tag, output)
+    api.export(clan, output)
     output.seek(0)
     return send_file(output, attachment_filename=filename, as_attachment=True)
 
