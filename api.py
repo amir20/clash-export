@@ -40,6 +40,9 @@ def export(clan, stream):
         ('Gold Grab', 'Total Gold Grab'),
         ('Elixir Escapade', 'Total Elixer Grab'),
         ('Heroic Heist', 'Total DE Grab'),
+        ('Friend in Need', 'Total Donations'),
+        ('Treasurer', 'Total War Collected Gold'),
+        ('War Hero', 'Total War Stars'),
         ('Sharing is caring', 'Total Spells Donated'),
         ('donations', 'Donations'),
         ('donationsReceived', 'Donations Received')
