@@ -35,6 +35,7 @@ def export(clan, stream):
         ('townHallLevel', 'TH Level'),
         ('expLevel', 'XP Level'),
         ('bestTrophies', 'Best Trophies'),
+        ('trophies', 'Current Trophies'),
         ('attackWins', 'Attack Wins'),
         ('defenseWins', 'Defense Wins'),
         ('Gold Grab', 'Total Gold Grab'),
