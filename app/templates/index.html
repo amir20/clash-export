@@ -3,17 +3,28 @@
 <main class="container">
     <div class="row">
         <div class="col-md-4 text-lg-right">
-            <img src="{{ url_for('static', filename='oops.png') }}" alt="Hog Rider">
+            <img src="{{ url_for('static', filename='hog.png') }}" alt="Hog Rider">
         </div>
         <div class="col-md-8">
             <div class="jumbotron">
                 <h1 class="display-3">Hey, Chief!</h1>
                 <p class="lead">
-                    Due to high usage, we have moved to a new place! Please update your bookmarks to
-                    <a href="http://clashstats.download/">http://clashstats.download/</a>.
-                                        
+                    I can help you find your clan and export all your member achievements.
+                    Let's start finding your clan by <strong>tag</strong>. Enter your clan tag below.
                 </p>
 
+                <p class="lead">
+                <form class="form-inline" action="{{ url_for('search') }}" method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-lg" id="tag"
+                               placeholder="#tag"
+                               value="#UGJPVJR"
+                               name="tag"
+                               required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Go</button>
+                </form>
+                </p>
             </div>
         </div>
     </div>

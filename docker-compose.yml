@@ -1,8 +1,15 @@
 version: '2'
 services:
-  web:
-    build: .
+  proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
     ports:
       - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      
+  clashstats:
+    build: .
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhmZDk0NWEwLWY5YTQtNGY4ZS04ZTVmLWM3ZmRjMzhhYTQyYSIsImlhdCI6MTQ4MzY2Mjc1Nywic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjU0LjIyNS41My4yMDMiXSwidHlwZSI6ImNsaWVudCJ9XX0.ESznWBDcaxP41m8zftD5vuvmvf8KdzaPy1Mjw2rleXkaf2mBtCRBkYfPBQeN2YMdV6S8dwu8-kU8Cv1Hfj_9fA
+      - VIRTUAL_HOST=clashstats.download
