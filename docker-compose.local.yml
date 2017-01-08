@@ -1,0 +1,12 @@
+version: '2'
+services:
+  clashstats:
+    build: .
+    environment:
+      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6Ijk2MTEyYTU0LWZiZTktNGI5MS1hNGU2LTBlMjY5MmI5MGI0YSIsImlhdCI6MTQ3NzA2NTI5NCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjIxNi4zOC4xMzkuMTAwIiwiNzEuMjAyLjIyMS4xMzciXSwidHlwZSI6ImNsaWVudCJ9XX0.7Ph05Uu6aG39DauBo6ysaOAQSoD-bizstcLVjHDsDovKleASB17QOc7EM2GwsL8ECxg0GQw1nKz6KPzH8wkdOw
+      - VIRTUAL_HOST=localhost
+      - DEBUG=true
+    ports:
+      - "8000:80"
+    volumes:
+      - ./app:/app
