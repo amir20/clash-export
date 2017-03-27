@@ -23,9 +23,16 @@ def export(clan, stream):
 
     def player_row(player_json):
         achievements = {i['name']: i for i in player_json['achievements']}
+        heroes = {i['name']: i for i in player_json['heroes']}
+        for k, hero in heroes.items():
+            hero['value'] = hero['level']
+
         row = player_json.copy()
         del row['achievements']
+        del row['heroes']
         row.update(achievements)
+        row.update(heroes)
+
         return row
 
     rows = [player_row(r.json()) for r in responses]
@@ -46,17 +53,29 @@ def export(clan, stream):
         ('War Hero', 'Total War Stars'),
         ('Sharing is caring', 'Total Spells Donated'),
         ('donations', 'Donations'),
-        ('donationsReceived', 'Donations Received')
+        ('donationsReceived', 'Donations Received'),
+        ('Barbarian King', 'Barbarian King'),
+        ('Archer Queen', 'Archer Queen'),
+        ('Grand Warden', 'Grand Warden')
     ))
-
-    column_keys = columns.keys()
 
     workbook = xlsxwriter.Workbook(stream)
     worksheet = workbook.add_worksheet()
 
-    data = [
-        [row[key]['value'] if type(row[key]) == dict and 'value' in row[key] else row[key] for key in column_keys]
-        for row in rows]
+    data = []
+    for row in rows:
+        data_row = []
+
+        for key in columns.keys():
+            if key in row:
+                if type(row[key]) == dict and 'value' in row[key]:
+                    data_row.append(row[key]['value'])
+                else:
+                    data_row.append(row[key])
+            else:
+                data_row.append(0)
+
+        data.append(data_row)
 
     data.insert(0, list(columns.values()))
 
