@@ -1,0 +1,11 @@
+https://clashstats.download {
+    tls findamir@gmail.com
+
+    proxy / clashstats {
+        transparent        
+    }
+
+    gzip
+    log stdout
+    errors stdout
+}

@@ -1,0 +1,11 @@
+https://clashstats.local {
+    tls self_signed
+
+    proxy / clashstats {
+        transparent        
+    }
+
+    gzip
+    log stdout
+    errors stdout
+}

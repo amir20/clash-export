@@ -1,13 +1,17 @@
 version: '2'
 services:
-  proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
+  proxy:    
+    build: ./proxy
     restart: unless-stopped
+    image: zzrot/alpine-caddy
     ports:
-      - "80:80"
+        - 80:80
+        - 443:443
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+        - /root/.caddy
+                
+    depends_on:
+        - clashstats  
 
   clashstats:
     build: .
