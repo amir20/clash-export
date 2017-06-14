@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<main class="container">
+    <div class="row">
+        <div class="col-md-4 text-lg-right">
+            <img src="{{ url_for('static', filename='hog.png') }}" alt="Hog Rider">
+        </div>
+        <div class="col-md-8">
+            <div class="jumbotron">
+                <h1 class="display-3">{{ "%.2f" %  uptime_ratio }}%</h1>
+                <p> &nbsp; 14 days uptime</p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, url_for, send_file, render_template
 import os
 from io import BytesIO
 import api
+import uptime as uptime_api
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
@@ -10,6 +11,13 @@ app.debug = os.getenv('DEBUG', False)
 @app.route("/")
 def index():
     return render_template('index.html')
+
+
+@app.route("/uptime")
+def uptime():
+    monitor = uptime_api.monitor()
+    uptime_ratio = float(monitor['custom_uptime_ratio'])
+    return render_template('uptime.html', uptime_ratio=uptime_ratio)
 
 
 @app.route("/search")
