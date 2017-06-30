@@ -1,3 +1,4 @@
+from raven.contrib.flask import Sentry
 from flask import Flask, request, redirect, url_for, send_file, render_template
 import os
 from io import BytesIO
@@ -5,6 +6,7 @@ import api
 import uptime as uptime_api
 
 app = Flask(__name__)
+sentry = Sentry(app)
 app.debug = os.getenv('DEBUG', False)
 
 

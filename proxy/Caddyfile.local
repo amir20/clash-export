@@ -1,6 +1,4 @@
-https://clashstats.local {
-    tls self_signed
-
+http://clashstats.local {
     proxy / clashstats {
         transparent        
     }
