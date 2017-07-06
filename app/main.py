@@ -4,6 +4,9 @@ import os
 from io import BytesIO
 import api
 import uptime as uptime_api
+from mongoengine import connect
+
+connect('clashstats', host='db')
 
 app = Flask(__name__)
 sentry = Sentry(app)
