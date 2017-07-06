@@ -5,6 +5,7 @@ from urllib.parse import quote
 import grequests
 import requests
 import xlsxwriter
+from model import Player
 
 token = os.getenv('API_TOKEN')
 headers = {'authorization': 'Bearer ' + token}
@@ -19,6 +20,8 @@ def export(clan, stream):
     urls = ['https://api.clashofclans.com/v1/players/' + quote(tag) for tag in tags]
     rs = (grequests.get(u, headers=headers) for u in urls)
     responses = grequests.map(rs)
+
+    [Player(**r.json()).save() for r in responses]
 
     def player_row(player_json):
         achievements = {i['name']: i for i in player_json['achievements']}

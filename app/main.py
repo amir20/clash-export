@@ -6,8 +6,13 @@ import uptime as uptime_api
 from flask import Flask, request, redirect, url_for, send_file, render_template
 from mongoengine import connect
 from raven.contrib.flask import Sentry
+from uwsgidecorators import postfork
 
-connect('clashstats', host='db')
+
+@postfork
+def connect_mongo():
+    connect(db='clashstats', host='db')
+
 
 app = Flask(__name__)
 sentry = Sentry(app)
