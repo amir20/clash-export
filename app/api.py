@@ -1,11 +1,10 @@
-# coding: utf-8
-
-import requests
-import grequests
-from urllib.parse import quote
-from collections import OrderedDict
-import xlsxwriter
 import os
+from collections import OrderedDict
+from urllib.parse import quote
+
+import grequests
+import requests
+import xlsxwriter
 
 token = os.getenv('API_TOKEN')
 headers = {'authorization': 'Bearer ' + token}
