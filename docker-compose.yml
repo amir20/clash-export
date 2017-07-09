@@ -16,6 +16,17 @@ services:
     restart: unless-stopped
     image: mongo:3.4
 
+  celery:
+    build: .
+    command: 'celery -A worker worker -B -E -l info -c 1'
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImRkMDdhYjg4LTZlMzMtNGI3Mi1iZTAwLWM4YjExZDMzNDAxNSIsImlhdCI6MTQ5OTM4NzQ2Miwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4xMzEuMTYxLjE5MyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.8-x9F8OeGVge5L0SlzehbppySV32rlJjvE4MgLTcpBCM0dfheQ1glDa0m80WPwQ0EH7OxQeGqHpjNaveuS44UA
+      - BROKER_URL=mongodb://db:27017/tasks
+
+
   clashstats:
     build: .
     restart: unless-stopped
@@ -25,3 +36,4 @@ services:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImRkMDdhYjg4LTZlMzMtNGI3Mi1iZTAwLWM4YjExZDMzNDAxNSIsImlhdCI6MTQ5OTM4NzQ2Miwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4xMzEuMTYxLjE5MyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.8-x9F8OeGVge5L0SlzehbppySV32rlJjvE4MgLTcpBCM0dfheQ1glDa0m80WPwQ0EH7OxQeGqHpjNaveuS44UA
       - VIRTUAL_HOST=clashstats.download
       - SENTRY_DSN=https://4ea62a4485a94a5ab1c93324e0e029a1:060a4c83525e4ffb8b00853c85e847cc@sentry.io/185882
+      - BROKER_URL=mongodb://db:27017/tasks

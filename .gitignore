@@ -90,3 +90,4 @@ ENV/
 
 .venv
 .ipynb_checkpoints
+*.db
