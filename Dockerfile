@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y supervisor \
 
 # Custom Supervisord config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-RUN chmod -R a+rw /var/log/supervisor/
+
 
 # Install Caddy Server, and All Middleware
 RUN curl --silent --show-error --fail --location \
@@ -28,10 +28,8 @@ WORKDIR /app
 
 # Install dependencies
 COPY ./app/requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt --user
+RUN pip install -r /app/requirements.txt
 
-# Add path for local pip packages in path
-ENV PATH /home/clash/.local/bin:$PATH
 
 COPY ./app /app
 

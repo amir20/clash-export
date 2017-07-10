@@ -1,5 +1,5 @@
-http://clashstats.local {
-    proxy / clashstats {
+http://clashstats.local, localhost:80 {
+    proxy / unix:/tmp/uwsgi.sock {
         transparent        
     }
 
