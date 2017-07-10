@@ -1,0 +1,25 @@
+FROM python:3.5
+
+MAINTAINER Amir Raminfar <findamir@gmail.com>
+
+# Upgrade pip
+RUN pip install --upgrade pip uwsgi
+
+# Create user
+RUN useradd -ms /bin/bash clash
+USER clash
+
+
+# Create app directoy
+WORKDIR /app
+
+# Install dependencies
+COPY ./app/requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt --user
+
+# Add path for local pip packages in path
+ENV PATH /home/clash/.local/bin:$PATH
+
+COPY ./app /app
+
+CMD ["/usr/bin/supervisord"]
