@@ -44,7 +44,7 @@ def clan_detail(tag):
         tag = tag[:-5]
         is_export = True
 
-    clan = api.search_by_tag(tag)
+    clan = api.find_clan_by_tag(tag)
 
     if 'tag' not in clan:
         return render_template('error.html'), 404
@@ -56,7 +56,7 @@ def clan_detail(tag):
 
 def export(clan, filename):
     output = BytesIO()
-    api.export(clan, output)
+    api.export_clan(clan, output)
     output.seek(0)
     return send_file(output, attachment_filename=filename, as_attachment=True)
 

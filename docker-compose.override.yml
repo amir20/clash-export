@@ -14,7 +14,7 @@ services:
 
     volumes:
       - ./app:/app
-      - ./Caddyfile.local:/etc/Caddyfile
+      - ./caddy/Caddyfile.local:/etc/Caddyfile
 
   celery:
     environment:

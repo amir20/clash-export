@@ -21,7 +21,7 @@ RUN curl --silent --show-error --fail --location \
     && chmod 0755 /usr/bin/caddy \
     && /usr/bin/caddy -version
 
-COPY ./Caddyfile /etc/Caddyfile
+COPY ./caddy/Caddyfile /etc/Caddyfile
 
 # Create app directoy
 WORKDIR /app

@@ -1,23 +1,37 @@
+import logging
 import os
 from datetime import timedelta
 
+import api
 from celery import Celery
 from model import Player
 from mongoengine import connect
+from raven import Client
+from raven.contrib.celery import register_signal, register_logger_signal
 
 celery = Celery('CLASH_TASKS', broker=os.getenv('BROKER_URL'))
+
+client = Client(os.getenv('SENTRY_DSN'))
+register_logger_signal(client)
+register_logger_signal(client, loglevel=logging.INFO)
+register_signal(client)
+register_signal(client, ignore_expected=True)
 
 connect(db='clashstats', host='db', connect=False)
 
 
 @celery.task
-def test():
-    print(Player.objects.distinct('clan.name'))
+def update_clans():
+    for tag in Player.objects.distinct('clan.tag'):
+        print("Updating player stats for {}.".format(tag))
+        clan = api.find_clan_by_tag(tag)
+        responses = api.fetch_all_players(clan)
+        [Player(**r.json()).save() for r in responses]
 
 
 celery.conf.beat_schedule = {
-    'test-every-3-seconds': {
-        'task': 'worker.test',
-        'schedule': timedelta(seconds=3)
+    'update_clans': {
+        'task': 'worker.update_clans',
+        'schedule': timedelta(seconds=30)
     }
 }

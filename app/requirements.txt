@@ -7,9 +7,6 @@ chardet==3.0.3
 click==6.7
 contextlib2==0.5.5
 Flask==0.12.2
-gevent==1.2.1
-greenlet==0.4.12
-grequests==0.3.0
 gunicorn==19.7.1
 idna==2.5
 itsdangerous==0.24
