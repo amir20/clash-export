@@ -5,11 +5,13 @@ from datetime import timedelta
 import api
 from celery import Celery
 from model import Player
+from celery.utils.log import get_task_logger
 from mongoengine import connect
 from raven import Client
 from raven.contrib.celery import register_signal, register_logger_signal
 
 celery = Celery('CLASH_TASKS', broker=os.getenv('BROKER_URL'))
+logger = get_task_logger(__name__)
 
 client = Client(os.getenv('SENTRY_DSN'))
 register_logger_signal(client)
@@ -22,8 +24,9 @@ connect(db='clashstats', host='db', connect=False)
 
 @celery.task
 def update_clans():
+    logger.info("Updating all clans.")
     for tag in Player.objects.distinct('clan.tag'):
-        print("Updating player stats for {}.".format(tag))
+        logger.info("Updating player stats for {}.".format(tag))
         clan = api.find_clan_by_tag(tag)
         responses = api.fetch_all_players(clan)
         [Player(**r.json()).save() for r in responses]
@@ -32,6 +35,6 @@ def update_clans():
 celery.conf.beat_schedule = {
     'update_clans': {
         'task': 'worker.update_clans',
-        'schedule': timedelta(seconds=30)
+        'schedule': timedelta(hours=8)
     }
 }
