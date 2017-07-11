@@ -26,7 +26,7 @@ connect(db='clashstats', host='db', connect=False)
 def update_clans():
     logger.info("Updating all clans.")
     for tag in Player.objects.distinct('clan.tag'):
-        logger.info("Updating player stats for {}.".format(tag))
+        logger.info(f"Updating player stats for {tag}.")
         clan = api.find_clan_by_tag(tag)
         responses = api.fetch_all_players(clan)
         [Player(**r.json()).save() for r in responses]
