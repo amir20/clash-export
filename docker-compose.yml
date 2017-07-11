@@ -26,3 +26,6 @@ services:
       - VIRTUAL_HOST=clashstats.download
       - SENTRY_DSN=https://4ea62a4485a94a5ab1c93324e0e029a1:060a4c83525e4ffb8b00853c85e847cc@sentry.io/185882
       - BROKER_URL=mongodb://db:27017/tasks
+    ports:
+      - 80:80
+      - 443:443

@@ -1,7 +1,7 @@
 clashstats.download {
     tls findamir@gmail.com
 
-    proxy / unix:/tmp/uwsgi.sock {
+    proxy / 0.0.0.0:8080 {
         transparent        
     }
 
