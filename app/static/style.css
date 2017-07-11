@@ -1,14 +1,6 @@
-main {
-    margin-top: 75px;
+main.container {
+    padding-top: 7em;
+    padding-bottom: 4em;
 }
 
-.jumbotron {
-    background: none;
-}
 
-footer {
-    font-size: .8em;
-    margin-top: 1em;
-    text-align: center;
-    color: #555;
-}

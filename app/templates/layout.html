@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
-          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
     <title>Export Clash of Clans Achievements - ClashStats.download</title>
-    <meta name=”description” content="ClashStats.download is a tool to export all Clash of Clans achievements to a file.">
+    <meta name=”description”
+          content="ClashStats.download is a tool to export all Clash of Clans achievements to a file.">
     <meta name="keywords" content="clash of clans, export, excel, achievements, Amir Raminfar, download">
 
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon-96.png') }}">
@@ -28,12 +28,12 @@
 </script>
 {% block body %}{% endblock %}
 
-<footer>
-    <ul class="list-inline">
-        <li class="list-inline-item"><a href="https://github.com/amir20/clash-export">Github</a></li>
-        <li class="list-inline-item"><a href="/uptime">Uptime</a></li>
-        <li class="list-inline-item"><a href="https://www.reddit.com/r/dynastyclash/">/r/dynastyclash</a></li>
-        <li class="list-inline-item">© 2017 ClashStats is an open source project and maintained by Reddit Dynasty.</li>
+<footer class="container has-text-centered">
+    <ul class="is-inline-block">
+        <li class="is-inline-block"><a href="https://github.com/amir20/clash-export">Github</a></li>
+        <li class="is-inline-block"><a href="/uptime">Uptime</a></li>
+        <li class="is-inline-block"><a href="https://www.reddit.com/r/dynastyclash/">/r/dynastyclash</a></li>
+        <li class="is-inline-block">© 2017 ClashStats is an open source project and maintained by Reddit Dynasty.</li>
     </ul>
 </footer>
 </body>

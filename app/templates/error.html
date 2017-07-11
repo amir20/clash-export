@@ -1,19 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
 <main class="container">
-    <div class="row">
-        <div class="col-md-4 text-lg-right">
+    <div class="columns">
+        <div class="column is-3 is-offset-2">
             <img src="{{ url_for('static', filename='oops.png') }}" alt="Barbarian">
         </div>
-        <div class="col-md-8">
-            <div class="jumbotron">
-                <h1 class="display-3">Oops!</h1>
-                <p class="lead">I couldn't find your clan. Are you sure you entered the right tag?</p>
-                <p class="lead">It should be similar to "#UGJPVJR" and make sure to include the hash tag.</p>
-                <p class="lead">
-                    <a href="{{ url_for('index') }}" class="btn btn-warning btn-lg">Try again</a>
-                </p>
-            </div>
+        <div class="column">
+            <section class="hero">
+                <div class="hero-body">
+                    <h1 class="title is-1">
+                        Oops!
+                    </h1>
+                    <p>I couldn't find your clan. Are you sure you entered the right tag?</p>
+                    <p>It should be similar to "#UGJPVJR" and make sure to include the hash tag.</p>
+                    <p class="section">
+                        <a href="{{ url_for('index') }}" class="button is-large is-warning">Try again</a>
+                    </p>
+                </div>
+            </section>
         </div>
     </div>
 </main>
