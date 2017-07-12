@@ -1,22 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
+
 <main class="container">
-    <div class="row">
-        <div class="col-md-4 text-lg-right">
+    <div class="columns">
+        <div class="column is-3 is-offset-2">
             <img src="{{ url_for('static', filename='barbarian.png') }}" alt="Barbarian">
         </div>
-        <div class="col-md-8">
-            <div class="jumbotron">
-                <h1 class="display-3">
-                    <img src="{{ clan['badgeUrls']['small'] }}" alt="Barbarian"> {{ clan['name'] }}
-                </h1>
-                <p class="lead">{{ clan['description'] }}</p>
-                <hr class="my-2">
-                <p class="lead">Congrats! I found your clan. Click the button below to export to a spreadsheet.</p>
-                <p class="lead">
-                    <a href="{{ url_for('clan_detail', tag=clan['tag']) }}.xlsx" class="btn btn-primary btn-lg">Export to Excel</a>
-                </p>
-            </div>
+        <div class="column">
+            <h1 class="title is-1"><img src="{{ clan['badgeUrls']['small'] }}" alt="Barbarian"> {{ clan['name'] }}</h1>
+            <p>{{ clan['description'] }}</p>
+            <p class="section">Congrats! I found your clan. Click the button below to export to a spreadsheet.</p>
+            <p class="section">
+                <a href="{{ url_for('clan_detail', tag=clan['tag']) }}.xlsx" class="button is-large is-primary">Export
+                    to Excel</a>
+            </p>
         </div>
     </div>
 </main>

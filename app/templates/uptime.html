@@ -1,15 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
+
 <main class="container">
-    <div class="row">
-        <div class="col-md-4 text-lg-right">
+    <div class="columns">
+        <div class="column is-3 is-offset-2">
             <img src="{{ url_for('static', filename='hog.png') }}" alt="Hog Rider">
         </div>
-        <div class="col-md-8">
-            <div class="jumbotron">
-                <h1 class="display-3">{{ "%.2f" %  uptime_ratio }}%</h1>
-                <p> &nbsp; 14 days uptime</p>
-            </div>
+        <div class="column">
+            <section class="hero">
+                <div class="hero-body">
+                    <h1 class="title is-1">{{ "%.2f" % uptime_ratio }}%</h1>
+                    <h2 class="subtitle">14 days uptime</h2>
+                </div>
+            </section>
         </div>
     </div>
 </main>
