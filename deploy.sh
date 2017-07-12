@@ -7,9 +7,9 @@ msg() {
 set -e
 
 msg "Updating docker-machine to clash..."
-eval $(docker-machine env --shell bash clash-vultr)
+eval $(docker-machine env --shell bash clash)
 
 msg "Deploying with docker..."
-docker-compose -f docker-compose.yml up -d --build
+docker-compose -f docker-compose.yml up -d --build 
 
 msg "Success."
