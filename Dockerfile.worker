@@ -2,21 +2,19 @@ FROM python:3.6
 
 MAINTAINER Amir Raminfar <findamir@gmail.com>
 
-# Create user
-RUN useradd -ms /bin/bash clash
-
 # Create app directoy
 WORKDIR /app
 
 # Install dependencies
-COPY ./app/requirements.txt /app/requirements.txt
+COPY ./conf/requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
-COPY ./app /app
+RUN apt-get update && apt-get install -y supervisor \
+    && rm -rf /var/lib/apt/lists/*
 
-# Change user and chown
-RUN chown -R clash:clash .
-USER clash
+# Copy files
+COPY ./conf/supervisord-worker.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./app /app
 
 
 CMD ["/usr/bin/supervisord"]

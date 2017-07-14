@@ -5,13 +5,16 @@ MAINTAINER Amir Raminfar <findamir@gmail.com>
 # Upgrade pip
 RUN pip install --upgrade pip uwsgi
 
+# Create app directoy
+WORKDIR /app
+
+# Install dependencies
+COPY ./conf/requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
 # Install Supervisord
 RUN apt-get update && apt-get install -y supervisor \
-&& rm -rf /var/lib/apt/lists/*
-
-# Custom Supervisord config
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Caddy Server, and All Middleware
 RUN curl --silent --show-error --fail --location \
@@ -21,16 +24,14 @@ RUN curl --silent --show-error --fail --location \
     && chmod 0755 /usr/bin/caddy \
     && /usr/bin/caddy -version
 
+
+# Custom Supervisord config
+COPY ./conf/supervisord-web.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy caddy file
 COPY ./caddy/Caddyfile /etc/Caddyfile
 
-# Create app directoy
-WORKDIR /app
-
-# Install dependencies
-COPY ./app/requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
-
-
+# Copy all other files
 COPY ./app /app
 
 EXPOSE 80 443

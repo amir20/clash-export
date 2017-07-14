@@ -8,7 +8,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.worker
-    command: 'celery -A worker worker -B -E -l info -c 1'
     restart: unless-stopped
     depends_on:
       - db
@@ -17,7 +16,7 @@ services:
       - BROKER_URL=mongodb://db:27017/tasks
       - SENTRY_DSN=https://4ea62a4485a94a5ab1c93324e0e029a1:060a4c83525e4ffb8b00853c85e847cc@sentry.io/185882
 
-  clashstats:
+  web:
     build: .
     restart: unless-stopped
     depends_on:
