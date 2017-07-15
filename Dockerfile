@@ -1,3 +1,15 @@
+FROM node:8 as builder
+WORKDIR /build
+COPY package*.json ./
+RUN npm i
+
+COPY webpack.config.js .babelrc postcss.config.js ./
+COPY app/javascript/ app/javascript/
+COPY app/static/ app/static/
+
+RUN npm run build && ls -lah app/static
+
+
 FROM python:3.6
 
 MAINTAINER Amir Raminfar <findamir@gmail.com>
@@ -33,6 +45,7 @@ COPY ./caddy/Caddyfile /etc/Caddyfile
 
 # Copy all other files
 COPY ./app /app
+COPY --from=builder /build/app/static /app/static
 
 EXPOSE 80 443
 CMD ["/usr/bin/supervisord"]
