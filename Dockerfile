@@ -1,13 +1,18 @@
+# Build assets
 FROM node:8 as builder
 WORKDIR /build
 COPY package*.json ./
+
+# Install dependencies
 RUN npm i
 
+# Copy all files for webpack
 COPY webpack.config.js .babelrc postcss.config.js ./
 COPY app/javascript/ app/javascript/
 COPY app/static/ app/static/
 
-RUN npm run build && ls -lah app/static
+# Do the build
+RUN npm run build
 
 
 FROM python:3.6
@@ -45,6 +50,8 @@ COPY ./caddy/Caddyfile /etc/Caddyfile
 
 # Copy all other files
 COPY ./app /app
+
+# Copy the js files
 COPY --from=builder /build/app/static /app/static
 
 EXPOSE 80 443
