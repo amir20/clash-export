@@ -22,7 +22,7 @@ register_signal(client, ignore_expected=True)
 connect(db='clashstats', host='db', connect=False)
 
 
-@celery.task
+@celery.task(ignore_result=True)
 def update_clans():
     logger.info("Updating all clans.")
     for tag in Player.objects.distinct('clan.tag'):
