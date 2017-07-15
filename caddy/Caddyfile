@@ -1,5 +1,5 @@
-clashstats.download {
-    tls findamir@gmail.com
+https://clashstats.download {
+    tls /root/.caddy/clashstats_download.crt /root/.caddy/clashstats_download.pem
 
     proxy / 0.0.0.0:8080 {
         transparent        
