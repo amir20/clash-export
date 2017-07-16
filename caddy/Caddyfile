@@ -9,3 +9,7 @@ https://clashstats.download {
     log stdout
     errors stdout
 }
+
+http://clashstats.download {
+    redir / https://clashstats.download
+}
