@@ -10,35 +10,64 @@ module.exports = {
     },
     output: {
         path: __dirname + "/app/static/",
-        filename: "js/[name].[hash].js",
+        filename: "js/[name].js",
+    },
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js',
+        }
     },
     module: {
         rules: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: ['babel-loader']
-        }, {
-            test: /\.css$/,
-            loader: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: [{
-                        loader: 'css-loader',
-                        query: {
-                            importLoaders: 1
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            }, {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [{
+                            loader: 'css-loader',
+                            query: {
+                                importLoaders: 1
+                            },
                         },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                    }
-                ]
-            })
-        }, {
-            test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            use: 'file-loader?name=./fonts/[hash].[ext]&publicPath=../'
-        }]
+                        {
+                            loader: 'postcss-loader',
+                        }
+                    ]
+                })
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+        ]
     },
     plugins: [
         new ExtractTextPlugin("css/[name].bundle.css"),
         new ManifestPlugin()
     ]
 };
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports.devtool = '#source-map'
+    // http://vue-loader.vuejs.org/en/workflow/production.html
+    module.exports.plugins = (module.exports.plugins || []).concat([
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
+        })
+    ])
+}
