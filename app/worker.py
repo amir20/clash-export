@@ -1,14 +1,15 @@
 import logging
-import os
 from datetime import timedelta
 
-import api
+import os
 from celery import Celery
-from model import Player
 from celery.utils.log import get_task_logger
 from mongoengine import connect
 from raven import Client
 from raven.contrib.celery import register_signal, register_logger_signal
+
+import api
+from model import Player
 
 celery = Celery('CLASH_TASKS', broker=os.getenv('BROKER_URL'))
 logger = get_task_logger(__name__)
@@ -26,10 +27,13 @@ connect(db='clashstats', host='db', connect=False)
 def update_clans():
     logger.info("Updating all clans.")
     for tag in Player.objects.distinct('clan.tag'):
-        logger.info(f"Updating player stats for {tag}.")
-        clan = api.find_clan_by_tag(tag)
-        responses = api.fetch_all_players(clan)
-        [Player(**r.json()).save() for r in responses]
+        try:
+            logger.info(f"Updating player stats for {tag}.")
+            clan = api.find_clan_by_tag(tag)
+            responses = api.fetch_all_players(clan)
+            [Player(**r.json()).save() for r in responses]
+        except Exception:
+            logger.exception(f"Error while fetching clan {tag}.")
 
 
 celery.conf.beat_schedule = {
