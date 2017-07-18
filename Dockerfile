@@ -1,5 +1,5 @@
 # Build assets
-FROM node:8 as builder
+FROM node:8-alpine as builder
 WORKDIR /build
 COPY package*.json ./
 
@@ -15,12 +15,18 @@ COPY app/static/ app/static/
 RUN npm run build
 
 
-FROM python:3.6
+FROM python:3.6-alpine
 
 MAINTAINER Amir Raminfar <findamir@gmail.com>
 
 # Upgrade pip
-RUN pip install --upgrade pip uwsgi
+RUN apk add --no-cache \
+    supervisor \
+    curl \
+    gcc \
+    libc-dev \
+    linux-headers
+
 
 # Create app directoy
 WORKDIR /app
@@ -29,9 +35,6 @@ WORKDIR /app
 COPY ./conf/requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
-# Install Supervisord
-RUN apt-get update && apt-get install -y supervisor \
-    && rm -rf /var/lib/apt/lists/*
 
 # Install Caddy Server, and All Middleware
 RUN curl --silent --show-error --fail --location \
@@ -55,4 +58,4 @@ COPY ./app /app
 COPY --from=builder /build/app/static /app/static
 
 EXPOSE 80 443
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
