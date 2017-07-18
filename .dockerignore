@@ -1,3 +1,4 @@
 **/celerybeat-schedule
 **/.DS_Store
 **/celerybeat.pid
+node_modules
