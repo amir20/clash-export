@@ -19,30 +19,29 @@ FROM python:3.6-alpine
 
 MAINTAINER Amir Raminfar <findamir@gmail.com>
 
-# Upgrade pip
-RUN apk add --no-cache \
-    supervisor \
-    curl \
-    gcc \
-    libc-dev \
-    linux-headers
-
+# Install supervisord
+RUN apk add --no-cache supervisor
 
 # Create app directoy
 WORKDIR /app
 
-# Install dependencies
+# Copy requirements file
 COPY ./conf/requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
 
-
-# Install Caddy Server, and All Middleware
-RUN curl --silent --show-error --fail --location \
+# Install packages and docker
+RUN apk add --no-cache --virtual .apk-deps \
+    curl \
+    gcc \
+    libc-dev \
+    linux-headers \
+    && pip install -r /app/requirements.txt \
+    && curl --silent --show-error --fail --location \
       --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
       "https://caddyserver.com/download/linux/amd64?plugins=${plugins}" \
     | tar --no-same-owner -C /usr/bin/ -xz caddy \
     && chmod 0755 /usr/bin/caddy \
-    && /usr/bin/caddy -version
+    && /usr/bin/caddy -version \
+    && apk del .apk-deps
 
 
 # Custom Supervisord config
