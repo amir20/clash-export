@@ -1,20 +1,29 @@
-FROM python:3.6
+FROM python:3.6-alpine
 
 MAINTAINER Amir Raminfar <findamir@gmail.com>
+
+# Install supervisord
+RUN apk add --no-cache supervisor
 
 # Create app directoy
 WORKDIR /app
 
 # Install dependencies
 COPY ./conf/requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
 
-RUN apt-get update && apt-get install -y supervisor \
-    && rm -rf /var/lib/apt/lists/*
+# Install packages and docker
+RUN apk add --no-cache --virtual .apk-deps \
+    curl \
+    gcc \
+    libc-dev \
+    linux-headers \
+    && pip install -r /app/requirements.txt \
+    && apk del .apk-deps
+
 
 # Copy files
 COPY ./conf/supervisord-scheduler.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./app /app
 
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
