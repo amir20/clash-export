@@ -56,5 +56,7 @@ COPY ./app /app
 # Copy the js files
 COPY --from=builder /build/app/static /app/static
 
+
+VOLUME /root/.caddy
 EXPOSE 80 443
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
