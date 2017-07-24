@@ -1,29 +1,22 @@
 import logging
-from datetime import timedelta
+import time
 
 import os
-from celery import Celery
-from celery.utils.log import get_task_logger
+import schedule
 from mongoengine import connect
 from raven import Client
-from raven.contrib.celery import register_signal, register_logger_signal
 
 import api
 from model import Player
 
-celery = Celery('CLASH_TASKS', broker=os.getenv('BROKER_URL'))
-logger = get_task_logger(__name__)
-
 client = Client(os.getenv('SENTRY_DSN'))
-register_logger_signal(client)
-register_logger_signal(client, loglevel=logging.INFO)
-register_signal(client)
-register_signal(client, ignore_expected=True)
+
+logging.basicConfig(level=logging.INFO)
 
 connect(db='clashstats', host='db', connect=False)
+logger = logging.getLogger(__name__)
 
 
-@celery.task(ignore_result=True)
 def update_clans():
     logger.info("Updating all clans.")
     for tag in Player.objects.distinct('clan.tag'):
@@ -34,11 +27,11 @@ def update_clans():
             [Player(**r.json()).save() for r in responses]
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")
+            client.captureException()
 
 
-celery.conf.beat_schedule = {
-    'update_clans': {
-        'task': 'worker.update_clans',
-        'schedule': timedelta(hours=8)
-    }
-}
+schedule.every(8).hours.do(update_clans)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)

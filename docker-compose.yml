@@ -4,10 +4,10 @@ services:
     restart: unless-stopped
     image: mongo:3.4
 
-  celery:
+  scheduler:
     build:
       context: .
-      dockerfile: Dockerfile.worker
+      dockerfile: Dockerfile.scheduler
     restart: unless-stopped
     depends_on:
       - db

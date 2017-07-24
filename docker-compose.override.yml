@@ -16,7 +16,7 @@ services:
       - ./app:/app
       - ./caddy/Caddyfile.local:/etc/Caddyfile
 
-  celery:
+  scheduler:
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjYwOTJkYWEyLTY3NTYtNDczZS1hNzZiLWQ5MjVjMzY5NTQ0NiIsImlhdCI6MTQ5OTM4MzY1Nywic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjczLjE3MC41NS4zOCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.Rpw3W0IvUA-84SdkWE97DsewmPuEqxQxOelbDC1nJ8lychzHlNYET7aPymy9a2kWtUhbIippsSzxWg3A9lJdAg
       - DEBUG=true
