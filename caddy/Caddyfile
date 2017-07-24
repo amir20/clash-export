@@ -1,7 +1,7 @@
 https://clashstats.download {
     root /app
 
-    tls /root/.caddy/clashstats_download.crt /root/.caddy/clashstats_download.pem
+    tls findamir@gmail.com
 
     proxy / 0.0.0.0:8080 {
         transparent        
@@ -10,8 +10,4 @@ https://clashstats.download {
     gzip
     log stdout
     errors stdout
-}
-
-http://clashstats.download {
-    redir / https://clashstats.download
 }
