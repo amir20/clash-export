@@ -1,6 +1,12 @@
 http://clashstats.local, localhost:80 {
+    root /app
+
     proxy / 0.0.0.0:8080 {
-        transparent        
+        transparent
+        header_downstream -Cache-Control
+        header_downstream -Expires
+        header_downstream -Etag
+        header_downstream -Last-Modified
     }
 
     gzip

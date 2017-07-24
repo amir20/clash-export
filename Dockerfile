@@ -28,6 +28,8 @@ WORKDIR /app
 # Copy requirements file
 COPY ./conf/requirements.txt /app/requirements.txt
 
+ARG plugins 
+
 # Install packages and docker
 RUN apk add --no-cache --virtual .apk-deps \
     curl \

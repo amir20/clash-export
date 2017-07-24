@@ -1,8 +1,6 @@
 {
   "name": "clash-export",
   "version": "1.0.0",
-  "description": "Clash of Clans is a freemium mobile MMO strategy video game developed and published by Supercell. The game was released for iOS platforms on August 2, 2012, and on Google Play for Android on October 7, 2013.",
-  "main": "index.js",
   "dependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.25.0",
@@ -22,7 +20,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build": "webpack"
+    "build": "webpack -p",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",

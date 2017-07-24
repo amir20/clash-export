@@ -1,4 +1,6 @@
 https://clashstats.download {
+    root /app
+
     tls /root/.caddy/clashstats_download.crt /root/.caddy/clashstats_download.pem
 
     proxy / 0.0.0.0:8080 {
