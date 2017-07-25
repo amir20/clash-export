@@ -30,7 +30,9 @@ def update_clans():
             client.captureException()
 
 
-schedule.every(8).hours.do(update_clans)
+schedule.every().day.at("1:30").do(update_clans)
+schedule.every().day.at("9:30").do(update_clans)
+schedule.every().day.at("17:30").do(update_clans)
 
 while True:
     schedule.run_pending()
