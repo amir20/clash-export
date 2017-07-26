@@ -3,6 +3,7 @@ services:
   db:
     restart: unless-stopped
     image: mongo:3.4
+    hostname: mongo
 
   scheduler:
     hostname: scheduler
