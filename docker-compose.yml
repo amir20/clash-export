@@ -6,6 +6,7 @@ services:
 
   scheduler:
     hostname: scheduler
+    image: amir20/clashstats-scheduler:latest
     build:
       context: .
       dockerfile: Dockerfile.scheduler
@@ -19,6 +20,7 @@ services:
 
   web:
     build: .
+    image: amir20/clashstats-web:latest
     hostname: web
     restart: unless-stopped
     depends_on:
