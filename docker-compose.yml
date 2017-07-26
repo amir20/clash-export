@@ -5,6 +5,7 @@ services:
     image: mongo:3.4
 
   scheduler:
+    hostname: scheduler
     build:
       context: .
       dockerfile: Dockerfile.scheduler
@@ -18,6 +19,7 @@ services:
 
   web:
     build: .
+    hostname: web
     restart: unless-stopped
     depends_on:
       - db
