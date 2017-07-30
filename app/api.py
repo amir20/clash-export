@@ -5,7 +5,7 @@ from urllib.parse import quote
 
 import requests
 import xlsxwriter
-from model import Player
+from model import Player, Clan
 
 token = os.getenv('API_TOKEN')
 headers = {'authorization': 'Bearer ' + token}
@@ -27,8 +27,12 @@ def fetch_all_players(clan):
 
 
 def export_clan(clan, stream):
-    responses = fetch_all_players(clan)
-    [Player(**r.json()).save() for r in responses]
+    players = fetch_all_players(clan)
+    players = [p.json() for p in players]
+    [Player(**r).save() for r in players]
+    clan['players'] = players
+
+    Clan(**clan).save()
 
     def player_row(player_json):
         achievements = {i['name']: i for i in player_json['achievements']}
@@ -44,7 +48,7 @@ def export_clan(clan, stream):
 
         return row
 
-    rows = [player_row(r.json()) for r in responses]
+    rows = [player_row(r) for r in players]
 
     columns = OrderedDict((
         ('name', 'Player Name'),
