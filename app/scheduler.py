@@ -7,7 +7,7 @@ from mongoengine import connect
 from raven import Client
 
 import api
-from model import Player
+from model import Player, Clan
 
 client = Client(os.getenv('SENTRY_DSN'))
 
@@ -24,7 +24,12 @@ def update_clans():
             logger.info(f"Updating player stats for {tag}.")
             clan = api.find_clan_by_tag(tag)
             responses = api.fetch_all_players(clan)
-            [Player(**r.json()).save() for r in responses]
+            players = [r.json() for r in responses]
+            clan['players'] = players
+
+            [Player(**r).save() for r in players]
+            Clan(**clan).save()
+
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")
             client.captureException()
