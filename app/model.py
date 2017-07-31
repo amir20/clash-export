@@ -2,7 +2,21 @@ from mongoengine import DynamicDocument
 
 
 class Player(DynamicDocument):
-    pass
+    meta = {
+        'indexes': [
+            'clan.name',
+            'clan.tag',
+            'name',
+            'tag'
+        ]
+    }
+    
 
 class Clan(DynamicDocument):
-    pass   
+    meta = {
+        'indexes': [
+            'name',
+            'tag'
+        ]
+    }
+    
