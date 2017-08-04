@@ -101,7 +101,7 @@ export default {
 
       return clanRows.map(row => {
         const [name, ...columns] = row;
-        const previousColumns = previousPlayers[name];
+        const previousColumns = previousPlayers[name] || columns;
 
         const zippedRow = zip(columns, previousColumns);
         const data = zippedRow.map(item => {
