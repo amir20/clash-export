@@ -45,7 +45,15 @@ def clan_detail(tag):
         return send_file(excel.to_stream(clan), attachment_filename=f"{tag}.xlsx", as_attachment=True)
     elif ext == '.json':
         days_ago = request.args.get('daysAgo')
-        clan = Clan.from_now_with_tag(tag, days=int(days_ago))[0] if days_ago else Clan.fetch_and_save(tag)
+        if days_ago:
+            clans = Clan.from_now_with_tag(tag, days=int(days_ago))
+            if not clans:
+                clan = Clan.fetch_and_save(tag)
+            else:
+                clan = clans[0]
+        else:
+            clan = Clan.fetch_and_save(tag)
+
         return jsonify(transform_players(clan.players))
     else:
         return render_template('clan.html', clan=clan)
