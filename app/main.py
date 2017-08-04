@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, url_for, send_file, render_template, jsonify
+from flask import Flask, request, redirect, url_for, send_file, render_template, jsonify, json
 from mongoengine import connect
 from raven.contrib.flask import Sentry
 
@@ -50,6 +50,16 @@ def clan_detail(tag):
     else:
         return render_template('clan.html', clan=clan)
 
+
+def javascript_path(file):
+    SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
+    manifest = os.path.join(SITE_ROOT, "static", "manifest.json")
+    with open(manifest) as f:
+        data = json.load(f)
+    return data[file]
+
+
+app.add_template_global(javascript_path, 'javascript_path')
 
 if __name__ == "__main__":
     app.debug = os.getenv('DEBUG', False)

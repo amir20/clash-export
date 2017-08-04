@@ -1,9 +1,11 @@
-
-
 import Vue from 'vue'
 import Clan from './Clan'
 
-new Vue({
-  el: '#clan-table',
-  components: { Clan }
-})
+if (document.getElementById('clan-table')) {
+  new Vue({
+    el: '#clan-table',
+    components: {
+      Clan
+    }
+  });
+}
