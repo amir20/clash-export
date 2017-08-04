@@ -1,10 +1,9 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends "layout.html" %} {% block body %}
 
 <main class="container">
-    <div class="columns">
-        <div class="column is-3 is-offset-2">
-            <img src="{{ url_for('static', filename='hog.png') }}" alt="Hog Rider">
+    <div class="columns is-centered is-vcentered">
+        <div class="column is-3">
+            <img src="{{ url_for('static', filename='images/hog.png') }}" alt="Hog Rider">
         </div>
         <div class="column">
             <section class="hero">

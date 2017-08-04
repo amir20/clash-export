@@ -9,8 +9,9 @@ services:
       - DEBUG=true
       - SENTRY_DSN=
     restart: 'no'
+    #command: 'python main.py'
     ports:
-      - "8000:80"
+      - "8000:80"      
 
     volumes:
       - ./app:/app

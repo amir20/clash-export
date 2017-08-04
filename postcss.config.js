@@ -1,7 +1,6 @@
 module.exports = {
-    plugins: [
-        require('lost'),
-        require("postcss-cssnext")(),
-        require('postcss-font-magician')()
-    ]
+    plugins: {
+        'postcss-import': {},
+        'postcss-cssnext': {}        
+    }
 }

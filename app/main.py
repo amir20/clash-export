@@ -1,22 +1,19 @@
 import os
-from io import BytesIO
-
-import api
-import uptime as uptime_api
-from flask import Flask, request, redirect, url_for, send_file, render_template
+from flask import Flask, request, redirect, url_for, send_file, render_template, jsonify
 from mongoengine import connect
 from raven.contrib.flask import Sentry
-from uwsgidecorators import postfork
 
-
-@postfork
-def connect_mongo():
-    connect(db='clashstats', host='db')
+import uptime as uptime_api
+from clash import excel, api
+from clash.transformer import transform_players
+from model import Clan
 
 
 app = Flask(__name__)
-sentry = Sentry(app)
 app.debug = os.getenv('DEBUG', False)
+sentry = Sentry(app)
+
+connect(db='clashstats', host='db', connect=False)
 
 
 @app.route("/")
@@ -38,28 +35,26 @@ def search():
 
 @app.route("/clan/<path:tag>")
 def clan_detail(tag):
-    is_export = False
-
-    if tag.endswith(".xlsx"):
-        tag = tag[:-5]
-        is_export = True
-
+    tag, ext = os.path.splitext(tag)
     clan = api.find_clan_by_tag(tag)
 
     if 'tag' not in clan:
         return render_template('error.html'), 404
-    elif is_export:
-        return export(clan=clan, filename='%s.xlsx' % tag)
+    elif ext == '.xlsx':
+        clan = Clan.fetch_and_save(tag)
+        return send_file(excel.to_stream(clan), attachment_filename=f"{tag}.xlsx", as_attachment=True)
+    elif ext == '.json':
+        days_ago = request.args.get('daysAgo')
+        clan = Clan.from_now_with_tag(tag, days=int(days_ago))[0] if days_ago else Clan.fetch_and_save(tag)
+        return jsonify(transform_players(clan.players))
     else:
         return render_template('clan.html', clan=clan)
 
 
-def export(clan, filename):
-    output = BytesIO()
-    api.export_clan(clan, output)
-    output.seek(0)
-    return send_file(output, attachment_filename=filename, as_attachment=True)
-
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=80)
+    app.debug = os.getenv('DEBUG', False)
+    if (app.debug):
+        from werkzeug.debug import DebuggedApplication
+        app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
+
+    app.run(host='0.0.0.0', port=80)

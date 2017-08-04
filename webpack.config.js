@@ -28,15 +28,11 @@ module.exports = {
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [{
-                            loader: 'css-loader',
-                            query: {
-                                importLoaders: 1
-                            },
-                        },
-                        {
-                            loader: 'postcss-loader',
+                        loader: 'css-loader',
+                        query: {
+                            importLoaders: 1
                         }
-                    ]
+                    }]
                 })
             },
             {
@@ -46,7 +42,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("css/[name].bundle.css"),
+        //new ExtractTextPlugin("css/[name].bundle.css"),
         new ManifestPlugin()
     ]
 };

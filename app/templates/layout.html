@@ -6,16 +6,18 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
 
     <title>Export Clash of Clans Achievements - ClashStats.download</title>
     <meta name=”description”
           content="ClashStats.download is a tool to export all Clash of Clans achievements to a file.">
     <meta name="keywords" content="clash of clans, export, excel, achievements, Amir Raminfar, download">
 
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon-96.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon-96.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">
     
 </head>
 <body>
@@ -37,5 +39,6 @@
         <li class="is-inline-block">© 2017 ClashStats is an open source project and maintained by Reddit Dynasty.</li>
     </ul>
 </footer>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>

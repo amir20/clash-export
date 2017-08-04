@@ -1,7 +1,7 @@
 http://clashstats.local, localhost:80 {
     root /app
 
-    proxy / 0.0.0.0:8080 {
+    proxy / unix:/tmp/gunicorn.sock {
         transparent
         header_downstream -Cache-Control
         header_downstream -Expires

@@ -1,0 +1,8 @@
+.columns.is-vcentered {
+    min-height: 90vh;
+}
+
+h1,
+h2 {
+    font-family: 'Ubuntu', sans-serif;    
+}

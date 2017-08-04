@@ -1,12 +1,9 @@
 
 
 import Vue from 'vue'
-import App from './App'
+import Clan from './Clan'
 
 new Vue({
-  el: '#app',
-  template: '<App/>',
-  components: { App }
+  el: '#clan-table',
+  components: { Clan }
 })
-
-console.log('Hello, world!');

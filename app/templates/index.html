@@ -1,31 +1,26 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends "layout.html" %} {% block body %}
 <main class="container">
-    <div class="columns">
-        <div class="column is-3 is-offset-2">
-            <img src="{{ url_for('static', filename='hog.png') }}" alt="Hog Rider">
+    <div class="columns is-centered is-vcentered">
+        <div class="column is-3">
+            <img src="{{ url_for('static', filename='images/hog.png') }}" alt="Hog Rider">
         </div>
         <div class="column">
             <section class="hero">
                 <div class="hero-body">
                     <h1 class="title is-1">
-                            Hey, Chief!
-                        </h1>
-                        <h2 class="subtitle">
-                            I can help you find your clan and export all your member achievements.
-                            Let's start finding your clan by <strong>tag</strong>. Enter your clan tag below.
-                        </h2>
+                        Hey, Chief!
+                    </h1>
+                    <h2 class="subtitle">
+                        I can help you find your clan and export all your member achievements. Let's start finding your clan by <strong>tag</strong>.
+                        Enter your clan tag below.
+                    </h2>
                 </div>
             </section>
 
             <form class="section" action="{{ url_for('search') }}" method="get">
                 <div class="field has-addons">
                     <p class="control">
-                        <input type="text" class="input is-large" id="tag"
-                               placeholder="#tag"
-                               value="#UGJPVJR"
-                               name="tag"
-                               required>
+                        <input type="text" class="input is-large" id="tag" placeholder="#tag" value="#UGJPVJR" name="tag" required>
                     </p>
                     <p class="control">
                         <button type="submit" class="button is-primary is-large">Go</button>
@@ -37,6 +32,6 @@
 </main>
 
 <div id="app">
-    
+
 </div>
 {% endblock %}
