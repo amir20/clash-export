@@ -7,7 +7,6 @@ import requests
 
 token = os.getenv('API_TOKEN')
 headers = {'authorization': 'Bearer ' + token}
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

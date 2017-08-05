@@ -14,6 +14,7 @@ logging.basicConfig(level=logging.INFO)
 
 connect(db='clashstats', host='db', connect=False)
 logger = logging.getLogger(__name__)
+logging.getLogger("clash.api").setLevel(logging.WARNING)
 
 
 def update_clans():
