@@ -19,14 +19,14 @@ def transform_players(players):
     rows = [player_row(r) for r in players]
 
     columns = OrderedDict((
-        ('name', 'Player Name'),
+        ('name', 'Name'),
         ('townHallLevel', 'TH Level'),
         ('builderHallLevel', 'BH Level'),
         ('expLevel', 'XP Level'),
         ('bestTrophies', 'Best Trophies'),
         ('bestVersusTrophies', 'Best Versus Trophies'),
         ('trophies', 'Current Trophies'),
-        ('Champion Builder', 'Builder Hall Trophies'),
+        ('versusTrophies', 'Builder Hall Trophies'),
         ('attackWins', 'Attack Wins'),
         ('versusBattleWinCount', 'Versus Battle Wins'),
         ('defenseWins', 'Defense Wins'),
