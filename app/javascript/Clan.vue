@@ -19,7 +19,7 @@
                 <a class="button" :class="{'is-warning': days == 7}" @click="loadDaysAgo(7)">
                   Last Week
                 </a>
-              </div>              
+              </div>
             </div>
           </div>
         </div>
@@ -44,8 +44,8 @@
       <table class="table is-narrow is-fullwidth is-striped" v-if="!loading">
         <thead>
           <tr>
-            <th v-for="header in header">
-              {{ header }}
+            <th v-for="(header, index) in header" :class="{'selected-sort': index - 1 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
+              <a @click="updateSort(index - 1)">{{ header }}</a>
             </th>
           </tr>
         </thead>
@@ -82,7 +82,9 @@ export default {
       loading: false,
       clan: null,
       previousData: null,
-      days: 7
+      days: 7,
+      sortIndex: 4,
+      sortDirection: 1
     }
   },
   created() {
@@ -99,7 +101,7 @@ export default {
         previousPlayers[name] = columns;
       });
 
-      return clanRows.map(row => {
+      const tableData = clanRows.map(row => {
         const [name, ...columns] = row;
         const previousColumns = previousPlayers[name] || columns;
 
@@ -111,6 +113,15 @@ export default {
         });
 
         return { name, data };
+      });
+
+
+      return tableData.sort((a, b) => {
+        if (this.sortIndex == -1) { // index for name
+          return a.name.toLowerCase() < b.name.toLowerCase() ? -this.sortDirection : this.sortDirection;
+        } else { // index for other columns
+          return a.data[this.sortIndex].now < b.data[this.sortIndex].now ? this.sortDirection : -this.sortDirection;
+        }
       });
     },
     header() {
@@ -135,6 +146,13 @@ export default {
       this.days = days;
       const data = await fetch(`/clan/${encodeURIComponent(this.tag)}.json?daysAgo=${days}`);
       this.previousData = await data.json();
+    },
+    updateSort(column) {
+      if (this.sortIndex != column) {
+        this.sortIndex = column;
+      } else {
+        this.sortDirection = -this.sortDirection;
+      }
     }
   }
 }
@@ -150,10 +168,28 @@ thead {
 
   & th {
     color: #fff;
+
+    &.selected-sort {
+      &.up {
+        border-top: 4px solid #ff3860;
+      }
+
+      &.down {
+        border-bottom: 4px solid #ff3860;
+      }
+    }
   }
 
   & tr:hover {
     background-color: #00d1b2;
+  }
+
+  & a {
+    color: #fff;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
