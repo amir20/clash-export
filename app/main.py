@@ -1,10 +1,10 @@
 import os
+import logging
+
 from flask import Flask, request, redirect, url_for, send_file, render_template, jsonify, json
 from mongoengine import connect
 from raven.contrib.flask import Sentry
-
-import uptime as uptime_api
-from clash import excel, api
+from clash import uptime as uptime_api, excel, api
 from clash.transformer import transform_players
 from model import Clan
 
@@ -12,7 +12,9 @@ from model import Clan
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
 sentry = Sentry(app)
+logging.basicConfig(level=logging.INFO)
 
+# Set connect to False for pre-forking to work
 connect(db='clashstats', host='db', connect=False)
 
 
