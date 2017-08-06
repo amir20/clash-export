@@ -1,4 +1,14 @@
-**/celerybeat-schedule
+.git
+.dockerignore
+
 **/.DS_Store
-**/celerybeat.pid
+**/*.pid
+**/*.log
+
 node_modules
+
+**/__pycache__
+**/*.py[cod]
+
+**/static/manifest.json
+**/static/js
