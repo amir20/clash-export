@@ -1,0 +1,34 @@
+{% extends "layout.html" %} {% block body %}
+
+<main class="container">
+    <div class="columns is-centered is-vcentered">
+        <div class="column is-3">
+            <img src="{{ url_for('static', filename='images/hog.png') }}" alt="Hog Rider">
+        </div>
+        <div class="column">
+            <div class="tile is-ancestor">
+                <div class="tile is-parent is-vertical">
+                    <div class="tile is-child box">
+                        <p class="heading">Uptime</p>
+                        <p>{{ "{:.2f}".format(uptime_ratio) }}%</p>
+                    </div>
+                    <div class="tile is-child box">
+                        <p class="heading">Total Clans</p>
+                        <p>{{ "{:,}".format(total_clans) }}</p>
+                    </div>
+                </div>
+                <div class="tile is-parent is-vertical">
+                    <div class="tile is-child box">
+                        <p class="heading">Total Players</p>
+                        <p>{{ "{:,}".format(total_players) }}</p>
+                    </div>
+                    <div class="tile is-child box">
+                        <p class="heading">Clans Up to Date</p>
+                        <p>{{ "{:.2f}".format(100 * clans_indexed / total_clans) }}%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
