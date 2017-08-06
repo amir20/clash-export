@@ -83,7 +83,7 @@ export default {
       clan: null,
       previousData: null,
       days: 7,
-      sortIndex: 4,
+      sortIndex: 5,
       sortDirection: 1
     }
   },
