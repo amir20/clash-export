@@ -94,4 +94,5 @@ ENV/
 *.pid
 
 node_modules
-
+**/static/manifest.json
+**/static/js
