@@ -6,7 +6,7 @@ from mongoengine import connect
 from raven.contrib.flask import Sentry
 from clash import uptime as uptime_api, excel, api
 from clash.transformer import transform_players
-from model import Clan
+from model import Clan, Player
 
 
 app = Flask(__name__)
@@ -23,11 +23,15 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/uptime")
+@app.route("/status")
 def uptime():
     monitor = uptime_api.monitor()
     uptime_ratio = float(monitor['custom_uptime_ratio'])
-    return render_template('uptime.html', uptime_ratio=uptime_ratio)
+    total_clans = len(Clan.objects.distinct('tag'))
+    clans_indexed = len(Clan.from_now(hours=12).distinct('tag'))
+    total_players = len(Player.objects.distinct('tag'))
+
+    return render_template('status.html', uptime_ratio=uptime_ratio, total_clans=total_clans, clans_indexed=clans_indexed, total_players=total_players)
 
 
 @app.route("/search")
