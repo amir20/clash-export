@@ -52,11 +52,7 @@ def clan_detail(tag):
     elif ext == '.json':
         days_ago = request.args.get('daysAgo')
         if days_ago:
-            clans = Clan.from_now_with_tag(tag, days=int(days_ago))
-            if not clans:
-                clan = Clan.fetch_and_save(tag)
-            else:
-                clan = clans[0]
+            clan = Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)            
         else:
             clan = Clan.fetch_and_save(tag)
 
