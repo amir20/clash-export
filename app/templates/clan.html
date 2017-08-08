@@ -1,8 +1,6 @@
 {% extends "layout.html" %} {% block body %}
 
-<main class="container is-fluid is-marginless">
-    <div id="clan-table">
-        <Clan tag="{{ clan.tag }}" name="{{ clan.name }}" />
-    </div>
+<main id="clan-table">
+    <Clan tag="{{ clan.tag }}" name="{{ clan.name }}" />
 </main>
 {% endblock %}

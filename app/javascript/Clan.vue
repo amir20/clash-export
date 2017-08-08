@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar has-shadow">
+    <nav class="navbar">
       <div class="navbar-brand">
         <h1 class="navbar-item">
           {{ name }}
@@ -40,7 +40,9 @@
       </div>
     </nav>
     <section>
-      <div class="has-text-centered" v-if="loading">Please wait...</div>
+      <div v-if="loading" class="has-text-centered load-text">                
+        <i class="fa fa-spinner fa-2 fa-spin"></i>        
+      </div>
       <table class="table is-narrow is-fullwidth is-striped" v-if="!loading">
         <thead>
           <tr>
@@ -216,5 +218,22 @@ b {
   &.down {
     color: #ff3860;
   }
+}
+
+nav {
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
+  position: sticky;
+  top: 0;
+}
+
+.load-text{
+  font-size: 120%;
+  margin: 3em 0;
+}
+</style>
+
+<style>
+body {
+  overflow-x: initial;
 }
 </style>
