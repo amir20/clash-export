@@ -20,11 +20,13 @@
     "webpack-manifest-plugin": "^1.2.1"
   },
   "devDependencies": {
-    "babel-plugin-transform-runtime": "^6.23.0"
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "concurrently": "^3.5.0"
   },
   "scripts": {
     "build": "NODE_ENV='production' webpack -p",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "start": "concurrently 'docker-compose up web' 'npm run watch'"
   },
   "repository": {
     "type": "git",

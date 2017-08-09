@@ -61,7 +61,7 @@ def clan_detail(tag):
         return render_template('clan.html', clan=clan)
 
 
-def javascript_path(file):
+def manifest_path(file):
     SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
     manifest = os.path.join(SITE_ROOT, "static", "manifest.json")
     with open(manifest) as f:
@@ -69,7 +69,7 @@ def javascript_path(file):
     return data[file]
 
 
-app.add_template_global(javascript_path, 'javascript_path')
+app.add_template_global(manifest_path, 'manifest_path')
 
 if __name__ == "__main__":    
     if (app.debug):
