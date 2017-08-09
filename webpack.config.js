@@ -6,7 +6,8 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 module.exports = {
     context: __dirname + "/app",
     entry: {
-        app: "./javascript/index.js"
+        'details-page': "./javascript/details-page.js",
+        'index': "./javascript/index.js"
     },
     output: {
         path: __dirname + "/app/static/",
