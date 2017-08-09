@@ -4,7 +4,8 @@ https://clashstats.download {
     tls findamir@gmail.com
 
     proxy / unix:/tmp/gunicorn.sock {
-        transparent        
+        transparent
+        except /favicon.ico /robots.txt
     }
 
     gzip

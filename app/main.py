@@ -52,7 +52,7 @@ def clan_detail(tag):
     elif ext == '.json':
         days_ago = request.args.get('daysAgo')
         if days_ago:
-            clan = Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)            
+            clan = Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
         else:
             clan = Clan.fetch_and_save(tag)
 
@@ -71,8 +71,7 @@ def javascript_path(file):
 
 app.add_template_global(javascript_path, 'javascript_path')
 
-if __name__ == "__main__":
-    app.debug = os.getenv('DEBUG', False)
+if __name__ == "__main__":    
     if (app.debug):
         from werkzeug.debug import DebuggedApplication
         app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
