@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import Clan from './Clan'
+import Vue from "vue";
+import Clan from "./Clan";
 
 new Vue({
-  el: '#clan-table',
+  el: "#clan-table",
   components: {
     Clan
   }
