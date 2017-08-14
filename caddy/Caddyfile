@@ -5,7 +5,7 @@ https://clashstats.download {
 
     proxy / unix:/tmp/gunicorn.sock {
         transparent
-        except /favicon.ico /robots.txt
+        except /favicon.ico /robots.txt /static
     }
 
     gzip

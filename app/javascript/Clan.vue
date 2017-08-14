@@ -40,8 +40,8 @@
       </div>
     </nav>
     <section>
-      <div v-if="loading" class="has-text-centered load-text">                
-        <i class="fa fa-spinner fa-2 fa-spin"></i>        
+      <div v-if="loading" class="has-text-centered load-text">
+        <i class="fa fa-spinner fa-2 fa-spin"></i>
       </div>
       <table class="table is-narrow is-fullwidth is-striped" v-if="!loading">
         <thead>
@@ -226,7 +226,7 @@ nav {
   top: 0;
 }
 
-.load-text{
+.load-text {
   font-size: 120%;
   margin: 3em 0;
 }
