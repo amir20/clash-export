@@ -4,7 +4,7 @@ WORKDIR /build
 COPY package*.json ./
 
 # Install dependencies
-RUN npm i
+RUN npm install --production
 
 # Copy all files for webpack
 COPY webpack.config.js .babelrc postcss.config.js ./
