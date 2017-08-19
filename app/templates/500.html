@@ -1,0 +1,24 @@
+{% extends "layout.html" %} {% block body %}
+<main class="container">
+    <div class="columns is-centered is-vcentered">
+        <div class="column is-3 is-hidden-mobile">
+            <img src="{{ url_for('static', filename='images/oops.png') }}" alt="Barbarian">
+        </div>
+        <div class="column">
+            <section class="hero">
+                <div class="hero-body">
+                    <h1 class="title is-1">
+                        Oops!! An unexpected error occurred.
+                    </h1>
+                    <p>The server was unable to complete your request.</p>
+                    <p>Please try again soon.</p>
+
+                    <p class="section">
+                        <a href="{{ url_for('index') }}" class="button is-large is-warning">Home Page</a>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+{% endblock %}

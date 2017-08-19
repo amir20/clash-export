@@ -61,6 +61,16 @@ def clan_detail(tag):
         return render_template('clan.html', clan=clan)
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('500.html'), 500
+
+
 def manifest_path(file):
     SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
     manifest = os.path.join(SITE_ROOT, "static", "manifest.json")
@@ -71,7 +81,7 @@ def manifest_path(file):
 
 app.add_template_global(manifest_path, 'manifest_path')
 
-if __name__ == "__main__":    
+if __name__ == "__main__":
     if (app.debug):
         from werkzeug.debug import DebuggedApplication
         app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
