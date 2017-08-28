@@ -2,17 +2,22 @@ from collections import OrderedDict
 
 
 def transform_players(players):
-    def player_row(player_json):
-        achievements = {i['name']: i for i in player_json['achievements']}
-        heroes = {i['name']: i for i in player_json['heroes']}
-        for k, hero in heroes.items():
-            hero['value'] = hero['level']
 
+    def player_row(player_json):
         row = player_json.copy()
-        del row['achievements']
-        del row['heroes']
-        row.update(achievements)
-        row.update(heroes)
+
+        if 'achievements' in player_json:
+            achievements = {i['name']: i for i in player_json['achievements']}
+            del row['achievements']
+            row.update(achievements)
+
+        if 'heroes' in player_json:
+            heroes = {i['name']: i for i in player_json['heroes']}
+            for k, hero in heroes.items():
+                hero['value'] = hero['level']
+
+            del row['heroes']
+            row.update(heroes)
 
         return row
 
