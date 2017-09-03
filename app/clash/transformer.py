@@ -46,7 +46,8 @@ def transform_players(players):
         ('donationsReceived', 'Donations Received'),
         ('Barbarian King', 'Barbarian King'),
         ('Archer Queen', 'Archer Queen'),
-        ('Grand Warden', 'Grand Warden')
+        ('Grand Warden', 'Grand Warden'),
+        ('Battle Machine', 'Battle Machine')
     ))
 
     data = []
