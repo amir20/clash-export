@@ -37,8 +37,7 @@ class Clan(DynamicDocument):
     @classmethod
     def fetch_and_save(cls, tag):
         clan = api.find_clan_by_tag(tag)
-        responses = api.fetch_all_players(clan)
-        players = [r.json() for r in responses]
+        players = api.fetch_all_players(clan)
         clan['players'] = players
         del clan['memberList']
 
