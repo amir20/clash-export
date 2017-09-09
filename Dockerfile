@@ -34,6 +34,7 @@ ARG plugins
 RUN apk add --no-cache --virtual .apk-deps \
     curl \
     gcc \
+    g++ \
     libc-dev \
     linux-headers \
     && pip install -r /app/requirements.txt \
