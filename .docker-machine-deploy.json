@@ -1,5 +1,6 @@
 {
   "machine": "clash",
   "mode": "compose",
-  "build": "local"
+  "build": "local",
+  "name": "clash-export"
 }
