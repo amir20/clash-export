@@ -19,6 +19,7 @@ services:
     volumes:
       - ./app:/app
       - ./caddy/Caddyfile.local:/etc/Caddyfile
+      - /tmp/mongodb-27017.sock:/tmp/mongodb-27017.sock
 
   scheduler:
     environment:
