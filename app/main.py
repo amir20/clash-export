@@ -15,7 +15,7 @@ sentry = Sentry(app)
 logging.basicConfig(level=logging.INFO)
 
 # Set connect to False for pre-forking to work
-connect(db='clashstats', host='db', connect=False)
+connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 
 @app.route("/")
