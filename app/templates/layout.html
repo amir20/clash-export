@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,34 +12,37 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
 
     <title>Export Clash of Clans Achievements - ClashStats.download</title>
-    <meta name=”description”
-          content="ClashStats.download is a tool to export all Clash of Clans achievements to a file.">
+    <meta name=”description” content="ClashStats.download is a tool to export all Clash of Clans achievements to a file.">
     <meta name="keywords" content="clash of clans, export, excel, achievements, Amir Raminfar, download">
 
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon-96.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">
-    
 </head>
-<body>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-88927228-2', 'auto');
-  ga('send', 'pageview');
-</script>
-{% block body %}{% endblock %}
 
-<footer class="container has-text-centered">
-    <ul class="is-inline-block">
-        <li class="is-inline-block"><a href="/">Home</a></li>
-        <li class="is-inline-block"><a href="https://github.com/amir20/clash-export">Github</a></li>
-        <li class="is-inline-block"><a href="/status">Status</a></li>
-        <li class="is-inline-block"><a href="https://www.reddit.com/r/dynastyclash/">/r/dynastyclash</a></li>
-        <li class="is-inline-block">© 2017 ClashStats is an open source project and maintained by Reddit Dynasty.</li>
-    </ul>
-</footer>
+<body>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-88927228-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    {% block body %}{% endblock %}
+
+    <footer class="container has-text-centered">
+        <ul class="is-inline-block">
+            <li class="is-inline-block"><a href="/">Home</a></li>
+            <li class="is-inline-block"><a href="https://github.com/amir20/clash-export">Github</a></li>
+            <li class="is-inline-block"><a href="/status">Status</a></li>
+            <li class="is-inline-block"><a href="https://www.reddit.com/r/dynastyclash/">/r/dynastyclash</a></li>
+            <li class="is-inline-block">© 2017 ClashStats is an open source project and maintained by Reddit Dynasty.</li>
+        </ul>
+    </footer>
 </body>
+
 </html>
