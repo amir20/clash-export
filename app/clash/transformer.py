@@ -25,6 +25,7 @@ def transform_players(players):
 
     columns = OrderedDict((
         ('name', 'Name'),
+        ('tag', 'Tag'),
         ('townHallLevel', 'TH Level'),
         ('builderHallLevel', 'BH Level'),
         ('expLevel', 'XP Level'),

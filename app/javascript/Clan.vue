@@ -51,7 +51,7 @@
       <table class="table is-narrow is-fullwidth is-striped" v-if="!loading">
         <thead>
           <tr>
-            <th v-for="(header, index) in header" :class="{'selected-sort': index - 1 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
+            <th v-for="(header, index) in header" :class="{'selected-sort': index - 2 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
               <a @click="updateSort(index - 1)">{{ header }}</a>
             </th>
           </tr>
@@ -66,6 +66,7 @@
         <tbody>
           <tr v-for="row in tableData">
             <th>{{ row.name }}</th>
+            <td>{{ row.tag }}</td>
             <td v-for="column in row.data">
               {{ column.now.toLocaleString() }}
               <b v-if="column.delta != 0" :class="{up: column.delta > 0, down: column.delta < 0}">
@@ -104,12 +105,12 @@ export default {
       // Map by user -> columns      
       const previousPlayers = {};
       this.previousData.slice(1).forEach(row => {
-        const [name, ...columns] = row;
+        const [name, tags, ...columns] = row;
         previousPlayers[name] = columns;
       });
 
       const tableData = clanRows.map(row => {
-        const [name, ...columns] = row;
+        const [name, tag, ...columns] = row;
         const previousColumns = previousPlayers[name] || columns;
 
         const zippedRow = zip(columns, previousColumns);
@@ -119,7 +120,7 @@ export default {
           return { now, delta: now - previous, previous };
         });
 
-        return { name, data };
+        return { name, tag, data };
       });
 
 
