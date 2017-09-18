@@ -52,7 +52,7 @@
         <thead>
           <tr>
             <th v-for="(header, index) in header" :class="{'selected-sort': index - 2 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
-              <a @click="updateSort(index - 1)">{{ header }}</a>
+              <a @click="updateSort(index - 2)">{{ header }}</a>
             </th>
           </tr>
         </thead>
