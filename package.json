@@ -2,14 +2,14 @@
   "name": "clash-export",
   "version": "1.0.0",
   "dependencies": {
-    "autoprefixer": "^7.1.5",
+    "autoprefixer": "^7.1.6",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "babel-runtime": "^6.26.0",
     "css-loader": "^0.28.7",
-    "extract-text-webpack-plugin": "^3.0.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "lodash": "^4.17.4",
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^11.0.0",
@@ -17,7 +17,7 @@
     "vue": "^2.5.2",
     "vue-loader": "^13.3.0",
     "vue-template-compiler": "^2.5.2",
-    "webpack": "^3.7.1",
+    "webpack": "^3.8.1",
     "webpack-manifest-plugin": "^1.3.2"
   },
   "devDependencies": {
