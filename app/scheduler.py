@@ -39,8 +39,8 @@ def update_clans():
 
 
 def delete_old_clans():
-    deleted = Clan.older_than(days=30).delete()
-    logger.info(f"Deleted {deleted} clans that are older than a month.")
+    deleted = Clan.older_than(days=45).delete()
+    logger.info(f"Deleted {deleted} clans that are older than 45 days.")
 
 
 schedule.every().hour.do(update_clans)
