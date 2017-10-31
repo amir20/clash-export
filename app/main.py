@@ -47,18 +47,23 @@ def clan_detail(tag):
     if 'tag' not in clan:
         return render_template('error.html'), 404
     elif ext == '.xlsx':
-        clan = Clan.fetch_and_save(tag)
+        days_ago = request.args.get('daysAgo')
+        clan = clan_from_days_ago(days_ago, tag)
         return send_file(excel.to_stream(clan), attachment_filename=f"{tag}.xlsx", as_attachment=True)
     elif ext == '.json':
         days_ago = request.args.get('daysAgo')
-        if days_ago:
-            clan = Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
-        else:
-            clan = Clan.fetch_and_save(tag)
+        clan = clan_from_days_ago(days_ago, tag)
 
         return jsonify(transform_players(clan.players))
     else:
         return render_template('clan.html', clan=clan)
+
+
+def clan_from_days_ago(days_ago, tag):
+    if days_ago:
+        return Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
+    else:
+        return Clan.fetch_and_save(tag)
 
 
 @app.errorhandler(404)
