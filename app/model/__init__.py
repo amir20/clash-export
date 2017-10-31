@@ -30,6 +30,11 @@ class Clan(DynamicDocument):
         return cls.objects(id__gte=object_id)
 
     @classmethod
+    def older_than(cls, **kwargs):
+        object_id = object_id_from_now(**kwargs)
+        return cls.objects(id__lt=object_id)
+
+    @classmethod
     def from_now_with_tag(cls, tag, **kwargs):
         object_id = object_id_from_now(**kwargs)
         return cls.objects(id__gte=object_id, tag=tag)
@@ -40,9 +45,7 @@ class Clan(DynamicDocument):
         players = api.fetch_all_players(clan)
         clan['players'] = players
         del clan['memberList']
-
-        [Player(**r).save() for r in players]
-
+        
         return Clan(**clan).save()
 
 
