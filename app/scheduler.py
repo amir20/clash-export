@@ -44,7 +44,7 @@ def delete_old_clans():
 
 
 schedule.every().hour.do(update_clans)
-schedule.every().day.do(delete_old_clans)
+schedule.every().day.at("12:01").do(delete_old_clans)
 
 if __name__ == "__main__":
     while True:
