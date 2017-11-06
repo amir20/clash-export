@@ -1,48 +1,59 @@
 <template>
   <div>
     <nav class="navbar">
-      <div class="navbar-brand">
-        <h1 class="navbar-item">
-          {{ name }}
-        </h1>
-      </div>
-      <div class="navbar-menu">
-        <div class="navbar-start">
-          <div class="navbar-item">
-            <div class="field has-addons">
-              <div class="control">
-                <a class="button" :class="{'is-warning': days == 1}" @click="loadDaysAgo(1)">
-                  Yesterday
-                </a>
-              </div>
-              <div class="control">
-                <a class="button" :class="{'is-warning': days == 7}" @click="loadDaysAgo(7)">
-                  Last Week
-                </a>
-              </div>
-              <div class="control">
-                <a class="button" :class="{'is-warning': days == 30}" @click="loadDaysAgo(30)">
-                  Last Month
-                </a>
-              </div>
-            </div>
-          </div>
+        <div class="navbar-brand">
+            <h1 class="navbar-item">
+                {{ name }}
+            </h1>
         </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <a class="button is-danger" :href="`/clan/${encodeURIComponent(tag)}.xlsx`">
-                  <span class="icon">
-                    <i class="fa fa-download"></i>
-                  </span>
-                  <span>Export</span>
-                </a>
-              </p>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <a class="button" :class="{'is-warning': days == 1}" @click="loadDaysAgo(1)">
+                                Yesterday
+                            </a>
+                        </div>
+                        <div class="control">
+                            <a class="button" :class="{'is-warning': days == 7}" @click="loadDaysAgo(7)">
+                                Last Week
+                            </a>
+                        </div>
+                        <div class="control">
+                            <a class="button" :class="{'is-warning': days == 30}" @click="loadDaysAgo(30)">
+                                Last Month
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <div class="dropdown is-hoverable is-right">
+                                <div class="dropdown-trigger">
+                                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                        <span>Export</span>
+                                        <span class="icon is-small">
+                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <a href="#" class="dropdown-item">
+                                          Dropdown item
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </nav>
     <section>
       <div v-if="loading" class="has-text-centered load-text">
@@ -76,7 +87,7 @@
         </tbody>
       </table>
     </section>
-  
+
   </div>
 </template>
 
@@ -102,7 +113,7 @@ export default {
     tableData() {
       const clanRows = this.clan.slice(1);
 
-      // Map by user -> columns      
+      // Map by user -> columns
       const previousPlayers = {};
       this.previousData.slice(1).forEach(row => {
         const [name, tags, ...columns] = row;
