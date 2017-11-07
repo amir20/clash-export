@@ -61,7 +61,7 @@
                                       </a>
                                       <hr class="dropdown-divider">    
                                       <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=7`">                                        
-                                        A week ago
+                                        Last Week
                                       </a>                                  
                                     </div>
                                 </div>
