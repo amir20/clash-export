@@ -23,7 +23,7 @@ def update_clans():
     tags_to_fetch = list(all_tags - already_done)
 
     total = len(tags_to_fetch)
-    tags_to_fetch = tags_to_fetch[:75]
+    tags_to_fetch = tags_to_fetch[:10]
 
     logger.info(f"Fetching {len(tags_to_fetch)} of total {total} eligible items.")
 
@@ -43,7 +43,7 @@ def delete_old_clans():
     logger.info(f"Deleted {deleted} clans that are older than 45 days.")
 
 
-schedule.every().hour.do(update_clans)
+schedule.every(10).minutes.do(update_clans)
 schedule.every().day.at("12:01").do(delete_old_clans)
 
 if __name__ == "__main__":
