@@ -34,8 +34,11 @@
                         <p class="control">
                             <div class="dropdown is-hoverable is-right">
                                 <div class="dropdown-trigger">
-                                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                                        <span>Export</span>
+                                    <button class="button is-danger" aria-haspopup="true" aria-controls="dropdown-menu">
+                                      <span class="icon">
+                                          <i class="fa fa-download"></i>
+                                        </span>
+                                        <span>Download</span>
                                         <span class="icon is-small">
                                             <i class="fa fa-angle-down" aria-hidden="true"></i>
                                         </span>
@@ -43,9 +46,23 @@
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
-                                        <a href="#" class="dropdown-item">
-                                          Dropdown item
-                                        </a>
+                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx`">                                        
+                                        Today
+                                      </a> 
+                                      <hr class="dropdown-divider"> 
+                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=1`">                                        
+                                        Yesterday
+                                      </a>  
+                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=2`">                                        
+                                        Two Days Ago
+                                      </a>  
+                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=3`">                                        
+                                        Three Days Ago
+                                      </a>
+                                      <hr class="dropdown-divider">    
+                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=7`">                                        
+                                        A week ago
+                                      </a>                                  
                                     </div>
                                 </div>
                             </div>
