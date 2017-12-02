@@ -11,6 +11,10 @@ http://clashstats.local, localhost:80 {
         except /favicon.ico /robots.txt /static
     }
 
+    expires {
+        match /static 1y 
+    }    
+
     gzip
     log stdout
     errors stdout
