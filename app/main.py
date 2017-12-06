@@ -45,7 +45,7 @@ def clan_detail(tag):
 
     if not tag.startswith('#'):
         tag = '#' + tag
-
+        
     clan = api.find_clan_by_tag(tag)
 
     if 'tag' not in clan:
@@ -61,6 +61,14 @@ def clan_detail(tag):
         return jsonify(transform_players(clan.players))
     else:
         return render_template('clan.html', clan=clan)
+
+
+@app.route("/clan/<path:tag>/short.json")
+def clan_meta(tag):
+    clan = Clan.from_now_with_tag(tag, days=1).first()
+    clan.id = None
+    clan.players = None
+    return clan.to_json()
 
 
 def clan_from_days_ago(days_ago, tag):
