@@ -46,21 +46,21 @@
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
-                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx`">                                        
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx`">                                        
                                         Today
                                       </a> 
                                       <hr class="dropdown-divider"> 
-                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=1`">                                        
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=1`">                                        
                                         Yesterday
                                       </a>  
-                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=2`">                                        
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=2`">                                        
                                         Two Days Ago
                                       </a>  
-                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=3`">                                        
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=3`">                                        
                                         Three Days Ago
                                       </a>
                                       <hr class="dropdown-divider">    
-                                      <a class="dropdown-item" :href="`/clan/${encodeURIComponent(tag)}.xlsx?daysAgo=7`">                                        
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=7`">                                        
                                         Last Week
                                       </a>                                  
                                     </div>
@@ -153,8 +153,10 @@ export default {
 
 
       return tableData.sort((a, b) => {
-        if (this.sortIndex == -1) { // index for name
+        if (this.sortIndex == -2) { // index for name
           return a.name.toLowerCase() < b.name.toLowerCase() ? -this.sortDirection : this.sortDirection;
+        } else if (this.sortIndex == -1) { // index for name
+          return a.tag.toLowerCase() < b.tag.toLowerCase() ? -this.sortDirection : this.sortDirection;
         } else { // index for other columns
           return a.data[this.sortIndex].now < b.data[this.sortIndex].now ? this.sortDirection : -this.sortDirection;
         }
@@ -162,13 +164,16 @@ export default {
     },
     header() {
       return this.clan[0];
+    },
+    path() {
+      return `/clan/${this.tag.replace('#', '')}`
     }
   },
   methods: {
     async fetchData() {
       this.loading = true;
-      const nowPromise = fetch(`/clan/${encodeURIComponent(this.tag)}.json`);
-      const previousPromise = fetch(`/clan/${encodeURIComponent(this.tag)}.json?daysAgo=${this.days}`);
+      const nowPromise = fetch(`${this.path}.json`);
+      const previousPromise = fetch(`${this.path}.json?daysAgo=${this.days}`);
 
       const nowResponse = await nowPromise;
       const previousResponse = await previousPromise;
@@ -180,7 +185,7 @@ export default {
     },
     async loadDaysAgo(days) {
       this.days = days;
-      const data = await fetch(`/clan/${encodeURIComponent(this.tag)}.json?daysAgo=${days}`);
+      const data = await fetch(`${this.path}.json?daysAgo=${days}`);
       this.previousData = await data.json();
     },
     updateSort(column) {
