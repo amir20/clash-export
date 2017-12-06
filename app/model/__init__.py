@@ -36,11 +36,16 @@ class Clan(DynamicDocument):
 
     @classmethod
     def from_now_with_tag(cls, tag, **kwargs):
+        if not tag.startswith('#'):
+            tag = '#' + tag
+
         object_id = object_id_from_now(**kwargs)
         return cls.objects(id__gte=object_id, tag=tag)
 
     @classmethod
     def fetch_and_save(cls, tag):
+        if not tag.startswith('#'):
+            tag = '#' + tag
         clan = api.find_clan_by_tag(tag)
         players = api.fetch_all_players(clan)
         clan['players'] = players

@@ -18,27 +18,9 @@
             </section>
 
             <form class="section columns" action="{{ url_for('search') }}" method="get">
-                <div class="box column">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-64x64">
-                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>John Smith</strong>
-                                    <small>@johnsmith</small>
-                                    <small>31m</small>
-                                    <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa
-                                    fringilla egestas. Nullam condimentum luctus turpis.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
+                <div id="last-tag" class="column">
+                    <clan-tag/>
                 </div>
-
                 <div class="column field has-addons">
                     <p class="control">
                         <input type="text" class="input is-large" id="tag" placeholder="#tag" value="#UGJPVJR" name="tag" required>
