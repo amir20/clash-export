@@ -36,12 +36,16 @@ def status():
 
 @app.route("/search")
 def search():
-    return redirect(url_for('clan_detail', tag=request.args.get('tag')))
+    return redirect(url_for('clan_detail', tag=request.args.get('tag').replace('#', '')))
 
 
 @app.route("/clan/<path:tag>")
 def clan_detail(tag):
     tag, ext = os.path.splitext(tag)
+
+    if not tag.startswith('#'):
+        tag = '#' + tag
+
     clan = api.find_clan_by_tag(tag)
 
     if 'tag' not in clan:
