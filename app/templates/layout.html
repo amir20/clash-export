@@ -22,6 +22,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon-96.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">
+    <script src="{{ url_for('static', filename=manifest_path('vendor.js')) }}"></script> 
 </head>
 
 <body>
@@ -34,7 +35,6 @@
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
         ga('create', 'UA-88927228-2', 'auto');
         ga('send', 'pageview');
-
     </script>
     {% block body %}{% endblock %}
 
@@ -46,7 +46,7 @@
             <li class="is-inline-block"><a href="https://www.reddit.com/r/dynastyclash/">/r/dynastyclash</a></li>
             <li class="is-inline-block">© 2017 ClashStats is an open source project and maintained by Reddit Dynasty.</li>
         </ul>
-    </footer>
+    </footer>    
 </body>
 
 </html>

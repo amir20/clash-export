@@ -42,9 +42,11 @@ module.exports = {
             },
         ]
     },
-    plugins: [
-        //new ExtractTextPlugin("css/[name].bundle.css"),
-        new ManifestPlugin()
+    plugins: [        
+        new ManifestPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor"                    
+          })
     ]
 };
 

@@ -1,5 +1,5 @@
 # Build assets
-FROM node:8-alpine as builder
+FROM node:9-alpine as builder
 WORKDIR /build
 COPY package*.json ./
 
