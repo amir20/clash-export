@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block body %}
 
 <main id="clan-table">
-    <Clan tag="{{ clan.tag }}" name="{{ clan.name }}" />
+    <Clan-Table tag="{{ clan.tag }}" name="{{ clan.name }}" />
 </main>
 <script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script>
 {% endblock %}

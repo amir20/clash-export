@@ -1,9 +1,9 @@
 import Vue from "vue";
-import Clan from "./Clan";
+import ClanTable from "./components/ClanTable";
 
 new Vue({
   el: "#clan-table",
   components: {
-    Clan
+    ClanTable
   }
 });
