@@ -1,12 +1,20 @@
 import Vue from "vue";
-import ClanTag from "./ClanTag";
+import ClanTag from "./components/ClanTag";
+import ClanCard from "./components/ClanCard";
 const STORAGE_KEY = "lastTag";
 const input = document.querySelector("input#tag");
 
+
+let savedTag = localStorage.getItem(STORAGE_KEY);
+
+
 new Vue({
-  el: "#last-tag",
+  el: "#last-tag",  
   components: {
-    ClanTag
+    ClanCard
+  },
+  data: {
+    tag: savedTag
   }
 });
 

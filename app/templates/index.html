@@ -19,7 +19,7 @@
 
             <form class="section columns" action="{{ url_for('search') }}" method="get">
                 <div id="last-tag" class="column">
-                    <clan-tag/>
+                    <clan-card :tag="tag" />
                 </div>
                 <div class="column field has-addons">
                     <p class="control">
