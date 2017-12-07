@@ -33,12 +33,14 @@ export default {
         },
         name: "██████",
         tag: "██████",
-        clanPoints: "0"    
+        clanPoints: "0"
       }
     };
   },
-  async created() {    
-    this.data = await (await fetch(`/clan/${this.tag.replace("#", "")}/short.json`)).json();
+  async created() {
+    this.data = await (await fetch(
+      `/clan/${this.tag.replace("#", "")}/short.json`
+    )).json();
   }
 };
 </script>
