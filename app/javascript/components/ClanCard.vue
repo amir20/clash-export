@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" :class="{'still-loading': loading}">
       <article class="media">
           <div class="media-left">
               <figure class="image is-64x64">
@@ -27,12 +27,14 @@ export default {
   props: ["tag"],
   data() {
     return {
+      loading: true,
       data: {
         badgeUrls: {
-          small: "https://placeholdit.co//i/500x500?text=&bg=ccc"
+          small: "https://placeholdit.co//i/500x500?text=&bg=efefef"
         },
         name: "██████",
         tag: "██████",
+        description: "██████ ████████████ █ ████ █ ██████ ████████████ ███ ███",
         clanPoints: "0"
       }
     };
@@ -41,6 +43,13 @@ export default {
     this.data = await (await fetch(
       `/clan/${this.tag.replace("#", "")}/short.json`
     )).json();
+    this.loading = false;
   }
 };
 </script>
+<style scoped>
+.still-loading * {
+  color: #efefef !important;
+}
+</style>
+
