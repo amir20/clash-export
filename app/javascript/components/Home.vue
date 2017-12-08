@@ -7,7 +7,7 @@
                         Welcome Back, Chief!
                     </h1>
                     <h2 class="subtitle">
-                        I see you have been before. Let's continue with the last clan you viewed. You can also start over again. 
+                        Let's continue with the last clan you viewed or start over again. 
                     </h2>
                 </div>
             </section>       
@@ -24,8 +24,8 @@
                         Hey, Chief!
                     </h1>
                     <h2 class="subtitle">
-                        I can help you find your clan and export all your member achievements. Let's start finding your clan by
-                        <strong>tag</strong>. Enter your clan tag below.
+                        I can help you find your clan and export all your member achievements. Let's start by finding your clan with a
+                        <strong>tag</strong>. 
                     </h2>
                 </div>
             </section>
