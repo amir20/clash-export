@@ -1,16 +1,34 @@
 <template>
-    <form class="section columns" action="/search" method="get" @submit="onSubmit" @reset="onReset">        
-        <template v-if="savedTag">
-            <div class="column">
-                <Card :tag="savedTag" />
-            </div>
-            <div class="column buttons">
-                <a :href="url" class="button is-success is-large">Continue &rsaquo;</a>   
-                <br>             
-                <button type="reset" class="button is-danger is-large">Reset</button>
-            </div>
+    <form class="section" action="/search" method="get" @submit="onSubmit" @reset="onReset">        
+        <template v-if="savedTag">   
+          <section class="hero">
+                <div class="hero-body">
+                    <h1 class="title is-1">
+                        Welcome Back, Chief!
+                    </h1>
+                    <h2 class="subtitle">
+                        I see you have been before. Let's continue with the last clan you viewed. You can also start over again. 
+                    </h2>
+                </div>
+            </section>       
+          <Card :tag="savedTag" />            
+          <p class="buttons">             
+            <button type="reset" class="button is-warning is-large">Change Clan</button>
+            <a :href="url" class="button is-success is-large">Continue &rsaquo;</a>      
+          </p>
         </template>
         <template v-else>
+          <section class="hero">
+                <div class="hero-body">
+                    <h1 class="title is-1">
+                        Hey, Chief!
+                    </h1>
+                    <h2 class="subtitle">
+                        I can help you find your clan and export all your member achievements. Let's start finding your clan by
+                        <strong>tag</strong>. Enter your clan tag below.
+                    </h2>
+                </div>
+            </section>
             <div class="column field has-addons">
                 <p class="control">
                     <input type="text" class="input is-large" placeholder="#tag" v-model="inputModel" name="tag" ref="tag" required>
@@ -54,7 +72,7 @@ export default {
   },
   computed: {
     url() {
-      return this.savedTag ? `/clan/${this.savedTag.replace("#", "")}` : '';
+      return this.savedTag ? `/clan/${this.savedTag.replace("#", "")}` : "";
     }
   }
 };
