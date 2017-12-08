@@ -3,6 +3,7 @@
     <nav class="navbar">
         <div class="navbar-brand">
             <h1 class="navbar-item">
+                <img :src="this.meta.badgeUrls.small" alt="Image">
                 {{ name }}
             </h1>
         </div>
@@ -120,7 +121,12 @@ export default {
       previousData: null,
       days: 7,
       sortIndex: 5,
-      sortDirection: 1
+      sortDirection: 1,
+      meta: {
+        badgeUrls: {
+          small: "https://placeholdit.co//i/500x500?text=&bg=ccc"
+        }
+      }
     }
   },
   created() {
@@ -174,12 +180,11 @@ export default {
       this.loading = true;
       const nowPromise = fetch(`${this.path}.json`);
       const previousPromise = fetch(`${this.path}.json?daysAgo=${this.days}`);
-
-      const nowResponse = await nowPromise;
-      const previousResponse = await previousPromise;
-
-      this.clan = await nowResponse.json();
-      this.previousData = await previousResponse.json();
+      const metaPromise = fetch(`${this.path}/short.json`);
+      
+      this.meta = await (await metaPromise).json();
+      this.previousData = await (await previousPromise).json();
+      this.clan = await (await nowPromise).json();          
 
       this.loading = false;
     },
