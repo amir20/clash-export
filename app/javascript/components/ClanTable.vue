@@ -75,7 +75,7 @@
     </nav>
     <section>
       <div v-if="loading" class="has-text-centered load-text">
-        <i class="fa fa-spinner fa-2 fa-spin"></i>
+        <i class="fa fa-circle-notch fa-spin"></i>
       </div>
       <table class="table is-narrow is-fullwidth is-striped" v-if="!loading">
         <thead>
