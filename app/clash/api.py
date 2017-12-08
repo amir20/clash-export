@@ -25,6 +25,8 @@ def __get_all(urls):
 
 
 def find_clan_by_tag(tag):
+    if not tag.startswith('#'):
+        tag = '#' + tag
     logger.info(f"Fetching clan from API {tag}.")
     return requests.get('https://api.clashofclans.com/v1/clans/' + quote(tag), headers=headers).json()
 
