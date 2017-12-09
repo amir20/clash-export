@@ -62,8 +62,7 @@ export default {
   methods: {
     onReset() {
       this.savedTag = null;
-      localStorage.removeItem(STORAGE_KEY);
-      setTimeout((() => this.$refs.tag.focus()).bind(this), 0);
+      localStorage.removeItem(STORAGE_KEY);      
       return false;
     }
   },
