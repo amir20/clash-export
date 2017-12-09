@@ -69,10 +69,9 @@ def clan_detail(tag):
 
 @app.route("/clan/<path:tag>/short.json")
 def clan_meta(tag):
-    clan = Clan.from_now_with_tag(tag, days=1).first() or api.find_clan_by_tag(tag)
-    if clan is Clan:
-        clan.id = None
-        clan.players = None
+    clan = clan_from_days_ago(1, tag)
+    clan.id = None
+    clan.players = None        
     return clan.to_json()
 
 
