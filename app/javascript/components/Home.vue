@@ -1,5 +1,5 @@
 <template>
-    <form class="section" action="/search" method="get" @submit="onSubmit" @reset="onReset">        
+    <form class="section" action="/search" method="get" @reset="onReset">        
         <template v-if="savedTag">   
           <section class="hero">
                 <div class="hero-body">
@@ -31,7 +31,7 @@
             </section>
             <div class="column field has-addons">
                 <p class="control">
-                    <input type="text" class="input is-large" placeholder="#tag" v-model="inputModel" name="tag" ref="tag" required>
+                    <input type="text" class="input is-large" placeholder="#tag" name="tag" required>
                 </p>
                 <p class="control">
                     <button type="submit" class="button is-primary is-large">Go</button>
@@ -52,8 +52,7 @@ export default {
   },
   data() {
     return {
-      savedTag: null,
-      inputModel: ""
+      savedTag: null
     };
   },
   created() {
@@ -61,11 +60,9 @@ export default {
     console.log(`Found saved tag value [${this.savedTag}].`);
   },
   methods: {
-    onSubmit() {
-      localStorage.setItem(STORAGE_KEY, this.inputModel);
-    },
     onReset() {
       this.savedTag = null;
+      localStorage.removeItem(STORAGE_KEY);
       setTimeout((() => this.$refs.tag.focus()).bind(this), 0);
       return false;
     }

@@ -112,6 +112,8 @@
 <script>
 import zip from 'lodash/zip'
 
+const STORAGE_KEY = "lastTag";
+
 export default {
   props: ['tag', 'name'],
   data() {
@@ -186,6 +188,7 @@ export default {
       this.previousData = await (await previousPromise).json();
       this.clan = await (await nowPromise).json();          
 
+      localStorage.setItem(STORAGE_KEY, this.tag);
       this.loading = false;
     },
     async loadDaysAgo(days) {
