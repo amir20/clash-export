@@ -34,15 +34,21 @@ export default {
         },
         name: "██████",
         tag: "██████",
-        description: "██████ ████████████ █ ████ █ ██████ ████████████ ███ ███",
+        description:
+          "██████ ████████████ █ ████ █ ██████ ████████████ ███ ███ ███████████ █ ███ ███",
         clanPoints: "0"
       }
     };
   },
   async created() {
-    this.data = await (await fetch(
-      `/clan/${this.tag.replace("#", "")}/short.json`
-    )).json();
+    try {
+      this.data = await (await fetch(
+        `/clan/${this.tag.replace("#", "")}/short.json`
+      )).json();
+    } catch (e) {
+      console.error(e);
+      this.$emit("error");
+    }
     this.loading = false;
   }
 };
