@@ -1,11 +1,13 @@
 import os
 import logging
+import requests_cache
 
 from flask import Flask, request, redirect, url_for, send_file, render_template, jsonify, json
 from mongoengine import connect
 from raven.contrib.flask import Sentry
 from clash import uptime, excel, api
 from clash.transformer import transform_players
+from datetime import timedelta
 from model import Clan, Player
 
 
@@ -13,6 +15,8 @@ app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
 sentry = Sentry(app)
 logging.basicConfig(level=logging.INFO)
+
+requests_cache.install_cache(expire_after=timedelta(seconds=10), backend='memory')
 
 # Set connect to False for pre-forking to work
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
