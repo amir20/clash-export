@@ -11,7 +11,7 @@
                     </h2>
                 </div>
             </section>       
-          <Card :tag="savedTag" v-on:error="onClanError"/>            
+          <Card :tag="savedTag" @error="onClanError"/>            
           <p class="buttons">             
             <button type="reset" class="button is-warning is-large">Change Clan</button>
             <a :href="url" class="button is-success is-large">Continue &rsaquo;</a>      
