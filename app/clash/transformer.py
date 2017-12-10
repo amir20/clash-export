@@ -37,7 +37,7 @@ def transform_players(players):
         ('versusBattleWinCount', 'Versus Battle Wins'),
         ('defenseWins', 'Defense Wins'),
         ('Gold Grab', 'Total Gold Grab'),
-        ('Elixir Escapade', 'Total Elixer Grab'),
+        ('Elixir Escapade', 'Total Elixir Grab'),
         ('Heroic Heist', 'Total DE Grab'),
         ('Friend in Need', 'Total Donations'),
         ('Treasurer', 'Total War Collected Gold'),
