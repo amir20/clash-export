@@ -74,10 +74,15 @@
         </div>
     </nav>
     <section>
-      <div v-if="loading" class="has-text-centered load-text">
-        <i class="fa fa-circle-notch fa-spin"></i>
+      <div class="modal" :class="{'is-active': loading}">
+        <div class="modal-background"></div>
+        <div class="modal-content has-text-centered">
+           <i class="fa fa-circle-notch fa-spin"></i> 
+           <br>
+           Loading...
+        </div>        
       </div>
-      <table class="table is-narrow is-fullwidth is-striped" v-if="!loading">
+      <table class="table is-narrow is-fullwidth is-striped" :class="{'still-loading': loading}">
         <thead>
           <tr>
             <th v-for="(header, index) in header" :class="{'selected-sort': index - 2 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
@@ -111,6 +116,7 @@
 
 <script>
 import zip from 'lodash/zip'
+import fakeData from '../fake-data'
 
 const STORAGE_KEY = "lastTag";
 
@@ -118,9 +124,9 @@ export default {
   props: ['tag', 'name'],
   data() {
     return {
-      loading: false,
-      clan: null,
-      previousData: null,
+      loading: true,
+      clan: fakeData,
+      previousData: fakeData,
       days: 7,
       sortIndex: 5,
       sortDirection: 1,
@@ -178,8 +184,7 @@ export default {
     }
   },
   methods: {
-    async fetchData() {
-      this.loading = true;
+    async fetchData() {      
       const nowPromise = fetch(`${this.path}.json`);
       const previousPromise = fetch(`${this.path}.json?daysAgo=${this.days}`);
       const metaPromise = fetch(`${this.path}/short.json`);
@@ -271,11 +276,20 @@ nav {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
   position: sticky;
   top: 0;
+  z-index: 100;
 }
 
-.load-text {
-  font-size: 120%;
-  margin: 3em 0;
+.modal {
+  font-size: 180%;
+  color: white;
+}
+
+.still-loading tbody * {
+  color: #efefef !important;
+}
+
+.modal-background{
+  background-color: rgba(10,10,10,.2);
 }
 </style>
 
