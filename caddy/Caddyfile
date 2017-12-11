@@ -10,8 +10,8 @@ https://clashstats.download {
 
     expires {
         match /static 1y 
+        match /clan/.*/short.json$ 1h
     }
-
 
     gzip
     log stdout
