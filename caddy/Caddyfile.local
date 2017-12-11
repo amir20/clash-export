@@ -9,7 +9,7 @@ http://clashstats.local, localhost:80 {
         header_downstream -Last-Modified
 
         except /favicon.ico /robots.txt /static
-    }  
+    }
 
     gzip
     log stdout
