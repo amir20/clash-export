@@ -58,16 +58,26 @@ export default {
   created() {
     this.savedTag = localStorage.getItem(STORAGE_KEY);
     console.log(`Found saved tag value [${this.savedTag}].`);
+    this.prefetch(`${this.url}.json`);
+    this.prefetch(`${this.url}.json?daysAgo=7`);
   },
   methods: {
     onReset() {
       this.savedTag = null;
-      localStorage.removeItem(STORAGE_KEY);      
+      localStorage.removeItem(STORAGE_KEY);
       return false;
     },
-    onClanError(){
+    onClanError() {
       this.savedTag = null;
+    },
+    prefetch(url) {
+      const link = document.createElement("link");
+      link.href = url;
+      link.rel = "prefetch";
+      link.as = "fetch";
+      document.head.appendChild(link);
     }
+
   },
   computed: {
     url() {
