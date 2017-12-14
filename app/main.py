@@ -32,9 +32,7 @@ def status():
     monitor = uptime.monitor()
     uptime_ratio = float(monitor['custom_uptime_ratio'])
     status = Status.objects.first()
-    total_players = len(Player.objects.distinct('tag'))
     
-
     return render_template('status.html', uptime_ratio=uptime_ratio, total_clans=status.total_clans, ratio_indexed=status.ratio_indexed, total_players=0)
 
 
