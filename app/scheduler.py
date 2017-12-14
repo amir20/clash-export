@@ -17,10 +17,12 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 logger = logging.getLogger(__name__)
 logging.getLogger("clash.api").setLevel(logging.WARNING)
 
+all_tags = set(Clan.objects.distinct('tag'))
+
 
 def update_clans():
-    all_tags = set(Clan.objects.distinct('tag'))
     already_done = set(Clan.from_now(hours=12).distinct('tag'))
+    all_tags.update(already_done)
     tags_to_fetch = list(all_tags - already_done)
 
     total = len(tags_to_fetch)
@@ -41,11 +43,11 @@ def update_clans():
     ratio_indexed = 100 * (len(Clan.from_now(hours=12).distinct('tag')) / len(all_tags))
     total_clans = len(all_tags)
     Status.objects.update_one(
-        set__ratio_indexed=ratio_indexed, 
-        set__total_clans=total_clans, 
+        set__ratio_indexed=ratio_indexed,
+        set__total_clans=total_clans,
         set__last_updated=datetime.now,
         upsert=True
-        )
+    )
 
 
 def delete_old_clans():
