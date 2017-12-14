@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 
 from bson.objectid import ObjectId
-from mongoengine import DynamicDocument
+from mongoengine import *
 from clash import api
+from datetime import datetime
 
 
 class Player(DynamicDocument):
@@ -50,8 +51,14 @@ class Clan(DynamicDocument):
         players = api.fetch_all_players(clan)
         clan['players'] = players
         del clan['memberList']
-        
+
         return Clan(**clan).save()
+
+
+class Status(Document):
+    last_updated = DateTimeField(default=datetime.now)
+    total_clans = IntField()
+    ratio_indexed = FloatField()
 
 
 def object_id_from_now(**kwargs):
