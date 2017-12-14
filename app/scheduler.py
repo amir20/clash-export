@@ -43,7 +43,8 @@ def update_clans():
     Status.objects.update_one(
         set__ratio_indexed=ratio_indexed, 
         set__total_clans=total_clans, 
-        set__last_updated=datetime.now
+        set__last_updated=datetime.now,
+        upsert=True
         )
 
 
