@@ -5,8 +5,9 @@ import os
 import schedule
 from mongoengine import connect
 from raven import Client
+from datetime import datetime
 
-from model import Clan
+from model import Clan, Status
 
 client = Client(os.getenv('SENTRY_DSN'))
 
@@ -35,7 +36,15 @@ def update_clans():
             logger.exception(f"Error while fetching clan {tag}.")
             client.captureException()
 
-    logger.info(f"Done fetching clans.")
+    logger.debug(f"Done fetching clans.")
+
+    ratio_indexed = 100 * (len(Clan.from_now(hours=12).distinct('tag')) / len(all_tags))
+    total_clans = len(all_tags)
+    Status.objects.update_one(
+        set__ratio_indexed=ratio_indexed, 
+        set__total_clans=total_clans, 
+        set__last_updated=datetime.now
+        )
 
 
 def delete_old_clans():

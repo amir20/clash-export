@@ -8,7 +8,7 @@ from raven.contrib.flask import Sentry
 from clash import uptime, excel, api
 from clash.transformer import transform_players
 from datetime import timedelta
-from model import Clan, Player
+from model import Clan, Player, Status
 
 
 app = Flask(__name__)
@@ -31,11 +31,11 @@ def index():
 def status():
     monitor = uptime.monitor()
     uptime_ratio = float(monitor['custom_uptime_ratio'])
-    total_clans = len(Clan.objects.distinct('tag'))
-    clans_indexed = len(Clan.from_now(hours=12).distinct('tag'))
+    status = Status.objects.first()
     total_players = len(Player.objects.distinct('tag'))
+    
 
-    return render_template('status.html', uptime_ratio=uptime_ratio, total_clans=total_clans, clans_indexed=clans_indexed, total_players=total_players)
+    return render_template('status.html', uptime_ratio=uptime_ratio, total_clans=status.total_clans, ratio_indexed=status.ratio_indexed, total_players=0)
 
 
 @app.route("/search")
