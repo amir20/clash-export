@@ -61,6 +61,25 @@ class Status(Document):
     ratio_indexed = FloatField()
 
 
+class ClanPreCalculated(Document):
+    tag = StringField(required=true, unique=True)
+    name = StringField(required=true)
+    description = StringField(required=true)
+    clan_points = IntField(required=True)
+    clanVersusPoints = IntField(required=True)
+    members = IntField(required=True)
+
+    season_start = ReferenceField(Clan)
+    most_recent = ReferenceField(Clan)
+
+    meta = {
+        'indexes': [
+            'name',
+            'tag'
+        ]
+    }
+
+
 def object_id_from_now(**kwargs):
     now = datetime.now()
     dt = now - timedelta(**kwargs)
