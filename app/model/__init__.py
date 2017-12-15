@@ -65,7 +65,7 @@ class ClanPreCalculated(Document):
     tag = StringField(required=true, unique=True)
     name = StringField(required=true)
     description = StringField(required=true)
-    clan_points = IntField(required=True)
+    clanPoints = IntField(required=True)
     clanVersusPoints = IntField(required=True)
     members = IntField(required=True)
 
