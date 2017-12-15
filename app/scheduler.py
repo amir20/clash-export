@@ -26,7 +26,7 @@ def update_clans():
     tags_to_fetch = list(all_tags - already_done)
 
     total = len(tags_to_fetch)
-    tags_to_fetch = tags_to_fetch[:10]
+    tags_to_fetch = tags_to_fetch[:50]
 
     logger.info(f"Fetching {len(tags_to_fetch)} of total {total} eligible items.")
 
