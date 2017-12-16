@@ -62,9 +62,9 @@ class Status(Document):
 
 
 class ClanPreCalculated(Document):
-    tag = StringField(required=true, unique=True)
-    name = StringField(required=true)
-    description = StringField(required=true)
+    tag = StringField(required=True, unique=True)
+    name = StringField(required=True)
+    description = StringField(required=True)
     clanPoints = IntField(required=True)
     clanVersusPoints = IntField(required=True)
     members = IntField(required=True)

@@ -1,6 +1,7 @@
 import pandas as pd
 
 from .transformer import transform_players
+from model import ClanPreCalculated
 
 
 def update_calculations(clan):
@@ -33,7 +34,7 @@ def is_new_season(before, now):
 
     intersection = before_donations.index.intersection(now_donations.index)
 
-    return (before_donations[intersection] > now_donations[intersection]).any()
+    return (before_donations[intersection] > now_donations[intersection]).all()
 
 
 def to_data_frame(clan):

@@ -18,7 +18,8 @@ RUN apk add --no-cache --virtual .apk-deps \
     libc-dev \
     linux-headers \
     && pip install -r /app/requirements.txt \
-    && apk del .apk-deps
+    && apk del .apk-deps \
+    && apk add --no-cache libstdc++
 
 
 # Copy files

@@ -44,7 +44,8 @@ RUN apk add --no-cache --virtual .apk-deps \
     | tar --no-same-owner -C /usr/bin/ -xz caddy \
     && chmod 0755 /usr/bin/caddy \
     && /usr/bin/caddy -version \
-    && apk del .apk-deps
+    && apk del .apk-deps \
+    && apk add --no-cache libstdc++
 
 
 # Custom Supervisord config
