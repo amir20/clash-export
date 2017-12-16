@@ -20,7 +20,7 @@ FROM python:3.6-alpine
 MAINTAINER Amir Raminfar <findamir@gmail.com>
 
 # Install supervisord
-RUN apk add --no-cache supervisor
+RUN apk add --no-cache supervisor libstdc++
 
 # Create app directoy
 WORKDIR /app
@@ -44,8 +44,7 @@ RUN apk add --no-cache --virtual .apk-deps \
     | tar --no-same-owner -C /usr/bin/ -xz caddy \
     && chmod 0755 /usr/bin/caddy \
     && /usr/bin/caddy -version \
-    && apk del .apk-deps \
-    && apk add --no-cache libstdc++
+    && apk del .apk-deps
 
 
 # Custom Supervisord config

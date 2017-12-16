@@ -3,7 +3,7 @@ FROM python:3.6-alpine
 MAINTAINER Amir Raminfar <findamir@gmail.com>
 
 # Install supervisord
-RUN apk add --no-cache supervisor
+RUN apk add --no-cache supervisor libstdc++
 
 # Create app directoy
 WORKDIR /app
@@ -18,8 +18,7 @@ RUN apk add --no-cache --virtual .apk-deps \
     libc-dev \
     linux-headers \
     && pip install -r /app/requirements.txt \
-    && apk del .apk-deps \
-    && apk add --no-cache libstdc++
+    && apk del .apk-deps
 
 
 # Copy files
