@@ -6,6 +6,7 @@ import schedule
 from mongoengine import connect
 from raven import Client
 from datetime import datetime
+from clash.calculation import update_calculations
 
 from model import Clan, Status
 
@@ -33,7 +34,8 @@ def update_clans():
     for tag in tags_to_fetch:
         try:
             logger.info(f"Updating player stats for {tag}.")
-            Clan.fetch_and_save(tag)
+            clan = Clan.fetch_and_save(tag)
+            update_calculations(clan)
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")
             client.captureException()
