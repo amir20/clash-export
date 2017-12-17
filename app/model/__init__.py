@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
 
 from bson.objectid import ObjectId
 from mongoengine import *
+
 from clash import api
-from datetime import datetime
 
 
 class Player(DynamicDocument):
@@ -61,6 +62,23 @@ class Status(Document):
     ratio_indexed = FloatField()
 
 
+class ClanDelta(EmbeddedDocument):
+    avg_donations = FloatField(required=True)
+    avg_donations_received = FloatField(required=True)
+
+    avg_gold_grab = FloatField(required=True)
+    avg_elixir_grab = FloatField(required=True)
+    avg_de_grab = FloatField(required=True)
+    avg_war_stars = FloatField(required=True)
+
+    avg_th_level = FloatField(required=True)
+    avg_bh_level = FloatField(required=True)
+    avg_xp_level = FloatField(required=True)
+    avg_best_trophies = FloatField(required=True)
+    avg_trophies = FloatField(required=True)
+    avg_bh_trophies = FloatField(required=True)
+
+
 class ClanPreCalculated(Document):
     tag = StringField(required=True, unique=True)
     name = StringField(required=True)
@@ -72,10 +90,50 @@ class ClanPreCalculated(Document):
     season_start = ReferenceField(Clan)
     most_recent = ReferenceField(Clan)
 
+    avg_donations = FloatField(required=True)
+    avg_gold_grab = FloatField(required=True)
+    avg_elixir_grab = FloatField(required=True)
+    avg_de_grab = FloatField(required=True)
+    avg_war_stars = FloatField(required=True)
+    avg_th_level = FloatField(required=True)
+    avg_bh_level = FloatField(required=True)
+    avg_xp_level = FloatField(required=True)
+    avg_best_trophies = FloatField(required=True)
+    avg_trophies = FloatField(required=True)
+    avg_bh_trophies = FloatField(required=True)
+
+    season_delta = EmbeddedDocumentField(ClanDelta)
+
     meta = {
         'indexes': [
             'name',
-            'tag'
+            'tag',
+
+            'avg_donations',
+            'avg_gold_grab',
+            'avg_elixir_grab',
+            'avg_de_grab',
+            'avg_war_stars',
+            'avg_th_level',
+            'avg_bh_level',
+            'avg_xp_level',
+            'avg_best_trophies',
+            'avg_trophies',
+            'avg_bh_trophies',
+
+            'season_delta.avg_donations',
+            'season_delta.avg_donations_received',
+            'season_delta.avg_gold_grab',
+            'season_delta.avg_elixir_grab',
+            'season_delta.avg_de_grab',
+            'season_delta.avg_war_stars',
+            'season_delta.avg_th_level',
+            'season_delta.avg_bh_level',
+            'season_delta.avg_xp_level',
+            'season_delta.avg_best_trophies',
+            'season_delta.avg_trophies',
+            'season_delta.avg_bh_trophies',
+
         ]
     }
 
