@@ -15,12 +15,9 @@ COPY app/static/ app/static/
 RUN npm run build
 
 
-FROM python:3.6-alpine
+FROM python:3.6-slim
 
 MAINTAINER Amir Raminfar <findamir@gmail.com>
-
-# Install supervisord
-RUN apk add --no-cache supervisor
 
 # Create app directoy
 WORKDIR /app
@@ -28,23 +25,24 @@ WORKDIR /app
 # Copy requirements file
 COPY ./conf/requirements.txt /app/requirements.txt
 
+# Install packages and docker
+RUN pip install -r /app/requirements.txt
+
 ARG plugins=http.expires
 
 # Install packages and docker
-RUN apk add --no-cache --virtual .apk-deps \
-    curl \
-    gcc \
-    g++ \
-    libc-dev \
-    linux-headers \
-    && pip install -r /app/requirements.txt \
+RUN apt-get update \
+    && apt-get install supervisor -y --no-install-recommends \
+    && apt-get install curl -y --no-install-recommends \
     && curl --silent --show-error --fail --location \
       --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
       "https://caddyserver.com/download/linux/amd64?plugins=${plugins}" \
     | tar --no-same-owner -C /usr/bin/ -xz caddy \
     && chmod 0755 /usr/bin/caddy \
     && /usr/bin/caddy -version \
-    && apk del .apk-deps
+    && apt-get remove -y curl \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 
 # Custom Supervisord config
