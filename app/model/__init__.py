@@ -103,6 +103,7 @@ class ClanPreCalculated(Document):
     avg_bh_trophies = FloatField(required=True)
 
     season_delta = EmbeddedDocumentField(ClanDelta)
+    week_delta = EmbeddedDocumentField(ClanDelta)
 
     meta = {
         'indexes': [
@@ -133,6 +134,19 @@ class ClanPreCalculated(Document):
             'season_delta.avg_best_trophies',
             'season_delta.avg_trophies',
             'season_delta.avg_bh_trophies',
+
+            'week_delta.avg_donations',
+            'week_delta.avg_donations_received',
+            'week_delta.avg_gold_grab',
+            'week_delta.avg_elixir_grab',
+            'week_delta.avg_de_grab',
+            'week_delta.avg_war_stars',
+            'week_delta.avg_th_level',
+            'week_delta.avg_bh_level',
+            'week_delta.avg_xp_level',
+            'week_delta.avg_best_trophies',
+            'week_delta.avg_trophies',
+            'week_delta.avg_bh_trophies',
 
         ]
     }

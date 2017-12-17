@@ -1,10 +1,16 @@
 import pandas as pd
 
-from model import ClanPreCalculated, ClanDelta
+from model import ClanPreCalculated, ClanDelta, Clan
 from .transformer import transform_players
 
 
 def update_calculations(clan):
+    """
+    Calculates averages for current, season and last week. If pre calculation doesn't exist
+    then one is created.
+    :param clan:
+    :return:
+    """
     cpc = ClanPreCalculated.objects(tag=clan.tag).first()
     if cpc is None:
         cpc = ClanPreCalculated(tag=clan.tag)
@@ -24,11 +30,18 @@ def update_calculations(clan):
 
     calculate_avg(cpc)
     calculate_season(cpc)
+    calculate_week(cpc)
 
     cpc.save()
 
 
 def calculate_avg(cpc):
+    """
+    Calculate all averages for clans based on total values
+
+    :param cpc:
+    :return:
+    """
     df = to_data_frame(cpc.most_recent)
 
     cpc.avg_donations = df['Total Donations'].mean()
@@ -46,13 +59,28 @@ def calculate_avg(cpc):
     cpc.avg_bh_trophies = df['Builder Hall Trophies'].mean()
 
 
+def calculate_week(cpc):
+    """
+    Calcuates last weeks averages
+    :param cpc:
+    :return:
+    """
+    start_df = to_data_frame(Clan.from_now_with_tag(cpc.tag, days=7).first())
+    now_df = to_data_frame(cpc.most_recent)
+
+    cpc.week_delta = calculate_delta(now_df, start_df)
+
+
 def calculate_season(cpc):
+    """
+    Calculates season averages based on season_start
+    :param cpc:
+    :return:
+    """
     start_df = to_data_frame(cpc.season_start)
     now_df = to_data_frame(cpc.most_recent)
 
-    season_delta = calculate_delta(now_df, start_df)
-
-    cpc.season_delta = season_delta
+    cpc.season_delta = calculate_delta(now_df, start_df)
 
 
 def calculate_delta(now_df, start_df):
@@ -92,6 +120,12 @@ def avg_column(column, now, start):
 
 
 def is_new_season(before, now):
+    """
+    Calculates season start based on donations
+    :param before:
+    :param now:
+    :return:
+    """
     before_df = to_data_frame(before)
     now_df = to_data_frame(now)
 
