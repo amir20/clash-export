@@ -1,9 +1,11 @@
-FROM python:3.6-alpine
+FROM python:3.6-slim
 
 MAINTAINER Amir Raminfar <findamir@gmail.com>
 
 # Install supervisord
-RUN apk add --no-cache supervisor libstdc++
+RUN apt-get update \
+    && apt-get install supervisor -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 
 # Create app directoy
 WORKDIR /app
@@ -12,14 +14,7 @@ WORKDIR /app
 COPY ./conf/requirements.txt /app/requirements.txt
 
 # Install packages and docker
-RUN apk add --no-cache --virtual .apk-deps \    
-    gcc \
-    g++ \
-    libc-dev \
-    linux-headers \
-    && pip install -r /app/requirements.txt \
-    && apk del .apk-deps
-
+RUN pip install -r /app/requirements.txt
 
 # Copy files
 COPY ./conf/supervisord-scheduler.conf /etc/supervisor/conf.d/supervisord.conf
