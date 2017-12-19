@@ -132,14 +132,12 @@ def is_new_season(before, now):
     before_donations = before_df['Donations']
     now_donations = now_df['Donations']
 
-    intersection = before_donations.index.intersection(now_donations.index)
-
-    return (before_donations[intersection] > now_donations[intersection]).all()
+    return before_donations.gt(now_donations).all()
 
 
 def to_data_frame(clan):
     tf = transform_players(clan.players)
     df = pd.DataFrame(data=tf, columns=tf[0])
-    df = df.set_index('Name')
+    df = df.set_index('Tag')
     df = df.iloc[1:]
     return df
