@@ -109,6 +109,9 @@ class ClanPreCalculated(Document):
         'indexes': [
             'name',
             'tag',
+            'members',
+            'clanPoints',
+            'clanVersusPoints',
 
             'avg_donations',
             'avg_gold_grab',
