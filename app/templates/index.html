@@ -12,6 +12,12 @@
         <div class="column is-3 ">
             {{ leaderboard('Most Donated', most_donations) }}
         </div>
+        <div class="column is-3 ">
+            {{ leaderboard('Most Active', most_donations) }}
+        </div>
+        <div class="column is-3 ">
+            {{ leaderboard('Most Loot Gained', most_donations) }}
+        </div>
     </div>
 </main>
 <script src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script> {% endblock %}

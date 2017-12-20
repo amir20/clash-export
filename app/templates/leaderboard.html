@@ -1,7 +1,7 @@
 {% macro leaderboard(name, data) -%}
-<nav class="panel">
+<nav class="panel leaderboard">
   <h3 class="panel-heading">
-    Most Donations
+    {{ name }}
   </h3>
   <p class="panel-tabs">
     <a class="is-active">this season</a>
@@ -12,7 +12,7 @@
   {% for item in data %}
   <a class="panel-block">
     <span class="panel-icon">
-      <img src="{{ item.badgeUrls['small'] }}" alt="Clan Badge">
+      <img src="{{ item.badgeUrls['small'] }}">
     </span>
     {{ item.name }}
   </a>
