@@ -86,6 +86,7 @@ class ClanPreCalculated(Document):
     clanPoints = IntField(required=True)
     clanVersusPoints = IntField(required=True)
     members = IntField(required=True)
+    badgeUrls = DictField(required=True)
 
     season_start = ReferenceField(Clan)
     most_recent = ReferenceField(Clan)
