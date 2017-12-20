@@ -8,7 +8,7 @@ from raven.contrib.flask import Sentry
 from clash import uptime, excel, api
 from clash.transformer import transform_players
 from datetime import timedelta
-from model import Clan, Player, Status
+from model import *
 
 
 app = Flask(__name__)
@@ -24,7 +24,8 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    most_donations = ClanPreCalculated.objects.order_by('-avg_donations').limit(10)
+    return render_template('index.html', most_donations=most_donations)
 
 
 @app.route("/status")

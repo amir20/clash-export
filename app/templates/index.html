@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block body %}
+{% from 'leaderboard.html' import leaderboard %} {% extends "layout.html" %} {% block body %}
 <main class="container">
     <div class="columns is-centered is-vcentered">
         <div class="column is-3 is-hidden-mobile">
@@ -6,6 +6,11 @@
         </div>
         <div class="column" id="home">
             <Home />
+        </div>
+    </div>
+    <div class="columns is-centered">
+        <div class="column is-3 ">
+            {{ leaderboard('Most Donated', most_donations) }}
         </div>
     </div>
 </main>

@@ -82,7 +82,7 @@
            Loading...
         </div>        
       </div>
-      <table class="table is-narrow is-fullwidth is-striped" :class="{'still-loading': loading}">
+      <table class="table is-narrow is-fullwidth is-striped is-hoverable" :class="{'still-loading': loading}">
         <thead>
           <tr>
             <th v-for="(header, index) in header" :class="{'selected-sort': index - 2 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
