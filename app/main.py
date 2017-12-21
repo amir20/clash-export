@@ -3,6 +3,7 @@ import logging
 import requests_cache
 
 from flask import Flask, request, redirect, url_for, send_file, render_template, jsonify, json
+from flask_caching import Cache
 from mongoengine import connect
 from raven.contrib.flask import Sentry
 from clash import uptime, excel, api
@@ -16,18 +17,22 @@ app.debug = os.getenv('DEBUG', False)
 sentry = Sentry(app)
 logging.basicConfig(level=logging.INFO)
 
+# Cache settings
 requests_cache.install_cache(expire_after=timedelta(seconds=10), backend='memory')
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 # Set connect to False for pre-forking to work
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 
 @app.route("/")
+@cache.cached(timeout=300)
 def index():
     most_donations = ClanPreCalculated.objects.order_by('-avg_donations').limit(10)
     most_attacks = ClanPreCalculated.objects.order_by('-avg_attack_wins').limit(10)
     most_loot = ClanPreCalculated.objects.order_by('-season_delta.avg_gold_grab').limit(10)
     status = Status.objects.first()
+
     return render_template('index.html',
                            most_donations=most_donations,
                            most_attacks=most_attacks,
