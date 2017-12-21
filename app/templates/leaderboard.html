@@ -12,7 +12,7 @@
     {{ clan.name }}
 
     {% if property %}
-    <span class="value">{{ "{:,.0f}".format(clan|attr(property)) }}</span>
+    <span class="value subtitle is-7">{{ "{:,.0f}".format(clan|attr(property)) }}</span>
     {% endif %}
   </a>
   {% endfor %}

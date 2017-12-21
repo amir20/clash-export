@@ -7,7 +7,8 @@ module.exports = {
   context: __dirname + "/app",
   entry: {
     "details-page": "./assets/js/details-page.js",
-    index: "./assets/js/index.js"
+    index: "./assets/js/index.js",
+    styles: "./assets/css/styles.css"
   },
   output: {
     path: __dirname + "/app/static/",
@@ -28,10 +29,7 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: "vue-loader",
-        options: {
-          extractCSS: true
-        }
+        loader: "vue-loader"
       },
       {
         test: /\.(sass|scss|css)$/,
@@ -53,18 +51,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new ManifestPlugin({
-      map: function(file) { 
-        console.log(file)
-        return file; 
-    },
-    }),
+    new ManifestPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor"
     }),
-    new ExtractTextPlugin("css/styles.[hash].css", {
-      allChunks: true
-    })
+    new ExtractTextPlugin("css/[name].[hash].css")
   ]
 };
 
