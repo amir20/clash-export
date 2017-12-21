@@ -1,4 +1,4 @@
-{% macro leaderboard(name, clans) -%}
+{% macro leaderboard(name, clans, property=False) -%}
 <nav class="panel leaderboard">
   <h3 class="panel-heading">
     {{ name }}
@@ -10,6 +10,10 @@
       <img src="{{ clan.badgeUrls['small'] }}">
     </span>
     {{ clan.name }}
+
+    {% if property %}
+    <span class="value">{{ "{:,.0f}".format(clan|attr(property)) }}</span>
+    {% endif %}
   </a>
   {% endfor %}
 

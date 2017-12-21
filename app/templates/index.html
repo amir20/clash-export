@@ -31,13 +31,13 @@
     </h1>
     <div class="columns is-variable is-8">
         <div class="column is-4">
-            {{ leaderboard('Highest Trophies', most_points) }}
+            {{ leaderboard('Highest Trophies', most_points, 'clanPoints') }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Highest Versus Trophies', most_vs_points) }}
+            {{ leaderboard('Highest Versus Trophies', most_vs_points, 'clanVersusPoints') }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Current War Win Streak', most_win_streak) }}
+            {{ leaderboard('Current War Win Streak', most_win_streak, 'warWinStreak') }}
         </div>
     </div>
 </main>

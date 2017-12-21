@@ -26,25 +26,22 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 @app.route("/")
 @cache.cached(timeout=300)
 def index():
-    most_donations = ClanPreCalculated.objects.order_by('-avg_donations').limit(10)
-    most_attacks = ClanPreCalculated.objects.order_by('-avg_attack_wins').limit(10)
-    most_loot = ClanPreCalculated.objects.order_by('-season_delta.avg_gold_grab').limit(10)
+    most_donations = ClanPreCalculated.objects(members__gt=20).order_by('-avg_donations').limit(10)
+    most_attacks = ClanPreCalculated.objects(members__gt=20).order_by('-avg_attack_wins').limit(10)
+    most_loot = ClanPreCalculated.objects(members__gt=20).order_by('-season_delta.avg_gold_grab').limit(10)
 
     most_points = ClanPreCalculated.objects.order_by('-clanPoints').limit(10)
     most_vs_points = ClanPreCalculated.objects.order_by('-clanVersusPoints').limit(10)
     most_win_streak = ClanPreCalculated.objects.order_by('-warWinStreak').limit(10)
 
-    stats = Status.objects.first()
 
     return render_template('index.html',
                            most_donations=most_donations,
                            most_attacks=most_attacks,
                            most_loot=most_loot,
-                           status=stats,
                            most_points=most_points,
                            most_vs_points=most_vs_points,
                            most_win_streak=most_win_streak
-
                            )
 
 
