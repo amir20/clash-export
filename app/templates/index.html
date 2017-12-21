@@ -15,10 +15,10 @@
     </h1>
     <div class="columns is-variable is-8">
         <div class="column is-4">
-            {{ leaderboard('Most Donated', most_donations) }}
+            {{ leaderboard('Most Donated', most_donations, "{:,.0f} donations/player") }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Most Attacks Won', most_attacks) }}
+            {{ leaderboard('Most Attacks Won', most_attacks, "{:,.0f} wins/player") }}
         </div>
         <div class="column is-4">
             {{ leaderboard('Most Loot Gained', most_loot) }}
@@ -31,13 +31,13 @@
     </h1>
     <div class="columns is-variable is-8">
         <div class="column is-4">
-            {{ leaderboard('Highest Trophies', most_points, 'clanPoints') }}
+            {{ leaderboard('Highest Trophies', most_points) }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Highest Versus Trophies', most_vs_points, 'clanVersusPoints') }}
+            {{ leaderboard('Highest Versus Trophies', most_vs_points) }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Current War Win Streak', most_win_streak, 'warWinStreak') }}
+            {{ leaderboard('Current War Win Streak', most_win_streak) }}
         </div>
     </div>
 </main>

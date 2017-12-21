@@ -1,8 +1,11 @@
 from collections import OrderedDict
+from collections import namedtuple
+from functools import reduce
+
+ShortClan = namedtuple('ShortClan', 'name tag badge score')
 
 
 def transform_players(players):
-
     def player_row(player_json):
         row = player_json.copy()
 
@@ -69,3 +72,15 @@ def transform_players(players):
     data.insert(0, list(columns.values()))
 
     return data
+
+
+def deepgetattr(obj, attr):    
+    return reduce(getattr, attr.split('.'), obj)
+
+
+def to_short_clan(clan, prop):    
+    return ShortClan(name=clan.name, tag=clan.tag, badge=clan.badgeUrls['small'], score=deepgetattr(clan, prop))
+
+
+def clans_leaderboard(clans, prop):
+    return [to_short_clan(c, prop) for c in clans]
