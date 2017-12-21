@@ -1,11 +1,43 @@
-{% extends "layout.html" %} {% block body %}
+{% from 'leaderboard.html' import leaderboard %} {% extends "layout.html" %} {% block body %}
 <main class="container">
     <div class="columns is-centered is-vcentered">
         <div class="column is-3 is-hidden-mobile">
             <img src="{{ url_for('static', filename='images/hog.png') }}" alt="Hog Rider">
         </div>
         <div class="column" id="home">
-            <Home />
+            <Home/>
+        </div>
+    </div>
+
+    <h1 class="title is-2">
+        Trending Clans
+        <span class="tag is-success">New!</span>
+    </h1>
+    <div class="columns is-variable is-8">
+        <div class="column is-4">
+            {{ leaderboard('Most Donated', most_donations) }}
+        </div>
+        <div class="column is-4">
+            {{ leaderboard('Most Attacks Won', most_attacks) }}
+        </div>
+        <div class="column is-4">
+            {{ leaderboard('Most Loot Gained', most_loot) }}
+        </div>
+    </div>
+
+    <h1 class="title is-2">
+        Global Ranking
+        <span class="tag is-success">New!</span>
+    </h1>
+    <div class="columns is-variable is-8">
+        <div class="column is-4">
+            {{ leaderboard('Highest Trophies', most_points, 'clanPoints') }}
+        </div>
+        <div class="column is-4">
+            {{ leaderboard('Highest Versus Trophies', most_vs_points, 'clanVersusPoints') }}
+        </div>
+        <div class="column is-4">
+            {{ leaderboard('Current War Win Streak', most_win_streak, 'warWinStreak') }}
         </div>
     </div>
 </main>
