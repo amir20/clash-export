@@ -59,6 +59,9 @@ def calculate_avg(cpc):
     cpc.avg_trophies = df['Current Trophies'].mean()
     cpc.avg_bh_trophies = df['Builder Hall Trophies'].mean()
 
+    cpc.avg_attack_wins = df['Attack Wins'].mean()
+    cpc.avg_versus_wins = df['Versus Battle Wins'].mean()
+
 
 def calculate_week(cpc):
     """
@@ -100,6 +103,9 @@ def calculate_delta(now_df, start_df):
     avg_trophies = avg_column('Current Trophies', now_df, start_df)
     avg_bh_trophies = avg_column('Builder Hall Trophies', now_df, start_df)
 
+    avg_attack_wins = avg_column('Attack Wins', now_df, start_df)
+    avg_versus_wins = avg_column('Versus Battle Wins', now_df, start_df)
+
     return ClanDelta(
         avg_donations=avg_donations,
         avg_donations_received=avg_donations_received,
@@ -112,7 +118,9 @@ def calculate_delta(now_df, start_df):
         avg_xp_level=avg_xp_level,
         avg_best_trophies=avg_best_trophies,
         avg_trophies=avg_trophies,
-        avg_bh_trophies=avg_bh_trophies
+        avg_bh_trophies=avg_bh_trophies,
+        avg_attack_wins=avg_attack_wins,
+        avg_versus_wins=avg_versus_wins
     )
 
 

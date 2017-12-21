@@ -1,6 +1,4 @@
-from datetime import datetime
-from datetime import timedelta
-
+from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 from mongoengine import *
 
@@ -78,6 +76,9 @@ class ClanDelta(EmbeddedDocument):
     avg_trophies = FloatField(required=True)
     avg_bh_trophies = FloatField(required=True)
 
+    avg_attack_wins = FloatField(required=True)
+    avg_versus_wins = FloatField(required=True)
+
 
 class ClanPreCalculated(Document):
     tag = StringField(required=True, unique=True)
@@ -103,6 +104,9 @@ class ClanPreCalculated(Document):
     avg_trophies = FloatField(required=True)
     avg_bh_trophies = FloatField(required=True)
 
+    avg_attack_wins = FloatField(required=True)
+    avg_versus_wins = FloatField(required=True)
+
     season_delta = EmbeddedDocumentField(ClanDelta)
     week_delta = EmbeddedDocumentField(ClanDelta)
 
@@ -125,6 +129,8 @@ class ClanPreCalculated(Document):
             'avg_best_trophies',
             'avg_trophies',
             'avg_bh_trophies',
+            'avg_attack_wins',
+            'avg_versus_wins',
 
             'season_delta.avg_donations',
             'season_delta.avg_donations_received',
@@ -138,6 +144,8 @@ class ClanPreCalculated(Document):
             'season_delta.avg_best_trophies',
             'season_delta.avg_trophies',
             'season_delta.avg_bh_trophies',
+            'season_delta.avg_attack_wins',
+            'season_delta.avg_versus_wins',
 
             'week_delta.avg_donations',
             'week_delta.avg_donations_received',
@@ -151,6 +159,8 @@ class ClanPreCalculated(Document):
             'week_delta.avg_best_trophies',
             'week_delta.avg_trophies',
             'week_delta.avg_bh_trophies',
+            'week_delta.avg_attack_wins',
+            'week_delta.avg_versus_wins',
 
         ]
     }
