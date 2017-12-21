@@ -8,7 +8,7 @@ RUN npm install --production
 
 # Copy all files for webpack
 COPY webpack.config.js .babelrc postcss.config.js ./
-COPY app/javascript/ app/javascript/
+COPY app/assets/ app/assets/
 COPY app/static/ app/static/
 
 # Do the build

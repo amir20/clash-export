@@ -7,7 +7,7 @@ from flask_caching import Cache
 from raven.contrib.flask import Sentry
 
 from clash import uptime, excel
-from clash.transformer import transform_players
+from clash.transformer import transform_players, clans_leaderboard
 from model import *
 
 app = Flask(__name__)
@@ -26,22 +26,21 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 @app.route("/")
 @cache.cached(timeout=300)
 def index():
-    most_donations = ClanPreCalculated.objects(members__gt=20).order_by('-avg_donations').limit(10)
-    most_attacks = ClanPreCalculated.objects(members__gt=20).order_by('-avg_attack_wins').limit(10)
-    most_loot = ClanPreCalculated.objects(members__gt=20).order_by('-season_delta.avg_gold_grab').limit(10)
+    most_donations = ClanPreCalculated.objects(members__gt=20).order_by('-week_delta.avg_donations').limit(10)
+    most_attacks = ClanPreCalculated.objects(members__gt=20).order_by('-week_delta.avg_attack_wins').limit(10)
+    most_loot = ClanPreCalculated.objects(members__gt=20).order_by('-week_delta.avg_gold_grab').limit(10)
 
     most_points = ClanPreCalculated.objects.order_by('-clanPoints').limit(10)
     most_vs_points = ClanPreCalculated.objects.order_by('-clanVersusPoints').limit(10)
     most_win_streak = ClanPreCalculated.objects.order_by('-warWinStreak').limit(10)
 
-
     return render_template('index.html',
-                           most_donations=most_donations,
-                           most_attacks=most_attacks,
-                           most_loot=most_loot,
-                           most_points=most_points,
-                           most_vs_points=most_vs_points,
-                           most_win_streak=most_win_streak
+                           most_donations=clans_leaderboard(most_donations, 'week_delta.avg_donations'),
+                           most_attacks=clans_leaderboard(most_attacks, 'week_delta.avg_attack_wins'),
+                           most_loot=clans_leaderboard(most_loot, 'week_delta.avg_gold_grab'),
+                           most_points=clans_leaderboard(most_points, 'clanPoints'),
+                           most_vs_points=clans_leaderboard(most_vs_points, 'clanVersusPoints'),
+                           most_win_streak=clans_leaderboard(most_win_streak, 'warWinStreak')
                            )
 
 
