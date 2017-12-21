@@ -1,0 +1,21 @@
+{% macro leaderboard(name, clans, property=False) -%}
+<nav class="panel leaderboard">
+  <h3 class="panel-heading">
+    {{ name }}
+  </h3>
+
+  {% for clan in clans %}
+  <a class="panel-block" href="/clan/{{ clan.tag.replace('#', '') }}">
+    <span class="panel-icon">
+      <img src="{{ clan.badgeUrls['small'] }}">
+    </span>
+    {{ clan.name }}
+
+    {% if property %}
+    <span class="value">{{ "{:,.0f}".format(clan|attr(property)) }}</span>
+    {% endif %}
+  </a>
+  {% endfor %}
+
+</nav>
+{%- endmacro %}

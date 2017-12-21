@@ -1,5 +1,5 @@
 <template>
-    <form class="section" action="/search" method="get" @reset="onReset">        
+    <form class="section" action="/search" method="get" @reset="onReset" @submit="onSubmit">        
         <template v-if="savedTag">   
           <section class="hero">
                 <div class="hero-body">
@@ -70,6 +70,9 @@ export default {
     onClanError() {
       this.savedTag = null;
     },
+    onSubmit() {
+      localStorage.setItem("searching", true);
+    },
     prefetch(url) {
       const link = document.createElement("link");
       link.href = url;
@@ -77,7 +80,6 @@ export default {
       link.as = "fetch";
       document.head.appendChild(link);
     }
-
   },
   computed: {
     url() {

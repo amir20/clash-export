@@ -1,39 +1,62 @@
-import os
 import logging
+
+import os
 import requests_cache
-
 from flask import Flask, request, redirect, url_for, send_file, render_template, jsonify, json
-from mongoengine import connect
+from flask_caching import Cache
 from raven.contrib.flask import Sentry
-from clash import uptime, excel, api
-from clash.transformer import transform_players
-from datetime import timedelta
-from model import Clan, Player, Status
 
+from clash import uptime, excel
+from clash.transformer import transform_players
+from model import *
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
 sentry = Sentry(app)
 logging.basicConfig(level=logging.INFO)
 
+# Cache settings
 requests_cache.install_cache(expire_after=timedelta(seconds=10), backend='memory')
+cache = Cache(app, config={'CACHE_TYPE': 'null' if app.debug else 'filesystem', 'CACHE_DIR': '/tmp'})
 
 # Set connect to False for pre-forking to work
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 
 @app.route("/")
+@cache.cached(timeout=300)
 def index():
-    return render_template('index.html')
+    most_donations = ClanPreCalculated.objects(members__gt=20).order_by('-avg_donations').limit(10)
+    most_attacks = ClanPreCalculated.objects(members__gt=20).order_by('-avg_attack_wins').limit(10)
+    most_loot = ClanPreCalculated.objects(members__gt=20).order_by('-season_delta.avg_gold_grab').limit(10)
+
+    most_points = ClanPreCalculated.objects.order_by('-clanPoints').limit(10)
+    most_vs_points = ClanPreCalculated.objects.order_by('-clanVersusPoints').limit(10)
+    most_win_streak = ClanPreCalculated.objects.order_by('-warWinStreak').limit(10)
+
+
+    return render_template('index.html',
+                           most_donations=most_donations,
+                           most_attacks=most_attacks,
+                           most_loot=most_loot,
+                           most_points=most_points,
+                           most_vs_points=most_vs_points,
+                           most_win_streak=most_win_streak
+                           )
 
 
 @app.route("/status")
+@cache.cached(timeout=60)
 def status():
     monitor = uptime.monitor()
     uptime_ratio = float(monitor['custom_uptime_ratio'])
-    status = Status.objects.first()
-    
-    return render_template('status.html', uptime_ratio=uptime_ratio, total_clans=status.total_clans, ratio_indexed=status.ratio_indexed, total_players=0)
+    stats = Status.objects.first()
+
+    return render_template('status.html',
+                           uptime_ratio=uptime_ratio,
+                           total_clans=stats.total_clans,
+                           ratio_indexed=stats.ratio_indexed,
+                           total_players=0)
 
 
 @app.route("/search")
@@ -66,10 +89,11 @@ def clan_detail(tag):
 
 
 @app.route("/clan/<path:tag>/short.json")
+@cache.cached(timeout=1000)
 def clan_meta(tag):
     clan = clan_from_days_ago(1, tag)
     clan.id = None
-    clan.players = None        
+    clan.players = None
     return clan.to_json()
 
 
@@ -103,6 +127,7 @@ app.add_template_global(manifest_path, 'manifest_path')
 if __name__ == "__main__":
     if (app.debug):
         from werkzeug.debug import DebuggedApplication
+
         app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
 
     app.run(host='0.0.0.0', port=80)
