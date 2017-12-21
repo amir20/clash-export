@@ -1,6 +1,4 @@
-.columns.is-vcentered {
-    min-height: 90vh;
-}
+
 
 h1,
 h2 {
@@ -22,4 +20,13 @@ h2 {
     font-size: 2rem;
     font-weight: 600;
     line-height: 1.125;    
+}
+
+.leaderboard .panel-icon{
+    font-size: 20px;
+    margin-right: 0.45em;
+}
+
+.leaderboard .value{
+    margin-left: auto;
 }

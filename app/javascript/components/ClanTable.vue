@@ -82,7 +82,7 @@
            Loading...
         </div>        
       </div>
-      <table class="table is-narrow is-fullwidth is-striped" :class="{'still-loading': loading}">
+      <table class="table is-narrow is-fullwidth is-striped is-hoverable" :class="{'still-loading': loading}">
         <thead>
           <tr>
             <th v-for="(header, index) in header" :class="{'selected-sort': index - 2 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
@@ -115,13 +115,13 @@
 </template>
 
 <script>
-import zip from 'lodash/zip'
-import fakeData from '../fake-data'
+import zip from "lodash/zip";
+import fakeData from "../fake-data";
 
 const STORAGE_KEY = "lastTag";
 
 export default {
-  props: ['tag', 'name'],
+  props: ["tag", "name"],
   data() {
     return {
       loading: true,
@@ -135,7 +135,7 @@ export default {
           small: "https://placeholdit.co//i/500x500?text=&bg=ccc"
         }
       }
-    }
+    };
   },
   created() {
     this.fetchData();
@@ -165,14 +165,22 @@ export default {
         return { name, tag, data };
       });
 
-
       return tableData.sort((a, b) => {
-        if (this.sortIndex == -2) { // index for name
-          return a.name.toLowerCase() < b.name.toLowerCase() ? -this.sortDirection : this.sortDirection;
-        } else if (this.sortIndex == -1) { // index for name
-          return a.tag.toLowerCase() < b.tag.toLowerCase() ? -this.sortDirection : this.sortDirection;
-        } else { // index for other columns
-          return a.data[this.sortIndex].now < b.data[this.sortIndex].now ? this.sortDirection : -this.sortDirection;
+        if (this.sortIndex == -2) {
+          // index for name
+          return a.name.toLowerCase() < b.name.toLowerCase()
+            ? -this.sortDirection
+            : this.sortDirection;
+        } else if (this.sortIndex == -1) {
+          // index for name
+          return a.tag.toLowerCase() < b.tag.toLowerCase()
+            ? -this.sortDirection
+            : this.sortDirection;
+        } else {
+          // index for other columns
+          return a.data[this.sortIndex].now < b.data[this.sortIndex].now
+            ? this.sortDirection
+            : -this.sortDirection;
         }
       });
     },
@@ -180,20 +188,24 @@ export default {
       return this.clan[0];
     },
     path() {
-      return `/clan/${this.tag.replace('#', '')}`
+      return `/clan/${this.tag.replace("#", "")}`;
     }
   },
   methods: {
-    async fetchData() {      
+    async fetchData() {
       const nowPromise = fetch(`${this.path}.json`);
       const previousPromise = fetch(`${this.path}.json?daysAgo=${this.days}`);
       const metaPromise = fetch(`${this.path}/short.json`);
-      
+
       this.meta = await (await metaPromise).json();
       this.previousData = await (await previousPromise).json();
-      this.clan = await (await nowPromise).json();          
+      this.clan = await (await nowPromise).json();
 
-      localStorage.setItem(STORAGE_KEY, this.tag);
+      if (localStorage.getItem("searching")) {
+        localStorage.setItem(STORAGE_KEY, this.tag);
+        localStorage.removeItem("searching");
+      }
+
       this.loading = false;
     },
     async loadDaysAgo(days) {
@@ -209,7 +221,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -249,7 +261,6 @@ thead {
 
 section {
   overflow-y: scroll;
-  max-width:
 }
 
 h1 {
@@ -288,8 +299,8 @@ nav {
   color: #efefef !important;
 }
 
-.modal-background{
-  background-color: rgba(10,10,10,.2);
+.modal-background {
+  background-color: rgba(10, 10, 10, 0.2);
 }
 </style>
 
