@@ -1,75 +1,81 @@
 const webpack = require("webpack");
 const path = require("path");
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 module.exports = {
-    context: __dirname + "/app",
-    entry: {
-        'details-page': "./javascript/details-page.js",
-        'index': "./javascript/index.js"
-    },
-    output: {
-        path: __dirname + "/app/static/",
-        filename: "js/[name].js",
-    },
-    resolve: {
-        extensions: ['.js', '.vue', '.json'],
-        alias: {
-            'vue$': 'vue/dist/vue.esm.js',
-        }
-    },
-    module: {
-        rules: [{
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: ['babel-loader']
-            }, {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [{
-                        loader: 'css-loader',
-                        query: {
-                            importLoaders: 1
-                        }
-                    }]
-                })
-            },
+  context: __dirname + "/app",
+  entry: {
+    "details-page": "./javascript/details-page.js",
+    index: "./javascript/index.js",
+    style: "./static/css/style.css"
+  },
+  output: {
+    path: __dirname + "/app/static/",
+    filename: "js/[name].js"
+  },
+  resolve: {
+    extensions: [".js", ".vue", ".json"],
+    alias: {
+      vue$: "vue/dist/vue.esm.js"
+    }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"]
+      },
+      {
+        test: /\.vue$/,
+        loader: "vue-loader"
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
             {
-                test: /\.vue$/,
-                loader: 'vue-loader'
+              loader: "css-loader",
+              query: {
+                importLoaders: 1
+              }
             },
-        ]
-    },
-    plugins: [        
-        new ManifestPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor"                    
-          })
+            "postcss-loader"
+          ]
+        })
+      }
     ]
+  },
+  plugins: [
+    new ManifestPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor"
+    }),
+    new ExtractTextPlugin('[name].[hash].css')
+  ]
 };
 
-if (process.env.NODE_ENV === 'production') {    
-    module.exports.devtool = '#source-map'
-    // http://vue-loader.vuejs.org/en/workflow/production.html
-    module.exports.plugins = (module.exports.plugins || []).concat([
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true
-        })
-    ]);
+if (process.env.NODE_ENV === "production") {
+  module.exports.devtool = "#source-map";
+  // http://vue-loader.vuejs.org/en/workflow/production.html
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    })
+  ]);
 
-
-    module.exports.output.filename = "js/[name].[hash].js";
+  module.exports.output.filename = "js/[name].[hash].js";
 }
