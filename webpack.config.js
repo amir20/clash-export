@@ -6,9 +6,8 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 module.exports = {
   context: __dirname + "/app",
   entry: {
-    "details-page": "./javascript/details-page.js",
-    index: "./javascript/index.js",
-    style: "./static/css/style.css"
+    "details-page": "./assets/js/details-page.js",
+    index: "./assets/js/index.js"
   },
   output: {
     path: __dirname + "/app/static/",
@@ -29,31 +28,43 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: "vue-loader"
+        loader: "vue-loader",
+        options: {
+          extractCSS: true
+        }
       },
       {
-        test: /\.css$/,
+        test: /\.(sass|scss|css)$/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
-          use: [
+          use: [            
             {
+
               loader: "css-loader",
               query: {
                 importLoaders: 1
               }
-            },
-            "postcss-loader"
+            },            
+            "postcss-loader",
+            "sass-loader"
           ]
         })
       }
     ]
   },
   plugins: [
-    new ManifestPlugin(),
+    new ManifestPlugin({
+      map: function(file) { 
+        console.log(file)
+        return file; 
+    },
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor"
     }),
-    new ExtractTextPlugin('[name].[hash].css')
+    new ExtractTextPlugin("css/styles.[hash].css", {
+      allChunks: true
+    })
   ]
 };
 
