@@ -8,15 +8,46 @@
             <Home />
         </div>
     </div>
-    <div class="columns is-centered">
-        <div class="column is-3 ">
+    <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Tweets</p>
+                    <p class="title">3,456</p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Following</p>
+                    <p class="title">123</p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Followers</p>
+                    <p class="title">456K</p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Likes</p>
+                    <p class="title">789</p>
+                </div>
+            </div>
+        </nav>
+    
+    <h1 class="title is-2">
+        Trending Clans
+        <span class="tag is-success">New!</span>
+    </h1>
+    <div class="columns is-variable is-8">
+        <div class="column is-4">
             {{ leaderboard('Most Donated', most_donations) }}
         </div>
-        <div class="column is-3 ">
-            {{ leaderboard('Most Active', most_donations) }}
+        <div class="column is-4">
+            {{ leaderboard('Most Attacks', most_attacks) }}
         </div>
-        <div class="column is-3 ">
-            {{ leaderboard('Most Loot Gained', most_donations) }}
+        <div class="column is-4">
+            {{ leaderboard('Most Loot Gained', most_loot) }}
         </div>
     </div>
 </main>

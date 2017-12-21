@@ -25,7 +25,15 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 @app.route("/")
 def index():
     most_donations = ClanPreCalculated.objects.order_by('-avg_donations').limit(10)
-    return render_template('index.html', most_donations=most_donations)
+    most_attacks = ClanPreCalculated.objects.order_by('-avg_attack_wins').limit(10)
+    most_loot = ClanPreCalculated.objects.order_by('-season_delta.avg_gold_grab').limit(10)
+    status = Status.objects.first()
+    return render_template('index.html',
+                           most_donations=most_donations,
+                           most_attacks=most_attacks,
+                           most_loot=most_loot,
+                           status=status
+                           )
 
 
 @app.route("/status")
@@ -33,7 +41,7 @@ def status():
     monitor = uptime.monitor()
     uptime_ratio = float(monitor['custom_uptime_ratio'])
     status = Status.objects.first()
-    
+
     return render_template('status.html', uptime_ratio=uptime_ratio, total_clans=status.total_clans, ratio_indexed=status.ratio_indexed, total_players=0)
 
 
@@ -70,7 +78,7 @@ def clan_detail(tag):
 def clan_meta(tag):
     clan = clan_from_days_ago(1, tag)
     clan.id = None
-    clan.players = None        
+    clan.players = None
     return clan.to_json()
 
 
