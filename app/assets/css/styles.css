@@ -1,4 +1,4 @@
-
+@import "~bulma/bulma";
 
 h1,
 h2 {
@@ -22,11 +22,11 @@ h2 {
     line-height: 1.125;    
 }
 
-.leaderboard .panel-icon{
+.leaderboard .panel-icon {
     font-size: 20px;
     margin-right: 0.45em;
 }
 
-.leaderboard .value{
+.leaderboard .value {
     margin-left: auto;
 }
