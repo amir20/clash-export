@@ -26,3 +26,7 @@ h2 {
     font-size: 20px;
     margin-right: 0.45em;
 }
+
+.leaderboard .value{
+    margin-left: auto;
+}

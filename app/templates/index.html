@@ -5,29 +5,9 @@
             <img src="{{ url_for('static', filename='images/hog.png') }}" alt="Hog Rider">
         </div>
         <div class="column" id="home">
-            <Home />
+            <Home/>
         </div>
     </div>
-    <nav class="level">
-        <div class="level-item has-text-centered">
-            <div>
-                <p class="heading">Total Clans</p>
-                <p class="title">{{ "{:,}".format(status.total_clans) }}</p>
-            </div>
-        </div>
-        <div class="level-item has-text-centered">
-            <div>
-                <p class="heading">Following</p>
-                <p class="title">123</p>
-            </div>
-        </div>
-        <div class="level-item has-text-centered">
-            <div>
-                <p class="heading">Followers</p>
-                <p class="title">456K</p>
-            </div>
-        </div>
-    </nav>
 
     <h1 class="title is-2">
         Trending Clans
@@ -42,6 +22,22 @@
         </div>
         <div class="column is-4">
             {{ leaderboard('Most Loot Gained', most_loot) }}
+        </div>
+    </div>
+
+    <h1 class="title is-2">
+        Global Ranking
+        <span class="tag is-success">New!</span>
+    </h1>
+    <div class="columns is-variable is-8">
+        <div class="column is-4">
+            {{ leaderboard('Highest Trophies', most_points) }}
+        </div>
+        <div class="column is-4">
+            {{ leaderboard('Highest Versus Trophies', most_vs_points) }}
+        </div>
+        <div class="column is-4">
+            {{ leaderboard('Current War Win Streak', most_win_streak) }}
         </div>
     </div>
 </main>
