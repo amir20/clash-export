@@ -24,6 +24,11 @@ def update_calculations(clan):
     cpc.clanVersusPoints = clan.clanVersusPoints
     cpc.badgeUrls = clan.badgeUrls
 
+    cpc.warWinStreak = clan.warWinStreak
+    cpc.warWins = clan.warWins
+    cpc.warTies = clan.warTies
+    cpc.warLosses = clan.warLosses
+
     if is_new_season(cpc.most_recent, clan):
         cpc.season_start = clan
 

@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+
 from bson.objectid import ObjectId
 from mongoengine import *
 
@@ -89,6 +90,11 @@ class ClanPreCalculated(Document):
     members = IntField(required=True)
     badgeUrls = DictField(required=True)
 
+    warWinStreak = IntField(required=True)
+    warWins = IntField(required=True)
+    warTies = IntField(required=True)
+    warLosses = IntField(required=True)
+
     season_start = ReferenceField(Clan)
     most_recent = ReferenceField(Clan)
 
@@ -117,6 +123,11 @@ class ClanPreCalculated(Document):
             'members',
             'clanPoints',
             'clanVersusPoints',
+
+            'warWinStreak',
+            'warWins',
+            'warTies',
+            'warLosses',
 
             'avg_donations',
             'avg_gold_grab',
