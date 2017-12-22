@@ -11,6 +11,10 @@ headers = {'authorization': 'Bearer ' + token}
 logger = logging.getLogger(__name__)
 
 
+class ClanNotFound(Exception):
+    pass
+
+
 async def __fetch(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=headers) as response:
@@ -28,7 +32,12 @@ def find_clan_by_tag(tag):
     if not tag.startswith('#'):
         tag = '#' + tag
     logger.info(f"Fetching clan from API {tag}.")
-    return requests.get('https://api.clashofclans.com/v1/clans/' + quote(tag), headers=headers).json()
+    r = requests.get('https://api.clashofclans.com/v1/clans/' + quote(tag), headers=headers)
+
+    if r.status_code != 200:
+        raise ClanNotFound('Clan not found')
+
+    return r.json()
 
 
 def fetch_all_players(clan):
