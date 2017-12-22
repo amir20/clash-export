@@ -63,31 +63,41 @@ def search():
     return redirect(url_for('clan_detail', tag=request.args.get('tag').replace('#', '')))
 
 
-@app.route("/clan/<path:tag>")
-def clan_detail(tag):
-    tag, ext = os.path.splitext(tag)
-
-    if not tag.startswith('#'):
-        tag = '#' + tag
-
-    clan = api.find_clan_by_tag(tag)
-
-    if 'tag' not in clan:
+@app.route("/clan/<tag>.json")
+def clan_detail_json(tag):
+    try:
+        api.find_clan_by_tag(tag)
+    except api.ClanNotFound:
         return render_template('error.html'), 404
-    elif ext == '.xlsx':
+    else:
         days_ago = request.args.get('daysAgo')
         clan = clan_from_days_ago(days_ago, tag)
-        return send_file(excel.to_stream(clan), attachment_filename=f"{tag}.xlsx", as_attachment=True)
-    elif ext == '.json':
-        days_ago = request.args.get('daysAgo')
-        clan = clan_from_days_ago(days_ago, tag)
-
         return jsonify(transform_players(clan.players))
+
+
+@app.route("/clan/<tag>.xlsx")
+def clan_detail_xlsx(tag):
+    try:
+        api.find_clan_by_tag(tag)
+    except api.ClanNotFound:
+        return render_template('error.html'), 404
+    else:
+        days_ago = request.args.get('daysAgo')
+        clan = clan_from_days_ago(days_ago, tag)
+        return send_file(excel.to_stream(clan), attachment_filename=f"{clan.tag}.xlsx", as_attachment=True)
+
+
+@app.route("/clan/<tag>")
+def clan_detail_page(tag):
+    try:
+        clan = api.find_clan_by_tag(tag)
+    except api.ClanNotFound:
+        return render_template('error.html'), 404
     else:
         return render_template('clan.html', clan=clan)
 
 
-@app.route("/clan/<path:tag>/short.json")
+@app.route("/clan/<tag>/short.json")
 @cache.cached(timeout=1000)
 def clan_meta(tag):
     clan = clan_from_days_ago(1, tag)
