@@ -2,6 +2,7 @@ import pandas as pd
 
 from model import ClanPreCalculated, ClanDelta, Clan
 from .transformer import transform_players
+from datetime import datetime
 
 
 def update_calculations(clan):
@@ -28,6 +29,8 @@ def update_calculations(clan):
     cpc.warWins = getattr(clan, 'warWins', 0)
     cpc.warTies = getattr(clan, 'warTies', 0)
     cpc.warLosses = getattr(clan, 'warLosses', 0)
+
+    cpc.last_updated = datetime.now
 
     if is_new_season(cpc.most_recent, clan):
         cpc.season_start = clan

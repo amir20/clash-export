@@ -5,15 +5,16 @@ import os
 import schedule
 from mongoengine import connect
 from raven import Client
-from datetime import datetime
+from datetime import datetime, timedelta
 from clash.calculation import update_calculations
-from model import Clan, Status
+from model import *
 
 client = Client(os.getenv('SENTRY_DSN'))
 
 logging.basicConfig(level=logging.INFO)
 
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
+
 logger = logging.getLogger(__name__)
 logging.getLogger("clash.api").setLevel(logging.WARNING)
 
@@ -51,12 +52,30 @@ def update_clans():
     )
 
 
+def update_clan_calculations():
+    hour_ago = datetime.now() - timedelta(days=1)
+    recent_tags = set(Clan.from_now(hours=1).distinct('tag'))
+    calculated_tags = set(ClanPreCalculated.objects(last_updated__gte=hour_ago).distinct('tag'))
+    available_clan_tags = recent_tags - calculated_tags
+
+    logger.info(f"Updating {len(available_clan_tags)} clan calculations.")
+    for tag in available_clan_tags:
+        try:
+            logger.info(f"Updating calculations for {tag}.")
+            clan = Clan.objects(tag=tag).first()
+            update_calculations(clan)
+        except Exception:
+            logger.exception(f"Error while fetching clan {tag}.")
+            client.captureException()
+
+
 def delete_old_clans():
     deleted = Clan.older_than(days=45).delete()
     logger.info(f"Deleted {deleted} clans that are older than 45 days.")
 
 
 schedule.every().minutes.do(update_clans)
+schedule.every().minutes.do(update_clan_calculations)
 schedule.every().day.at("12:01").do(delete_old_clans)
 
 if __name__ == "__main__":
