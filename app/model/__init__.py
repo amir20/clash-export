@@ -52,10 +52,6 @@ class Clan(DynamicDocument):
         del clan['memberList']
 
         clan = Clan(**clan).save()
-
-        if ClanPreCalculated.objects(tag=clan.tag).first() is None:
-            clash.calculation.update_calculations(clan)
-
         return clan
 
 
