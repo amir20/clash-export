@@ -82,6 +82,7 @@ class ClanDelta(EmbeddedDocument):
 
 
 class ClanPreCalculated(Document):
+    last_updated = DateTimeField(default=datetime.now)
     tag = StringField(required=True, unique=True)
     name = StringField(required=True)
     description = StringField(required=True)
@@ -118,6 +119,7 @@ class ClanPreCalculated(Document):
 
     meta = {
         'indexes': [
+            'last_updated',
             'name',
             'tag',
             'members',
