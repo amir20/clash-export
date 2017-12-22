@@ -10,18 +10,30 @@
     </div>
 
     <h1 class="title is-2">
-        Trending Clans
+        This Week's Trending Clans
         <span class="tag is-success">New!</span>
     </h1>
     <div class="columns">
         <div class="column is-4">
-            {{ leaderboard('Most Donated', most_donations, "{:,.0f} donations/player") }}
+            {{ leaderboard('Highest Donations', most_donations, "{:,.0f} donations/player") }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Most Attacks Won', most_attacks, "{:,.0f} wins/player") }}
+            {{ leaderboard('Average Attack Wins', most_attacks, "{:,.0f} wins/player") }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Most Loot Gained', most_loot) }}
+            {{ leaderboard('Average Versus Attack Wins', most_bh_attacks, "{:,.0f} wins/player") }}
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-4">
+            {{ leaderboard('War Stars Earned', most_war_stars, "{:,.0f} stars/player") }}
+        </div>
+        <div class="column is-4">
+            {{ leaderboard('Trophies Gained', most_trophies, "{:,.0f} trophies/player") }}
+        </div>
+        <div class="column is-4">
+            {{ leaderboard('Average Loot Grabbed', most_loot) }}
         </div>
     </div>
 
