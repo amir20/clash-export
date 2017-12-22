@@ -60,7 +60,7 @@ def status():
 
 @app.route("/search")
 def search():
-    return redirect(url_for('clan_detail', tag=request.args.get('tag').replace('#', '')))
+    return redirect(url_for('clan_detail_page', tag=request.args.get('tag').replace('#', '')))
 
 
 @app.route("/clan/<tag>.json")

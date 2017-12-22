@@ -52,7 +52,9 @@ class Clan(DynamicDocument):
         del clan['memberList']
 
         clan = Clan(**clan).save()
-        update_calculations(clan)
+
+        if ClanPreCalculated.objects(tag=clan.tag).first() is None:
+            clash.calculation.update_calculations(clan)
 
         return clan
 
@@ -185,4 +187,3 @@ def object_id_from_now(**kwargs):
     return ObjectId.from_datetime(dt)
 
 
-from clash.calculation import update_calculations
