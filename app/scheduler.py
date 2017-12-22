@@ -53,7 +53,7 @@ def update_clans():
 
 
 def update_clan_calculations():
-    hour_ago = datetime.now() - timedelta(days=1)
+    hour_ago = datetime.now() - timedelta(hours=1)
     recent_tags = set(Clan.from_now(hours=1).distinct('tag'))
     calculated_tags = set(ClanPreCalculated.objects(last_updated__gte=hour_ago).distinct('tag'))
     available_clan_tags = recent_tags - calculated_tags
