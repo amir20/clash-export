@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 
 from bson.objectid import ObjectId
 from mongoengine import *
-
 from clash import api
 
 
@@ -52,7 +51,10 @@ class Clan(DynamicDocument):
         clan['players'] = players
         del clan['memberList']
 
-        return Clan(**clan).save()
+        clan = Clan(**clan).save()
+        update_calculations(clan)
+
+        return clan
 
 
 class Status(Document):
@@ -181,3 +183,6 @@ def object_id_from_now(**kwargs):
     now = datetime.now()
     dt = now - timedelta(**kwargs)
     return ObjectId.from_datetime(dt)
+
+
+from clash.calculation import update_calculations
