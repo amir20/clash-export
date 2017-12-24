@@ -79,7 +79,7 @@ def deepgetattr(obj, attr):
 
 
 def to_short_clan(clan, prop):    
-    return ShortClan(name=clan.name, tag=clan.tag, badge=clan.badgeUrls['small'], score=deepgetattr(clan, prop))
+    return ShortClan(name=clan.name, tag=clan.tag, badge=clan.badgeUrls.get('small'), score=deepgetattr(clan, prop))
 
 
 def clans_leaderboard(clans, prop):

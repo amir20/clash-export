@@ -65,7 +65,7 @@ def update_clan_calculations():
             clan = Clan.objects(tag=tag).first()
             update_calculations(clan)
         except Exception:
-            logger.exception(f"Error while fetching clan {tag}.")
+            logger.exception(f"Error during updating clan calculation for {tag}.")
             client.captureException()
 
 
