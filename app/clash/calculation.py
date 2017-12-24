@@ -19,6 +19,16 @@ def update_calculations(clan):
         cpc.season_start = clan
         cpc.most_recent = clan
 
+    try:
+        cpc.most_recent
+    except DoesNotExist:
+        cpc.most_recent = clan
+
+    try:
+        cpc.season_start
+    except DoesNotExist:
+        cpc.season_start = clan
+
     cpc.name = clan.name
     cpc.description = clan.description
     cpc.members = clan.members
@@ -33,11 +43,8 @@ def update_calculations(clan):
 
     cpc.last_updated = datetime.now
 
-    try:
-        if is_new_season(cpc.most_recent, clan):
-            cpc.season_start = clan
-    except DoesNotExist:
-        pass  # Do nothing
+    if is_new_season(cpc.most_recent, clan):
+        cpc.season_start = clan
 
     cpc.most_recent = clan
 
