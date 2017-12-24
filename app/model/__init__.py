@@ -121,6 +121,7 @@ class ClanPreCalculated(Document):
         'indexes': [
             'last_updated',
             'name',
+            '$name',
             'tag',
             'members',
             'clanPoints',
