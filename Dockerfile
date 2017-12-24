@@ -17,20 +17,20 @@ RUN npm run build
 
 FROM python:3.6-slim
 
-MAINTAINER Amir Raminfar <findamir@gmail.com>
-
 # Create app directoy
 WORKDIR /app
 
-# Copy requirements file
-COPY ./conf/requirements.txt /app/requirements.txt
+RUN pip install pipenv
 
-# Install packages and docker
-RUN pip install -r /app/requirements.txt
+# Copy requirements file
+COPY ./Pipfile* /app/
+
+# Install packages 
+RUN pipenv install --system
 
 ARG plugins=http.expires
 
-# Install packages and docker
+# Install caddy and clean up
 RUN apt-get update \
     && apt-get install supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \

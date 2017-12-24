@@ -1,20 +1,20 @@
 FROM python:3.6-slim
 
-MAINTAINER Amir Raminfar <findamir@gmail.com>
-
 # Install supervisord
 RUN apt-get update \
     && apt-get install supervisor -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
+# Install pipenv
+RUN pip install pipenv
 
 # Create app directoy
 WORKDIR /app
 
-# Install dependencies
-COPY ./conf/requirements.txt /app/requirements.txt
+# Copy requirements file
+COPY ./Pipfile* /app/
 
-# Install packages and docker
-RUN pip install -r /app/requirements.txt
+# Install packages 
+RUN pipenv install --system
 
 # Copy files
 COPY ./conf/supervisord-scheduler.conf /etc/supervisor/conf.d/supervisord.conf
