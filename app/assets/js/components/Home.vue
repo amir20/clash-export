@@ -43,12 +43,14 @@
 
 <script>
 import Card from "./ClanCard";
+import Autocomplete from "buefy/components/autocomplete";
 
 const STORAGE_KEY = "lastTag";
 
 export default {
   components: {
-    Card
+    Card,
+    Autocomplete
   },
   data() {
     return {
