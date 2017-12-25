@@ -16,6 +16,7 @@
     "lodash": "^4.17.4",
     "node-sass": "^4.7.2",
     "postcss-cssnext": "^3.0.2",
+    "postcss-custom-properties": "^6.2.0",
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.9",
     "sass-loader": "^6.0.6",
