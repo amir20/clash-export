@@ -7,7 +7,7 @@ module.exports = {
   context: __dirname + "/app",
   entry: {
     "details-page": "./assets/js/details-page.js",
-    index: "./assets/js/index.js",
+    'index': "./assets/js/index.js",
     styles: "./assets/css/styles.css"
   },
   output: {
@@ -53,7 +53,8 @@ module.exports = {
   plugins: [
     new ManifestPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor"
+      name: "vendor",
+      chunks: ['details-page', 'index'],
     }),
     new ExtractTextPlugin("css/[name].[hash].css")
   ]
