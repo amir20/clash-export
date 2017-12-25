@@ -3,6 +3,8 @@ services:
   db:    
     image: mongo:3.6
     hostname: mongo
+    volumes:
+      - ./:/clashstats
 
   web:
     environment:

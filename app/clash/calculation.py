@@ -160,7 +160,7 @@ def is_new_season(before, now):
     before_donations = before_df['Donations']
     now_donations = now_df['Donations']
 
-    return before_donations.gt(now_donations).all()
+    return before_donations.gt(now_donations).any()
 
 
 def to_data_frame(clan):
