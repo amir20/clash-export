@@ -119,9 +119,13 @@ class ClanPreCalculated(Document):
 
     meta = {
         'indexes': [
+            {
+                'fields': ['$name', "$tag"],
+                'default_language': 'english',
+                'weights': {'name': 1, 'tag': 10}
+            },
             'last_updated',
             'name',
-            '$name',
             'tag',
             'members',
             'clanPoints',
@@ -184,5 +188,3 @@ def object_id_from_now(**kwargs):
     now = datetime.now()
     dt = now - timedelta(**kwargs)
     return ObjectId.from_datetime(dt)
-
-
