@@ -1,4 +1,6 @@
 @import "~bulma/bulma";
+@import "~buefy/src/scss/utils/_all";
+@import "~buefy/src/scss/components/_autocomplete";
 
 h1,
 h2 {
