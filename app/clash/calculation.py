@@ -64,7 +64,7 @@ def calculate_avg(cpc):
     """
     df = to_data_frame(cpc.most_recent)
 
-    cpc.avg_donations = df['Total Donations'].mean()
+    cpc.avg_donations = df['Donations'].mean()
 
     cpc.avg_gold_grab = df['Total Gold Grab'].mean()
     cpc.avg_elixir_grab = df['Total Elixir Grab'].mean()
@@ -84,7 +84,7 @@ def calculate_avg(cpc):
 
 def calculate_week(cpc):
     """
-    Calcuates last weeks averages
+    Calculates last weeks averages
     :param cpc:
     :return:
     """
@@ -107,8 +107,8 @@ def calculate_season(cpc):
 
 
 def calculate_delta(now_df, start_df):
-    avg_donations = now_df['Donations'].mean()
-    avg_donations_received = now_df['Donations Received'].mean()
+    avg_donations = avg_column('Total Donations', now_df, start_df)
+    avg_donations_received = avg_column('Donations Received', now_df, start_df)
 
     avg_gold_grab = avg_column('Total Gold Grab', now_df, start_df)
     avg_elixir_grab = avg_column('Total Elixir Grab', now_df, start_df)
