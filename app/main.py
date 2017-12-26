@@ -7,7 +7,7 @@ from flask_caching import Cache
 from raven.contrib.flask import Sentry
 
 from clash import uptime, excel
-from clash.transformer import transform_players, clans_leaderboard
+from clash.transformer import transform_players, clans_leaderboard, to_short_clan
 from model import *
 
 app = Flask(__name__)
@@ -58,9 +58,9 @@ def status():
                            total_players=0)
 
 
-@app.route("/search")
+@app.route("/search.json")
 def search():
-    return redirect(url_for('clan_detail_page', tag=request.args.get('tag').replace('#', '')))
+    return jsonify([to_short_clan(c)._asdict() for c in ClanPreCalculated.objects.search_text(request.args.get('q'))])    
 
 
 @app.route("/clan/<tag>.json")
