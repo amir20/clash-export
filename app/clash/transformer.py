@@ -74,12 +74,13 @@ def transform_players(players):
     return data
 
 
-def deepgetattr(obj, attr):    
+def deepgetattr(obj, attr):
     return reduce(getattr, attr.split('.'), obj)
 
 
-def to_short_clan(clan, prop):    
-    return ShortClan(name=clan.name, tag=clan.tag, badge=clan.badgeUrls.get('small'), score=deepgetattr(clan, prop))
+def to_short_clan(clan, prop=None):
+    score = None if prop is None else deepgetattr(clan, prop)
+    return ShortClan(name=clan.name, tag=clan.tag, badge=clan.badgeUrls.get('small'), score=score)
 
 
 def clans_leaderboard(clans, prop):
