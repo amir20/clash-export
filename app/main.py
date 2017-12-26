@@ -60,7 +60,8 @@ def status():
 
 @app.route("/search.json")
 def search():
-    return jsonify([to_short_clan(c)._asdict() for c in ClanPreCalculated.objects.search_text(request.args.get('q'))])    
+    clans = ClanPreCalculated.objects.search_text(f"\"{request.args.get('q')}\"") or ClanPreCalculated.objects.search_text(request.args.get('q'))
+    return jsonify([to_short_clan(c)._asdict() for c in clans])
 
 
 @app.route("/clan/<tag>.json")
