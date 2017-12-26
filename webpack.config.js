@@ -7,7 +7,7 @@ module.exports = {
   context: __dirname + "/app",
   entry: {
     "details-page": "./assets/js/details-page.js",
-    'index': "./assets/js/index.js",
+    index: "./assets/js/index.js",
     styles: "./assets/css/styles.css"
   },
   output: {
@@ -35,15 +35,17 @@ module.exports = {
         test: /\.(sass|scss|css)$/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
-          use: [            
+          use: [
             {
-
               loader: "css-loader",
               query: {
                 importLoaders: 1
               }
-            },            
-            "postcss-loader",
+            },
+            {
+              loader: "postcss-loader",
+              options: { "postcss-custom-properties": false }
+            },
             "sass-loader"
           ]
         })
@@ -54,7 +56,7 @@ module.exports = {
     new ManifestPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
-      chunks: ['details-page', 'index'],
+      chunks: ["details-page", "index"]
     }),
     new ExtractTextPlugin("css/[name].[hash].css")
   ]
