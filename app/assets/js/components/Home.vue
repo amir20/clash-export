@@ -1,5 +1,5 @@
 <template>
-    <form class="section" action="/search" method="get" @reset="onReset" @submit="onSubmit">        
+    <form class="section" action="/search" method="get" @reset="onReset" @submit.prevent="onSubmit">        
         <template v-if="savedTag">   
           <section class="hero">
                 <div class="hero-body">
@@ -30,8 +30,32 @@
                 </div>
             </section>
             <div class="column field has-addons">
-                <p class="control">
-                    <input type="text" class="input is-large" placeholder="#tag" name="tag" required>
+                <p class="control">                    
+                    <b-autocomplete
+                        placeholder="Clan name or tag"
+                        field="tag"
+                        size="is-large"
+                        v-model="tag"
+                        :data="data"                        
+                        :loading="isLoading"
+                        @input="fetchData"
+                        @selected="option => selected = option">
+
+                        <template slot-scope="props">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img width="32" :src="props.option.badge">
+                                </div>
+                                <div class="media-content">
+                                    {{ props.option.name }}
+                                    <br>
+                                    <small>
+                                        {{ props.option.tag }}
+                                    </small>
+                                </div>
+                            </div>
+                        </template>
+                    </b-autocomplete>
                 </p>
                 <p class="control">
                     <button type="submit" class="button is-primary is-large">Go</button>
@@ -43,23 +67,31 @@
 
 <script>
 import Card from "./ClanCard";
+import Buefy from "buefy";
+import debounce from "lodash/debounce";
 
 const STORAGE_KEY = "lastTag";
 
 export default {
   components: {
-    Card,  
+    Card,
+    [Buefy.Autocomplete.name]: Buefy.Autocomplete
   },
   data() {
     return {
-      savedTag: null
+      savedTag: null,
+      tag: null,
+      isLoading: false,
+      data: []
     };
   },
   created() {
     this.savedTag = localStorage.getItem(STORAGE_KEY);
-    console.log(`Found saved tag value [${this.savedTag}].`);
-    this.prefetch(`${this.url}.json`);
-    this.prefetch(`${this.url}.json?daysAgo=7`);
+    if (this.savedTag) {
+      console.log(`Found saved tag value [${this.savedTag}].`);
+      this.prefetch(`${this.url}.json`);
+      this.prefetch(`${this.url}.json?daysAgo=7`);
+    }
   },
   methods: {
     onReset() {
@@ -71,8 +103,21 @@ export default {
       this.savedTag = null;
     },
     onSubmit() {
-      localStorage.setItem("searching", true);
+      window.location.href = `/clan/${this.tag.replace("#", "")}`;
+      localStorage.setItem(STORAGE_KEY, this.tag);
     },
+    fetchData: debounce(async function() {
+      this.data = [];
+      this.isLoading = true;
+
+      try {
+        this.data = await (await fetch(`/search.json?q=${this.tag}`)).json();
+      } catch (e) {
+        console.error(e);
+      }
+
+      this.isLoading = false;
+    }, 500),
     prefetch(url) {
       const link = document.createElement("link");
       link.href = url;
