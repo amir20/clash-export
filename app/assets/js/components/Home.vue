@@ -24,8 +24,7 @@
                         Hey, Chief!
                     </h1>
                     <h2 class="subtitle">
-                        I can help you find your clan and export all your member achievements. Let's start by finding your clan with a
-                        <strong>tag</strong>. 
+                        Welcome to ClashStats. I can find and export all your stats for you. Let's search for your clan by name or tag.                                                 
                     </h2>
                 </div>
             </section>
@@ -35,12 +34,11 @@
                         placeholder="Clan name or tag"
                         field="tag"
                         size="is-large"
+                        :keep-first="true"
                         v-model="tag"
                         :data="data"                        
                         :loading="isLoading"
-                        @input="fetchData"
-                        @selected="option => selected = option">
-
+                        @input="fetchData">
                         <template slot-scope="props">
                             <div class="media">
                                 <div class="media-left">
@@ -111,7 +109,7 @@ export default {
       this.isLoading = true;
 
       try {
-        this.data = await (await fetch(`/search.json?q=${this.tag}`)).json();
+        this.data = await (await fetch(`/search.json?q=${this.tag.replace("#", "")}`)).json();
       } catch (e) {
         console.error(e);
       }
