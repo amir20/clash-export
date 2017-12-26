@@ -74,8 +74,32 @@ def delete_old_clans():
     logger.info(f"Deleted {deleted} clans that are older than 45 days.")
 
 
+def update_leaderboards():
+    columns = ['week_delta.avg_donations',
+               'week_delta.avg_attack_wins',
+               'week_delta.avg_versus_wins',
+               'week_delta.avg_gold_grab',
+               'clanPoints',
+               'clanVersusPoints',
+               'warWinStreak',
+               'week_delta.avg_war_stars',
+               'week_delta.avg_trophies',
+               'avg_bh_level']
+
+    for column in columns:
+        for clan in ClanPreCalculated.objects(members__gt=20).order_by(f"-{column}").limit(15):
+            try:
+                logger.info(f"Updating {column} leaderboard clan {clan.tag}.")
+                clan = Clan.fetch_and_save(clan.tag)
+                update_calculations(clan)
+            except Exception:
+                logger.exception(f"Error while fetching leaderboard clan {tag}.")
+                client.captureException()
+
+
 schedule.every().minutes.do(update_clans)
 schedule.every().minutes.do(update_clan_calculations)
+schedule.every().hour.do(update_leaderboards)
 schedule.every().day.at("12:01").do(delete_old_clans)
 
 if __name__ == "__main__":
