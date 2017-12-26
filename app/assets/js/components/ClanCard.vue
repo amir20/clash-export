@@ -3,7 +3,7 @@
       <article class="media">
           <div class="media-left">
               <figure class="image is-64x64">
-                  <img :src="this.data.badgeUrls.small" alt="Image">
+                  <img :src="this.data.badgeUrls.medium" alt="Image">
               </figure>
           </div>
           <div class="media-content">
@@ -30,7 +30,7 @@ export default {
       loading: true,
       data: {
         badgeUrls: {
-          small: "https://placeholdit.co//i/500x500?text=&bg=efefef"
+          medium: "https://placeholdit.co/i/250x250?text=&bg=efefef"
         },
         name: "██████",
         tag: "██████",
