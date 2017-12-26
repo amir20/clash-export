@@ -118,7 +118,6 @@
 import zip from "lodash/zip";
 import fakeData from "../fake-data";
 
-const STORAGE_KEY = "lastTag";
 
 export default {
   props: ["tag", "name"],
@@ -199,12 +198,7 @@ export default {
 
       this.meta = await (await metaPromise).json();
       this.previousData = await (await previousPromise).json();
-      this.clan = await (await nowPromise).json();
-
-      if (localStorage.getItem("searching")) {
-        localStorage.setItem(STORAGE_KEY, this.tag);
-        localStorage.removeItem("searching");
-      }
+      this.clan = await (await nowPromise).json();      
 
       this.loading = false;
     },
