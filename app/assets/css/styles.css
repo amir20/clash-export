@@ -1,5 +1,5 @@
-@import "~bulma/bulma";
-@import "~buefy/lib/buefy.css";
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
 
 h1,
 h2 {
