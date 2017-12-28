@@ -6,7 +6,7 @@ from flask import Flask, request, redirect, url_for, send_file, render_template,
 from flask_caching import Cache
 from raven.contrib.flask import Sentry
 
-from clash import uptime, excel
+from clash import uptime, excel, api
 from clash.transformer import transform_players, clans_leaderboard, to_short_clan
 from model import *
 
@@ -60,7 +60,15 @@ def status():
 
 @app.route("/search.json")
 def search():
-    clans = ClanPreCalculated.objects.search_text(f"\"{request.args.get('q')}\"") or ClanPreCalculated.objects.search_text(request.args.get('q'))
+    query = request.args.get('q')
+    clans = ClanPreCalculated.objects.search_text(f"\"{query}\"") or ClanPreCalculated.objects.search_text(query)
+
+    if not clans:
+        try:            
+            clans = [Clan(**api.find_clan_by_tag(query))]
+        except api.ClanNotFound:
+            clans = [Clan(**c) for c in api.search_by_name(query)['items']]
+
     return jsonify([to_short_clan(c)._asdict() for c in clans])
 
 
