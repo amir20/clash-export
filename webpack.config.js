@@ -44,7 +44,9 @@ module.exports = {
             },
             {
               loader: "postcss-loader",
-              options: { "postcss-custom-properties": false }
+              options: {
+                "postcss-custom-properties": { warnings: false }
+              }
             },
             "sass-loader"
           ]
