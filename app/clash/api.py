@@ -40,6 +40,12 @@ def find_clan_by_tag(tag):
     return r.json()
 
 
+def search_by_name(name):
+    logger.info(f"Searching for clan name {name}.")
+    r = requests.get('https://api.clashofclans.com/v1/clans', headers=headers, params={'name': name})
+    return r.json()
+
+
 def fetch_all_players(clan):
     logger.info(f"Fetching all player stats for {clan['tag']}.")
     tags = [member['tag'] for member in clan['memberList']]

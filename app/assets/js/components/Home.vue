@@ -65,15 +65,13 @@
 
 <script>
 import Card from "./ClanCard";
-import Buefy from "buefy";
 import debounce from "lodash/debounce";
 
 const STORAGE_KEY = "lastTag";
 
 export default {
   components: {
-    Card,
-    [Buefy.Autocomplete.name]: Buefy.Autocomplete
+    Card,    
   },
   data() {
     return {
