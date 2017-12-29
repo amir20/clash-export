@@ -34,7 +34,7 @@
                         placeholder="Clan name or tag"
                         field="tag"
                         size="is-large"
-                        :keep-first="true"
+                        keep-first
                         v-model="tag"
                         :data="data"                        
                         :loading="isLoading"
