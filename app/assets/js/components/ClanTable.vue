@@ -74,43 +74,21 @@
         </div>
     </nav>
     <section>
-      <div class="modal" :class="{'is-active': loading}">
-        <div class="modal-background"></div>
-        <div class="modal-content has-text-centered">
-           <i class="fa fa-circle-notch fa-spin"></i> 
-           <br>
-           Loading...
-        </div>        
-      </div>
-      <table class="table is-narrow is-fullwidth is-striped is-hoverable" :class="{'still-loading': loading}">
-        <thead>
-          <tr>
-            <th v-for="(header, index) in header" :class="{'selected-sort': index - 2 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
-              <a @click="updateSort(index - 2)">{{ header }}</a>
-            </th>
-          </tr>
-        </thead>
-        <tfoot>
-          <tr>
-            <th v-for="header in header">
-              {{ header }}
-            </th>
-          </tr>
-        </tfoot>
-        <tbody>
-          <tr v-for="row in tableData">
-            <th>{{ row.name }}</th>
-            <td>{{ row.tag }}</td>
-            <td v-for="column in row.data">
-              {{ column.now.toLocaleString() }}
-              <b v-if="column.delta != 0" :class="{up: column.delta > 0, down: column.delta < 0}">
-                <i :class="{'fa-arrow-up': column.delta > 0, 'fa-arrow-down': column.delta < 0, fa: true}" aria-hidden="true"></i> {{ Math.abs(column.delta).toLocaleString() }}</b>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
 
+       <b-table
+            :data="tableData"            
+            striped
+            narrowed
+            hoverable
+            mobile-cards
+            :loading="loading">
+             <template slot-scope="props">
+                <b-table-column :label="header" field="index" v-for="(header, index) in header" :key="index" sortable numeric>
+                    {{ props.row[index] }}
+                </b-table-column>
+            </template>            
+        </b-table>    
+    </section>
   </div>
 </template>
 
@@ -141,47 +119,29 @@ export default {
   },
   computed: {
     tableData() {
-      const clanRows = this.clan.slice(1);
+      return this.clan.slice(1);
 
-      // Map by user -> columns
-      const previousPlayers = {};
-      this.previousData.slice(1).forEach(row => {
-        const [name, tags, ...columns] = row;
-        previousPlayers[name] = columns;
-      });
 
-      const tableData = clanRows.map(row => {
-        const [name, tag, ...columns] = row;
-        const previousColumns = previousPlayers[name] || columns;
+      // const clanRows = this.clan.slice(1);
 
-        const zippedRow = zip(columns, previousColumns);
-        const data = zippedRow.map(item => {
-          const [now, previous] = item;
+      // // Map by user -> columns
+      // const previousPlayers = {};
+      // this.previousData.slice(1).forEach(row => {
+      //   const [name, tags, ...columns] = row;
+      //   previousPlayers[name] = columns;
+      // });
 
-          return { now, delta: now - previous, previous };
-        });
+      // const tableData = clanRows.map(row => {
+      //   const [name, tag, ...columns] = row;
+      //   const previousColumns = previousPlayers[name] || columns;
 
-        return { name, tag, data };
-      });
+      //   const zippedRow = zip(columns, previousColumns);
+      //   const data = zippedRow.map(item => {
+      //     const [now, previous] = item;
 
-      return tableData.sort((a, b) => {
-        if (this.sortIndex == -2) {
-          // index for name
-          return a.name.toLowerCase() < b.name.toLowerCase()
-            ? -this.sortDirection
-            : this.sortDirection;
-        } else if (this.sortIndex == -1) {
-          // index for name
-          return a.tag.toLowerCase() < b.tag.toLowerCase()
-            ? -this.sortDirection
-            : this.sortDirection;
-        } else {
-          // index for other columns
-          return a.data[this.sortIndex].now < b.data[this.sortIndex].now
-            ? this.sortDirection
-            : -this.sortDirection;
-        }
-      });
+      //     return { now, delta: now - previous, previous };
+      //   });        
+      // });      
     },
     header() {
       return this.clan[0];
@@ -207,51 +167,48 @@ export default {
       const data = await fetch(`${this.path}.json?daysAgo=${days}`);
       this.previousData = await data.json();
     },
-    updateSort(column) {
-      if (this.sortIndex != column) {
-        this.sortIndex = column;
-      } else {
-        this.sortDirection = -this.sortDirection;
-      }
-    }
   }
 };
 </script>
 
 <style scoped>
-table {
-  font-size: 90%;
-}
 
-thead {
-  background-color: #00d1b2;
-
-  & th {
-    color: #fff;
-
-    &.selected-sort {
-      &.up {
-        border-top: 4px solid #ff3860;
-      }
-
-      &.down {
-        border-bottom: 4px solid #ff3860;
-      }
-    }
+.b-table {
+  & >>> table {
+    font-size: 90%;
   }
 
-  & tr:hover {
+  & >>> thead {
     background-color: #00d1b2;
-  }
 
-  & a {
-    color: #fff;
+    & th {
+      color: #fff;
 
-    &:hover {
-      text-decoration: underline;
+      &.selected-sort {
+        &.up {
+          border-top: 4px solid #ff3860;
+        }
+
+        &.down {
+          border-bottom: 4px solid #ff3860;
+        }
+      }
+    }
+
+    & tr:hover {
+      background-color: #00d1b2;
+    }
+
+    & a {
+      color: #fff;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
+
 
 section {
   overflow-y: scroll;
@@ -284,18 +241,7 @@ nav {
   z-index: 100;
 }
 
-.modal {
-  font-size: 180%;
-  color: white;
-}
 
-.still-loading tbody * {
-  color: #efefef !important;
-}
-
-.modal-background {
-  background-color: rgba(10, 10, 10, 0.2);
-}
 </style>
 
 <style>
