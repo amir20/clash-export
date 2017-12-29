@@ -1,5 +1,5 @@
 <template>
-    <form class="section" action="/search" method="get" @reset="onReset" @submit.prevent="onSubmit">        
+    <form class="section" action="/search" method="get" @reset="onReset">        
         <template v-if="savedTag">   
           <section class="hero">
                 <div class="hero-body">
@@ -70,7 +70,7 @@ const STORAGE_KEY = "lastTag";
 
 export default {
   components: {
-    Card,    
+    Card
   },
   data() {
     return {
@@ -91,8 +91,7 @@ export default {
   methods: {
     onReset() {
       this.savedTag = null;
-      this.tag = null;      
-      localStorage.removeItem(STORAGE_KEY);      
+      this.tag = null;
     },
     onClanError() {
       this.savedTag = null;
@@ -102,7 +101,8 @@ export default {
       this.isLoading = true;
 
       try {
-        this.data = await (await fetch(`/search.json?q=${this.tag.replace("#", "")}`)).json();
+        const query = this.tag.replace("#", "");
+        this.data = await (await fetch(`/search.json?q=${query}`)).json();
       } catch (e) {
         console.error(e);
       }
@@ -120,6 +120,15 @@ export default {
   computed: {
     url() {
       return this.savedTag ? `/clan/${this.savedTag.replace("#", "")}` : "";
+    }
+  },
+  watch: {
+    savedTag(newValue) {
+      if (newValue == null) {
+        localStorage.removeItem(STORAGE_KEY);
+      } else {
+        localStorage.setItem(STORAGE_KEY, newValue);
+      }
     }
   }
 };
