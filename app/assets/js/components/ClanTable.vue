@@ -80,12 +80,15 @@
             narrowed
             hoverable
             mobile-cards
-            default-sort="currentTrophies"
+            default-sort="currentTrophies.value"
             default-sort-direction="desc"            
             :loading="loading">
              <template slot-scope="props">
                 <b-table-column v-for="column in header" :label="column.label" :field="`${column.field}.value`" :key="column.field" :numeric="column.numeric" sortable>
                     {{ props.row[column.field].value.toLocaleString() }}
+                    <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}">
+                      <i class="fa" :class="{'fa-caret-up': props.row[column.field].delta > 0, 'fa-caret-down': props.row[column.field].delta < 0}" aria-hidden="true"></i> {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
+                    </b>
                 </b-table-column>
             </template>            
         </b-table>    
@@ -117,7 +120,7 @@ export default {
     };
   },
   created() {
-    this.fetchData();
+    this.fetchData();    
   },
   computed: {
     tableData() {
@@ -131,10 +134,7 @@ export default {
           row,
           (map, value, column) => {
             const delta =
-              previousRow && isNumber(value)
-                ? previousRow[column] - value
-                : 0;
-
+              previousRow && isNumber(value) ? previousRow[column] - value : 0;
             map[column] = { value, delta };
             return map;
           },
@@ -163,7 +163,7 @@ export default {
       this.previousData = await (await previousPromise).json();
       this.clan = await (await nowPromise).json();
 
-      this.loading = false;
+      this.loading = false;          
     },
     async loadDaysAgo(days) {
       this.days = days;
@@ -203,6 +203,20 @@ export default {
 
   &.is-loading * {
     color: #efefef !important;
+  }
+
+  &>>>b {
+    white-space: nowrap;
+    display: block;
+    line-height: 1;
+    margin-top: 5px;
+    font-size: 95%;
+    &.up {
+      color: #23d160;
+    }
+    &.down {
+      color: #ff3860;
+    }
   }
 }
 
