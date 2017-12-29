@@ -28,17 +28,19 @@
                     </h2>
                 </div>
             </section>
-            <div class="column field has-addons">
+            <div class="column field">
                 <p class="control">                    
                     <b-autocomplete
                         placeholder="Clan name or tag"
                         field="tag"
                         size="is-large"
                         keep-first
+                        expanded
                         v-model="tag"
                         :data="data"                        
                         :loading="isLoading"
-                        @input="fetchData">
+                        @input="fetchData"
+                        @select="option => savedTag = option.tag">
                         <template slot-scope="props">
                             <div class="media">
                                 <div class="media-left">
@@ -54,10 +56,7 @@
                             </div>
                         </template>
                     </b-autocomplete>
-                </p>
-                <p class="control">
-                    <button type="submit" class="button is-primary is-large">Go</button>
-                </p>
+                </p>                
             </div>
         </template>    
     </form>
@@ -92,15 +91,11 @@ export default {
   methods: {
     onReset() {
       this.savedTag = null;
-      localStorage.removeItem(STORAGE_KEY);
-      return false;
+      this.tag = null;      
+      localStorage.removeItem(STORAGE_KEY);      
     },
     onClanError() {
       this.savedTag = null;
-    },
-    onSubmit() {
-      window.location.href = `/clan/${this.tag.replace("#", "")}`;
-      localStorage.setItem(STORAGE_KEY, this.tag);
     },
     fetchData: debounce(async function() {
       this.data = [];
