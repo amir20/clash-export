@@ -83,8 +83,8 @@
             mobile-cards
             :loading="loading">
              <template slot-scope="props">
-                <b-table-column :label="header" field="index" v-for="(header, index) in header" :key="index" sortable numeric>
-                    {{ props.row[index] }}
+                <b-table-column v-for="column in header" :label="column.label" :field="column.field" :key="column.field" :numeric="column.numeric" sortable>
+                    {{ props.row[column.field] }}
                 </b-table-column>
             </template>            
         </b-table>    
@@ -94,8 +94,9 @@
 
 <script>
 import zip from "lodash/zip";
+import camelCase from "lodash/camelCase";
+import reduce from "lodash/reduce";
 import fakeData from "../fake-data";
-
 
 export default {
   props: ["tag", "name"],
@@ -119,32 +120,27 @@ export default {
   },
   computed: {
     tableData() {
-      return this.clan.slice(1);
+      const matrix = this.clan.slice(1);
+      const header = this.header;
 
-
-      // const clanRows = this.clan.slice(1);
-
-      // // Map by user -> columns
-      // const previousPlayers = {};
-      // this.previousData.slice(1).forEach(row => {
-      //   const [name, tags, ...columns] = row;
-      //   previousPlayers[name] = columns;
-      // });
-
-      // const tableData = clanRows.map(row => {
-      //   const [name, tag, ...columns] = row;
-      //   const previousColumns = previousPlayers[name] || columns;
-
-      //   const zippedRow = zip(columns, previousColumns);
-      //   const data = zippedRow.map(item => {
-      //     const [now, previous] = item;
-
-      //     return { now, delta: now - previous, previous };
-      //   });        
-      // });      
+      
+      return matrix.map(row => {
+        return reduce(
+          row,
+          (map, value, index) => {              
+            map[header[index].field] = value;
+            return map;
+          },
+          {}
+        );
+      });
     },
     header() {
-      return this.clan[0];
+      return this.clan[0].map((column, index) => ({
+        label: column,
+        field: camelCase(column),
+        numeric: index > 1
+      }));
     },
     path() {
       return `/clan/${this.tag.replace("#", "")}`;
@@ -158,7 +154,7 @@ export default {
 
       this.meta = await (await metaPromise).json();
       this.previousData = await (await previousPromise).json();
-      this.clan = await (await nowPromise).json();      
+      this.clan = await (await nowPromise).json();
 
       this.loading = false;
     },
@@ -166,19 +162,18 @@ export default {
       this.days = days;
       const data = await fetch(`${this.path}.json?daysAgo=${days}`);
       this.previousData = await data.json();
-    },
+    }
   }
 };
 </script>
 
 <style scoped>
-
 .b-table {
-  & >>> table {
+  &>>>table {
     font-size: 90%;
   }
 
-  & >>> thead {
+  &>>>thead {
     background-color: #00d1b2;
 
     & th {
@@ -208,7 +203,6 @@ export default {
     }
   }
 }
-
 
 section {
   overflow-y: scroll;
@@ -240,8 +234,6 @@ nav {
   top: 0;
   z-index: 100;
 }
-
-
 </style>
 
 <style>
