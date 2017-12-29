@@ -84,8 +84,8 @@
             default-sort-direction="desc"            
             :loading="loading">
              <template slot-scope="props">
-                <b-table-column v-for="column in header" :label="column.label" :field="column.field" :key="column.field" :numeric="column.numeric" sortable>
-                    {{ props.row[column.field].toLocaleString() }}
+                <b-table-column v-for="column in header" :label="column.label" :field="`${column.field}.value`" :key="column.field" :numeric="column.numeric" sortable>
+                    {{ props.row[column.field].value.toLocaleString() }}
                 </b-table-column>
             </template>            
         </b-table>    
@@ -97,6 +97,8 @@
 import zip from "lodash/zip";
 import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
+import keyBy from "lodash/keyBy";
+import isNumber from "lodash/isNumber";
 import fakeData from "../fake-data";
 
 export default {
@@ -107,8 +109,6 @@ export default {
       clan: fakeData,
       previousData: fakeData,
       days: 7,
-      sortIndex: 5,
-      sortDirection: 1,
       meta: {
         badgeUrls: {
           small: "https://placeholdit.co//i/500x500?text=&bg=ccc"
@@ -121,15 +121,21 @@ export default {
   },
   computed: {
     tableData() {
-      const matrix = this.clan.slice(1);
-      const header = this.header;
+      const data = this.convertToMap(this.clan.slice(1));
+      const previousData = this.convertToMap(this.previousData.slice(1));
+      const previousByTag = keyBy(previousData, "tag");
 
-      
-      return matrix.map(row => {
+      return data.map(row => {
+        const previousRow = previousByTag[row.tag];
         return reduce(
           row,
-          (map, value, index) => {              
-            map[header[index].field] = value;
+          (map, value, column) => {
+            const delta =
+              previousRow && isNumber(value)
+                ? previousRow[column] - value
+                : 0;
+
+            map[column] = { value, delta };
             return map;
           },
           {}
@@ -163,6 +169,19 @@ export default {
       this.days = days;
       const data = await fetch(`${this.path}.json?daysAgo=${days}`);
       this.previousData = await data.json();
+    },
+    convertToMap(matrix) {
+      const header = this.header;
+      return matrix.map(row => {
+        return reduce(
+          row,
+          (map, value, columnIndex) => {
+            map[header[columnIndex].field] = value;
+            return map;
+          },
+          {}
+        );
+      });
     }
   }
 };
@@ -179,29 +198,11 @@ export default {
 
     & th {
       color: #fff;
-
-      &.selected-sort {
-        &.up {
-          border-top: 4px solid #ff3860;
-        }
-
-        &.down {
-          border-bottom: 4px solid #ff3860;
-        }
-      }
     }
+  }
 
-    & tr:hover {
-      background-color: #00d1b2;
-    }
-
-    & a {
-      color: #fff;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+  &.is-loading * {
+    color: #efefef !important;
   }
 }
 
@@ -211,22 +212,6 @@ section {
 
 h1 {
   font-size: 140%;
-}
-
-b {
-  white-space: nowrap;
-  display: block;
-  line-height: 1;
-  margin-top: 5px;
-  font-size: 95%;
-
-  &.up {
-    color: #23d160;
-  }
-
-  &.down {
-    color: #ff3860;
-  }
 }
 
 nav {
