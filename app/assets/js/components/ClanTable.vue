@@ -74,50 +74,35 @@
         </div>
     </nav>
     <section>
-      <div class="modal" :class="{'is-active': loading}">
-        <div class="modal-background"></div>
-        <div class="modal-content has-text-centered">
-           <i class="fa fa-circle-notch fa-spin"></i> 
-           <br>
-           Loading...
-        </div>        
-      </div>
-      <table class="table is-narrow is-fullwidth is-striped is-hoverable" :class="{'still-loading': loading}">
-        <thead>
-          <tr>
-            <th v-for="(header, index) in header" :class="{'selected-sort': index - 2 == sortIndex, 'up': sortDirection == 1, 'down': sortDirection == -1}">
-              <a @click="updateSort(index - 2)">{{ header }}</a>
-            </th>
-          </tr>
-        </thead>
-        <tfoot>
-          <tr>
-            <th v-for="header in header">
-              {{ header }}
-            </th>
-          </tr>
-        </tfoot>
-        <tbody>
-          <tr v-for="row in tableData">
-            <th>{{ row.name }}</th>
-            <td>{{ row.tag }}</td>
-            <td v-for="column in row.data">
-              {{ column.now.toLocaleString() }}
-              <b v-if="column.delta != 0" :class="{up: column.delta > 0, down: column.delta < 0}">
-                <i :class="{'fa-arrow-up': column.delta > 0, 'fa-arrow-down': column.delta < 0, fa: true}" aria-hidden="true"></i> {{ Math.abs(column.delta).toLocaleString() }}</b>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+       <b-table
+            :data="tableData"            
+            striped
+            narrowed
+            hoverable
+            mobile-cards
+            default-sort="currentTrophies.value"
+            default-sort-direction="desc"            
+            :loading="loading">
+             <template slot-scope="props">
+                <b-table-column v-for="column in header" :label="column.label" :field="`${column.field}.value`" :key="column.field" :numeric="column.numeric" sortable>
+                    {{ props.row[column.field].value.toLocaleString() }}
+                    <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}">
+                      <i class="fa" :class="{'fa-caret-up': props.row[column.field].delta > 0, 'fa-caret-down': props.row[column.field].delta < 0}" aria-hidden="true"></i> {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
+                    </b>
+                </b-table-column>
+            </template>            
+        </b-table>    
     </section>
-
   </div>
 </template>
 
 <script>
 import zip from "lodash/zip";
+import camelCase from "lodash/camelCase";
+import reduce from "lodash/reduce";
+import keyBy from "lodash/keyBy";
+import isNumber from "lodash/isNumber";
 import fakeData from "../fake-data";
-
 
 export default {
   props: ["tag", "name"],
@@ -127,8 +112,6 @@ export default {
       clan: fakeData,
       previousData: fakeData,
       days: 7,
-      sortIndex: 5,
-      sortDirection: 1,
       meta: {
         badgeUrls: {
           small: "https://placeholdit.co//i/500x500?text=&bg=ccc"
@@ -137,54 +120,34 @@ export default {
     };
   },
   created() {
-    this.fetchData();
+    this.fetchData();    
   },
   computed: {
     tableData() {
-      const clanRows = this.clan.slice(1);
+      const data = this.convertToMap(this.clan.slice(1));
+      const previousData = this.convertToMap(this.previousData.slice(1));
+      const previousByTag = keyBy(previousData, "tag");
 
-      // Map by user -> columns
-      const previousPlayers = {};
-      this.previousData.slice(1).forEach(row => {
-        const [name, tags, ...columns] = row;
-        previousPlayers[name] = columns;
-      });
-
-      const tableData = clanRows.map(row => {
-        const [name, tag, ...columns] = row;
-        const previousColumns = previousPlayers[name] || columns;
-
-        const zippedRow = zip(columns, previousColumns);
-        const data = zippedRow.map(item => {
-          const [now, previous] = item;
-
-          return { now, delta: now - previous, previous };
-        });
-
-        return { name, tag, data };
-      });
-
-      return tableData.sort((a, b) => {
-        if (this.sortIndex == -2) {
-          // index for name
-          return a.name.toLowerCase() < b.name.toLowerCase()
-            ? -this.sortDirection
-            : this.sortDirection;
-        } else if (this.sortIndex == -1) {
-          // index for name
-          return a.tag.toLowerCase() < b.tag.toLowerCase()
-            ? -this.sortDirection
-            : this.sortDirection;
-        } else {
-          // index for other columns
-          return a.data[this.sortIndex].now < b.data[this.sortIndex].now
-            ? this.sortDirection
-            : -this.sortDirection;
-        }
+      return data.map(row => {
+        const previousRow = previousByTag[row.tag];
+        return reduce(
+          row,
+          (map, value, column) => {
+            const delta =
+              previousRow && isNumber(value) ? previousRow[column] - value : 0;
+            map[column] = { value, delta };
+            return map;
+          },
+          {}
+        );
       });
     },
     header() {
-      return this.clan[0];
+      return this.clan[0].map((column, index) => ({
+        label: column,
+        field: camelCase(column),
+        numeric: index > 1
+      }));
     },
     path() {
       return `/clan/${this.tag.replace("#", "")}`;
@@ -198,57 +161,61 @@ export default {
 
       this.meta = await (await metaPromise).json();
       this.previousData = await (await previousPromise).json();
-      this.clan = await (await nowPromise).json();      
+      this.clan = await (await nowPromise).json();
 
-      this.loading = false;
+      this.loading = false;          
     },
     async loadDaysAgo(days) {
       this.days = days;
       const data = await fetch(`${this.path}.json?daysAgo=${days}`);
       this.previousData = await data.json();
     },
-    updateSort(column) {
-      if (this.sortIndex != column) {
-        this.sortIndex = column;
-      } else {
-        this.sortDirection = -this.sortDirection;
-      }
+    convertToMap(matrix) {
+      const header = this.header;
+      return matrix.map(row => {
+        return reduce(
+          row,
+          (map, value, columnIndex) => {
+            map[header[columnIndex].field] = value;
+            return map;
+          },
+          {}
+        );
+      });
     }
   }
 };
 </script>
 
 <style scoped>
-table {
-  font-size: 90%;
-}
+.b-table {
+  &>>>table {
+    font-size: 90%;
+  }
 
-thead {
-  background-color: #00d1b2;
+  &>>>thead {
+    background-color: #00d1b2;
 
-  & th {
-    color: #fff;
-
-    &.selected-sort {
-      &.up {
-        border-top: 4px solid #ff3860;
-      }
-
-      &.down {
-        border-bottom: 4px solid #ff3860;
-      }
+    & th {
+      color: #fff;
     }
   }
 
-  & tr:hover {
-    background-color: #00d1b2;
+  &.is-loading * {
+    color: #efefef !important;
   }
 
-  & a {
-    color: #fff;
-
-    &:hover {
-      text-decoration: underline;
+  &>>>b {
+    white-space: nowrap;
+    display: block;
+    line-height: 1;
+    margin-top: 5px;
+    font-size: 95%;
+    &.up {
+      color: #23d160;
+    }
+    &.down {
+      color: #ff3860;
     }
   }
 }
@@ -261,40 +228,11 @@ h1 {
   font-size: 140%;
 }
 
-b {
-  white-space: nowrap;
-  display: block;
-  line-height: 1;
-  margin-top: 5px;
-  font-size: 95%;
-
-  &.up {
-    color: #23d160;
-  }
-
-  &.down {
-    color: #ff3860;
-  }
-}
-
 nav {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
-}
-
-.modal {
-  font-size: 180%;
-  color: white;
-}
-
-.still-loading tbody * {
-  color: #efefef !important;
-}
-
-.modal-background {
-  background-color: rgba(10, 10, 10, 0.2);
 }
 </style>
 
