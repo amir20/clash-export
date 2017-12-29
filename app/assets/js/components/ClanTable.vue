@@ -134,7 +134,7 @@ export default {
           row,
           (map, value, column) => {
             const delta =
-              previousRow && isNumber(value) ? previousRow[column] - value : 0;
+              previousRow && isNumber(value) ? value - previousRow[column] : 0;
             map[column] = { value, delta };
             return map;
           },
