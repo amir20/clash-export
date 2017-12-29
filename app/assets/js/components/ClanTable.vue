@@ -74,17 +74,18 @@
         </div>
     </nav>
     <section>
-
        <b-table
             :data="tableData"            
             striped
             narrowed
             hoverable
             mobile-cards
+            default-sort="currentTrophies"
+            default-sort-direction="desc"            
             :loading="loading">
              <template slot-scope="props">
                 <b-table-column v-for="column in header" :label="column.label" :field="column.field" :key="column.field" :numeric="column.numeric" sortable>
-                    {{ props.row[column.field] }}
+                    {{ props.row[column.field].toLocaleString() }}
                 </b-table-column>
             </template>            
         </b-table>    
