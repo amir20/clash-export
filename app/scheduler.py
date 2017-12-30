@@ -73,6 +73,10 @@ def delete_old_clans():
     deleted = Clan.older_than(days=45).delete()
     logger.info(f"Deleted {deleted} clans that are older than 45 days.")
 
+    tags = ClanPreCalculated.objects(members__lt=5).distinct('tag')
+    Clan.objects(tag__in=tags).delete()
+    logger.info(f"Deleted {deleted} clans with less than 5 members.")
+
 
 def update_leaderboards():
     columns = ['week_delta.avg_donations',
