@@ -76,7 +76,7 @@ def delete_old_clans():
     tags = ClanPreCalculated.objects(members__lt=5).distinct('tag')
     Clan.objects(tag__in=tags).delete()
     logger.info(f"Deleted {deleted} clans with less than 5 members.")
-    all_tags.remove(tags)
+    [all_tags.discard(t) for t in tags]
 
 
 def update_leaderboards():
