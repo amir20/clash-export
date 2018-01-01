@@ -1,7 +1,7 @@
 import xlsxwriter
 from io import BytesIO
 
-from clash import transformer
+from clashstats.clash import transformer
 
 
 def to_stream(clan):

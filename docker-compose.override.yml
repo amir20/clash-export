@@ -7,11 +7,7 @@ services:
       - ./:/clashstats
 
   web:
-    environment:
-      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImMwMTQzZGJhLTVmYjAtNGNiYy04MGU1LTlmMzZjZmEzMmY2ZiIsImlhdCI6MTUxMzg3MjMzMCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjczLjE3MC41NS4zOCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.lpKym4i7azK2xXXSdqlwRl3jrb2JeaDvjZLUJiWvZx6J6mLLt3LD96gbO2OZkL40p97wLYf7Dz46x-g7brplFw
-      - DEBUG=true
-      - SENTRY_DSN=
-      - DB_HOST=db
+    env_file: .env          
     restart: 'no'
     #command: 'python main.py'
     depends_on: 
@@ -24,11 +20,7 @@ services:
       - /tmp/mongodb-27017.sock:/tmp/mongodb-27017.sock
 
   scheduler:
-    environment:
-      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImMwMTQzZGJhLTVmYjAtNGNiYy04MGU1LTlmMzZjZmEzMmY2ZiIsImlhdCI6MTUxMzg3MjMzMCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjczLjE3MC41NS4zOCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.lpKym4i7azK2xXXSdqlwRl3jrb2JeaDvjZLUJiWvZx6J6mLLt3LD96gbO2OZkL40p97wLYf7Dz46x-g7brplFw
-      - DEBUG=true
-      - SENTRY_DSN=
-      - DB_HOST=db
+    env_file: .env      
     restart: 'no'    
     volumes:
       - ./app:/app

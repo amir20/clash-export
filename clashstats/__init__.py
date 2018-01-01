@@ -6,9 +6,9 @@ from flask import Flask, request, redirect, url_for, send_file, render_template,
 from flask_caching import Cache
 from raven.contrib.flask import Sentry
 
-from clash import uptime, excel, api
-from clash.transformer import transform_players, clans_leaderboard, to_short_clan
-from model import *
+from clashstats.clash import uptime, excel, api
+from clashstats.clash.transformer import transform_players, clans_leaderboard, to_short_clan
+from clashstats.model import *
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)

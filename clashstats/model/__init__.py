@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from bson.objectid import ObjectId
 from mongoengine import *
-from clash import api
+from clashstats.clash import api
 
 
 class Player(DynamicDocument):
