@@ -8,8 +8,8 @@ RUN npm install --production
 
 # Copy all files for webpack
 COPY webpack.config.js .babelrc postcss.config.js ./
-COPY app/assets/ app/assets/
-COPY app/static/ app/static/
+COPY assets/ assets/
+COPY clashstats/static clashstats/static
 
 # Do the build
 RUN npm run build
@@ -46,18 +46,21 @@ RUN apt-get update \
 
 
 # Custom Supervisord config
-COPY ./conf/supervisord-web.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
 
 # Copy caddy file
 COPY ./caddy/Caddyfile /etc/Caddyfile
 
 # Copy all other files
-COPY ./app /app
+COPY ./clashstats /app/clashstats
+COPY ./*.py /app/
 
 # Copy the js files
-COPY --from=builder /build/app/static /app/static
+COPY --from=builder /build/clashstats/static /app/clashstats/static
 
+RUN pip install -e .
+ENV FLASK_APP=clashstats
 
 VOLUME /root/.caddy
 EXPOSE 80 443
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord-web.conf"]

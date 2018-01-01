@@ -142,10 +142,3 @@ def manifest_path(file):
 
 app.add_template_global(manifest_path, 'manifest_path')
 
-if __name__ == "__main__":
-    if (app.debug):
-        from werkzeug.debug import DebuggedApplication
-
-        app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
-
-    app.run(host='0.0.0.0', port=80)

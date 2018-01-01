@@ -1,13 +1,14 @@
 import logging
 import time
-
 import os
 import schedule
+
 from mongoengine import connect
 from raven import Client
 from datetime import datetime, timedelta
-from clash.calculation import update_calculations
-from model import *
+
+from clashstats.clash.calculation import update_calculations
+from clashstats.model import *
 
 client = Client(os.getenv('SENTRY_DSN'))
 
@@ -16,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 logger = logging.getLogger(__name__)
-logging.getLogger("clash.api").setLevel(logging.WARNING)
+logging.getLogger("clashstats.clash.api").setLevel(logging.WARNING)
 
 all_tags = set(Clan.objects.distinct('tag'))
 
@@ -107,7 +108,12 @@ schedule.every().minutes.do(update_clan_calculations)
 schedule.every().hour.do(update_leaderboards)
 schedule.every().day.at("12:01").do(delete_old_clans)
 
-if __name__ == "__main__":
+
+def main():
     while True:
         schedule.run_pending()
         time.sleep(1)
+
+
+if __name__ == "__main__":
+    main()

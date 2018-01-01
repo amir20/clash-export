@@ -1,13 +1,11 @@
 version: '3'
 services:
-  scheduler:
-    hostname: scheduler
-    image: amir20/clashstats-scheduler:latest
-    build:
-      context: .
-      dockerfile: Dockerfile.scheduler           
+  scheduler:    
+    image: amir20/clashstats:latest
+    hostname: scheduler    
+    command: '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord-scheduler.conf'    
 
   web:
     build: .
-    image: amir20/clashstats-web:latest
+    image: amir20/clashstats:latest
     hostname: web    
