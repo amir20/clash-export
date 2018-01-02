@@ -1,5 +1,5 @@
 http://clashstats.local, localhost:80 {
-    root /app
+    root /app/clashstats
 
     proxy / unix:/tmp/gunicorn.sock {
         transparent

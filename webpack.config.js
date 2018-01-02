@@ -2,16 +2,17 @@ const webpack = require("webpack");
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin'); 
 
 module.exports = {
-  context: __dirname + "/app",
+  context: __dirname + "/assets",
   entry: {
-    "details-page": "./assets/js/details-page.js",
-    index: "./assets/js/index.js",
-    styles: "./assets/css/styles.css"
+    "details-page": "./js/details-page.js",
+    index: "./js/index.js",
+    styles: "./css/styles.css"
   },
   output: {
-    path: __dirname + "/app/static/",
+    path: __dirname + "/clashstats/static/",
     filename: "js/[name].js"
   },
   resolve: {
@@ -60,7 +61,8 @@ module.exports = {
       name: "vendor",
       chunks: ["details-page", "index"]
     }),
-    new ExtractTextPlugin("css/[name].[hash].css")
+    new ExtractTextPlugin("css/[name].[hash].css"),
+    new CleanWebpackPlugin([__dirname + "/clashstats/static/css", __dirname + "/clashstats/static/js"]),
   ]
 };
 

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from model import ClanPreCalculated, ClanDelta, Clan
+from clashstats.model import ClanPreCalculated, ClanDelta, Clan
 from .transformer import transform_players
 from datetime import datetime
 from mongoengine.errors import DoesNotExist
