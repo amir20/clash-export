@@ -1,14 +1,12 @@
 import logging
-import time
 import os
+import time
+
 import schedule
-
-from mongoengine import connect
-from raven import Client
-from datetime import datetime, timedelta
-
 from clashstats.clash.calculation import update_calculations
 from clashstats.model import *
+from mongoengine import connect
+from raven import Client
 
 client = Client(os.getenv('SENTRY_DSN'))
 
