@@ -1,5 +1,5 @@
 https://clashstats.download {
-    root /app
+    root /app/clashstats
 
     tls findamir@gmail.com
 
