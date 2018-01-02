@@ -39,7 +39,7 @@ def update_clans():
 
     total_clans = ClanPreCalculated.objects.count()
 
-    ratio_indexed = 100 * (ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago).count() / total_clans)
+    ratio_indexed = 100 * (ClanPreCalculated.objects(last_updated__gt=twelve_hour_ago).count() / total_clans)
     Status.objects.update_one(
         set__ratio_indexed=ratio_indexed,
         set__total_clans=total_clans,
