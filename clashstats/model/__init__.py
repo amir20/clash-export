@@ -1,4 +1,4 @@
-from clashstats.model.clan import Clan
-from clashstats.model.clan_pre_calculated import ClanPreCalculated, ClanDelta
-from clashstats.model.player import Player
-from clashstats.model.status import Status
+from .clan import Clan
+from .clan_pre_calculated import ClanPreCalculated, ClanDelta
+from .player import Player
+from .status import Status
