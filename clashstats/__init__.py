@@ -20,7 +20,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'null' if app.debug else 'filesystem', 
 # Set connect to False for pre-forking to work
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
-import clashstats.views
+import clashstats.views  # noqa
 
 
 def manifest_path(file):
