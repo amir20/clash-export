@@ -50,7 +50,7 @@
                                     {{ props.option.name }}
                                     <br>
                                     <small>
-                                        {{ props.option.tag }}
+                                        {{ props.option.tag }} {{ props.option.members}} members
                                     </small>
                                 </div>
                             </div>
