@@ -50,7 +50,7 @@ def clan_detail_xlsx(tag):
 def clan_detail_page(slug):
     try:
         clan = api.find_clan_by_tag(ClanPreCalculated.find_by_slug(slug).tag)
-    except api.ClanNotFound:
+    except (api.ClanNotFound, DoesNotExist):
         return render_template('error.html'), 404
     else:
         return render_template('clan.html', clan=clan)
