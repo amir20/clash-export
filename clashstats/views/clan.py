@@ -1,8 +1,11 @@
+from flask import render_template, send_file, request, jsonify
+from mongoengine import DoesNotExist
+
 from clashstats import app, cache
 from clashstats.clash import excel, api
+from clashstats.clash.calculation import update_calculations
 from clashstats.clash.transformer import transform_players, to_short_clan
 from clashstats.model import Clan, ClanPreCalculated
-from flask import render_template, send_file, request, jsonify
 
 
 @app.route("/search.json")
@@ -43,10 +46,10 @@ def clan_detail_xlsx(tag):
         return send_file(excel.to_stream(clan), attachment_filename=f"{clan.tag}.xlsx", as_attachment=True)
 
 
-@app.route("/clan/<tag>")
-def clan_detail_page(tag):
+@app.route("/clan/<slug>")
+def clan_detail_page(slug):
     try:
-        clan = api.find_clan_by_tag(tag)
+        clan = api.find_clan_by_tag(ClanPreCalculated.find_by_slug(slug).tag)
     except api.ClanNotFound:
         return render_template('error.html'), 404
     else:
@@ -56,10 +59,23 @@ def clan_detail_page(tag):
 @app.route("/clan/<tag>/short.json")
 @cache.cached(timeout=1000)
 def clan_meta(tag):
-    clan = clan_from_days_ago(1, tag)
-    clan.id = None
-    clan.players = None
-    return clan.to_json()
+    try:
+        clan = ClanPreCalculated.find_by_tag(tag)
+    except DoesNotExist:
+        clan = update_calculations(Clan.fetch_and_save(tag))
+
+    data = {
+        'tag': clan.tag,
+        'slug': clan.slug,
+        'name': clan.name,
+        'description': clan.description,
+        'clanPoints': clan.clanPoints,
+        'clanVersusPoints': clan.clanVersusPoints,
+        'members': clan.members,
+        'badgeUrls': clan.badgeUrls,
+    }
+
+    return jsonify(data)
 
 
 def clan_from_days_ago(days_ago, tag):

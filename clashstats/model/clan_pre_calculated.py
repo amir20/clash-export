@@ -27,6 +27,7 @@ class ClanDelta(EmbeddedDocument):
 class ClanPreCalculated(Document):
     last_updated = DateTimeField(default=datetime.now)
     tag = StringField(required=True, unique=True)
+    slug = StringField(required=True)
     name = StringField(required=True)
     description = StringField(required=True)
     clanPoints = IntField(required=True)
@@ -69,6 +70,7 @@ class ClanPreCalculated(Document):
             },
             'last_updated',
             'name',
+            'slug',
             'tag',
             'members',
             'clanPoints',
@@ -125,3 +127,13 @@ class ClanPreCalculated(Document):
 
         ]
     }
+
+    @classmethod
+    def find_by_slug(cls, slug):
+        return cls.objects.get(slug=slug)
+
+    @classmethod
+    def find_by_tag(cls, tag):
+        if not tag.startswith('#'):
+            tag = '#' + tag
+        return cls.objects.get(tag=tag)

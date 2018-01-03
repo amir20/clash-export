@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  props: ["tag"],
+  props: ["tag", "foundClan"],
   data() {
     return {
       loading: true,
@@ -49,6 +49,7 @@ export default {
       console.error(e);
       this.$emit("error");
     }
+    this.$emit('update:foundClan', this.data)
     this.loading = false;
   }
 };

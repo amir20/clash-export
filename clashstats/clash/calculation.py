@@ -4,6 +4,7 @@ from clashstats.model import ClanPreCalculated, ClanDelta, Clan
 from .transformer import transform_players
 from datetime import datetime
 from mongoengine.errors import DoesNotExist
+from slugify import slugify
 
 
 def update_calculations(clan):
@@ -30,6 +31,7 @@ def update_calculations(clan):
         cpc.season_start = clan
 
     cpc.name = clan.name
+    cpc.slug = slugify(f"{clan.name}-{clan.tag}", to_lower=True)
     cpc.description = clan.description
     cpc.members = clan.members
     cpc.clanPoints = clan.clanPoints
@@ -53,6 +55,8 @@ def update_calculations(clan):
     calculate_week(cpc)
 
     cpc.save()
+
+    return cpc
 
 
 def calculate_avg(cpc):
@@ -169,3 +173,5 @@ def to_data_frame(clan):
     df = df.set_index('Tag')
     df = df.iloc[1:]
     return df
+
+
