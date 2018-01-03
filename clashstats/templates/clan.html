@@ -7,4 +7,8 @@
  
 {% endblock %}
 
-{% block title %}{{ clan.name }}{% endblock %}
+{% block title %}{{ clan.name }}{% endblock %} {% block meta %}
+<meta name=”description” content="{{ clan.name }} {{ clan.description }} at ClashStats.download.">
+<meta name="keywords" content="{{ clan.name }} clash of clans, export, excel, achievements, leaderboard">
+<meta property="og:title" content="{{ clan.name }} - ClashStats.download">
+<meta property="og:description" content="{{ clan.name }} {{ clan.description }} at ClashStats.download."> {% endblock %}
