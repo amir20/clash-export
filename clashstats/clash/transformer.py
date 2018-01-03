@@ -2,7 +2,7 @@ from collections import OrderedDict
 from collections import namedtuple
 from functools import reduce
 
-ShortClan = namedtuple('ShortClan', 'name tag badge slug score')
+ShortClan = namedtuple('ShortClan', 'name tag badge slug members score')
 
 
 def transform_players(players):
@@ -80,7 +80,7 @@ def deepgetattr(obj, attr):
 
 def to_short_clan(clan, prop=None):
     score = None if prop is None else deepgetattr(clan, prop)
-    return ShortClan(name=clan.name, tag=clan.tag, badge=clan.badgeUrls.get('small'), slug=getattr(clan, 'slug', None), score=score)
+    return ShortClan(name=clan.name, tag=clan.tag, badge=clan.badgeUrls.get('small'), members=clan.members, slug=getattr(clan, 'slug', None), score=score)
 
 
 def clans_leaderboard(clans, prop):

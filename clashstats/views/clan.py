@@ -1,5 +1,6 @@
 from flask import render_template, send_file, request, jsonify
 from mongoengine import DoesNotExist
+from collections import OrderedDict
 
 from clashstats import app, cache
 from clashstats.clash import excel, api
@@ -11,13 +12,19 @@ from clashstats.model import Clan, ClanPreCalculated
 @app.route("/search.json")
 def search():
     query = request.args.get('q')
-    clans = ClanPreCalculated.objects.search_text(f"\"{query}\"") or ClanPreCalculated.objects.search_text(query)
 
-    if not clans:
+    tags = set()
+    clans = []
+    clans.extend(ClanPreCalculated.objects.search_text(f"\"{query}\""))
+    tags.update([c.tag for c in clans])
+
+    if len(clans) < 2:
         try:
-            clans = [Clan(**api.find_clan_by_tag(query))]
-        except api.ClanNotFound:
-            clans = [Clan(**c) for c in api.search_by_name(query)['items']]
+            clans.extend([Clan(**api.find_clan_by_tag(query))])
+        except api.ClanNotFound:        
+            for clan in sorted([Clan(**c) for c in api.search_by_name(query)['items']], key=lambda c: c.members, reverse=True):
+                if clan.tag not in tags:
+                    clans.append(clan)
 
     return jsonify([to_short_clan(c)._asdict() for c in clans])
 
