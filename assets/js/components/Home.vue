@@ -11,10 +11,10 @@
                     </h2>
                 </div>
             </section>       
-          <Card :tag="savedTag" @error="onClanError"/>            
+          <Card :tag="savedTag" @error="onClanError" :foundClan.sync="foundClan"/>            
           <p class="buttons">             
             <button type="reset" class="button is-warning is-large">Change Clan</button>
-            <a :href="url" class="button is-success is-large">Continue &rsaquo;</a>      
+            <a :href="`/clan/${foundClan.slug}`" class="button is-success is-large">Continue &rsaquo;</a>      
           </p>
         </template>
         <template v-else>
@@ -77,7 +77,8 @@ export default {
       savedTag: null,
       tag: null,
       isLoading: false,
-      data: []
+      data: [],
+      foundClan: { slug: null }
     };
   },
   created() {
