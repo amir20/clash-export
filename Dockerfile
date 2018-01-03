@@ -25,25 +25,23 @@ RUN pip install pipenv
 # Copy requirements file
 COPY ./Pipfile* /app/
 
-# Install packages 
-RUN pipenv install --system
-
 ARG plugins=http.expires
 
 # Install caddy and clean up
 RUN apt-get update \
     && apt-get install supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \
+    && apt-get install gcc -y \
     && curl --silent --show-error --fail --location \
       --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
       "https://caddyserver.com/download/linux/amd64?plugins=${plugins}" \
     | tar --no-same-owner -C /usr/bin/ -xz caddy \
     && chmod 0755 /usr/bin/caddy \
     && /usr/bin/caddy -version \
-    && apt-get remove -y curl \
+    && pipenv install --system \
+    && apt-get remove -y curl gcc \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
-
 
 # Custom Supervisord config
 COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
