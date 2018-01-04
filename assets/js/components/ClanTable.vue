@@ -102,15 +102,14 @@ import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
 import isNumber from "lodash/isNumber";
-import fakeData from "../fake-data";
 
 export default {
-  props: ["tag", "name"],
+  props: ["tag", "name", "players"],
   data() {
     return {
       loading: true,
-      clan: fakeData,
-      previousData: fakeData,
+      clan: null,
+      previousData: null,
       days: 7,
       meta: {
         badgeUrls: {
@@ -120,7 +119,9 @@ export default {
     };
   },
   created() {
-    this.fetchData();    
+    this.clan = this.players;
+    this.previousData = this.players;
+    this.fetchData();
   },
   computed: {
     tableData() {
@@ -159,11 +160,11 @@ export default {
       const previousPromise = fetch(`${this.path}.json?daysAgo=${this.days}`);
       const metaPromise = fetch(`${this.path}/short.json`);
 
-      this.meta = await (await metaPromise).json();
+      this.loading = false;
       this.previousData = await (await previousPromise).json();
+      
+      this.meta = await (await metaPromise).json();
       this.clan = await (await nowPromise).json();
-
-      this.loading = false;          
     },
     async loadDaysAgo(days) {
       this.days = days;

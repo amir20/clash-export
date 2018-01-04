@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block body %}
 <main id="clan-table">
-    <Clan-Table tag="{{ clan.tag }}" name="{{ clan.name }}" />
+    <Clan-Table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}'/>
 </main>
 <script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %} 
 {% block title %}{{ clan.name }}{% endblock %} {% block meta %}

@@ -32,6 +32,13 @@ class Clan(DynamicDocument):
         return cls.objects(id__gte=object_id, tag=tag)
 
     @classmethod
+    def find_first_by_tag(cls, tag):
+        if not tag.startswith('#'):
+            tag = '#' + tag
+
+        return cls.objects(tag=tag).first()
+
+    @classmethod
     def fetch_and_save(cls, tag):
         if not tag.startswith('#'):
             tag = '#' + tag
