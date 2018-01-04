@@ -40,9 +40,9 @@ def find_clan_by_tag(tag):
     return r.json()
 
 
-def search_by_name(name):
-    logger.info(f"Searching for clan name {name}.")
-    r = requests.get('https://api.clashofclans.com/v1/clans', headers=headers, params={'name': name})
+def search_by_name(name, limit=10):
+    logger.info(f"Searching for clan name '{name}'.")
+    r = requests.get('https://api.clashofclans.com/v1/clans', headers=headers, params={'name': name, 'limit': limit})
     return r.json()
 
 
