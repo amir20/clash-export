@@ -50,10 +50,12 @@ def clan_detail_xlsx(tag):
 def clan_detail_page(slug):
     try:
         clan = ClanPreCalculated.find_by_slug(slug)
+        last_data = Clan.find_first_by_tag(clan.tag)
+        players = transform_players(last_data.players)
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
-        return render_template('clan.html', clan=clan)
+        return render_template('clan.html', clan=clan, players=players)
 
 
 @app.route("/clan/<tag>/short.json")
