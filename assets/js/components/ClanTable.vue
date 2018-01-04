@@ -86,7 +86,7 @@
              <template slot-scope="props">
                 <b-table-column v-for="column in header" :label="column.label" :field="`${column.field}.value`" :key="column.field" :numeric="column.numeric" sortable>
                     {{ props.row[column.field].value.toLocaleString() }}
-                    <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}">
+                    <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
                       <i class="fa" :class="{'fa-caret-up': props.row[column.field].delta > 0, 'fa-caret-down': props.row[column.field].delta < 0}" aria-hidden="true"></i> {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
                     </b>
                 </b-table-column>
@@ -102,15 +102,14 @@ import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
 import isNumber from "lodash/isNumber";
-import fakeData from "../fake-data";
 
 export default {
-  props: ["tag", "name"],
+  props: ["tag", "name", "players"],
   data() {
     return {
       loading: true,
-      clan: fakeData,
-      previousData: fakeData,
+      clan: null,
+      previousData: null,
       days: 7,
       meta: {
         badgeUrls: {
@@ -120,7 +119,9 @@ export default {
     };
   },
   created() {
-    this.fetchData();    
+    this.clan = this.players;
+    this.previousData = this.players;
+    this.fetchData();
   },
   computed: {
     tableData() {
@@ -159,11 +160,11 @@ export default {
       const previousPromise = fetch(`${this.path}.json?daysAgo=${this.days}`);
       const metaPromise = fetch(`${this.path}/short.json`);
 
-      this.meta = await (await metaPromise).json();
+      this.loading = false;
       this.previousData = await (await previousPromise).json();
+      
+      this.meta = await (await metaPromise).json();
       this.clan = await (await nowPromise).json();
-
-      this.loading = false;          
     },
     async loadDaysAgo(days) {
       this.days = days;
