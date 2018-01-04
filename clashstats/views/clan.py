@@ -10,23 +10,16 @@ from clashstats.model import Clan, ClanPreCalculated
 
 
 @app.route("/search.json")
-def search():
+def search():    
     query = request.args.get('q')
+    try:
+        clan = api.find_clan_by_tag(query)
+        results = [Clan(**clan)]
+    except api.ClanNotFound:
+        results = [Clan(**c) for c in api.search_by_name(query, limit=6)['items']]
 
-    tags = set()
-    clans = []
-    clans.extend(ClanPreCalculated.objects.search_text(f"\"{query}\""))
-    tags.update([c.tag for c in clans])
-
-    if len(clans) < 2:
-        try:
-            clans.extend([Clan(**api.find_clan_by_tag(query))])
-        except api.ClanNotFound:        
-            for clan in sorted([Clan(**c) for c in api.search_by_name(query)['items']], key=lambda c: c.members, reverse=True):
-                if clan.tag not in tags:
-                    clans.append(clan)
-
-    return jsonify([to_short_clan(c)._asdict() for c in clans])
+    results = sorted(results, key=lambda c: c.members, reverse=True)
+    return jsonify([to_short_clan(c)._asdict() for c in results])
 
 
 @app.route("/clan/<tag>.json")

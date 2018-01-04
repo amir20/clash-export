@@ -47,10 +47,13 @@
                                     <img width="32" :src="props.option.badge">
                                 </div>
                                 <div class="media-content">
-                                    {{ props.option.name }}
-                                    <br>
+                                    <strong>{{ props.option.name }}</strong>
                                     <small>
-                                        {{ props.option.tag }} {{ props.option.members}} members
+                                      <i class="fa fa-tag"></i> {{ props.option.tag }} 
+                                    </small>
+                                    <br>
+                                    <small>                                        
+                                        <i class="fa fa-users"></i> {{ props.option.members}} members
                                     </small>
                                 </div>
                             </div>
@@ -109,7 +112,7 @@ export default {
       }
 
       this.isLoading = false;
-    }, 500),
+    }, 600),
     prefetch(url) {
       const link = document.createElement("link");
       link.href = url;
