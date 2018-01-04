@@ -10,10 +10,12 @@
               <div class="content">
                   <p>
                       <strong>{{ this.data.name }}</strong>
-                      <i class="fa fa-tag" aria-hidden="true"></i>
-                      <small>{{ this.data.tag }}</small>
-                      <i class="fa fa-trophy" aria-hidden="true"></i>
-                      <small>{{this.data.clanPoints}}</small>
+                      <small>
+                        <i class="fa fa-tag" aria-hidden="true"></i>
+                        {{ this.data.tag }}
+                        <i class="fa fa-trophy" aria-hidden="true"></i>
+                        {{this.data.clanPoints.toLocaleString()}}
+                      </small>
                       <br> {{ this.data.description }}
                   </p>
               </div>
@@ -49,7 +51,7 @@ export default {
       console.error(e);
       this.$emit("error");
     }
-    this.$emit('update:foundClan', this.data)
+    this.$emit("update:foundClan", this.data);
     this.loading = false;
   }
 };
