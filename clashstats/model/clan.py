@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 
 from bson.objectid import ObjectId
-from clashstats.clash import api
 from mongoengine import *
+
+from clashstats.clash import api
 
 
 class Clan(DynamicDocument):
@@ -35,7 +36,7 @@ class Clan(DynamicDocument):
     def find_first_by_tag(cls, tag):
         if not tag.startswith('#'):
             tag = '#' + tag
-            
+
         return cls.objects(tag=tag).order_by('-id').first()
 
     @classmethod

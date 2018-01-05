@@ -5,32 +5,34 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-             
+
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
-    
+
     <title>{% block title %}Trending Clash of Clan leaderboards{% endblock %} - ClashStats.download</title>
 
     {% block meta %}
-    <meta name=”description” content="ClashStats.download shows trending and global leaderboards. Clan achievements can be exported and compared to historical stats.">
+    <meta name=”description”
+          content="ClashStats.download shows trending and global leaderboards. Clan achievements can be exported and compared to historical stats.">
     <meta name="keywords" content="clash of clans, export, excel, achievements, Amir Raminfar, download">
     <meta property="og:title" content="Trending Clash of Clan leaderboards - ClashStats.download">
-    <meta property="og:description" content="ClashStats.download shows trending and global leaderboards. Clan achievements can be exported and compared to historical stats.">
-    {% endblock %} 
+    <meta property="og:description"
+          content="ClashStats.download shows trending and global leaderboards. Clan achievements can be exported and compared to historical stats.">
+    {% endblock %}
 
     <meta property="og:image" content="{{ url_for('static', filename='images/ogImage.jpg') }}">
     <meta property="og:type" content="website">
 
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon-96.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">     
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">
     <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch"></script>
-    <script src="{{ url_for('static', filename=manifest_path('vendor.js')) }}"></script>    
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles.css')) }}">   
+    <script src="{{ url_for('static', filename=manifest_path('vendor.js')) }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles.css')) }}">
 </head>
 
 <body>
-    <script>
+<script>
         (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
             (i[r].q = i[r].q || []).push(arguments)
@@ -39,18 +41,21 @@
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
         ga('create', 'UA-88927228-2', 'auto');
         ga('send', 'pageview');
-    </script>
-    {% block body %}{% endblock %}
 
-    <footer class="container has-text-centered section subtitle is-7">
-        <ul class="is-inline-block">
-            <li class="is-inline-block"><a href="/">Home</a></li>
-            <li class="is-inline-block"><a href="https://github.com/amir20/clash-export">Github</a></li>
-            <li class="is-inline-block"><a href="/status">Status</a></li>
-            <li class="is-inline-block"><a href="https://www.reddit.com/r/dynastyclash/">/r/dynastyclash</a></li>
-            <li class="is-inline-block">© 2018 ClashStats is an open source project and maintained by <a href="/clan/reddit-dynasty-ugjpvjr">Reddit Dynasty</a>.</li>
-        </ul>
-    </footer>    
+</script>
+{% block body %}{% endblock %}
+
+<footer class="container has-text-centered section subtitle is-7">
+    <ul class="is-inline-block">
+        <li class="is-inline-block"><a href="/">Home</a></li>
+        <li class="is-inline-block"><a href="https://github.com/amir20/clash-export">Github</a></li>
+        <li class="is-inline-block"><a href="/status">Status</a></li>
+        <li class="is-inline-block"><a href="https://www.reddit.com/r/dynastyclash/">/r/dynastyclash</a></li>
+        <li class="is-inline-block">© 2018 ClashStats is an open source project and maintained by <a
+                href="/clan/reddit-dynasty-ugjpvjr">Reddit Dynasty</a>.
+        </li>
+    </ul>
+</footer>
 </body>
 
 </html>

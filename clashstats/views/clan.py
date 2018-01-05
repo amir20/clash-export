@@ -1,6 +1,5 @@
 from flask import render_template, send_file, request, jsonify
 from mongoengine import DoesNotExist
-from collections import OrderedDict
 
 from clashstats import app, cache
 from clashstats.clash import excel, api
@@ -10,7 +9,7 @@ from clashstats.model import Clan, ClanPreCalculated
 
 
 @app.route("/search.json")
-def search():    
+def search():
     query = request.args.get('q')
     try:
         clan = api.find_clan_by_tag(query)

@@ -47,23 +47,23 @@
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
-                                      <a class="dropdown-item" :href="`${this.path}.xlsx`">                                        
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx`">
                                         Today
-                                      </a> 
-                                      <hr class="dropdown-divider"> 
-                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=1`">                                        
+                                      </a>
+                                      <hr class="dropdown-divider">
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=1`">
                                         Yesterday
-                                      </a>  
-                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=2`">                                        
+                                      </a>
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=2`">
                                         Two Days Ago
-                                      </a>  
-                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=3`">                                        
+                                      </a>
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=3`">
                                         Three Days Ago
                                       </a>
-                                      <hr class="dropdown-divider">    
-                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=7`">                                        
+                                      <hr class="dropdown-divider">
+                                      <a class="dropdown-item" :href="`${this.path}.xlsx?daysAgo=7`">
                                         Last Week
-                                      </a>                                  
+                                      </a>
                                     </div>
                                 </div>
                             </div>
@@ -75,13 +75,13 @@
     </nav>
     <section>
        <b-table
-            :data="tableData"            
+            :data="tableData"
             striped
             narrowed
             hoverable
             mobile-cards
             default-sort="currentTrophies.value"
-            default-sort-direction="desc"            
+            default-sort-direction="desc"
             :loading="loading">
              <template slot-scope="props">
                 <b-table-column v-for="column in header" :label="column.label" :field="`${column.field}.value`" :key="column.field" :numeric="column.numeric" sortable>
@@ -90,14 +90,13 @@
                       <i class="fa" :class="{'fa-caret-up': props.row[column.field].delta > 0, 'fa-caret-down': props.row[column.field].delta < 0}" aria-hidden="true"></i> {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
                     </b>
                 </b-table-column>
-            </template>            
-        </b-table>    
+            </template>
+        </b-table>
     </section>
   </div>
 </template>
 
 <script>
-import zip from "lodash/zip";
 import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
@@ -162,7 +161,7 @@ export default {
 
       this.loading = false;
       this.previousData = await (await previousPromise).json();
-      
+
       this.meta = await (await metaPromise).json();
       this.clan = await (await nowPromise).json();
     },

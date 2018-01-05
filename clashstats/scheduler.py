@@ -4,10 +4,11 @@ import time
 from datetime import datetime, timedelta
 
 import schedule
-from clashstats.clash.calculation import update_calculations
-from clashstats.model import *
 from mongoengine import connect
 from raven import Client
+
+from clashstats.clash.calculation import update_calculations
+from clashstats.model import *
 
 client = Client(os.getenv('SENTRY_DSN'))
 

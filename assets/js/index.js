@@ -1,13 +1,12 @@
 import Vue from "vue";
 import Buefy from "buefy";
-import Home from "./components/Home"
+import Home from "./components/Home";
 
-Vue.use(Buefy, {defaultIconPack: 'fa'});
+Vue.use(Buefy, { defaultIconPack: "fa" });
 
 new Vue({
-  el: "#home",  
+  el: "#home",
   components: {
     Home
-  }  
+  }
 });
-

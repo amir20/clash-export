@@ -1,7 +1,8 @@
+from flask import render_template
+
 from clashstats import app, cache
 from clashstats.clash.transformer import clans_leaderboard
 from clashstats.model import ClanPreCalculated
-from flask import render_template
 
 
 @app.route("/")
