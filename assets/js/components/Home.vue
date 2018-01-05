@@ -1,20 +1,20 @@
 <template>
-    <form class="section" action="/search" method="get" @reset="onReset">        
-        <template v-if="savedTag">   
+    <form class="section" action="/search" method="get" @reset="onReset">
+        <template v-if="savedTag">
           <section class="hero">
                 <div class="hero-body">
                     <h1 class="title is-1">
                         Welcome Back, Chief!
                     </h1>
                     <h2 class="subtitle">
-                        Let's continue with the last clan you viewed or start over again. 
+                        Let's continue with the last clan you viewed or start over again.
                     </h2>
                 </div>
-            </section>       
-          <Card :tag="savedTag" @error="onClanError" :foundClan.sync="foundClan"/>            
-          <p class="buttons">             
+            </section>
+          <Card :tag="savedTag" @error="onClanError" :foundClan.sync="foundClan"/>
+          <p class="buttons">
             <button type="reset" class="button is-warning is-large">Change Clan</button>
-            <a :href="`/clan/${foundClan.slug}`" class="button is-success is-large">Continue &rsaquo;</a>      
+            <a :href="`/clan/${foundClan.slug}`" class="button is-success is-large">Continue &rsaquo;</a>
           </p>
         </template>
         <template v-else>
@@ -24,12 +24,12 @@
                         Hey, Chief!
                     </h1>
                     <h2 class="subtitle">
-                        Welcome to ClashStats. I can find and export all your stats for you. Let's search for your clan by name or tag.                                                 
+                        Welcome to ClashStats. I can find and export all your stats for you. Let's search for your clan by name or tag.
                     </h2>
                 </div>
             </section>
             <div class="column field">
-                <p class="control">                    
+                <p class="control">
                     <b-autocomplete
                         placeholder="Clan name or tag"
                         field="tag"
@@ -37,7 +37,7 @@
                         keep-first
                         expanded
                         v-model="tag"
-                        :data="data"                        
+                        :data="data"
                         :loading="isLoading"
                         @input="fetchData"
                         @select="option => savedTag = option.tag">
@@ -49,19 +49,19 @@
                                 <div class="media-content">
                                     <strong>{{ props.option.name }}</strong>
                                     <small>
-                                      <i class="fa fa-tag"></i> {{ props.option.tag }} 
+                                      <i class="fa fa-tag"></i> {{ props.option.tag }}
                                     </small>
                                     <br>
-                                    <small>                                        
+                                    <small>
                                         <i class="fa fa-users"></i> {{ props.option.members}} members
                                     </small>
                                 </div>
                             </div>
                         </template>
                     </b-autocomplete>
-                </p>                
+                </p>
             </div>
-        </template>    
+        </template>
     </form>
 </template>
 
