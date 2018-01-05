@@ -1,9 +1,9 @@
 import asyncio
 import logging
+import os
 from urllib.parse import quote
 
 import aiohttp
-import os
 import requests
 
 token = os.getenv('API_TOKEN')

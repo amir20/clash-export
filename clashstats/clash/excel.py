@@ -1,5 +1,6 @@
-import xlsxwriter
 from io import BytesIO
+
+import xlsxwriter
 
 from clashstats.clash import transformer
 

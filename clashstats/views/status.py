@@ -1,7 +1,8 @@
+from flask import render_template
+
 from clashstats import app, cache
 from clashstats.clash import uptime
 from clashstats.model import Status
-from flask import render_template
 
 
 @app.route("/status")

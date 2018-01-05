@@ -1,10 +1,11 @@
+from datetime import datetime
+
 import pandas as pd
+from mongoengine.errors import DoesNotExist
+from slugify import slugify
 
 from clashstats.model import ClanPreCalculated, ClanDelta, Clan
 from .transformer import transform_players
-from datetime import datetime
-from mongoengine.errors import DoesNotExist
-from slugify import slugify
 
 
 def update_calculations(clan):
@@ -173,5 +174,3 @@ def to_data_frame(clan):
     df = df.set_index('Tag')
     df = df.iloc[1:]
     return df
-
-

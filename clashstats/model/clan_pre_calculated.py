@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from clashstats.model.clan import Clan
 from mongoengine import *
+
+from clashstats.model.clan import Clan
 
 
 class ClanDelta(EmbeddedDocument):
