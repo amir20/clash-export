@@ -59,7 +59,7 @@ def update_clan_calculations():
     for tag in available_clan_tags:
         try:
             logger.info(f"Updating calculations for {tag}.")
-            update_calculations(Clan.objects(tag=tag).first())
+            update_calculations(Clan.find_first_by_tag(tag))
         except Exception:
             logger.exception(f"Error during updating clan calculation for {tag}.")
             client.captureException()
