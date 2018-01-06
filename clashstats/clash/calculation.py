@@ -15,7 +15,7 @@ def update_calculations(clan):
     :param clan:
     :return:
     """
-    cpc = ClanPreCalculated.find_by_tag(clan.tag)
+    cpc = ClanPreCalculated.objects(tag=clan.tag).first()
     if cpc is None:
         cpc = ClanPreCalculated(tag=clan.tag)
         cpc.season_start = clan
