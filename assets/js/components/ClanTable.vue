@@ -48,6 +48,9 @@ export default {
     this.clan = this.players;
     this.previousData = this.players;
     this.fetchData();
+    this.$bus.$on("days-changed-event", days => {
+      this.loadDaysAgo(days);
+    });
   },
   computed: {
     tableData() {
@@ -94,8 +97,10 @@ export default {
     },
     async loadDaysAgo(days) {
       this.days = days;
+      this.loading = true;
       const data = await fetch(`${this.path}.json?daysAgo=${days}`);
       this.previousData = await data.json();
+      this.loading = false;
     },
     convertToMap(matrix) {
       const header = this.header;
@@ -146,5 +151,4 @@ export default {
 section {
   overflow-y: scroll;
 }
-
 </style>
