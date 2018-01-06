@@ -1,5 +1,5 @@
 {
-  "name": "clash-export",
+  "name": "clashstats",
   "version": "1.0.0",
   "dependencies": {
     "autoprefixer": "^7.2.4",
