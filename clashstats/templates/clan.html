@@ -1,10 +1,29 @@
 {% extends "layout.html" %} {% block body %}
-<nav class="navbar">
-    <div class="navbar-brand">
-        <h1 class="navbar-item">
-            ClashStats.Download
-        </h1>
+<nav class="navbar ">
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ClashStats Logo">
+            </a>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="field is-grouped">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Find a repository">
+                        </div>
+                        <div class="control">
+                            <a class="button is-success">
+                                Search
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </nav>
 <section class="hero is-warning is-bold">
     <div class="hero-body">
@@ -19,24 +38,36 @@
                     </p>
                 </div>
                 <div class="column is-narrow">
-                    <img src="{{ clan['badgeUrls']['medium'] }}">
+                    <figure class="image is-128x128">
+                        <img src="{{ clan['badgeUrls']['medium'] }}">
+                    </figure>
                 </div>
-
             </div>
-        </div>
-    </div>
-    </div>
-    <div class="hero-footer">
-        <div class="container">
-            <nav class="tabs is-boxed">
-                <ul>
-                    <li>
-                        <a href="/">Players</a>
-                    </li>
-                    <li>
-                        <a href="/">Wars</a>
-                    </li>
-                </ul>
+            <nav class="level">
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Total Trophies</p>
+                        <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Avg Donations / Player</p>
+                        <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_donations) }}</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Avg Wins / Player</p>
+                        <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_attack_wins) }}</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Avg Versus Wins / Player</p>
+                        <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_versus_wins) }}</p>
+                    </div>
+                </div>
             </nav>
         </div>
     </div>

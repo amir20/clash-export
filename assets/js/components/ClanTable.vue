@@ -128,10 +128,6 @@ export default {
     }
   }
 
-  &.is-loading * {
-    color: #efefef !important;
-  }
-
   &>>>b {
     white-space: nowrap;
     display: block;
@@ -151,20 +147,4 @@ section {
   overflow-y: scroll;
 }
 
-h1 {
-  font-size: 140%;
-}
-
-nav {
-  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-</style>
-
-<style>
-body {
-  overflow-x: initial;
-}
 </style>

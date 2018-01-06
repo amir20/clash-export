@@ -1,4 +1,13 @@
 {% from 'leaderboard.html' import leaderboard %} {% extends "layout.html" %} {% block body %}
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ClashStats Logo">
+            </a>
+        </div>
+    </div>
+</nav>
 <main class="container">
     <div class="columns is-centered is-vcentered">
         <div class="column is-3 is-hidden-mobile">
@@ -53,5 +62,4 @@
         </div>
     </div>
 </main>
-<script src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script>
-{% endblock %}
+<script src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script> {% endblock %}
