@@ -15,7 +15,7 @@ def search():
         clan = api.find_clan_by_tag(query)
         results = [Clan(**clan)]
     except api.ClanNotFound:
-        results = [Clan(**c) for c in api.search_by_name(query, limit=6)['items']]
+        results = [Clan(**c) for c in api.search_by_name(query, limit=6)]
 
     results = sorted(results, key=lambda c: c.members, reverse=True)
     return jsonify([to_short_clan(c)._asdict() for c in results])
@@ -33,15 +33,15 @@ def clan_detail_json(tag):
         return jsonify(transform_players(clan.players))
 
 
-@app.route("/clan/<tag>.xlsx")
-def clan_detail_xlsx(tag):
+@app.route("/clan/<slug>.xlsx")
+def clan_detail_xlsx(slug):
     try:
-        api.find_clan_by_tag(tag)
-    except api.ClanNotFound:
+        clan = ClanPreCalculated.find_by_slug(slug)
+    except DoesNotExist:
         return render_template('error.html'), 404
     else:
         days_ago = request.args.get('daysAgo')
-        clan = clan_from_days_ago(days_ago, tag)
+        clan = clan_from_days_ago(days_ago, clan.tag)
         return send_file(excel.to_stream(clan), attachment_filename=f"{clan.tag}.xlsx", as_attachment=True)
 
 
