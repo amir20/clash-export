@@ -29,6 +29,11 @@
     <div class="hero-body">
         <div class="container">
             <div class="columns is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image is-128x128">
+                        <img src="{{ clan['badgeUrls']['medium'] }}">
+                    </figure>
+                </div>
                 <div class="column">
                     <p class="title">
                         {{ clan.name }}
@@ -36,11 +41,6 @@
                     <p class="subtitle">
                         {{ clan.description }}
                     </p>
-                </div>
-                <div class="column is-narrow">
-                    <figure class="image is-128x128">
-                        <img src="{{ clan['badgeUrls']['medium'] }}">
-                    </figure>
                 </div>
             </div>
             <nav class="level">
