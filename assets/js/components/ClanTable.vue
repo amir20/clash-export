@@ -37,11 +37,6 @@ export default {
       clan: null,
       previousData: null,
       days: 7,
-      meta: {
-        badgeUrls: {
-          small: "https://placeholdit.co//i/500x500?text=&bg=ccc"
-        }
-      }
     };
   },
   created() {
@@ -87,12 +82,9 @@ export default {
     async fetchData() {
       const nowPromise = fetch(`${this.path}.json`);
       const previousPromise = fetch(`${this.path}.json?daysAgo=${this.days}`);
-      const metaPromise = fetch(`${this.path}/short.json`);
-
       this.loading = false;
-      this.previousData = await (await previousPromise).json();
 
-      this.meta = await (await metaPromise).json();
+      this.previousData = await (await previousPromise).json();
       this.clan = await (await nowPromise).json();
     },
     async loadDaysAgo(days) {
