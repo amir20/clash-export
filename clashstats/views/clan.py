@@ -49,8 +49,8 @@ def clan_detail_xlsx(slug):
 def clan_detail_page(slug):
     try:
         clan = ClanPreCalculated.find_by_slug(slug)
-        last_data = Clan.find_first_by_tag(clan.tag)
-        players = transform_players(last_data.players)
+        most_recent = Clan.objects(tag=clan.tag).only('players').order_by('-id').first()
+        players = transform_players(most_recent.players)
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
