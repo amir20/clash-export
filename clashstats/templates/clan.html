@@ -12,8 +12,8 @@
                     <p class="title">
                         {{ clan.name }}
                     </p>
-                    <p class="subtitle">
-                        {{ clan.description }}
+                    <p class="subtitle clan-description">
+                        {{ description | safe }}
                     </p>
                 </div>
             </div>
@@ -26,20 +26,26 @@
                 </div>
                 <div class="level-item has-text-centered">
                     <div>
-                        <p class="heading">Avg Donations / Player</p>
+                        <p class="heading">Donations / Player</p>
                         <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_donations) }}</p>
                     </div>
                 </div>
                 <div class="level-item has-text-centered">
                     <div>
-                        <p class="heading">Avg Wins / Player</p>
+                        <p class="heading">Wins / Player</p>
                         <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_attack_wins) }}</p>
                     </div>
                 </div>
                 <div class="level-item has-text-centered">
                     <div>
-                        <p class="heading">Avg Versus Wins / Player</p>
+                        <p class="heading">Versus Wins / Player</p>
                         <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_versus_wins) }}</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Trophies Gained / Player</p>
+                        <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_trophies) }}</p>
                     </div>
                 </div>
             </nav>
