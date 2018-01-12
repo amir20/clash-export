@@ -10,9 +10,7 @@ class Clan(DynamicDocument):
     meta = {
         'indexes': [
             'name',
-            'tag',
-            ('tag', '-id'),
-            ('id', 'tag'),
+            'tag'
         ]
     }
 

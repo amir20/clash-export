@@ -53,7 +53,7 @@ def clan_detail_xlsx(slug):
 def clan_detail_page(slug):
     try:
         clan = ClanPreCalculated.find_by_slug(slug)
-        most_recent = Clan.objects(tag=clan.tag).only('players').order_by('-id').first()
+        most_recent = Clan.find_first_by_tag(clan.tag)
         players = transform_players(most_recent.players)
         description = URL_REGEX.sub(repl, clan.description)
     except DoesNotExist:
