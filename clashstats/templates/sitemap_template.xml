@@ -3,7 +3,7 @@
     {% for page in pages %}
     <url>
         <loc>{{ page['url'] | safe }}</loc>
-        <lastmod>{{ page['modified_time'] }}</lastmod>
+        <changefreq>daily</changefreq>
     </url>
     {% endfor %}
 </urlset>
