@@ -12,7 +12,7 @@ h2 {
     font-size: 11px;
     letter-spacing: 1px;
     margin-bottom: 5px;
-    text-transform: uppercase;    
+    text-transform: uppercase;
     font-family: 'Ubuntu', sans-serif;
 }
 
@@ -20,7 +20,7 @@ h2 {
     color: #363636;
     font-size: 2rem;
     font-weight: 600;
-    line-height: 1.125;    
+    line-height: 1.125;
 }
 
 .leaderboard {
@@ -30,5 +30,11 @@ h2 {
     }
     & .value {
         margin-left: auto;
+    }
+}
+
+.clan-description {
+    & a:hover {
+        text-decoration: underline;
     }
 }

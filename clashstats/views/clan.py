@@ -1,3 +1,5 @@
+import re
+
 from flask import render_template, send_file, request, jsonify
 from mongoengine import DoesNotExist
 
@@ -6,6 +8,8 @@ from clashstats.clash import excel, api
 from clashstats.clash.calculation import update_calculations
 from clashstats.clash.transformer import transform_players, to_short_clan
 from clashstats.model import Clan, ClanPreCalculated
+
+URL_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca)+[^ ]*)", re.IGNORECASE)
 
 
 @app.route("/search.json")
@@ -51,10 +55,11 @@ def clan_detail_page(slug):
         clan = ClanPreCalculated.find_by_slug(slug)
         most_recent = Clan.objects(tag=clan.tag).only('players').order_by('-id').first()
         players = transform_players(most_recent.players)
+        description = URL_REGEX.sub(repl, clan.description)
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
-        return render_template('clan.html', clan=clan, players=players)
+        return render_template('clan.html', clan=clan, players=players, description=description)
 
 
 @app.route("/clan/<tag>/short.json")
@@ -84,3 +89,10 @@ def clan_from_days_ago(days_ago, tag):
         return Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
     else:
         return Clan.fetch_and_save(tag)
+
+
+def repl(match):
+    if match.group(0).startswith('http'):
+        return f"<a href=\"{match.group(0)}\">{match.group(0)}</a>"
+    else:
+        return f"<a href=\"http://{match.group(0)}\">{match.group(0)}</a>"
