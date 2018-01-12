@@ -7,10 +7,12 @@ from clashstats.model import ClanPreCalculated
 @app.route("/sitemap.xml")
 def sitemap():
     pages = []
+
+    pages.append({'url': url_for('index', _external=True)})
+
     for clan in ClanPreCalculated.objects:
         pages.append({
             'url': url_for('clan_detail_page', slug=clan.slug, _external=True),
-            'modified_time': clan.last_updated.isoformat()
         })
 
     sitemap_xml = render_template('sitemap_template.xml', pages=pages)
