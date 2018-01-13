@@ -1,27 +1,27 @@
 version: '3'
-services:  
-  db:    
+services:
+  db:
     image: mongo:3.6
     hostname: mongo
     volumes:
       - ./:/clashstats
 
   web:
-    env_file: .env          
+    env_file: .env
     restart: 'no'
     # command: 'flask run --host=0.0.0.0 --port=80'
-    depends_on: 
+    depends_on:
       - db
     ports:
-      - "8000:80"              
+      - "8000:80"
     volumes:
       - ./clashstats:/app/clashstats
       - ./caddy/Caddyfile.local:/etc/Caddyfile
 
   scheduler:
-    env_file: .env      
-    restart: 'no'    
+    env_file: .env
+    restart: 'no'
     volumes:
       - ./clashstats:/app/clashstats
-    depends_on: 
-      - db  
+    depends_on:
+      - db
