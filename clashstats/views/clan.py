@@ -9,7 +9,7 @@ from clashstats.clash.calculation import update_calculations
 from clashstats.clash.transformer import transform_players, to_short_clan
 from clashstats.model import Clan, ClanPreCalculated
 
-URL_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca)+[^ ]*)", re.IGNORECASE)
+URL_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me)+[^ ]*)", re.IGNORECASE)
 
 
 @app.route("/search.json")
@@ -93,6 +93,6 @@ def clan_from_days_ago(days_ago, tag):
 
 def repl(match):
     if match.group(0).startswith('http'):
-        return f"<a href=\"{match.group(0)}\">{match.group(0)}</a>"
+        return f"<a href=\"{match.group(0)}\" target=\"_blank\">{match.group(0)}</a>"
     else:
-        return f"<a href=\"http://{match.group(0)}\">{match.group(0)}</a>"
+        return f"<a href=\"http://{match.group(0)}\" target=\"_blank\">{match.group(0)}</a>"
