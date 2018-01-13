@@ -38,7 +38,7 @@ class Clan(DynamicDocument):
         if not tag.startswith('#'):
             tag = '#' + tag
 
-        return cls.objects(tag=tag).order_by('-id').first()
+        return cls.from_now_with_tag(tag=tag, hours=13).order_by('-id').first()
 
     @classmethod
     def fetch_and_save(cls, tag):
