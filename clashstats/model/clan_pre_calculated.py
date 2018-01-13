@@ -35,6 +35,7 @@ class ClanPreCalculated(Document):
     clanVersusPoints = IntField(required=True)
     members = IntField(required=True)
     badgeUrls = DictField(required=True)
+    location = DictField(required=False)
 
     warWinStreak = IntField(required=True)
     warWins = IntField(required=True)
@@ -76,6 +77,11 @@ class ClanPreCalculated(Document):
             'members',
             'clanPoints',
             'clanVersusPoints',
+
+            'location.id',
+            'location.name',
+            'location.countryCode',
+            'location.isCountry',
 
             'warWinStreak',
             'warWins',
