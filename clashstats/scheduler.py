@@ -26,7 +26,11 @@ def update_clans():
     total = query_set.count()
     clans = query_set.limit(50)
 
-    logger.info(f"Fetching {len(clans)} of total {total} eligible clans.")
+    if clans:
+        logger.info(f"Fetching {len(clans)} of total {total} eligible clans.")
+    else:
+        logger.info(f"No clans need updating. Fetching 5 least updated clans.")
+        clans = ClanPreCalculated.objects.order_by("-last_updated").limit(5)
 
     for c in clans:
         try:
@@ -39,7 +43,6 @@ def update_clans():
     logger.debug(f"Done fetching clans.")
 
     total_clans = ClanPreCalculated.objects.count()
-
     ratio_indexed = 100 * (ClanPreCalculated.objects(last_updated__gt=twelve_hour_ago).count() / total_clans)
     Status.objects.update_one(
         set__ratio_indexed=ratio_indexed,
