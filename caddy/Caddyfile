@@ -1,5 +1,4 @@
-https://clashstats.download,
-https://www.clashranking.com {
+https://clashstats.download {
     root /app/clashstats
 
     tls findamir@gmail.com
@@ -17,8 +16,4 @@ https://www.clashranking.com {
     gzip
     log stdout
     errors stdout
-}
-
-clashranking.com {
-   redir https://www.clashranking.com
 }
