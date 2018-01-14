@@ -4,7 +4,7 @@ services:
     image: mongo:3.6
     hostname: mongo
     volumes:
-      - ./:/clashstats
+      - ./:/clashleaders
 
   web:
     env_file: .env
@@ -15,13 +15,13 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./clashstats:/app/clashstats
+      - ./clashleaders:/app/clashleaders
       - ./caddy/Caddyfile.local:/etc/Caddyfile
 
   scheduler:
     env_file: .env
     restart: 'no'
     volumes:
-      - ./clashstats:/app/clashstats
+      - ./clashleaders:/app/clashleaders
     depends_on:
       - db

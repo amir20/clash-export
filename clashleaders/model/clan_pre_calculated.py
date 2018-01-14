@@ -2,7 +2,7 @@ from datetime import datetime
 
 from mongoengine import *
 
-from clashstats.model.clan import Clan
+from clashleaders.model.clan import Clan
 
 
 class ClanDelta(EmbeddedDocument):

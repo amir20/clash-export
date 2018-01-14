@@ -1,11 +1,11 @@
 version: '3'
 services:
   scheduler:
-    image: amir20/clashstats:latest
+    image: amir20/clashleaders:latest
     hostname: scheduler
     command: '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord-scheduler.conf'
 
   web:
     build: .
-    image: amir20/clashstats:latest
+    image: amir20/clashleaders:latest
     hostname: web

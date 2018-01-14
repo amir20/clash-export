@@ -4,7 +4,7 @@ import pandas as pd
 from mongoengine.errors import DoesNotExist
 from slugify import slugify
 
-from clashstats.model import ClanPreCalculated, ClanDelta, Clan
+from clashleaders.model import ClanPreCalculated, ClanDelta, Clan
 from .transformer import transform_players
 
 
