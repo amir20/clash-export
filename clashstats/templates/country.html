@@ -1,4 +1,4 @@
-{% macro country_leaderboard(name, aggregate_by_country, formatter="{:,.1f}M") -%}
+{% macro country_leaderboard(name, aggregate_by_country, formatter="{:,.1f}M", factor=1000000) -%}
 <nav class="panel leaderboard">
         <h3 class="panel-heading">
             {{ name | safe }}
@@ -10,7 +10,7 @@
                 <span class="flag-icon flag-icon-{{ country['code'] }}"></span>
             </span>
             {{ country['name'] }}
-            <span class="value subtitle is-7">{{ formatter.format(country['score']/1000000) }}</span>
+            <span class="value subtitle is-7">{{ formatter.format(country['score']/factor) }}</span>
         </span>
         {% endfor %}
 
