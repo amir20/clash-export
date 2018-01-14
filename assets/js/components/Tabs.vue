@@ -1,12 +1,15 @@
 <template>
 <ul>
-    <li :class="{'is-active': days === 1}">
+    <li class="is-active" v-if="totalDays == 0">
+        <a>Today</a>
+    </li>
+    <li :class="{'is-active': days === 1}" v-if="totalDays > 0">
         <a @click="changeDays(1)">Yesterday</a>
     </li>
-    <li :class="{'is-active': days === 7}">
+    <li :class="{'is-active': days === 7}" v-if="totalDays > 6">
         <a @click="changeDays(7)">This Week</a>
     </li>
-    <li :class="{'is-active': days ===30}">
+    <li :class="{'is-active': days ===30}" v-if="totalDays > 29">
         <a @click="changeDays(30)">Last Month</a>
     </li>
 </ul>
@@ -16,12 +19,17 @@
 export default {
   data() {
     return {
-      days: 7
+      days: 7,
+      totalDays: 30
     };
   },
   created() {
     this.$bus.$on("days-changed-event", days => {
       this.days = days;
+    });
+    this.$bus.$on("days-of-data", totalDays => {
+      this.totalDays = totalDays;
+      console.log(this.totalDays)
     });
   },
   methods: {
