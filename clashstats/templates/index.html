@@ -1,4 +1,6 @@
-{% from 'leaderboard.html' import leaderboard %} {% extends "layout.html" %} {% block body %}
+{% from 'country.html' import country_leaderboard %} {% from 'leaderboard.html' import leaderboard %} {% extends "layout.html"
+%} {% block body %}
+
 <main class="container">
     <div class="columns is-centered is-vcentered">
         <div class="column is-3 is-hidden-mobile">
@@ -11,27 +13,8 @@
 
     <h1 class="title is-2">
         This Week's Trending Clans
-        <span class="tag is-success">New!</span>
     </h1>
     <div class="columns">
-        <div class="column is-4">
-            <nav class="panel leaderboard">
-                <h3 class="panel-heading">
-                    Most Active Countries
-                </h3>
-
-                {% for country in aggregate_by_country %}
-                <a class="panel-block">
-                    <span class="panel-icon">
-                        <span class="flag-icon flag-icon-{{ country['code'] }}"></span>
-                    </span>
-                    {{ country['name'] }}
-                    <span class="value subtitle is-7">{{ "{:,.1f}M Loot".format(country['score']/1000000) }}</span>
-                </a>
-                {% endfor %}
-
-            </nav>
-        </div>
         <div class="column is-4">
             {{ leaderboard('Highest Donations', most_donations, "{:,.0f} donations/player") }}
         </div>
@@ -51,7 +34,7 @@
             {{ leaderboard('Trophies Gained', most_trophies, "{:,.0f} trophies/player") }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Average Loot Grabbed', most_loot) }}
+            {{ country_leaderboard('Most Active Countries <span class="tag is-success">New!</span>', most_loot_country) }}
         </div>
     </div>
 
@@ -67,7 +50,7 @@
             {{ leaderboard('Highest Versus Trophies', most_vs_points) }}
         </div>
         <div class="column is-4">
-            {{ leaderboard('Current War Win Streak', most_win_streak) }}
+            {{ country_leaderboard('Country Trophies <span class="tag is-success">New!</span>', most_trophies_country) }}
         </div>
     </div>
 </main>
