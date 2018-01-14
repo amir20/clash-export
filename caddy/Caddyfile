@@ -1,4 +1,5 @@
-https://clashstats.download {
+https://clashstats.download,
+https://clashleaders.com {
     root /app/clashstats
 
     tls findamir@gmail.com
@@ -16,4 +17,9 @@ https://clashstats.download {
     gzip
     log stdout
     errors stdout
+}
+
+
+clashleaders.com {
+   redir https://www.clashleaders.com
 }
