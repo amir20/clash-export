@@ -30,13 +30,13 @@ import keyBy from "lodash/keyBy";
 import isNumber from "lodash/isNumber";
 
 export default {
-  props: ["tag", "name", "players"],
+  props: ["tag", "name", "players", "oldestDays"],
   data() {
     return {
       loading: true,
       clan: null,
       previousData: null,
-      days: 7,
+      days: 7
     };
   },
   created() {
@@ -46,6 +46,22 @@ export default {
     this.$bus.$on("days-changed-event", days => {
       this.loadDaysAgo(days);
     });
+
+    if (this.oldestDays < 3) {
+      this.$snackbar.open({
+        message:
+          "Hey Cheif! This is the first time I am seeing your clan. Try again in a few days to see historical data.",
+        type: "is-warning",
+        position: "is-bottom-left",
+        actionText: "Got it",
+        duration: 20000
+      });
+
+      this.$nextTick(() => {
+        this.$bus.$emit("days-changed-event", 1);
+        this.$bus.$emit("days-of-data", this.oldestDays);
+      });
+    }
   },
   computed: {
     tableData() {
