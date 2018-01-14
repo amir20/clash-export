@@ -28,7 +28,7 @@ def index():
                            most_war_stars=leaderboard('week_delta.avg_war_stars'),
                            most_trophies=leaderboard('week_delta.avg_trophies'),
                            avg_bh_level=leaderboard('avg_bh_level'),
-                           most_loot_country=aggregate_by_country('week_delta.avg_gold_grab'),
+                           most_active_country=aggregate_by_country('week_delta.avg_attack_wins'),
                            most_trophies_country=aggregate_by_country('clanPoints')
                            )
 
