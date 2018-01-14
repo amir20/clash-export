@@ -54,12 +54,14 @@ def clan_detail_page(slug):
     try:
         clan = ClanPreCalculated.find_by_slug(slug)
         most_recent = Clan.find_first_by_tag(clan.tag)
+        least_recent = Clan.find_last_by_tag(clan.tag)
         players = transform_players(most_recent.players)
         description = URL_REGEX.sub(repl, clan.description)
+        delta = most_recent.id.generation_time - least_recent.id.generation_time
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
-        return render_template('clan.html', clan=clan, players=players, description=description)
+        return render_template('clan.html', clan=clan, players=players, description=description, oldest_days=delta.days)
 
 
 @app.route("/clan/<tag>/short.json")
