@@ -1,4 +1,3 @@
-https://clashstats.download,
 https://www.clashleaders.com {
     root /app/clashleaders
 
@@ -22,4 +21,8 @@ https://www.clashleaders.com {
 
 clashleaders.com {
    redir https://www.clashleaders.com
+}
+
+https://clashstats.download {
+   redir https://www.clashleaders.com{uri}
 }
