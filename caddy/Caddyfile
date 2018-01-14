@@ -1,4 +1,5 @@
-https://clashstats.download {
+https://clashstats.download,
+https://www.clashranking.com {
     root /app/clashstats
 
     tls findamir@gmail.com
@@ -9,11 +10,15 @@ https://clashstats.download {
     }
 
     expires {
-        match /static 1y 
+        match /static 1y
         match /clan/.*/short.json$ 1h
     }
 
     gzip
     log stdout
     errors stdout
+}
+
+clashranking.com {
+   redir https://www.clashranking.com
 }
