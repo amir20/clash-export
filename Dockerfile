@@ -9,7 +9,7 @@ RUN npm install --production
 # Copy all files for webpack
 COPY webpack.config.js .babelrc postcss.config.js ./
 COPY assets/ assets/
-COPY clashstats/static clashstats/static
+COPY clashleaders/static clashleaders/static
 
 # Do the build
 RUN npm run build
@@ -50,14 +50,14 @@ COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
 COPY ./caddy/Caddyfile /etc/Caddyfile
 
 # Copy all other files
-COPY ./clashstats /app/clashstats
+COPY ./clashleaders /app/clashleaders
 COPY ./*.py /app/
 
 # Copy the js files
-COPY --from=builder /build/clashstats/static /app/clashstats/static
+COPY --from=builder /build/clashleaders/static /app/clashleaders/static
 
 RUN pip install -e .
-ENV FLASK_APP=clashstats
+ENV FLASK_APP=clashleaders
 
 VOLUME /root/.caddy
 EXPOSE 80 443

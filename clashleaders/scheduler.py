@@ -7,8 +7,8 @@ import schedule
 from mongoengine import connect
 from raven import Client
 
-from clashstats.clash.calculation import update_calculations
-from clashstats.model import *
+from clashleaders.clash.calculation import update_calculations
+from clashleaders.model import *
 
 client = Client(os.getenv('SENTRY_DSN'))
 
@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 logger = logging.getLogger(__name__)
-logging.getLogger("clashstats.clash.api").setLevel(logging.WARNING)
+logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
 
 
 def update_clans():

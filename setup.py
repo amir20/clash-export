@@ -7,7 +7,7 @@ requirements = convert_deps_to_pip(pfile['packages'], r=False)
 test_requirements = convert_deps_to_pip(pfile['dev-packages'], r=False)
 
 setup(
-    name='clashstats',
+    name='clashleaders',
     packages=find_packages(),
     version='1.0',
     include_package_data=True,
@@ -17,7 +17,7 @@ setup(
     extras_require={'test': test_requirements},
     entry_points={
         'console_scripts': [
-            'clashstats-scheduler=clashstats.scheduler:main',
+            'scheduler=clashleaders.scheduler:main',
         ],
     }
 )
