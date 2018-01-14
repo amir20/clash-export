@@ -12,7 +12,7 @@ module.exports = {
     styles: "./css/styles.css"
   },
   output: {
-    path: __dirname + "/clashstats/static/",
+    path: __dirname + "/clashleaders/static/",
     filename: "js/[name].js"
   },
   resolve: {
@@ -72,9 +72,9 @@ module.exports = {
     }),
     new ExtractTextPlugin("css/[name].[hash].css"),
     new CleanWebpackPlugin([
-      __dirname + "/clashstats/static/css",
-      __dirname + "/clashstats/static/js",
-      __dirname + "/clashstats/static/svg"
+      __dirname + "/clashleaders/static/css",
+      __dirname + "/clashleaders/static/js",
+      __dirname + "/clashleaders/static/svg"
     ])
   ]
 };

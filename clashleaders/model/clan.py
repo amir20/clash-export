@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 from mongoengine import *
 
-from clashstats.clash import api
+from clashleaders.clash import api
 
 
 class Clan(DynamicDocument):

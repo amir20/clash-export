@@ -1,7 +1,7 @@
 from flask import url_for, render_template, make_response
 
-from clashstats import app
-from clashstats.model import ClanPreCalculated
+from clashleaders import app
+from clashleaders.model import ClanPreCalculated
 
 
 @app.route("/sitemap.xml")

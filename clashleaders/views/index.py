@@ -1,8 +1,8 @@
 from flask import render_template
 
-from clashstats import app, cache
-from clashstats.clash.transformer import clans_leaderboard
-from clashstats.model import ClanPreCalculated
+from clashleaders import app, cache
+from clashleaders.clash.transformer import clans_leaderboard
+from clashleaders.model import ClanPreCalculated
 
 import json
 import os.path

@@ -2,7 +2,7 @@ from io import BytesIO
 
 import xlsxwriter
 
-from clashstats.clash import transformer
+from clashleaders.clash import transformer
 
 
 def to_stream(clan):
