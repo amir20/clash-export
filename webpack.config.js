@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin'); 
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
   context: __dirname + "/assets",
@@ -31,6 +31,15 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: "vue-loader"
+      },
+      {
+        test: /\.(svg)$/,
+        loader: "file-loader",
+        options: {
+          name: "[name]-[hash].[ext]",
+          outputPath: "svg/",
+          publicPath: "/static/"
+        }
       },
       {
         test: /\.(sass|scss|css)$/,
@@ -62,7 +71,11 @@ module.exports = {
       chunks: ["details-page", "index"]
     }),
     new ExtractTextPlugin("css/[name].[hash].css"),
-    new CleanWebpackPlugin([__dirname + "/clashstats/static/css", __dirname + "/clashstats/static/js"]),
+    new CleanWebpackPlugin([
+      __dirname + "/clashstats/static/css",
+      __dirname + "/clashstats/static/js",
+      __dirname + "/clashstats/static/svg"
+    ])
   ]
 };
 
