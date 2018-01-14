@@ -97,5 +97,6 @@ node_modules
 **/static/manifest.json
 **/static/js
 **/static/css
+**/static/svg
 
 vendor
