@@ -1,5 +1,8 @@
+$flag-icon-css-path: "~flag-icon-css/flags/";
+
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
+@import "~flag-icon-css/sass/flag-icon";
 
 h1,
 h2 {

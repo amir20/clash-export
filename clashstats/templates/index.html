@@ -15,6 +15,24 @@
     </h1>
     <div class="columns">
         <div class="column is-4">
+            <nav class="panel leaderboard">
+                <h3 class="panel-heading">
+                    Most Active Countries
+                </h3>
+
+                {% for country in aggregate_by_country %}
+                <a class="panel-block">
+                    <span class="panel-icon">
+                        <span class="flag-icon flag-icon-{{ country['code'] }}"></span>
+                    </span>
+                    {{ country['name'] }}
+                    <span class="value subtitle is-7">{{ "{:,.1f}M Loot".format(country['score']/1000000) }}</span>
+                </a>
+                {% endfor %}
+
+            </nav>
+        </div>
+        <div class="column is-4">
             {{ leaderboard('Highest Donations', most_donations, "{:,.0f} donations/player") }}
         </div>
         <div class="column is-4">

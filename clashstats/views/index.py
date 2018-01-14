@@ -4,6 +4,15 @@ from clashstats import app, cache
 from clashstats.clash.transformer import clans_leaderboard
 from clashstats.model import ClanPreCalculated
 
+import json
+import os.path
+
+parent = os.path.abspath(os.path.dirname(__file__))
+
+with open(os.path.join(parent, "../data/countries.json")) as f:
+    data = json.load(f)
+    COUNTRIES = {c['countryCode']: c for c in data if c['isCountry']}
+
 
 @app.route("/")
 @cache.cached(timeout=30)
@@ -18,9 +27,18 @@ def index():
                            most_win_streak=leaderboard('warWinStreak'),
                            most_war_stars=leaderboard('week_delta.avg_war_stars'),
                            most_trophies=leaderboard('week_delta.avg_trophies'),
-                           avg_bh_level=leaderboard('avg_bh_level')
+                           avg_bh_level=leaderboard('avg_bh_level'),
+                           aggregate_by_country=aggregate_by_country()
                            )
 
 
 def leaderboard(field):
     return clans_leaderboard(ClanPreCalculated.objects(members__gt=20).order_by(f"-{field}").limit(10), field)
+
+
+def aggregate_by_country():
+    group = {"$group": {"_id": "$location.countryCode", "score": {"$sum": "$week_delta.avg_gold_grab"}}}
+    sort = {'$sort': {'score': -1}}
+    aggregated = list(ClanPreCalculated.objects(location__countryCode__ne=None).aggregate(group, sort))
+    aggregated = [{'code': c['_id'].lower(), 'name': COUNTRIES[c['_id']]['name'], 'score': c['score']} for c in aggregated[:10]]
+    return aggregated
