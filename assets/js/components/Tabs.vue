@@ -6,10 +6,10 @@
     <li :class="{'is-active': days === 1}" v-if="totalDays > 0">
         <a @click="changeDays(1)">Yesterday</a>
     </li>
-    <li :class="{'is-active': days === 7}" v-if="totalDays > 6">
+    <li :class="{'is-active': days === 7}" v-if="totalDays > 2">
         <a @click="changeDays(7)">This Week</a>
     </li>
-    <li :class="{'is-active': days ===30}" v-if="totalDays > 29">
+    <li :class="{'is-active': days ===30}" v-if="totalDays > 15">
         <a @click="changeDays(30)">Last Month</a>
     </li>
 </ul>
@@ -29,7 +29,6 @@ export default {
     });
     this.$bus.$on("days-of-data", totalDays => {
       this.totalDays = totalDays;
-      console.log(this.totalDays)
     });
   },
   methods: {

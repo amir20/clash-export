@@ -9,9 +9,15 @@
             mobile-cards
             default-sort="currentTrophies.value"
             default-sort-direction="desc"
-            :loading="loading">
+            :loading="loading"
+            :selected.sync="selected"
+            focusable>
              <template slot-scope="props">
-                <b-table-column v-for="column in header" :label="column.label" :field="`${column.field}.value`" :key="column.field" :numeric="column.numeric" sortable>
+                <b-table-column v-for="column in header" :label="column.label"
+                                :field="`${column.field}.value`"
+                                :key="column.field"
+                                :numeric="column.numeric"
+                                sortable>
                     {{ props.row[column.field].value.toLocaleString() }}
                     <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
                       <i class="fa" :class="{'fa-caret-up': props.row[column.field].delta > 0, 'fa-caret-down': props.row[column.field].delta < 0}" aria-hidden="true"></i> {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
@@ -36,7 +42,8 @@ export default {
       loading: true,
       clan: null,
       previousData: null,
-      days: 7
+      days: 7,
+      selected: null
     };
   },
   created() {
@@ -48,20 +55,14 @@ export default {
     });
 
     if (this.oldestDays < 3) {
-      this.$snackbar.open({
-        message:
-          "Hey stranger! This is the first time I am seeing your clan and so it will take a while to collect historical data. Come back again in a few days to see your updated stats.",
-        type: "is-warning",
-        position: "is-bottom-left",
-        actionText: "Got it",
-        duration: 20000
-      });
-
+      this.showNoDataMessage();
       this.$nextTick(() => {
         this.$bus.$emit("days-changed-event", 1);
-        this.$bus.$emit("days-of-data", this.oldestDays);
       });
     }
+    this.$nextTick(() => {
+      this.$bus.$emit("days-of-data", this.oldestDays);
+    });
   },
   computed: {
     tableData() {
@@ -122,6 +123,16 @@ export default {
           {}
         );
       });
+    },
+    showNoDataMessage() {
+      this.$snackbar.open({
+        message:
+          "Hey stranger! This is the first time I am seeing your clan and so it will take a while to collect historical data. Come back again in a few days to see your updated stats.",
+        type: "is-warning",
+        position: "is-bottom-left",
+        actionText: "Got it",
+        duration: 20000
+      });
     }
   }
 };
@@ -129,6 +140,16 @@ export default {
 
 <style scoped>
 .b-table {
+  & >>> .table {
+    &.is-striped tbody tr:not(.is-selected):nth-child(even){
+      background-color: #eee;
+    }
+
+    & tr.is-selected {
+      background-color: #555;
+    }
+  }
+
   &>>>table {
     font-size: 90%;
   }
