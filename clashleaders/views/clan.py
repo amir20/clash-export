@@ -9,7 +9,7 @@ from clashleaders.clash.calculation import update_calculations
 from clashleaders.clash.transformer import transform_players, to_short_clan
 from clashleaders.model import Clan, ClanPreCalculated
 
-URL_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me)[^\s]*)", re.IGNORECASE)
+URL_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[^\s]*)", re.IGNORECASE)
 
 
 @app.route("/search.json")

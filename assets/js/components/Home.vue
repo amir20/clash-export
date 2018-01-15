@@ -24,7 +24,7 @@
                         Hey, Chief!
                     </h1>
                     <h2 class="subtitle">
-                        Welcome to ClashStats. I can find and export all your stats for you. Let's search for your clan by name or tag.
+                        Welcome to Clash Leaders. Let's try to find your clan by tag or name first.
                     </h2>
                 </div>
             </section>
