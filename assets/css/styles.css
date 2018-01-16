@@ -6,38 +6,45 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 
 h1,
 h2 {
-    font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
-
 .heading {
-    display: block;
-    font-size: 11px;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    font-family: 'Ubuntu', sans-serif;
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-family: "Ubuntu", sans-serif;
 }
 
 .title {
-    color: #363636;
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 1.125;
+  color: #363636;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.125;
 }
 
 .leaderboard {
-    & .panel-icon {
-        font-size: 20px;
-        margin-right: 0.45em;
-    }
-    & .value {
-        margin-left: auto;
-    }
+  & .panel-icon {
+    font-size: 20px;
+    margin-right: 0.45em;
+  }
+  & .value {
+    margin-left: auto;
+  }
 }
 
 .clan-description {
-    & a:hover {
-        text-decoration: underline;
-    }
+  & a:hover {
+    text-decoration: underline;
+  }
+}
+
+.clashleader-logo {
+  background-image: url("../images/logo.svg");
+  width: 250px;
+  background-size: 96%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
