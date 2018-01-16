@@ -42,7 +42,8 @@ module.exports = {
         }
       },
       {
-        test: /.*images.*\.svg$/,
+        test: /\.svg$/,
+        exclude: [/flags/],
         use: {
           loader: "svg-url-loader"
         }
