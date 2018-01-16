@@ -33,7 +33,7 @@ module.exports = {
         loader: "vue-loader"
       },
       {
-        test: /.*flag.*\.(svg)$/,
+        test: /.*flags.*\.(svg)$/,
         loader: "file-loader",
         options: {
           name: "[name]-[hash].[ext]",
@@ -42,7 +42,7 @@ module.exports = {
         }
       },
       {
-        test: /\.svg$/,
+        test: /.*images.*\.svg$/,
         use: {
           loader: "svg-url-loader"
         }
