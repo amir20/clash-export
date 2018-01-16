@@ -33,12 +33,18 @@ module.exports = {
         loader: "vue-loader"
       },
       {
-        test: /\.(svg)$/,
+        test: /.*flag.*\.(svg)$/,
         loader: "file-loader",
         options: {
           name: "[name]-[hash].[ext]",
-          outputPath: "svg/",
+          outputPath: "flags/",
           publicPath: "/static/"
+        }
+      },
+      {
+        test: /\.svg$/,
+        use: {
+          loader: "svg-url-loader"
         }
       },
       {
@@ -74,7 +80,7 @@ module.exports = {
     new CleanWebpackPlugin([
       __dirname + "/clashleaders/static/css",
       __dirname + "/clashleaders/static/js",
-      __dirname + "/clashleaders/static/svg"
+      __dirname + "/clashleaders/static/flags"
     ])
   ]
 };
