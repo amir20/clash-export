@@ -11,6 +11,29 @@
         </div>
     </div>
 
+    <div class="section">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Total Clans</p>
+                    <p class="title">{{ "{:,}".format(status.total_clans) }}</p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Total Members</p>
+                    <p class="title">{{ "{:,}".format(status.total_members) }}</p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Total Countries</p>
+                    <p class="title">{{ "{:,}".format(status.total_countries) }}</p>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     <h1 class="title is-2">
         This Week's Trending Clans
     </h1>
@@ -40,7 +63,6 @@
 
     <h1 class="title is-2">
         Global Ranking
-        <span class="tag is-success">New!</span>
     </h1>
     <div class="columns">
         <div class="column is-4">
