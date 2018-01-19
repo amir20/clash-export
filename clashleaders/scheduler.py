@@ -42,15 +42,6 @@ def update_clans():
 
     logger.debug(f"Done fetching clans.")
 
-    total_clans = ClanPreCalculated.objects.count()
-    ratio_indexed = 100 * (ClanPreCalculated.objects(last_updated__gt=twelve_hour_ago).count() / total_clans)
-    Status.objects.update_one(
-        set__ratio_indexed=ratio_indexed,
-        set__total_clans=total_clans,
-        set__last_updated=datetime.now,
-        upsert=True
-    )
-
 
 def update_clan_calculations():
     hour_ago = datetime.now() - timedelta(hours=1)
@@ -98,7 +89,21 @@ def update_leaderboards():
                 client.captureException()
 
 
+def update_status():
+    twelve_hour_ago = datetime.now() - timedelta(hours=12)
+    total_clans = ClanPreCalculated.objects.count()
+    ratio_indexed = 100 * (ClanPreCalculated.objects(last_updated__gt=twelve_hour_ago).count() / total_clans)
+    Status.objects.update_one(
+        set__ratio_indexed=ratio_indexed,
+        set__total_clans=total_clans,
+        set__last_updated=datetime.now,
+        set__total_members=ClanPreCalculated.objects.sum('members'),
+        upsert=True
+    )
+
+
 schedule.every().minutes.do(update_clans)
+schedule.every().minutes.do(update_status)
 schedule.every().minutes.do(update_clan_calculations)
 schedule.every().hour.do(update_leaderboards)
 schedule.every().day.at("12:01").do(delete_old_clans)
