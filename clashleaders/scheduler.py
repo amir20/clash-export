@@ -98,6 +98,7 @@ def update_status():
         set__total_clans=total_clans,
         set__last_updated=datetime.now,
         set__total_members=ClanPreCalculated.objects.sum('members'),
+        set__total_countries=len(ClanPreCalculated.objects.distinct('location.countryCode')),
         upsert=True
     )
 
