@@ -17,11 +17,13 @@ services:
     volumes:
       - ./clashleaders:/app/clashleaders
       - ./caddy/Caddyfile.local:/etc/Caddyfile
+      - .ipython/web:/root/.ipython/profile_default
 
   scheduler:
     env_file: .env
     restart: 'no'
     volumes:
       - ./clashleaders:/app/clashleaders
+      - .ipython/scheduler:/root/.ipython/profile_default
     depends_on:
       - db
