@@ -36,7 +36,7 @@ class ClanPreCalculated(Document):
     members = IntField(required=True)
     badgeUrls = DictField(required=True)
     location = DictField(required=False)
-    isWarLogPublic = BooleanField(required=False, default=False)
+    isWarLogPublic = BooleanField(required=False)
 
     warWinStreak = IntField(required=True)
     warWins = IntField(required=True)
@@ -83,6 +83,8 @@ class ClanPreCalculated(Document):
             'location.name',
             'location.countryCode',
             'location.isCountry',
+
+            'isWarLogPublic',
 
             'warWinStreak',
             'warWins',
