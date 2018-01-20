@@ -39,6 +39,7 @@ def update_calculations(clan):
     cpc.clanVersusPoints = clan.clanVersusPoints
     cpc.badgeUrls = clan.badgeUrls
     cpc.location = getattr(clan, 'location', {})
+    cpc.isWarLogPublic = clan.isWarLogPublic
 
     cpc.warWinStreak = getattr(clan, 'warWinStreak', 0)
     cpc.warWins = getattr(clan, 'warWins', 0)
