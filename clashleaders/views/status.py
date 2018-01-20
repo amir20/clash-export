@@ -16,4 +16,4 @@ def status():
                            uptime_ratio=uptime_ratio,
                            total_clans=stats.total_clans,
                            ratio_indexed=stats.ratio_indexed,
-                           total_players=0)
+                           total_players=stats.total_members)
