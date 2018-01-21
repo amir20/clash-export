@@ -2,11 +2,9 @@
 <section class="hero is-warning is-bold">
     <div class="hero-body">
         <div class="container">
-            <div class="columns is-vcentered">
+            <div class="columns is-vcentered has-text-centered-mobile">
                 <div class="column is-narrow">
-                    <figure class="image is-128x128">
-                        <img src="{{ clan['badgeUrls']['medium'] }}">
-                    </figure>
+                    <img src="{{ clan['badgeUrls']['medium'] }}" width="128">
                 </div>
                 <div class="column">
                     <p class="title">
@@ -98,10 +96,11 @@
     </div>
 </section>
 <section id="clan-table">
-    <Clan-Table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"/>
+    <Clan-Table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"
+    />
 </section>
 <script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %} {% block title %}{{ clan.name }}{% endblock %} {% block meta %}
 <meta name=”description” content="{{ clan.name }} | {{ clan.description }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders">
-<meta property="og:description" content="{{ clan.name }} | {{ clan.description }} at Clash Leaders."> {% endblock %}clan
+<meta property="og:description" content="{{ clan.name }} | {{ clan.description }} at Clash Leaders."> {% endblock %} {% block nav_class %}is-light{% endblock %}
