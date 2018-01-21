@@ -27,6 +27,7 @@ class ClanDelta(EmbeddedDocument):
 
 class ClanPreCalculated(Document):
     last_updated = DateTimeField(default=datetime.now)
+    page_views = IntField(required=True, default=0)
     tag = StringField(required=True, unique=True)
     slug = StringField(required=True)
     name = StringField(required=True)
@@ -72,6 +73,7 @@ class ClanPreCalculated(Document):
                 'weights': {'name': 1, 'tag': 10}
             },
             'last_updated',
+            'page_views',
             'name',
             'slug',
             'tag',
