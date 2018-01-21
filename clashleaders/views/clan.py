@@ -2,6 +2,7 @@ import re
 
 from flask import render_template, send_file, request, jsonify
 from mongoengine import DoesNotExist
+from user_agents import parse
 
 from clashleaders import app, cache
 from clashleaders.clash import excel, api
@@ -53,11 +54,10 @@ def clan_detail_xlsx(slug):
 def clan_detail_page(slug):
     try:
         clan = ClanPreCalculated.find_by_slug(slug)
-        most_recent = clan.most_recent
-        least_recent = Clan.find_last_by_tag(clan.tag)
-        players = transform_players(most_recent.players)
-        description = URL_REGEX.sub(repl, clan.description)
-        delta = most_recent.id.generation_time - least_recent.id.generation_time
+        update_page_views(clan)
+        description = clan_description(clan)
+        players = transform_players(clan.most_recent.players)
+        delta = compute_oldest_days(clan)
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
@@ -91,6 +91,22 @@ def clan_from_days_ago(days_ago, tag):
         return Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
     else:
         return Clan.fetch_and_save(tag)
+
+
+def update_page_views(clan):
+    user_agent = parse(request.user_agent.string)
+    if not user_agent.is_bot:
+        clan.update(inc__page_views=1)
+
+
+def compute_oldest_days(clan):
+    most_recent = clan.most_recent
+    least_recent = Clan.find_last_by_tag(clan.tag)
+    return most_recent.id.generation_time - least_recent.id.generation_time
+
+
+def clan_description(clan):
+    return URL_REGEX.sub(repl, clan.description)
 
 
 def repl(match):
