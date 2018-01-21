@@ -39,6 +39,7 @@ xlsxwriter = "==1.0.2"
 yarl = "==0.16.0"
 awesome-slugify = "*"
 flask-shell-ipython = "*"
+user-agents = "*"
 
 
 [dev-packages]
