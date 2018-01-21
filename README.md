@@ -3,12 +3,17 @@ Clash of Clans is a freemium mobile MMO strategy video game developed and publis
 
 # What is this repo?
 clashleaders is an open source project that allows players to export their clan stats to an Excel sheet.
-clashleaders is hosted at [clashleaders.download](http://clashleaders.download/).
+clashleaders is hosted at [clashleaders.com](http://www.clashleaders.com/).
 
 # How do I run it?
 You need to have [Docker](https://docs.docker.com/engine/installation/) installed. You can run the app locally by executing:
 
-    $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up clashleaders
+    $ docker-compose up web
 
 # Contributing
-Pull requests are welcomed. I will deploy to new versions manually.     
+Pull requests are welcomed. I will deploy new versions manually.
+
+# Sponsorship
+This project is proud to be hosted and sponsored by Digital Ocean
+
+![Digital Ocean Logo](https://i.imgur.com/zZN1GFH.png)
