@@ -6,8 +6,8 @@ from urllib.parse import quote
 import aiohttp
 import requests
 
-token = os.getenv('API_TOKEN')
-headers = {'authorization': 'Bearer ' + token}
+API_TOKEN = os.getenv('API_TOKEN')
+HEADERS = {'authorization': 'Bearer ' + API_TOKEN}
 logger = logging.getLogger(__name__)
 
 
@@ -17,7 +17,7 @@ class ClanNotFound(Exception):
 
 async def __fetch(url):
     async with aiohttp.ClientSession() as session:
-        async with session.get(url, headers=headers) as response:
+        async with session.get(url, headers=HEADERS) as response:
             return await response.json()
 
 
@@ -32,7 +32,7 @@ def find_clan_by_tag(tag):
     if not tag.startswith('#'):
         tag = '#' + tag
     logger.info(f"Fetching clan from API {tag}.")
-    r = requests.get('https://api.clashofclans.com/v1/clans/' + quote(tag), headers=headers)
+    r = requests.get('https://api.clashofclans.com/v1/clans/' + quote(tag), headers=HEADERS)
 
     if r.status_code != 200:
         raise ClanNotFound('Clan not found')
@@ -42,12 +42,24 @@ def find_clan_by_tag(tag):
 
 def search_by_name(name, limit=10):
     logger.info(f"Searching for clan name '{name}'.")
-    r = requests.get('https://api.clashofclans.com/v1/clans', headers=headers, params={'name': name, 'limit': limit})
+    r = requests.get('https://api.clashofclans.com/v1/clans', headers=HEADERS, params={'name': name, 'limit': limit})
 
     if r.status_code != 200:
         return []
     else:
         return r.json()['items']
+
+
+def clan_warlog(tag):
+    if not tag.startswith('#'):
+        tag = '#' + tag
+    logger.info(f"Fetching clan warlog from API {tag}.")
+    r = requests.get(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog", headers=HEADERS)
+
+    if r.status_code != 200:
+        raise ClanNotFound('Clan not found')
+
+    return r.json()
 
 
 def fetch_all_players(clan):

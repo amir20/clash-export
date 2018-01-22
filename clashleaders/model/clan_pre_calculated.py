@@ -3,6 +3,7 @@ from datetime import datetime
 from mongoengine import *
 
 from clashleaders.model.clan import Clan
+from clashleaders.clash.api import clan_warlog
 
 
 class ClanDelta(EmbeddedDocument):
@@ -149,3 +150,7 @@ class ClanPreCalculated(Document):
         if not tag.startswith('#'):
             tag = '#' + tag
         return cls.objects.get(tag=tag)
+
+    def warlog(self):
+        return clan_warlog(self.tag)['items']
+        
