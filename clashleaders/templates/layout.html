@@ -36,7 +36,7 @@
 </head>
 
 <body>
-    <nav class="navbar {% block nav_class %} {% endblock %}" role="navigation" aria-label="main navigation">
+    <nav class="navbar {% block nav_class %} {% endblock %}" aria-label="main navigation">
         <div class="navbar-brand">
             <a href="/" class="navbar-item clashleader-logo">Clash Leader</a>
         </div>
@@ -53,7 +53,7 @@
                             <div class="media">
                                 <div class="media-left">
                                     <span class="icon is-large">
-                                        <img src="{{ clan.badgeUrls.small }}">
+                                        <img src="{{ clan.badgeUrls.small }}" alt="{{ clan.name }}">
                                     </span>
                                 </div>
                                 <div class="media-content">
