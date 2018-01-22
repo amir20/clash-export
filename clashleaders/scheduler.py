@@ -2,6 +2,7 @@ import logging
 import os
 import time
 from datetime import datetime, timedelta
+from random import randrange
 
 import schedule
 from mongoengine import connect
@@ -103,22 +104,20 @@ def update_status():
     )
 
 
-def index_war_clans():
+def index_random_war_clan():
     count = ClanPreCalculated.objects(isWarLogPublic=True).count()
-    logger.info(f"Fetching clan war logs for {count} clans.")
+    random_clan = ClanPreCalculated.objects(isWarLogPublic=True)[randrange(0, count)]
 
-    i = 0
-    for clan in ClanPreCalculated.objects(isWarLogPublic=True):
-        i += 1
-        logger.info(f"Processing {i} of {count} clans.")
-        try:
-            tags = [war['opponent']['tag'] for war in clan.warlog()]
-        except Exception:
-            logger.exception(f"Error while fetch war log.")
-            continue
-
+    logger.info(f"Indexing random clan war log ({random_clan.name}).")
+        
+    try:
+        tags = [war['opponent']['tag'] for war in random_clan.warlog()]
+    except Exception:
+        logger.exception(f"Error while fetch war log.")
+    else:
         for tag in tags:
             if not ClanPreCalculated.objects(tag=tag).first():
+                logger.info(f"Fetching new clan with tag {tag}")
                 try:
                     Clan.fetch_and_save(tag)
                 except Exception:
@@ -129,6 +128,7 @@ schedule.every().minutes.do(update_clans)
 schedule.every().minutes.do(update_status)
 schedule.every().minutes.do(update_clan_calculations)
 schedule.every().hour.do(update_leaderboards)
+schedule.every().hour.do(index_random_war_clan)
 schedule.every().day.at("12:01").do(delete_old_clans)
 
 
