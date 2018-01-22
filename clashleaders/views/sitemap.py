@@ -10,7 +10,7 @@ def sitemap():
 
     pages.append({'url': url_for('index', _external=True)})
 
-    for clan in ClanPreCalculated.objects:
+    for clan in ClanPreCalculated.objects.only('slug'):
         pages.append({
             'url': url_for('clan_detail_page', slug=clan.slug, _external=True),
         })
