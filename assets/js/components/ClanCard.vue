@@ -11,9 +11,9 @@
                   <p>
                       <strong>{{ this.data.name }}</strong>
                       <small>
-                        <i class="fa fa-tag" aria-hidden="true"></i>
+                        <i class="fa fa-tag fa-lg" aria-hidden="true"></i>
                         {{ this.data.tag }}
-                        <i class="fa fa-trophy" aria-hidden="true"></i>
+                        <i class="fa fa-trophy fa-lg" aria-hidden="true"></i>
                         {{this.data.clanPoints.toLocaleString()}}
                       </small>
                       <br> {{ this.data.description }}

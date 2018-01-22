@@ -13,6 +13,11 @@ from clashleaders.model import Clan, ClanPreCalculated
 URL_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[^\s]*)", re.IGNORECASE)
 
 
+@app.context_processor
+def inject_most_popular():
+    return dict(most_popular=ClanPreCalculated.objects.order_by('-page_views').limit(6))
+
+
 @app.route("/search.json")
 def search():
     query = request.args.get('q')
