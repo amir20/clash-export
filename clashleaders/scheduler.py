@@ -103,6 +103,28 @@ def update_status():
     )
 
 
+def index_war_clans():
+    count = ClanPreCalculated.objects(isWarLogPublic=True).count()
+    logger.info(f"Fetching clan war logs for {count} clans.")
+
+    i = 0
+    for clan in ClanPreCalculated.objects(isWarLogPublic=True):
+        i += 1
+        logger.info(f"Processing {i} of {count} clans.")
+        try:
+            tags = [war['opponent']['tag'] for war in clan.warlog()]
+        except Exception:
+            logger.exception(f"Error while fetch war log.")
+            continue
+
+        for tag in tags:
+            if not ClanPreCalculated.objects(tag=tag).first():
+                try:
+                    Clan.fetch_and_save(tag)
+                except Exception:
+                    logger.exception(f"Error while updating clan from war log.")
+
+
 schedule.every().minutes.do(update_clans)
 schedule.every().minutes.do(update_status)
 schedule.every().minutes.do(update_clan_calculations)
