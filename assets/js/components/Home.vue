@@ -11,10 +11,10 @@
                     </h2>
                 </div>
             </section>
-          <Card :tag="savedTag" @error="onClanError" :foundClan.sync="foundClan"/>
+          <Card :tag="savedTag" @error="onClanError" :foundClan.sync="foundClan"></Card>
           <p class="buttons">
             <button type="reset" class="button is-warning is-large">Change Clan</button>
-            <a :href="`/clan/${foundClan.slug}`" class="button is-success is-large">Continue &rsaquo;</a>
+            <a :href="`/clan/${foundClan.slug}`" class="button is-success is-large" :disabled="foundClan.slug == null">Continue &rsaquo;</a>
           </p>
         </template>
         <template v-else>
@@ -137,4 +137,8 @@ export default {
   }
 };
 </script>
-
+<style scoped>
+a[disabled="disabled"] {
+  pointer-events: none;
+}
+</style>
