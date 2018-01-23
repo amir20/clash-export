@@ -14,7 +14,7 @@ https://www.clashleaders.com {
     }
 
     gzip
-    log stdout
+    log / stdout "{combined}"
     errors stdout
 }
 
