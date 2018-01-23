@@ -12,6 +12,6 @@ http://clashstats.local, localhost:80 {
     }
 
     gzip
-    log stdout
+    log / stdout "{combined}"
     errors stdout
 }
