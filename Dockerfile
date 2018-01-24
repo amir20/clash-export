@@ -1,5 +1,8 @@
 # Build assets
 FROM node:9-alpine as builder
+
+RUN apk add --no-cache git openssh
+
 WORKDIR /build
 COPY package*.json ./
 

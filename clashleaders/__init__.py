@@ -6,11 +6,15 @@ import requests_cache
 from flask import Flask, json
 from flask_caching import Cache
 from mongoengine import connect
-from raven.contrib.flask import Sentry
+import bugsnag
+from bugsnag.flask import handle_exceptions
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
-sentry = Sentry(app)
+
+bugsnag.configure(api_key=os.getenv('BUGSNAG_API_KEY'), project_root="/app", release_stage=os.getenv('STAGE', 'development'))
+handle_exceptions(app)
+
 logging.basicConfig(level=logging.INFO)
 
 # Cache settings

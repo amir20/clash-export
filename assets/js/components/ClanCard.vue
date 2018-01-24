@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { bugsnagClient } from "../bugsnag";
+
 export default {
   props: ["tag", "foundClan"],
   data() {
@@ -49,6 +51,7 @@ export default {
       )).json();
     } catch (e) {
       console.error(e);
+      bugsnagClient.notify(e);
       this.$emit("error");
     }
     this.$emit("update:foundClan", this.data);
@@ -61,4 +64,3 @@ export default {
   color: #efefef !important;
 }
 </style>
-
