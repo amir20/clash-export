@@ -44,7 +44,7 @@ def update_clans():
             updated_tags.append(c.tag)
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")
-            
+
     logger.info(f"Updated clans: {updated_tags}")
     logger.debug(f"Done fetching clans.")
 
