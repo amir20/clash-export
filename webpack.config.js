@@ -117,5 +117,3 @@ if (process.env.NODE_ENV === "production") {
   module.exports.output.filename = "js/[name].[hash].js";
 }
 
-
-console.log(process.env.BUGSNAG_API_KEY)
