@@ -68,6 +68,7 @@
 <script>
 import Card from "./ClanCard";
 import debounce from "lodash/debounce";
+import { bugsnagClient } from "../bugsnag";
 
 const STORAGE_KEY = "lastTag";
 
@@ -109,6 +110,7 @@ export default {
         this.data = await (await fetch(`/search.json?q=${query}`)).json();
       } catch (e) {
         console.error(e);
+        bugsnagClient.notify(e)
       }
 
       this.isLoading = false;

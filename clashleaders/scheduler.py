@@ -5,20 +5,23 @@ from datetime import datetime, timedelta
 from random import randrange
 
 import schedule
+import bugsnag
 from mongoengine import connect
-from raven import Client
+from bugsnag.handlers import BugsnagHandler
+
 
 from clashleaders.clash.calculation import update_calculations
 from clashleaders.model import *
 
-client = Client(os.getenv('SENTRY_DSN'))
-
+bugsnag.configure(api_key=os.getenv('BUGSNAG_API_KEY'), project_root="/app", release_stage=os.getenv('STAGE', 'development'))
+handler = BugsnagHandler()
+handler.setLevel(logging.ERROR)
 logging.basicConfig(level=logging.INFO)
-
-connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
-
 logger = logging.getLogger(__name__)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
+logger.addHandler(handler)
+
+connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 
 def update_clans():
@@ -39,7 +42,6 @@ def update_clans():
             update_calculations(Clan.fetch_and_save(c.tag))
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")
-            client.captureException()
 
     logger.debug(f"Done fetching clans.")
 
@@ -57,7 +59,6 @@ def update_clan_calculations():
             update_calculations(Clan.find_first_by_tag(tag))
         except Exception:
             logger.exception(f"Error during updating clan calculation for {tag}.")
-            client.captureException()
 
 
 def delete_old_clans():
@@ -87,7 +88,6 @@ def update_leaderboards():
                 update_calculations(Clan.fetch_and_save(c.tag))
             except Exception:
                 logger.exception(f"Error while fetching leaderboard clan {c.tag}.")
-                client.captureException()
 
 
 def update_status():
@@ -109,7 +109,7 @@ def index_random_war_clan():
     random_clan = ClanPreCalculated.objects(isWarLogPublic=True)[randrange(0, count)]
 
     logger.info(f"Indexing random clan war log ({random_clan.name}).")
-        
+
     try:
         tags = [war['opponent']['tag'] for war in random_clan.warlog()]
     except Exception:
