@@ -3,6 +3,8 @@ const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { BugsnagBuildReporterPlugin } = require('webpack-bugsnag-plugins');
+
 
 module.exports = {
   context: __dirname + "/assets",
@@ -103,8 +105,12 @@ if (process.env.NODE_ENV === "production") {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new BugsnagBuildReporterPlugin({
+      apiKey: process.env.BUGSNAG_API_KEY,
     })
   ]);
 
   module.exports.output.filename = "js/[name].[hash].js";
 }
+
