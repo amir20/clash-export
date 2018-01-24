@@ -36,13 +36,16 @@ def update_clans():
         logger.info(f"No clans need updating. Fetching 5 least updated clans.")
         clans = ClanPreCalculated.objects.order_by("-last_updated").limit(5)
 
+    updated_tags = []
     for c in clans:
         try:
-            logger.info(f"Updating clan {c.tag}.")
+            logger.debug(f"Updating clan {c.tag}.")
             update_calculations(Clan.fetch_and_save(c.tag))
+            updated_tags.append(c.tag)
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")
-
+            
+    logger.info(f"Updated clans: {updated_tags}")
     logger.debug(f"Done fetching clans.")
 
 
@@ -62,8 +65,8 @@ def update_clan_calculations():
 
 
 def delete_old_clans():
-    deleted = Clan.older_than(days=45).delete()
-    logger.info(f"Deleted {deleted} clans that are older than 45 days.")
+    deleted = Clan.older_than(days=33).delete()
+    logger.info(f"Deleted {deleted} clans that are older than 33 days.")
 
     deleted = ClanPreCalculated.objects(members=0).delete()
     logger.info(f"Deleted {deleted} clans with 0 members.")
@@ -82,9 +85,10 @@ def update_leaderboards():
                'avg_bh_level']
 
     for column in columns:
+        logger.info(f"Updating {column} leaderboard.")
         for c in ClanPreCalculated.objects(members__gt=20).order_by(f"-{column}").limit(15):
             try:
-                logger.info(f"Updating {column} leaderboard clan {c.tag}.")
+                logger.debug(f"Updating {column} leaderboard clan {c.tag}.")
                 update_calculations(Clan.fetch_and_save(c.tag))
             except Exception:
                 logger.exception(f"Error while fetching leaderboard clan {c.tag}.")
@@ -115,13 +119,17 @@ def index_random_war_clan():
     except Exception:
         logger.exception(f"Error while fetch war log.")
     else:
+        updated_tags = []
         for tag in tags:
             if not ClanPreCalculated.objects(tag=tag).first():
-                logger.info(f"Fetching new clan with tag {tag}")
+                logger.debug(f"Fetching new clan with tag {tag}")
                 try:
                     Clan.fetch_and_save(tag)
+                    updated_tags.append(tag)
                 except Exception:
                     logger.exception(f"Error while updating clan from war log.")
+
+        logger.info(f"Indexed new war clans: {updated_tags}")
 
 
 schedule.every().minutes.do(update_clans)
