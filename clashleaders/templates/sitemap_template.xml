@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     {% for page in pages %}
     <url>
-        <loc>{{ page['url'] | safe }}</loc>
+        <loc>{{ page.url | safe }}</loc>
         <changefreq>daily</changefreq>
     </url>
     {% endfor %}
