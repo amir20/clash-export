@@ -40,7 +40,7 @@
                         :data="data"
                         :loading="isLoading"
                         @input="fetchData"
-                        @select="option => savedTag = option.tag">
+                        @select="option => savedTag = option ? option.tag : null">
                         <template slot-scope="props">
                             <div class="media">
                                 <div class="media-left">
@@ -110,7 +110,7 @@ export default {
         this.data = await (await fetch(`/search.json?q=${query}`)).json();
       } catch (e) {
         console.error(e);
-        bugsnagClient.notify(e)
+        bugsnagClient.notify(e);
       }
 
       this.isLoading = false;
