@@ -2,7 +2,7 @@ const bugsnag = require("bugsnag-js");
 const bugsnagVue = require("bugsnag-vue");
 
 export const bugsnagClient = bugsnag({
-  apiKey: process.env.BUGSNAG_API_KEY,
+  apiKey: "cdb173414b6d879639165cedcc730d73",
   notifyReleaseStages: ["production"]
 });
 

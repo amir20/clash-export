@@ -5,8 +5,6 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const { BugsnagBuildReporterPlugin } = require('webpack-bugsnag-plugins');
 
-require('dotenv').config();
-
 
 module.exports = {
   context: __dirname + "/assets",
@@ -77,7 +75,6 @@ module.exports = {
   },
   plugins: [
     new ManifestPlugin(),
-    new webpack.EnvironmentPlugin(['BUGSNAG_API_KEY']),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
       chunks: ["details-page", "index"]
