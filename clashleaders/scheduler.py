@@ -56,12 +56,16 @@ def update_clan_calculations():
     available_clan_tags = recent_tags - calculated_tags
 
     logger.info(f"Updating {len(available_clan_tags)} clan calculations.")
+    updated_tags = []
     for tag in available_clan_tags:
         try:
-            logger.info(f"Updating calculations for {tag}.")
+            logger.debug(f"Updating calculations for {tag}.")
             update_calculations(Clan.find_first_by_tag(tag))
+            updated_tags.append(tag)
         except Exception:
             logger.exception(f"Error during updating clan calculation for {tag}.")
+
+    logger.info(f"Updated calculations: {updated_tags}")
 
 
 def delete_old_clans():
