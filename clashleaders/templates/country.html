@@ -7,10 +7,10 @@
         {% for country in aggregate_by_country %}
         <span class="panel-block">
             <span class="panel-icon">
-                <span class="flag-icon flag-icon-{{ country['code'] }}"></span>
+                <span class="flag-icon flag-icon-{{ country.code }}"></span>
             </span>
             {{ country['name'] }}
-            <span class="value subtitle is-7">{{ formatter.format(country['score']/factor) }}</span>
+            <span class="value subtitle is-7">{{ formatter.format(country.score / factor) }}</span>
         </span>
         {% endfor %}
 
