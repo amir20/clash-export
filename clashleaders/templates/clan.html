@@ -7,9 +7,15 @@
                     <img src="{{ clan.badgeUrls.medium }}" width="128" alt="{{ clan.name }}">
                 </div>
                 <div class="column">
-                    <p class="title">
+                    <h1 class="title">
                         {{ clan.name }}
-                    </p>
+
+                    </h1>
+                    <h6 class="subtitle is-6">
+                        {% if clan.location.countryCode %}
+                        <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
+                        {% endif %} {{ clan.location.name }}
+                    </h6>
                     <p class="subtitle clan-description">
                         {{ description | safe }}
                     </p>
@@ -99,7 +105,7 @@
     <Clan-Table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"></Clan-Table>
 </section>
 <script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %} {% block title %}{{ clan.name }}{% endblock %} {% block meta %}
-<meta name=”description” content="{{ clan.name }} | {{ clan.description }} at Clash Leaders">
+<meta name=”description” content="{{ clan.name }} | {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders">
-<meta property="og:description" content="{{ clan.name }} | {{ clan.description }} at Clash Leaders."> {% endblock %} {% block nav_class %}is-light{% endblock %}
+<meta property="og:description" content="{{ clan.name }} | {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders."> {% endblock %} {% block nav_class %}is-light{% endblock %}
