@@ -1,6 +1,8 @@
 from datetime import datetime
 
 import pandas as pd
+import numpy as np
+
 from mongoengine.errors import DoesNotExist
 from slugify import slugify
 
@@ -151,7 +153,8 @@ def calculate_delta(now_df, start_df):
 
 
 def avg_column(column, now, start):
-    return (now[column] - start[column]).mean()
+    value = (now[column] - start[column]).mean()
+    return 0 if np.isnan(value) else value
 
 
 def is_new_season(before, now):
