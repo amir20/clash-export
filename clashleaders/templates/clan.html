@@ -11,11 +11,13 @@
                         {{ clan.name }}
 
                     </h1>
-                    <h6 class="subtitle is-6">
-                        {% if clan.location.countryCode %}
+                    <h2 class="subtitle is-6">
+                        <i class="fa fa-tag" aria-hidden="true"></i>
+                        {{ clan.tag }} {% if clan.location.countryCode %}
                         <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
                         {% endif %} {{ clan.location.name }}
-                    </h6>
+
+                    </h2>
                     <p class="subtitle clan-description">
                         {{ description | safe }}
                     </p>
