@@ -12,11 +12,10 @@
 
                     </h1>
                     <h2 class="subtitle is-6">
-                        <i class="fa fa-tag" aria-hidden="true"></i>
-                        {{ clan.tag }} {% if clan.location.countryCode %}
+                        <span class="tag is-light">{{ clan.tag }}</span>
+                        {% if clan.location.countryCode %}
                         <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
                         {% endif %} {{ clan.location.name }}
-
                     </h2>
                     <p class="subtitle clan-description">
                         {{ description | safe }}
@@ -26,8 +25,12 @@
             <nav class="level">
                 <div class="level-item has-text-centered">
                     <div>
-                        <p class="heading">Total Trophies</p>
-                        <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
+                        <p class="heading is-tooltip-info is-tooltip-right tooltip" data-tooltip="Tooltip Text">Total Trophies</p>
+                        <p class="title">
+                            {{ "{:,}".format(clan.clanPoints) }}
+                            <br>
+                            <span class="tag is-success">+100</span>
+                        </p>
                     </div>
                 </div>
                 <div class="level-item has-text-centered">
