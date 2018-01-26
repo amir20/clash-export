@@ -3,6 +3,7 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
 @import "~flag-icon-css/sass/flag-icon";
+@import "~bulma-tooltip";
 
 h1,
 h2 {
