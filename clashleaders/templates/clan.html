@@ -4,7 +4,9 @@
         {% if tooltip %}
         <p class="heading is-tooltip-right tooltip is-tooltip-multiline" data-tooltip="{{ tooltip }}">
             {{ label }}
-            <i class="fas fa-info-circle"></i>
+            <span class="icon is-small">
+                <i class="fas fa-info-circle"></i>
+            </span>
         </p>
         {% else %}
         <p class="heading">{{ label }}</p>
