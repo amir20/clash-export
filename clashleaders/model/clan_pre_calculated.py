@@ -170,7 +170,7 @@ class ClanPreCalculated(Document):
             'week_delta.total_de_grab',
             'week_delta.total_donations',
             'week_delta.total_attack_wins',
-            'week_delta.total_versus_wins'
+            'week_delta.total_versus_wins',
         ]
     }
 
