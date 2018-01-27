@@ -5,6 +5,9 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 @import "~flag-icon-css/sass/flag-icon";
 @import "~bulma-tooltip";
 
+body  {
+  font-family: "Titillium Web";
+}
 
 .leaderboard {
   & .panel-icon {
