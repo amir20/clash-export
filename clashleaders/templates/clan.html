@@ -1,4 +1,19 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %}{% macro insight(label, value, delta, tooltip=None) -%}
+<div class="level-item has-text-centered">
+    <div>
+        {% if tooltip %}
+        <p class="heading is-tooltip-info is-tooltip-right tooltip" data-tooltip="{{ tooltip }}">{{ label }}</p>
+        {% else %}
+        <p class="heading">{{ label }}</p>
+        {% endif %}
+        <p class="title">
+            {{ "{:,}".format(value) }}
+            <br>
+            <span class="tag {{'is-success' if delta > 0 else 'is-danger'}}">{{ "{:+,}".format(delta) }}</span>
+        </p>
+    </div>
+</div>
+{%- endmacro %}{% block body %}
 <section class="hero is-warning is-bold">
     <div class="hero-body">
         <div class="container">
@@ -23,40 +38,16 @@
                 </div>
             </div>
             <nav class="level">
-                <div class="level-item has-text-centered">
-                    <div>
-                        <p class="heading is-tooltip-info is-tooltip-right tooltip" data-tooltip="Tooltip Text">Total Trophies</p>
-                        <p class="title">
-                            {{ "{:,}".format(clan.clanPoints) }}
-                            <br>
-                            <span class="tag is-success">+100</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="level-item has-text-centered">
-                    <div>
-                        <p class="heading">Donations / Player</p>
-                        <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_donations) }}</p>
-                    </div>
-                </div>
-                <div class="level-item has-text-centered">
-                    <div>
-                        <p class="heading">Wins / Player</p>
-                        <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_attack_wins) }}</p>
-                    </div>
-                </div>
-                <div class="level-item has-text-centered">
-                    <div>
-                        <p class="heading">Versus Wins / Player</p>
-                        <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_versus_wins) }}</p>
-                    </div>
-                </div>
-                <div class="level-item has-text-centered">
-                    <div>
-                        <p class="heading">Trophies Gained / Player</p>
-                        <p class="title">{{ "{:,.1f}".format(clan.week_delta.avg_trophies) }}</p>
-                    </div>
-                </div>
+                {{ insight('Total Trophies', clan.clanPoints, clan.week_delta.total_trophies) }}
+                
+                {{ insight('Total BH Trophies', clan.clanVersusPoints, clan.week_delta.total_bh_trophies) }}
+                
+                {{ insight('Donations', clan.total_donations, clan.week_delta.total_donations) }}
+
+                {{ insight('Total Wins', clan.total_attack_wins, clan.week_delta.total_attack_wins) }}
+
+                {{ insight('Total Versus Wins', clan.total_versus_wins, clan.week_delta.total_versus_wins) }}
+                                                                                
             </nav>
             <div class="columns">
                 <div class="column has-text-centered">
