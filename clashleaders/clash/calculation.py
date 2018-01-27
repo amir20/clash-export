@@ -55,7 +55,7 @@ def update_calculations(clan):
 
     cpc.most_recent = clan
 
-    calculate_avg(cpc)
+    calculate_data(cpc)
     calculate_season(cpc)
     calculate_week(cpc)
 
@@ -64,7 +64,7 @@ def update_calculations(clan):
     return cpc
 
 
-def calculate_avg(cpc):
+def calculate_data(cpc):
     """
     Calculate all averages for clans based on total values
 
@@ -89,6 +89,10 @@ def calculate_avg(cpc):
 
     cpc.avg_attack_wins = df['Attack Wins'].mean()
     cpc.avg_versus_wins = df['Versus Battle Wins'].mean()
+
+    cpc.total_donations = df['Donations'].sum()
+    cpc.total_attack_wins = df['Attack Wins'].sum()
+    cpc.total_versus_wins = df['Versus Battle Wins'].sum()
 
 
 def calculate_week(cpc):
@@ -134,6 +138,15 @@ def calculate_delta(now_df, start_df):
     avg_attack_wins = avg_column('Attack Wins', now_df, start_df)
     avg_versus_wins = avg_column('Versus Battle Wins', now_df, start_df)
 
+    total_trophies = sum_column('Current Trophies', now_df, start_df)
+    total_bh_trophies = sum_column('Builder Hall Trophies', now_df, start_df)
+    total_gold_grab = sum_column('Total Gold Grab', now_df, start_df)
+    total_elixir_grab = sum_column('Total Elixir Grab', now_df, start_df)
+    total_de_grab = sum_column('Total DE Grab', now_df, start_df)
+    total_donations = sum_column('Total Donations', now_df, start_df)
+    total_attack_wins = sum_column('Attack Wins', now_df, start_df)
+    total_versus_wins = sum_column('Versus Battle Wins', now_df, start_df)
+
     return ClanDelta(
         avg_donations=avg_donations,
         avg_donations_received=avg_donations_received,
@@ -148,12 +161,25 @@ def calculate_delta(now_df, start_df):
         avg_trophies=avg_trophies,
         avg_bh_trophies=avg_bh_trophies,
         avg_attack_wins=avg_attack_wins,
-        avg_versus_wins=avg_versus_wins
+        avg_versus_wins=avg_versus_wins,
+        total_trophies=total_trophies,
+        total_bh_trophies=total_bh_trophies,
+        total_gold_grab=total_gold_grab,
+        total_elixir_grab=total_elixir_grab,
+        total_de_grab=total_de_grab,
+        total_donations=total_donations,
+        total_attack_wins=total_attack_wins,
+        total_versus_wins=total_versus_wins
     )
 
 
 def avg_column(column, now, start):
     value = (now[column] - start[column]).mean()
+    return 0 if np.isnan(value) else value
+
+
+def sum_column(column, now, start):
+    value = (now[column] - start[column]).sum()
     return 0 if np.isnan(value) else value
 
 
