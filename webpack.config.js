@@ -3,8 +3,7 @@ const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const { BugsnagBuildReporterPlugin } = require('webpack-bugsnag-plugins');
-
+const { BugsnagBuildReporterPlugin } = require("webpack-bugsnag-plugins");
 
 module.exports = {
   context: __dirname + "/assets",
@@ -64,6 +63,13 @@ module.exports = {
             {
               loader: "postcss-loader",
               options: {
+                ident: 'postcss',
+                plugins: loader => [
+                  require("postcss-custom-properties")({ warnings: false }),
+                  require("postcss-import")(),
+                  require("postcss-cssnext")(),
+                  require("postcss-font-magician")()
+                ],
                 "postcss-custom-properties": { warnings: false }
               }
             },
@@ -107,10 +113,9 @@ if (process.env.NODE_ENV === "production") {
       minimize: true
     }),
     new BugsnagBuildReporterPlugin({
-      apiKey: process.env.BUGSNAG_API_KEY,
+      apiKey: process.env.BUGSNAG_API_KEY
     })
   ]);
 
   module.exports.output.filename = "js/[name].[hash].js";
 }
-
