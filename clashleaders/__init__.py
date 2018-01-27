@@ -12,7 +12,12 @@ from bugsnag.flask import handle_exceptions
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
 
-bugsnag.configure(api_key=os.getenv('BUGSNAG_API_KEY'), project_root="/app", release_stage=os.getenv('STAGE', 'development'))
+bugsnag.configure(
+    api_key=os.getenv('BUGSNAG_API_KEY'),
+    project_root="/app",
+    release_stage=os.getenv('STAGE', 'development'),
+    notify_release_stages=["production"]
+)
 handle_exceptions(app)
 
 logging.basicConfig(level=logging.INFO)

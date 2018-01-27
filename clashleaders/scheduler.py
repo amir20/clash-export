@@ -13,7 +13,12 @@ from bugsnag.handlers import BugsnagHandler
 from clashleaders.clash.calculation import update_calculations
 from clashleaders.model import *
 
-bugsnag.configure(api_key=os.getenv('BUGSNAG_API_KEY'), project_root="/app", release_stage=os.getenv('STAGE', 'development'))
+bugsnag.configure(
+    api_key=os.getenv('BUGSNAG_API_KEY'),
+    project_root="/app",
+    release_stage=os.getenv('STAGE', 'development'),
+    notify_release_stages=["production"]
+)
 handler = BugsnagHandler()
 handler.setLevel(logging.ERROR)
 logging.basicConfig(level=logging.INFO)
@@ -43,7 +48,7 @@ def update_clans():
             update_calculations(Clan.fetch_and_save(c.tag))
             updated_tags.append(c.tag)
         except Exception:
-            logger.exception(f"Error while fetching clan {tag}.")
+            logger.exception(f"Error while fetching clan {c.tag}.")
 
     logger.info(f"Updated clans: {updated_tags}")
     logger.debug(f"Done fetching clans.")
