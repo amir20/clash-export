@@ -2,7 +2,10 @@
 <div class="level-item has-text-centered">
     <div>
         {% if tooltip %}
-        <p class="heading is-tooltip-info is-tooltip-right tooltip" data-tooltip="{{ tooltip }}">{{ label }}</p>
+        <p class="heading is-tooltip-right tooltip is-tooltip-multiline" data-tooltip="{{ tooltip }}">
+            {{ label }}
+            <i class="fas fa-info-circle"></i>
+        </p>
         {% else %}
         <p class="heading">{{ label }}</p>
         {% endif %}
@@ -27,7 +30,10 @@
 
                     </h1>
                     <h2 class="subtitle is-6">
-                        <span class="tag is-light">{{ clan.tag }}</span>
+                        <div class="tags has-addons is-pulled-right">
+                            <span class="tag is-dark">Tag</span>
+                            <span class="tag is-info">{{ clan.tag }} </span>
+                        </div>
                         {% if clan.location.countryCode %}
                         <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
                         {% endif %} {{ clan.location.name }}
@@ -38,16 +44,16 @@
                 </div>
             </div>
             <nav class="level">
-                {{ insight('Total Trophies', clan.clanPoints, clan.week_delta.total_trophies) }}
-                
+                <!-- Total Trophies -->
+                {{ insight( 'Total Trophies', clan.clanPoints, clan.week_delta.total_trophies, "Data is calculated based on data from a week ago") }}
+                <!-- Total BH Trophies -->
                 {{ insight('Total BH Trophies', clan.clanVersusPoints, clan.week_delta.total_bh_trophies) }}
-                
+                <!-- Donations -->
                 {{ insight('Donations', clan.total_donations, clan.week_delta.total_donations) }}
-
+                <!-- Total Wins -->
                 {{ insight('Total Wins', clan.total_attack_wins, clan.week_delta.total_attack_wins) }}
-
+                <!-- Total Versus Wins -->
                 {{ insight('Total Versus Wins', clan.total_versus_wins, clan.week_delta.total_versus_wins) }}
-                                                                                
             </nav>
             <div class="columns">
                 <div class="column has-text-centered">
