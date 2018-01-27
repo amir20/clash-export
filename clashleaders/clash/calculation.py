@@ -73,26 +73,36 @@ def calculate_data(cpc):
     """
     df = to_data_frame(cpc.most_recent)
 
-    cpc.avg_donations = df['Donations'].mean()
+    cpc.avg_donations = mean_single_column('Donations', df)
 
-    cpc.avg_gold_grab = df['Total Gold Grab'].mean()
-    cpc.avg_elixir_grab = df['Total Elixir Grab'].mean()
-    cpc.avg_de_grab = df['Total DE Grab'].mean()
-    cpc.avg_war_stars = df['Total War Stars'].mean()
+    cpc.avg_gold_grab = mean_single_column('Total Gold Grab', df)
+    cpc.avg_elixir_grab = mean_single_column('Total Elixir Grab', df)
+    cpc.avg_de_grab = mean_single_column('Total DE Grab', df)
+    cpc.avg_war_stars = mean_single_column('Total War Stars', df)
 
-    cpc.avg_th_level = df['TH Level'].mean()
-    cpc.avg_bh_level = df['BH Level'].mean()
-    cpc.avg_xp_level = df['XP Level'].mean()
-    cpc.avg_best_trophies = df['Best Trophies'].mean()
-    cpc.avg_trophies = df['Current Trophies'].mean()
-    cpc.avg_bh_trophies = df['Builder Hall Trophies'].mean()
+    cpc.avg_th_level = mean_single_column('TH Level', df)
+    cpc.avg_bh_level = mean_single_column('BH Level', df)
+    cpc.avg_xp_level = mean_single_column('XP Level',  df)
+    cpc.avg_best_trophies = mean_single_column('Best Trophies', df)
+    cpc.avg_trophies = mean_single_column('Current Trophies', df)
+    cpc.avg_bh_trophies = mean_single_column('Builder Hall Trophies', df)
 
-    cpc.avg_attack_wins = df['Attack Wins'].mean()
-    cpc.avg_versus_wins = df['Versus Battle Wins'].mean()
+    cpc.avg_attack_wins = mean_single_column('Attack Wins', df)
+    cpc.avg_versus_wins = mean_single_column('Versus Battle Wins', df)
 
-    cpc.total_donations = df['Donations'].sum()
-    cpc.total_attack_wins = df['Attack Wins'].sum()
-    cpc.total_versus_wins = df['Versus Battle Wins'].sum()
+    cpc.total_donations = sum_single_column('Donations', df)
+    cpc.total_attack_wins = sum_single_column('Attack Wins', df)
+    cpc.total_versus_wins = sum_single_column('Versus Battle Wins', df)
+
+
+def sum_single_column(column, df):
+    value = df[column].sum()
+    return 0 if np.isnan(value) else value
+
+
+def mean_single_column(column, df):
+    value = df[column].mean()
+    return 0 if np.isnan(value) else value
 
 
 def calculate_week(cpc):
