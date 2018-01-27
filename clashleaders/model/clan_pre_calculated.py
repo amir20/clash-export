@@ -25,6 +25,15 @@ class ClanDelta(EmbeddedDocument):
     avg_attack_wins = FloatField(required=True)
     avg_versus_wins = FloatField(required=True)
 
+    total_trophies = IntField()
+    total_bh_trophies = IntField()
+    total_gold_grab = IntField()
+    total_elixir_grab = IntField()
+    total_de_grab = IntField()
+    total_donations = IntField()
+    total_attack_wins = IntField()
+    total_versus_wins = IntField()
+
 
 class ClanPreCalculated(Document):
     last_updated = DateTimeField(default=datetime.now)
@@ -63,6 +72,10 @@ class ClanPreCalculated(Document):
     avg_attack_wins = FloatField(required=True)
     avg_versus_wins = FloatField(required=True)
 
+    total_donations = IntField()
+    total_attack_wins = IntField()
+    total_versus_wins = IntField()
+
     season_delta = EmbeddedDocumentField(ClanDelta)
     week_delta = EmbeddedDocumentField(ClanDelta)
 
@@ -81,6 +94,9 @@ class ClanPreCalculated(Document):
             'members',
             'clanPoints',
             'clanVersusPoints',
+            'total_donations',
+            'total_attack_wins',
+            'total_versus_wins',
 
             'location.id',
             'location.name',
@@ -89,39 +105,48 @@ class ClanPreCalculated(Document):
 
             'isWarLogPublic',
 
-            'warWinStreak',
-            'warWins',
-            'warTies',
-            'warLosses',
+            # 'warWinStreak',
+            # 'warWins',
+            # 'warTies',
+            # 'warLosses',
 
-            'avg_donations',
-            'avg_gold_grab',
-            'avg_elixir_grab',
-            'avg_de_grab',
-            'avg_war_stars',
-            'avg_th_level',
-            'avg_bh_level',
-            'avg_xp_level',
-            'avg_best_trophies',
-            'avg_trophies',
-            'avg_bh_trophies',
-            'avg_attack_wins',
-            'avg_versus_wins',
+            # 'avg_donations',
+            # 'avg_gold_grab',
+            # 'avg_elixir_grab',
+            # 'avg_de_grab',
+            # 'avg_war_stars',
+            # 'avg_th_level',
+            # 'avg_bh_level',
+            # 'avg_xp_level',
+            # 'avg_best_trophies',
+            # 'avg_trophies',
+            # 'avg_bh_trophies',
+            # 'avg_attack_wins',
+            # 'avg_versus_wins',
 
-            'season_delta.avg_donations',
-            'season_delta.avg_donations_received',
-            'season_delta.avg_gold_grab',
-            'season_delta.avg_elixir_grab',
-            'season_delta.avg_de_grab',
-            'season_delta.avg_war_stars',
-            'season_delta.avg_th_level',
-            'season_delta.avg_bh_level',
-            'season_delta.avg_xp_level',
-            'season_delta.avg_best_trophies',
-            'season_delta.avg_trophies',
-            'season_delta.avg_bh_trophies',
-            'season_delta.avg_attack_wins',
-            'season_delta.avg_versus_wins',
+            # 'season_delta.avg_donations',
+            # 'season_delta.avg_donations_received',
+            # 'season_delta.avg_gold_grab',
+            # 'season_delta.avg_elixir_grab',
+            # 'season_delta.avg_de_grab',
+            # 'season_delta.avg_war_stars',
+            # 'season_delta.avg_th_level',
+            # 'season_delta.avg_bh_level',
+            # 'season_delta.avg_xp_level',
+            # 'season_delta.avg_best_trophies',
+            # 'season_delta.avg_trophies',
+            # 'season_delta.avg_bh_trophies',
+            # 'season_delta.avg_attack_wins',
+            # 'season_delta.avg_versus_wins',
+
+            # 'season_delta.total_trophies',
+            # 'season_delta.total_bh_trophies',
+            # 'season_delta.total_gold_grab',
+            # 'season_delta.total_elixir_grab',
+            # 'season_delta.total_de_grab',
+            # 'season_delta.total_donations',
+            # 'season_delta.total_attack_wins',
+            # 'season_delta.total_versus_wins',
 
             'week_delta.avg_donations',
             'week_delta.avg_donations_received',
@@ -138,6 +163,14 @@ class ClanPreCalculated(Document):
             'week_delta.avg_attack_wins',
             'week_delta.avg_versus_wins',
 
+            'week_delta.total_trophies',
+            'week_delta.total_bh_trophies',
+            'week_delta.total_gold_grab',
+            'week_delta.total_elixir_grab',
+            'week_delta.total_de_grab',
+            'week_delta.total_donations',
+            'week_delta.total_attack_wins',
+            'week_delta.total_versus_wins'
         ]
     }
 
@@ -153,4 +186,3 @@ class ClanPreCalculated(Document):
 
     def warlog(self):
         return clan_warlog(self.tag)['items']
-        
