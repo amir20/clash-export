@@ -63,14 +63,16 @@ module.exports = {
             {
               loader: "postcss-loader",
               options: {
-                ident: 'postcss',
+                ident: "postcss",
                 plugins: loader => [
-                  require("postcss-custom-properties")({ warnings: false }),
                   require("postcss-import")(),
-                  require("postcss-cssnext")(),
+                  require("postcss-cssnext")({
+                    features: {
+                      customProperties: { warnings: false }
+                    }
+                  }),
                   require("postcss-font-magician")()
-                ],
-                "postcss-custom-properties": { warnings: false }
+                ]
               }
             },
             "sass-loader"
