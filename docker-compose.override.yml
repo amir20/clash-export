@@ -16,6 +16,9 @@ services:
       - "8000:80"
     volumes:
       - ./clashleaders:/app/clashleaders
+      - ./tests/:/app/tests
+      - ./pytest.ini:/app/pytest.ini
+      - ./setup.cfg:/app/setup.cfg
       - ./caddy/Caddyfile.local:/etc/Caddyfile
       - .ipython/web:/root/.ipython/profile_default
 
