@@ -5,3 +5,4 @@ init:
 	
 test: init
 	python setup.py test
+
