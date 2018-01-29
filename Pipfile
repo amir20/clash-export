@@ -46,3 +46,4 @@ bugsnag = {extras = ["flask"]}
 
 pytest = "*"
 pytest-runner = "*"
+snapshottest = "*"
