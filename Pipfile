@@ -45,3 +45,4 @@ bugsnag = {extras = ["flask"]}
 [dev-packages]
 
 pytest = "*"
+pytest-runner = "*"

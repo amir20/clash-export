@@ -17,8 +17,8 @@ services:
     volumes:
       - ./clashleaders:/app/clashleaders
       - ./tests/:/app/tests
-      - ./pytest.ini:/app/pytest.ini
       - ./setup.cfg:/app/setup.cfg
+      - ./Makefile:/app/Makefile
       - ./caddy/Caddyfile.local:/etc/Caddyfile
       - .ipython/web:/root/.ipython/profile_default
 
