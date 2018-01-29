@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from bson.objectid import ObjectId
-from mongoengine import *
+from mongoengine import DynamicDocument
 
 from clashleaders.clash import api
 
