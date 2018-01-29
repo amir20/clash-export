@@ -82,7 +82,7 @@ def calculate_data(cpc):
 
     cpc.avg_th_level = mean_single_column('TH Level', df)
     cpc.avg_bh_level = mean_single_column('BH Level', df)
-    cpc.avg_xp_level = mean_single_column('XP Level',  df)
+    cpc.avg_xp_level = mean_single_column('XP Level', df)
     cpc.avg_best_trophies = mean_single_column('Best Trophies', df)
     cpc.avg_trophies = mean_single_column('Current Trophies', df)
     cpc.avg_bh_trophies = mean_single_column('Builder Hall Trophies', df)
