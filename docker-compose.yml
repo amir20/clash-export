@@ -6,9 +6,6 @@ services:
     command: '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord-scheduler.conf'
 
   web:
-    build:
-      context: .
-      cache_from:
-        - amir20/clashleaders:latest
+    build: .
     image: amir20/clashleaders:latest
     hostname: web
