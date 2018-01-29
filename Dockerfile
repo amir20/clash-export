@@ -32,7 +32,7 @@ ARG plugins=http.expires
 
 # Install caddy and clean up
 RUN apt-get update \
-    && apt-get install supervisor -y --no-install-recommends \
+    && apt-get install make supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \
     && apt-get install gcc -y \
     && curl --silent --show-error --fail --location \
