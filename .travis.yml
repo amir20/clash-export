@@ -11,7 +11,7 @@ before_install:
   - docker-compose -f docker-compose.yml build
 
 script:
-  - docker-compose run web make test
+  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run test
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
