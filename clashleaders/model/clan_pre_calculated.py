@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from mongoengine import *
+from mongoengine import FloatField, IntField, Document, DateTimeField, StringField, DictField, BooleanField, \
+    ReferenceField, EmbeddedDocumentField, EmbeddedDocument
 
 from clashleaders.model.clan import Clan
 from clashleaders.clash.api import clan_warlog

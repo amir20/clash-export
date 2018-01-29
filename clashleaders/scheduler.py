@@ -4,14 +4,13 @@ import time
 from datetime import datetime, timedelta
 from random import randrange
 
-import schedule
 import bugsnag
-from mongoengine import connect
+import schedule
 from bugsnag.handlers import BugsnagHandler
-
+from mongoengine import connect
 
 from clashleaders.clash.calculation import update_calculations
-from clashleaders.model import *
+from clashleaders.model import ClanPreCalculated, Clan, Status
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),

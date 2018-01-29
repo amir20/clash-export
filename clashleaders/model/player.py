@@ -1,4 +1,4 @@
-from mongoengine import *
+from mongoengine import DynamicDocument
 
 
 class Player(DynamicDocument):
