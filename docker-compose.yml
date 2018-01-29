@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   scheduler:
     image: amir20/clashleaders:latest
