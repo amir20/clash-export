@@ -41,6 +41,7 @@ flask-shell-ipython = "*"
 user-agents = "*"
 bugsnag = {extras = ["flask"]}
 scikit-learn = "*"
+scipy = "*"
 
 
 [dev-packages]
