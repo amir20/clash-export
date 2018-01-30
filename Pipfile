@@ -40,6 +40,7 @@ awesome-slugify = "*"
 flask-shell-ipython = "*"
 user-agents = "*"
 bugsnag = {extras = ["flask"]}
+scikit-learn = "*"
 
 
 [dev-packages]
