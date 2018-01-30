@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "59cfb0c9b9002fdbbe19448f72c481f6f23d88b39633f378119e7c238041c1f8"
+            "sha256": "8f41c504df458000809bc4d13bf5157da54595dbbd38c6f6868c295446644dbb"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -200,6 +200,10 @@
         "scikit-learn": {
             "hashes": [],
             "version": "==0.19.1"
+        },
+        "scipy": {
+            "hashes": [],
+            "version": "==1.0.0"
         },
         "simplegeneric": {
             "hashes": [],
