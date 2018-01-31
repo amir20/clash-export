@@ -130,7 +130,7 @@ def compute_similar_clans():
 
     logger.info(f"Updating labels for {len(labels)} clans.")
     for tag, label in labels.items():
-        ClanPreCalculated.objects(tag=tag).update_one(set__label=label)
+        ClanPreCalculated.objects(tag=tag).update_one(set__cluster_label=label)
 
 
 def index_random_war_clan():
