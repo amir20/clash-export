@@ -80,6 +80,8 @@ class ClanPreCalculated(Document):
     season_delta = EmbeddedDocumentField(ClanDelta)
     week_delta = EmbeddedDocumentField(ClanDelta)
 
+    cluster_label = IntField(required=True, default=-1)
+
     meta = {
         'indexes': [
             {
@@ -105,6 +107,8 @@ class ClanPreCalculated(Document):
             'location.isCountry',
 
             'isWarLogPublic',
+
+            'cluster_label',
 
             # 'warWinStreak',
             # 'warWins',
