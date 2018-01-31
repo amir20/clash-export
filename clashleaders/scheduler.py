@@ -11,6 +11,8 @@ from mongoengine import connect
 
 from clashleaders.clash.calculation import update_calculations
 from clashleaders.model import ClanPreCalculated, Clan, Status
+from clashleaders.clustering.csv_export import clans_to_csv
+from clashleaders.clustering.kmeans import cluster_clans
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -116,6 +118,21 @@ def update_status():
     )
 
 
+def compute_similar_clans():
+    filename = '/tmp/clans.csv'
+
+    logger.info(f"Writing clans to csv file.")
+    with open(filename, 'w') as f:
+        clans_to_csv(f)
+
+    logger.info(f"Computing kmeans for clans.")
+    labels = cluster_clans(filename)
+
+    logger.info(f"Updating labels for {len(labels)} clans.")
+    for tag, label in labels.items():
+        ClanPreCalculated.objects(tag=tag).update_one(set__label=label)
+
+
 def index_random_war_clan():
     count = ClanPreCalculated.objects(isWarLogPublic=True).count()
     random_clan = ClanPreCalculated.objects(isWarLogPublic=True)[randrange(0, count)]
@@ -146,6 +163,7 @@ schedule.every().minutes.do(update_clan_calculations)
 schedule.every().hour.do(update_leaderboards)
 schedule.every().hour.do(index_random_war_clan)
 schedule.every().day.at("12:01").do(delete_old_clans)
+schedule.every().day.at("13:01").do(compute_similar_clans)
 
 
 def main():
