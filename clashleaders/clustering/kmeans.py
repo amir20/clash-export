@@ -13,6 +13,6 @@ def cluster_clans(file_or_stream):
     X = scaled_df.as_matrix()
     total, _ = X.shape
 
-    kmeans = KMeans(n_clusters=int(total / 200)).fit(X)
+    kmeans = KMeans(n_clusters=int(total / 90)).fit(X)
     df['label'] = kmeans.labels_
     return df['label'].to_dict()
