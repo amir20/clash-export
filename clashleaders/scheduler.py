@@ -128,6 +128,8 @@ def compute_similar_clans():
     logger.info(f"Computing kmeans for clans.")
     labels = cluster_clans(filename)
 
+    os.remove(filename)
+
     logger.info(f"Updating labels for {len(labels)} clans.")
     for tag, label in labels.items():
         ClanPreCalculated.objects(tag=tag).update_one(set__cluster_label=label)

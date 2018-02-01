@@ -42,6 +42,7 @@ class ClanPreCalculated(Document):
     tag = StringField(required=True, unique=True)
     slug = StringField(required=True)
     name = StringField(required=True)
+    clanLevel = IntField()  # todo make this required
     description = StringField(required=True)
     clanPoints = IntField(required=True)
     clanVersusPoints = IntField(required=True)

@@ -34,6 +34,7 @@ def update_calculations(clan):
         cpc.season_start = clan
 
     cpc.name = clan.name
+    cpc.clanLevel = clan.clanLevel
     cpc.slug = slugify(f"{clan.name}-{clan.tag}", to_lower=True)
     cpc.description = clan.description
     cpc.members = clan.members
