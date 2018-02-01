@@ -63,10 +63,11 @@ def clan_detail_page(slug):
         description = clan_description(clan)
         players = transform_players(clan.most_recent.players)
         delta = compute_oldest_days(clan)
+        similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
-        return render_template('clan.html', clan=clan, players=players, description=description, oldest_days=delta.days)
+        return render_template('clan.html', clan=clan, players=players, description=description, oldest_days=delta.days, similar_clans=similar_clans)
 
 
 @app.route("/clan/<tag>/short.json")
@@ -119,3 +120,10 @@ def repl(match):
         return f"<a href=\"{match.group(0)}\" target=\"_blank\">{match.group(0)}</a>"
     else:
         return f"<a href=\"http://{match.group(0)}\" target=\"_blank\">{match.group(0)}</a>"
+
+
+def find_similar_clans(clan):
+    less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by('clanPoints').limit(2)
+    more = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clan.clanPoints).order_by('clanPoints').limit(2)
+
+    return [*less, clan, *more]
