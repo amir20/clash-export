@@ -27,9 +27,55 @@
                     <img src="{{ clan.badgeUrls.medium }}" width="128" alt="{{ clan.tag }}">
                 </div>
                 <div class="column">
-                    <h1 class="title">
-                        {{ clan.name }}
-                    </h1>
+                    <div class="columns is-gapless is-marginless is-paddingless">
+                        <div class="column">
+                            <h1 class="title">
+                                {{ clan.name }}
+                            </h1>
+                        </div>
+                        <div class="column is-narrow">
+                            <div class="dropdown is-right is-hoverable">
+                                <div class="dropdown-trigger">
+                                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
+                                        <span>Similar Clans</span>
+                                        <span class="icon is-small">
+                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        {% for similar in similar_clans %} {% if clan == similar %}
+                                        <hr class="dropdown-divider">
+                                        <div class="dropdown-item">
+                                            {% else %}
+                                            <a href="{{ url_for('clan_detail_page', slug=similar.slug) }}" class="dropdown-item">{% endif %}
+                                                <div class="media">
+                                                    <div class="media-left">
+                                                        <span class="icon is-large">
+                                                            <img src="{{ similar.badgeUrls.small }}" alt="{{ similar.name }}">
+                                                        </span>
+                                                    </div>
+                                                    <div class="media-content">
+                                                        <p>
+                                                            <strong>{{ similar.name }}</strong>
+                                                            <br>
+                                                            <small>
+                                                                <i class="fas fa-trophy" aria-hidden="true"></i>
+                                                                {{ "{:,}".format(similar.clanPoints) }}
+                                                            </small>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                {% if clan == similar %}
+                                        </div>
+                                        <hr class="dropdown-divider"> {% else %}
+                                        </a>{% endif %}{% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <h2 class="subtitle is-6">
                         {% if clan.location.countryCode %}
                         <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
@@ -43,7 +89,8 @@
 
             <nav class="level">
                 <!-- Total Trophies -->
-                {{ insight('Total Trophies', clan.clanPoints, clan.week_delta.total_trophies, "Data is calculated based on data from a week ago") }}
+                {{ insight('Total Trophies', clan.clanPoints, clan.week_delta.total_trophies, "Data is calculated based on data from a week
+                ago") }}
                 <!-- Total BH Trophies -->
                 {{ insight('Total BH Trophies', clan.clanVersusPoints, clan.week_delta.total_bh_trophies) }}
                 <!-- Donations -->
