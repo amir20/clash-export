@@ -34,6 +34,7 @@
                             </h1>
                         </div>
                         <div class="column is-narrow">
+                            {% if request.args.get('similar') %}
                             <div class="dropdown is-right is-hoverable">
                                 <div class="dropdown-trigger">
                                     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
@@ -47,7 +48,7 @@
                                     <div class="dropdown-content">
                                         {% for similar in similar_clans %} {% if clan == similar %}
                                         <hr class="dropdown-divider">
-                                        <div class="dropdown-item">
+                                        <div class="dropdown-item disabled">
                                             {% else %}
                                             <a href="{{ url_for('clan_detail_page', slug=similar.slug) }}" class="dropdown-item">{% endif %}
                                                 <div class="media">
@@ -74,6 +75,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                     <h2 class="subtitle is-6">
@@ -151,8 +153,8 @@
 <section id="clan-table">
     <Clan-Table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"></Clan-Table>
 </section>
-<script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %} {% block title %}{{ clan.name }}{% endblock %} {% block meta %}
-<meta name=”description” content="{{ clan.name }} | {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
+<script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %} {% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
+<meta name=”description” content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders">
-<meta property="og:description" content="{{ clan.name }} | {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders."> {% endblock %} {% block nav_class %}is-light{% endblock %}
+<meta property="og:description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders."> {% endblock %} {% block nav_class %}is-light{% endblock %}
