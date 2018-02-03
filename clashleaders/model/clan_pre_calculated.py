@@ -70,6 +70,11 @@ class ClanPreCalculated(Document):
     avg_best_trophies = FloatField(required=True)
     avg_trophies = FloatField(required=True)
     avg_bh_trophies = FloatField(required=True)
+    avg_xp_level = FloatField()
+    avg_bk_level = FloatField()
+    avg_aq_level = FloatField()
+    avg_gw_level = FloatField()
+    avg_bm_level = FloatField()
 
     avg_attack_wins = FloatField(required=True)
     avg_versus_wins = FloatField(required=True)
