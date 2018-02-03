@@ -1,12 +1,10 @@
-import numpy as np
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import MinMaxScaler
 
 
 def cluster_clans(file_or_stream):
-    df = pd.read_csv(file_or_stream, index_col=0, names=['tag', 'members', 'week_trophies', 'week_bh_trophies', 'week_total_donations',
-                                                         'week_attacks_wins', 'week_versus_wins', 'week_gold_grab', 'week_avg_war_stars'])
+    df = pd.read_csv(file_or_stream, index_col='tag')
 
     scaled_features = MinMaxScaler().fit_transform(df.values)
     scaled_df = pd.DataFrame(scaled_features, index=df.index, columns=df.columns)
