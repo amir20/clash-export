@@ -123,7 +123,7 @@ def repl(match):
 
 
 def find_similar_clans(clan):
-    less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by('clanPoints').limit(2)
+    less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by('-clanPoints').limit(2)
     more = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clan.clanPoints).order_by('clanPoints').limit(2)
 
-    return [*less, clan, *more]
+    return sorted([*less, clan, *more], key=lambda c: c.clanPoints)

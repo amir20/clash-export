@@ -34,7 +34,7 @@ def update_clans():
     twelve_hour_ago = datetime.now() - timedelta(hours=12)
     query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago)
     total = query_set.count()
-    clans = query_set.limit(50)
+    clans = query_set.limit(100)
 
     if clans:
         logger.info(f"Fetching {len(clans)} of total {total} eligible clans.")
