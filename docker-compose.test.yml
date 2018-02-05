@@ -6,7 +6,7 @@ services:
     
   test:
     image: amir20/clashleaders:latest
-    command: 'make test'
+    command: 'make init test'
     depends_on:
       - db
     volumes:

@@ -1,0 +1,5 @@
+{
+  "tests/model/clan_test.py::test_find_last_by_tag": true,
+  "tests/model/clan_test.py::test_transform_players": true,
+  "tests/snapshots/snap_transformer_test.py": true
+}
