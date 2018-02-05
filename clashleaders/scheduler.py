@@ -78,8 +78,9 @@ def delete_old_clans():
     deleted = Clan.older_than(days=33).delete()
     logger.info(f"Deleted {deleted} clans that are older than 33 days.")
 
-    deleted = ClanPreCalculated.objects(members=0).delete()
-    logger.info(f"Deleted {deleted} clans with 0 members.")
+    deleted = ClanPreCalculated.objects(members__lt=5).delete()
+    Clan.objects(members__lt=5).delete()
+    logger.info(f"Deleted {deleted} clans with less than 5 members.")
 
 
 def update_leaderboards():
