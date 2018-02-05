@@ -8,10 +8,12 @@ from clashleaders.clash import api
 
 class Clan(DynamicDocument):
     meta = {
+        'index_background': True,
         'indexes': [
             'name',
             'tag',
-            ('tag', '_id')
+            ('tag', '_id'),
+            'members'
         ]
     }
 
@@ -27,30 +29,20 @@ class Clan(DynamicDocument):
 
     @classmethod
     def from_now_with_tag(cls, tag, **kwargs):
-        if not tag.startswith('#'):
-            tag = '#' + tag
-
         object_id = object_id_from_now(**kwargs)
-        return cls.objects(id__gte=object_id, tag=tag)
+        return cls.objects(id__gte=object_id, tag=prepend_hash(tag))
 
     @classmethod
     def find_first_by_tag(cls, tag):
-        if not tag.startswith('#'):
-            tag = '#' + tag
-
-        return cls.from_now_with_tag(tag=tag, hours=13).order_by('-id').first()
+        return cls.from_now_with_tag(tag=prepend_hash(tag), hours=13).order_by('-id').first()
 
     @classmethod
     def find_last_by_tag(cls, tag):
-        if not tag.startswith('#'):
-            tag = '#' + tag
-
-        return cls.objects(tag=tag).first()
+        return cls.objects(tag=prepend_hash(tag)).first()
 
     @classmethod
     def fetch_and_save(cls, tag):
-        if not tag.startswith('#'):
-            tag = '#' + tag
+        tag = prepend_hash(tag)
         clan = api.find_clan_by_tag(tag)
         players = api.fetch_all_players(clan)
         clan['players'] = players
@@ -58,6 +50,10 @@ class Clan(DynamicDocument):
 
         clan = Clan(**clan).save()
         return clan
+
+
+def prepend_hash(tag):
+    return "#" + tag.lstrip("#")
 
 
 def object_id_from_now(**kwargs):
