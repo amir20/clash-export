@@ -1,8 +1,9 @@
+from datetime import datetime
+
 import pytest
+from bson.objectid import ObjectId
 
 from clashleaders.model import Clan
-from datetime import datetime
-from bson.objectid import ObjectId
 
 
 def test_find_last_by_tag_with_hash(mocker):
