@@ -2,7 +2,7 @@
 
 init:
 	pip install .[test]
-	
-test: init
+
+test:
 	python setup.py test
 
