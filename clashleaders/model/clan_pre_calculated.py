@@ -191,8 +191,7 @@ class ClanPreCalculated(Document):
 
     @classmethod
     def find_by_tag(cls, tag):
-        if not tag.startswith('#'):
-            tag = '#' + tag
+        tag = "#" + tag.lstrip("#")
         return cls.objects.get(tag=tag)
 
     def warlog(self):
