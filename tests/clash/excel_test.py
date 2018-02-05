@@ -6,4 +6,4 @@ def test_excel_to_stream(clan_with_players, snapshot):
     stream = to_stream(clan_with_players)
     df = pd.read_excel(stream)
 
-    snapshot.assert_match(df.to_json())
+    snapshot.assert_match(df.to_csv())
