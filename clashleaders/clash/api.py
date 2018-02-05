@@ -29,13 +29,12 @@ def __get_all(urls):
 
 
 def find_clan_by_tag(tag):
-    if not tag.startswith('#'):
-        tag = '#' + tag
+    tag = "#" + tag.lstrip("#")
     logger.info(f"Fetching clan from API {tag}.")
     r = requests.get('https://api.clashofclans.com/v1/clans/' + quote(tag), headers=HEADERS)
 
     if r.status_code != 200:
-        raise ClanNotFound('Clan not found')
+        raise ClanNotFound(f"Clan [{tag}] not found.")
 
     return r.json()
 
@@ -51,13 +50,12 @@ def search_by_name(name, limit=10):
 
 
 def clan_warlog(tag):
-    if not tag.startswith('#'):
-        tag = '#' + tag
+    tag = "#" + tag.lstrip("#")
     logger.info(f"Fetching clan warlog from API {tag}.")
     r = requests.get(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog", headers=HEADERS)
 
     if r.status_code != 200:
-        raise ClanNotFound('Clan not found')
+        raise ClanNotFound(f"Clan [{tag}] not found.")
 
     return r.json()
 
