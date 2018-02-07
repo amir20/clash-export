@@ -104,3 +104,4 @@ node_modules
 
 .bashful
 .vscode
+.pytest_cache
