@@ -23,12 +23,23 @@ def clan_season_start():
 
 
 @pytest.fixture
+def first_clan_with_players():
+    return object_from_json("first_clan_with_players.json", Clan)
+
+
+@pytest.fixture
 def clan_pre_calculated():
     cpc = object_from_json("clan_pre_calculated.json", ClanPreCalculated)
     cpc.season_start = clan_season_start()
     cpc.most_recent = clan_with_players()
 
     return cpc
+
+
+@pytest.fixture
+def clan_table_html():
+    with open(os.path.join(parent, "fixtures/clan-table.html")) as f:
+        return f.read()
 
 
 @pytest.fixture

@@ -59,10 +59,10 @@ def clan_detail_xlsx(slug):
 def clan_detail_page(slug):
     try:
         clan = ClanPreCalculated.find_by_slug(slug)
-        # update_page_views(clan)
+        update_page_views(clan)
         description = clan_description(clan)
         players = transform_players(clan.most_recent.players)
-        # delta = compute_oldest_days(clan)
+        delta = compute_oldest_days(clan)
         similar_clans = []
     except DoesNotExist:
         return render_template('error.html'), 404
