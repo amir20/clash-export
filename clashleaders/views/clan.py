@@ -1,16 +1,17 @@
 import re
 
-from flask import render_template, send_file, request, jsonify
+from flask import jsonify, render_template, request, send_file
 from mongoengine import DoesNotExist
 from user_agents import parse
 
 from clashleaders import app, cache
-from clashleaders.clash import excel, api
-from clashleaders.clash.calculation import update_calculations
-from clashleaders.clash.transformer import transform_players, to_short_clan
+from clashleaders.clash import api, excel
+from clashleaders.clash.transformer import to_short_clan, transform_players
 from clashleaders.model import Clan, ClanPreCalculated
 
-URL_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[^\s]*)", re.IGNORECASE)
+URL_REGEX = re.compile(
+    r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[^\s]*)",
+    re.IGNORECASE)
 
 
 @app.context_processor
@@ -67,7 +68,8 @@ def clan_detail_page(slug):
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
-        return render_template('clan.html', clan=clan, players=players, description=description, oldest_days=2, similar_clans=similar_clans)
+        return render_template('clan.html', clan=clan, players=players, description=description, oldest_days=delta,
+                               similar_clans=similar_clans)
 
 
 @app.route("/clan/<tag>/short.json")
@@ -76,7 +78,7 @@ def clan_meta(tag):
     try:
         clan = ClanPreCalculated.find_by_tag(tag)
     except DoesNotExist:
-        clan = update_calculations(Clan.fetch_and_save(tag))
+        clan = Clan.fetch_and_save(tag).update_calculations()
 
     data = {
         'tag': clan.tag,

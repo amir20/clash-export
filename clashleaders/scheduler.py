@@ -9,10 +9,9 @@ import schedule
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
-from clashleaders.clash.calculation import update_calculations
-from clashleaders.model import ClanPreCalculated, Clan, Status
 from clashleaders.clustering.csv_export import clans_to_csv
 from clashleaders.clustering.kmeans import cluster_clans
+from clashleaders.model import Clan, ClanPreCalculated, Status
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -46,7 +45,7 @@ def update_clans():
     for c in clans:
         try:
             logger.debug(f"Updating clan {c.tag}.")
-            update_calculations(Clan.fetch_and_save(c.tag))
+            Clan.fetch_and_save(c.tag).update_calculations()
             updated_tags.append(c.tag)
         except Exception:
             logger.exception(f"Error while fetching clan {c.tag}.")
@@ -66,7 +65,7 @@ def update_clan_calculations():
     for tag in available_clan_tags:
         try:
             logger.debug(f"Updating calculations for {tag}.")
-            update_calculations(Clan.find_first_by_tag(tag))
+            Clan.find_first_by_tag(tag).update_calculations()
             updated_tags.append(tag)
         except Exception:
             logger.exception(f"Error during updating clan calculation for {tag}.")
@@ -100,7 +99,7 @@ def update_leaderboards():
         for c in ClanPreCalculated.objects(members__gt=20).order_by(f"-{column}").limit(15):
             try:
                 logger.debug(f"Updating {column} leaderboard clan {c.tag}.")
-                update_calculations(Clan.fetch_and_save(c.tag))
+                Clan.fetch_and_save(c.tag).update_calculations()
             except Exception:
                 logger.exception(f"Error while fetching leaderboard clan {c.tag}.")
 

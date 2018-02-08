@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from mongoengine import FloatField, IntField, Document, DateTimeField, StringField, DictField, BooleanField, \
-    ReferenceField, EmbeddedDocumentField, EmbeddedDocument
+from mongoengine import BooleanField, DateTimeField, DictField, Document, EmbeddedDocument, EmbeddedDocumentField, FloatField, IntField, \
+    ReferenceField, StringField
 
-from clashleaders.model.clan import Clan
 from clashleaders.clash.api import clan_warlog
+from clashleaders.model.clan import Clan
 
 
 class ClanDelta(EmbeddedDocument):
@@ -185,6 +185,9 @@ class ClanPreCalculated(Document):
         ]
     }
 
+    def warlog(self):
+        return clan_warlog(self.tag)['items']
+
     @classmethod
     def find_by_slug(cls, slug):
         return cls.objects.get(slug=slug)
@@ -193,6 +196,3 @@ class ClanPreCalculated(Document):
     def find_by_tag(cls, tag):
         tag = "#" + tag.lstrip("#")
         return cls.objects.get(tag=tag)
-
-    def warlog(self):
-        return clan_warlog(self.tag)['items']

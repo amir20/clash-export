@@ -1,5 +1,4 @@
-from collections import OrderedDict
-from collections import namedtuple
+from collections import OrderedDict, namedtuple
 from functools import reduce
 
 ShortClan = namedtuple('ShortClan', 'name tag badge slug members score')

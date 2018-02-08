@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 from mongoengine import DynamicDocument
 
+import clashleaders.clash.calculation
+import clashleaders.model
 from clashleaders.clash import api
 
 
@@ -16,6 +18,12 @@ class Clan(DynamicDocument):
             'members'
         ]
     }
+
+    def pre_calculated(self):
+        return clashleaders.model.ClanPreCalculated.find_by_tag(self.tag)
+
+    def update_calculations(self):
+        return clashleaders.clash.calculation.update_calculations(self)
 
     @classmethod
     def from_now(cls, **kwargs):
