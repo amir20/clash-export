@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from mongoengine import FloatField, IntField, Document, DateTimeField
+from mongoengine import DateTimeField, Document, FloatField, IntField
 
 
 class Status(Document):

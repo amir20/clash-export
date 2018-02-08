@@ -1,12 +1,11 @@
 from datetime import datetime
 
-import pandas as pd
 import numpy as np
-
+import pandas as pd
 from mongoengine.errors import DoesNotExist
 from slugify import slugify
 
-from clashleaders.model import ClanPreCalculated, ClanDelta, Clan
+import clashleaders.model
 from .transformer import transform_players
 
 
@@ -17,9 +16,9 @@ def update_calculations(clan):
     :param clan:
     :return:
     """
-    cpc = ClanPreCalculated.objects(tag=clan.tag).first()
+    cpc = clashleaders.model.ClanPreCalculated.objects(tag=clan.tag).first()
     if cpc is None:
-        cpc = ClanPreCalculated(tag=clan.tag)
+        cpc = clashleaders.model.ClanPreCalculated(tag=clan.tag)
         cpc.season_start = clan
         cpc.most_recent = clan
 
@@ -118,7 +117,7 @@ def calculate_week(cpc):
     :param cpc:
     :return:
     """
-    start_df = to_data_frame(Clan.from_now_with_tag(cpc.tag, days=7).first())
+    start_df = to_data_frame(clashleaders.model.Clan.from_now_with_tag(cpc.tag, days=7).first())
     now_df = to_data_frame(cpc.most_recent)
 
     cpc.week_delta = calculate_delta(now_df, start_df)
@@ -164,7 +163,7 @@ def calculate_delta(now_df, start_df):
     total_attack_wins = sum_column('Attack Wins', now_df, start_df)
     total_versus_wins = sum_column('Versus Battle Wins', now_df, start_df)
 
-    return ClanDelta(
+    return clashleaders.model.ClanDelta(
         avg_donations=avg_donations,
         avg_donations_received=avg_donations_received,
         avg_gold_grab=avg_gold_grab,

@@ -1,4 +1,4 @@
-from flask import url_for, render_template, make_response
+from flask import make_response, render_template, url_for
 
 from clashleaders import app
 from clashleaders.model import ClanPreCalculated

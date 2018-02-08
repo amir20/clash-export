@@ -2,12 +2,12 @@ import logging
 import os
 from datetime import timedelta
 
+import bugsnag
 import requests_cache
+from bugsnag.flask import handle_exceptions
 from flask import Flask, json
 from flask_caching import Cache
 from mongoengine import connect
-import bugsnag
-from bugsnag.flask import handle_exceptions
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)

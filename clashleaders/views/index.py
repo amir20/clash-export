@@ -1,11 +1,11 @@
+import json
+import os.path
+
 from flask import render_template
 
 from clashleaders import app, cache
 from clashleaders.clash.transformer import clans_leaderboard
 from clashleaders.model import ClanPreCalculated, Status
-
-import json
-import os.path
 
 parent = os.path.abspath(os.path.dirname(__file__))
 
