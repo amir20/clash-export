@@ -159,10 +159,16 @@ def index_random_war_clan():
         logger.info(f"Indexed new war clans: {updated_tags}")
 
 
+def reset_page_views():
+    logger.info("Resetting page views...")
+    ClanPreCalculated.objects.update(set__page_views=0)
+
+
 schedule.every().minutes.do(update_clans)
 schedule.every().minutes.do(update_status)
 schedule.every().minutes.do(update_clan_calculations)
 schedule.every().hour.do(update_leaderboards)
+schedule.every().day.do(reset_page_views)
 schedule.every().hour.do(index_random_war_clan)
 schedule.every().day.at("12:01").do(delete_old_clans)
 schedule.every().day.at("13:01").do(compute_similar_clans)
