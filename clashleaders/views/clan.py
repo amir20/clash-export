@@ -64,11 +64,11 @@ def clan_detail_page(slug):
         description = clan_description(clan)
         players = transform_players(clan.most_recent.players)
         delta = compute_oldest_days(clan)
-        similar_clans = []
+        similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
-        return render_template('clan.html', clan=clan, players=players, description=description, oldest_days=delta,
+        return render_template('clan.html', clan=clan, players=players, description=description, oldest_days=delta.days,
                                similar_clans=similar_clans)
 
 
