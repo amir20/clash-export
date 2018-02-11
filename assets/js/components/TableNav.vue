@@ -48,8 +48,8 @@
 
     <b-dropdown v-model="sort" @change="changeSort">
         <button class="button is-info" type="button" slot="trigger" :key="sort">
-            <template v-if="sort === 'changed'">
-                <b-icon icon="clock" size="is-small"></b-icon>
+            <template v-if="sort === 'delta'">
+                <b-icon icon="clock" size="is-small" pack="far"></b-icon>
                 <span>Sort by Stats Changed</span>
             </template>
             <template v-else>
@@ -58,21 +58,21 @@
             </template>
             <b-icon icon="chevron-down" size="is-small"></b-icon>
         </button>
-        <b-dropdown-item value="changed">
-            <div class="media">
-                <b-icon class="media-left" icon="clock" pack="far"></b-icon>
-                <div class="media-content">
-                    <h3>Stats Changed</h3>
-                    <small>Sort the columns using the delta between today and previous stats</small>
-                </div>
-            </div>
-        </b-dropdown-item>
-        <b-dropdown-item value="today">
+        <b-dropdown-item value="value">
             <div class="media">
                 <b-icon class="media-left" icon="chart-line"></b-icon>
                 <div class="media-content">
                     <h3>Most Recent Stats</h3>
                     <small>Compare your data using more recent stats</small>
+                </div>
+            </div>
+        </b-dropdown-item>
+        <b-dropdown-item value="delta">
+            <div class="media">
+                <b-icon class="media-left" icon="clock" pack="far"></b-icon>
+                <div class="media-content">
+                    <h3>Stats Changed</h3>
+                    <small>Sort the columns using the delta between today and previous stats</small>
                 </div>
             </div>
         </b-dropdown-item>
@@ -86,7 +86,7 @@ export default {
     return {
       days: 7,
       totalDays: 30,
-      sort: "today"
+      sort: "value"
     };
   },
   created() {

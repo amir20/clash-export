@@ -2,6 +2,7 @@
   <div>
     <section>
        <b-table
+            ref="table"
             :data="tableData"
             striped
             narrowed
@@ -13,14 +14,16 @@
             :selected.sync="selected"
             focusable>
              <template slot-scope="props">
-                <b-table-column v-for="column in header" :label="column.label"
-                                :field="`${column.field}.value`"
+                <b-table-column v-for="column in header"
+                                :label="column.label"
+                                :field="`${column.field}.${sortField}`"
                                 :key="column.field"
                                 :numeric="column.numeric"
                                 sortable>
                     {{ props.row[column.field].value.toLocaleString() }}
-                    <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
-                      <i class="fa" :class="{'fa-caret-up': props.row[column.field].delta > 0, 'fa-caret-down': props.row[column.field].delta < 0}" aria-hidden="true"></i> {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
+                    <b v-show="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
+                      <b-icon :icon="props.row[column.field].delta > 0 ? 'caret-up' : 'caret-down'" size="is-small"></b-icon> 
+                      {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
                     </b>
                 </b-table-column>
             </template>
@@ -44,16 +47,15 @@ export default {
       previousData: null,
       days: 7,
       selected: null,
-      sort: 'today'
+      sortField: "value"
     };
   },
   created() {
     this.clan = this.players;
     this.previousData = this.players;
     this.fetchData();
-    this.$bus.$on("days-changed-event", days => {
-      this.loadDaysAgo(days);
-    });
+    this.$bus.$on("days-changed-event", days => this.loadDaysAgo(days));
+    this.$bus.$on("sort-changed-event", sort => this.changedSortField(sort));
 
     if (this.oldestDays < 3) {
       this.showNoDataMessage();
@@ -112,6 +114,13 @@ export default {
       this.previousData = await data.json();
       this.loading = false;
     },
+    changedSortField(sort) {
+      if (this.sortField != sort) {
+        this.sortField = sort;
+        const column = this.$refs.table.currentSortColumn;
+        this.$nextTick(() => this.$refs.table.sort(column, true));
+      }
+    },
     convertToMap(matrix) {
       const header = this.header;
       return matrix.map(row => {
@@ -141,8 +150,8 @@ export default {
 
 <style scoped>
 .b-table {
-  & >>> .table {
-    &.is-striped tbody tr:not(.is-selected):nth-child(even){
+  &>>>.table {
+    &.is-striped tbody tr:not(.is-selected):nth-child(even) {
       background-color: #eee;
     }
 
@@ -174,6 +183,10 @@ export default {
     }
     &.down {
       color: #ff3860;
+    }
+
+    & .icon > svg {
+      height: auto;
     }
   }
 }
