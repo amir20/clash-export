@@ -16,17 +16,16 @@
             <b-icon icon="chevron-down" size="is-small"></b-icon>
         </button>
 
-        <b-dropdown-item :value="1">
+        <b-dropdown-item :value="1" v-if="totalDays > 0">
             <div class="media">
-                <b-icon class="media-left" icon="clock"></b-icon>
+                <b-icon class="media-left" icon="clock" pack="far"></b-icon>
                 <div class="media-content">
                     <h3>Yesterday</h3>
                     <small>Compare your data to yesterday</small>
                 </div>
             </div>
         </b-dropdown-item>
-
-        <b-dropdown-item :value="7">
+        <b-dropdown-item :value="7" v-if="totalDays > 2">
             <div class="media">
                 <b-icon class="media-left" icon="clock"></b-icon>
                 <div class="media-content">
@@ -35,7 +34,7 @@
                 </div>
             </div>
         </b-dropdown-item>
-        <b-dropdown-item :value="30">
+        <b-dropdown-item :value="30" v-if="totalDays > 15">
             <div class="media">
                 <b-icon class="media-left" icon="clock"></b-icon>
                 <div class="media-content">
