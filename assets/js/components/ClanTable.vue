@@ -43,7 +43,8 @@ export default {
       clan: null,
       previousData: null,
       days: 7,
-      selected: null
+      selected: null,
+      sort: 'today'
     };
   },
   created() {
