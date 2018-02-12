@@ -1,15 +1,14 @@
 import Vue from "vue";
 import Buefy from "buefy";
 import ClanTable from "./components/ClanTable";
-import Tabs from "./components/Tabs";
-import bugsnag from "./bugsnag"
+import TableNav from "./components/TableNav";
+import bugsnag from "./bugsnag";
 
 bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
-
-Vue.prototype.$bus = new Vue({})
+Vue.prototype.$bus = new Vue({});
 
 new Vue({
   el: "#clan-table",
@@ -19,8 +18,8 @@ new Vue({
 });
 
 new Vue({
-  el: "#tabs",
+  el: "#table-nav",
   components: {
-    Tabs
+    TableNav
   }
 });
