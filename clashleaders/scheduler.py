@@ -33,13 +33,14 @@ def update_clans():
     twelve_hour_ago = datetime.now() - timedelta(hours=12)
     query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago)
     total = query_set.count()
-    clans = query_set.limit(100)
+    clans = query_set.limit(min(int(total * 0.09), 500))
 
     if clans:
         logger.info(f"Fetching {len(clans)} of total {total} eligible clans.")
     else:
-        logger.info(f"No clans need updating. Fetching 5 least updated clans.")
-        clans = ClanPreCalculated.objects.order_by("-last_updated").limit(5)
+        no_clans_count = 150
+        logger.info(f"No clans need updating. Fetching {no_clans_count} least updated clans.")
+        clans = ClanPreCalculated.objects.order_by("-last_updated").limit(no_clans_count)
 
     updated_tags = []
     for c in clans:
