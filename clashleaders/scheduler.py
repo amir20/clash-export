@@ -1,7 +1,6 @@
 import logging
 import os
 import time
-import queue
 from datetime import datetime, timedelta
 from random import randrange
 
@@ -31,9 +30,8 @@ logger.addHandler(handler)
 
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
-clan_queue = queue.Queue()
-start_worker_thread(clan_queue)
 
+start_worker_thread()
 
 
 def update_clan_calculations():
@@ -146,7 +144,6 @@ def reset_page_views():
     ClanPreCalculated.objects.update(set__page_views=0)
 
 
-schedule.every(10).seconds.do(queue_clans)
 schedule.every().minutes.do(update_status)
 schedule.every().minutes.do(update_clan_calculations)
 schedule.every().hour.do(update_leaderboards)
