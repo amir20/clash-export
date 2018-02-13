@@ -19,7 +19,7 @@ def start_clan_worker_thread():
             try:
                 twelve_hour_ago = datetime.now() - timedelta(hours=12)
 
-                query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago)
+                query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago).no_cache()
                 total = query_set.count()
                 clan = query_set.first()
                 if clan:
