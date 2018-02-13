@@ -12,7 +12,7 @@ from mongoengine import connect
 from clashleaders.clustering.csv_export import clans_to_csv
 from clashleaders.clustering.kmeans import cluster_clans
 from clashleaders.model import Clan, ClanPreCalculated, Status
-from clashleaders.worker.calculation_worker import start_worker_thread
+from clashleaders.worker.calculation_worker import start_clan_worker_thread
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -30,8 +30,8 @@ logger.addHandler(handler)
 
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
+start_clan_worker_thread()
 
-start_worker_thread()
 
 
 def update_clan_calculations():

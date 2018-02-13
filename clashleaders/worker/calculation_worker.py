@@ -8,14 +8,14 @@ from clashleaders.model import ClanPreCalculated
 logger = logging.getLogger(__name__)
 
 
-def start_worker_thread():
+def start_clan_worker_thread():
     def worker():
         # Creates an event loops for this thread
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
+        tags_indexed = []
         while True:
-
             try:
                 twelve_hour_ago = datetime.now() - timedelta(hours=12)
 
@@ -25,9 +25,13 @@ def start_worker_thread():
                 if clan:
                     logger.debug(f"Updating clan {clan.tag} with {total} eligible clans.")
                     clan.fetch_and_update_calculations()
+                    tags_indexed.append(clan.tag)
+                    if len(tags_indexed) > 100:
+                        logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
+                        tags_indexed = []
             except Exception:
                 logger.exception(f"Error while fetching clan.")
 
-    thread_1 = threading.Thread(target=worker)
-    thread_1.daemon = True
-    thread_1.start()
+    thread = threading.Thread(target=worker)
+    thread.daemon = True
+    thread.start()
