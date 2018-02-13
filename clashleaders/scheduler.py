@@ -32,7 +32,6 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 start_clan_worker_thread()
 
 
-
 def update_clan_calculations():
     hour_ago = datetime.now() - timedelta(hours=1)
     recent_tags = set(Clan.from_now(hours=1).distinct('tag'))
