@@ -188,6 +188,9 @@ class ClanPreCalculated(Document):
     def warlog(self):
         return clan_warlog(self.tag)['items']
 
+    def fetch_and_update_calculations(self):
+        return Clan.fetch_and_save(self.tag).update_calculations()
+
     @classmethod
     def find_by_slug(cls, slug):
         return cls.objects.get(slug=slug)
