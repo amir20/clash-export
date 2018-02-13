@@ -67,7 +67,6 @@ def update_leaderboards():
                'week_delta.avg_gold_grab',
                'clanPoints',
                'clanVersusPoints',
-               'warWinStreak',
                'week_delta.avg_war_stars',
                'week_delta.avg_trophies',
                'avg_bh_level']
