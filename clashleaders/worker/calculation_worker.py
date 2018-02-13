@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import threading
+import gc
 from datetime import datetime, timedelta
 
 from clashleaders.model import ClanPreCalculated
@@ -29,6 +30,8 @@ def start_clan_worker_thread():
                     if len(tags_indexed) > 100:
                         logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                         logger.info(f"Currently {total} eligible clans.")
+                        logger.info(f"gb.collect() {gc.collect()}")
+                        del tags_indexed
                         tags_indexed = []
             except Exception:
                 logger.exception(f"Error while fetching clan.")
