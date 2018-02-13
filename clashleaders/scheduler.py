@@ -12,6 +12,7 @@ from mongoengine import connect
 from clashleaders.clustering.csv_export import clans_to_csv
 from clashleaders.clustering.kmeans import cluster_clans
 from clashleaders.model import Clan, ClanPreCalculated, Status
+from clashleaders.worker.calculation_worker import start_clan_worker_thread
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -28,31 +29,7 @@ logger.addHandler(handler)
 
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
-
-def update_clans():
-    twelve_hour_ago = datetime.now() - timedelta(hours=12)
-    query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago)
-    total = query_set.count()
-    clans = query_set.limit(70)
-
-    if clans:
-        logger.info(f"Fetching {len(clans)} of total {total} eligible clans.")
-    else:
-        no_clans_count = 100
-        logger.info(f"No clans need updating. Fetching {no_clans_count} least updated clans.")
-        clans = ClanPreCalculated.objects.order_by("-last_updated").limit(no_clans_count)
-
-    updated_tags = []
-    for c in clans:
-        try:
-            logger.debug(f"Updating clan {c.tag}.")
-            Clan.fetch_and_save(c.tag).update_calculations()
-            updated_tags.append(c.tag)
-        except Exception:
-            logger.exception(f"Error while fetching clan {c.tag}.")
-
-    logger.info(f"Updated clans: {updated_tags}")
-    logger.debug(f"Done fetching clans.")
+start_clan_worker_thread()
 
 
 def update_clan_calculations():
@@ -165,7 +142,6 @@ def reset_page_views():
     ClanPreCalculated.objects.update(set__page_views=0)
 
 
-schedule.every().minutes.do(update_clans)
 schedule.every().minutes.do(update_status)
 schedule.every().minutes.do(update_clan_calculations)
 schedule.every().hour.do(update_leaderboards)
