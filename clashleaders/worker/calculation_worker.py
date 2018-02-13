@@ -28,6 +28,7 @@ def start_clan_worker_thread():
                     tags_indexed.append(clan.tag)
                     if len(tags_indexed) > 100:
                         logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
+                        logger.info(f"Currently {total} eligible clans.")
                         tags_indexed = []
             except Exception:
                 logger.exception(f"Error while fetching clan.")
