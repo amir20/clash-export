@@ -1,7 +1,6 @@
 from pipenv.project import Project
 from pipenv.utils import convert_deps_to_pip
-from setuptools import setup, find_packages
-
+from setuptools import find_packages, setup
 
 pfile = Project(chdir=False).parsed_pipfile
 requirements = convert_deps_to_pip(pfile['packages'], r=False)
@@ -19,6 +18,7 @@ setup(
     entry_points={
         'console_scripts': [
             'scheduler=clashleaders.scheduler:main',
+            'worker=clashleaders.worker:run_clan_worker',
         ],
     }
 )
