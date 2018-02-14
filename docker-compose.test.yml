@@ -10,8 +10,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./tests/:/app/tests
-      - ./clashleaders:/app/clashleaders
+      - ./tests/:/app/tests    
       - ./setup.cfg:/app/setup.cfg
       - ./Makefile:/app/Makefile
     environment:
