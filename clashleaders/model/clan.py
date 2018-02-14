@@ -1,7 +1,9 @@
+import json
+from codecs import decode, encode
 from datetime import datetime, timedelta
 
 from bson.objectid import ObjectId
-from mongoengine import DynamicDocument
+from mongoengine import BinaryField, DynamicDocument
 
 import clashleaders.clash.calculation
 import clashleaders.model
@@ -9,6 +11,7 @@ from clashleaders.clash import api
 
 
 class Clan(DynamicDocument):
+    players_bytes = BinaryField()
     meta = {
         'index_background': True,
         'indexes': [
@@ -24,6 +27,9 @@ class Clan(DynamicDocument):
 
     def update_calculations(self):
         return clashleaders.clash.calculation.update_calculations(self)
+
+    def players_data(self):
+        return self.players if 'players' in self else decode_player_bytes(self.players_bytes)
 
     @classmethod
     def from_now(cls, **kwargs):
@@ -53,7 +59,7 @@ class Clan(DynamicDocument):
         tag = prepend_hash(tag)
         clan = api.find_clan_by_tag(tag)
         players = api.fetch_all_players(clan)
-        clan['players'] = players
+        clan['players_bytes'] = encode_players(players)
         del clan['memberList']
 
         clan = Clan(**clan).save()
@@ -68,3 +74,12 @@ def object_id_from_now(**kwargs):
     now = datetime.now()
     dt = now - timedelta(**kwargs)
     return ObjectId.from_datetime(dt)
+
+
+def encode_players(players):
+    s = json.dumps(players)
+    return encode(s.encode('utf8'), 'zlib')
+
+
+def decode_player_bytes(b):
+    return json.loads(decode(b, 'zlib'))
