@@ -41,7 +41,7 @@ def clan_detail_json(tag):
     else:
         days_ago = request.args.get('daysAgo')
         clan = clan_from_days_ago(days_ago, tag)
-        return jsonify(transform_players(clan.players))
+        return jsonify(transform_players(clan.players_data()))
 
 
 @app.route("/clan/<slug>.xlsx")
@@ -62,7 +62,7 @@ def clan_detail_page(slug):
         clan = ClanPreCalculated.find_by_slug(slug)
         update_page_views(clan)
         description = clan_description(clan)
-        players = transform_players(clan.most_recent.players)
+        players = transform_players(clan.most_recent.players_data())
         delta = compute_oldest_days(clan)
         similar_clans = find_similar_clans(clan)
     except DoesNotExist:
