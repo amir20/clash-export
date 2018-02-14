@@ -23,7 +23,7 @@ async def __fetch(url, session):
 def __get_all(urls):
     loop = asyncio.get_event_loop()
     jar = aiohttp.DummyCookieJar()
-    async with aiohttp.ClientSession(loop=, cookie_jar=jar, headers=HEADERS) as session:
+    async with aiohttp.ClientSession(loop=loop, cookie_jar=jar, headers=HEADERS) as session:
         futures = [__fetch(url, session) for url in urls]
         responses = loop.run_until_complete(asyncio.gather(*futures))
     loop.close()
