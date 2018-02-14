@@ -11,6 +11,7 @@ services:
       - db
     volumes:
       - ./tests/:/app/tests
+      - ./clashleaders:/app/clashleaders
       - ./setup.cfg:/app/setup.cfg
       - ./Makefile:/app/Makefile
     environment:
