@@ -49,8 +49,7 @@ def run_clan_worker():
                     logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                     logger.info(f"Currently {total} eligible clans.")
                     tags_indexed = []
-                    if DEBUG:
-                        tracker.print_diff()
+                    tracker.print_diff()
         except Exception:
             logger.exception(f"Error while fetching clan.")
 
