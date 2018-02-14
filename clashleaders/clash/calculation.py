@@ -216,7 +216,7 @@ def is_new_season(before, now):
 
 
 def to_data_frame(clan):
-    tf = transform_players(clan.players)
+    tf = transform_players(clan.players_data())
     df = pd.DataFrame(data=tf, columns=tf[0])
     df = df.set_index('Tag')
     df = df.iloc[1:]

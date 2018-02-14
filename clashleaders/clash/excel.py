@@ -7,7 +7,7 @@ from clashleaders.clash.transformer import transform_players
 
 def to_stream(clan):
     stream = BytesIO()
-    data = transform_players(clan.players)
+    data = transform_players(clan.players_data())
     workbook = Workbook(stream)
     worksheet = workbook.add_worksheet(clan.tag)
     for row, data in enumerate(data):
