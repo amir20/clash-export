@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ec270433856dbf71cc4b0603de0b044e146899a49ad5f0144fea698a0f08f559"
+            "sha256": "f164be4a970905fc87a7aa5a8df8ec3f78fe0aa431e205fbdce2d2a14ba4febf"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -431,6 +431,12 @@
                 "sha256:c6de26d1e171cdc449745b82f1addbc873d105b8e7335097da991c0fc664a4a8"
             ],
             "version": "==3.6.0"
+        },
+        "pympler": {
+            "hashes": [
+                "sha256:7d16c4285f01dcc647f69fb6ed4635788abc7a7cb7caa0065d763f4ce3d21c0f"
+            ],
+            "version": "==0.5"
         },
         "python-dateutil": {
             "hashes": [
