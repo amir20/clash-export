@@ -8,7 +8,6 @@ services:
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - DB_HOST=localhost
       - STAGE=production
-      - PYTHONUNBUFFERED=true
   scheduler:
     restart: unless-stopped
     network_mode: host
