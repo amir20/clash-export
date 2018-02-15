@@ -1,12 +1,13 @@
 import logging
 import os
+import time
 from datetime import datetime, timedelta
 
 import bugsnag
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
-from pympler.tracker import SummaryTracker
 
+from clashleaders.clash.api import ClanNotFound
 from clashleaders.model import ClanPreCalculated
 
 bugsnag.configure(
@@ -33,7 +34,6 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 def run_clan_worker():
     tags_indexed = []
-    tracker = SummaryTracker()
     while True:
         try:
             twelve_hour_ago = datetime.now() - timedelta(hours=12)
@@ -49,9 +49,16 @@ def run_clan_worker():
                     logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                     logger.info(f"Currently {total} eligible clans.")
                     tags_indexed = []
-                    tracker.print_diff()
+
+                time.sleep(0.1)
+        except ClanNotFound as e:
+            logger.exception(f"Clan not found when fetching {clan.tag}. Pausing for 5 seconds.")
+            eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
+            clan.update(set__last_updated=eleven_hour_ago)
+            time.sleep(5)
         except Exception:
-            logger.exception(f"Error while fetching clan.")
+            logger.exception(f"Error while fetching clan. Pausing for 5 seconds.")
+            time.sleep(5)
 
 
 if __name__ == "__main__":
