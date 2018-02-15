@@ -26,7 +26,6 @@ def __get_all(urls):
     with aiohttp.ClientSession(loop=loop, cookie_jar=jar, headers=HEADERS) as session:
         futures = [__fetch(url, session) for url in urls]
         responses = loop.run_until_complete(asyncio.gather(*futures))
-    loop.close()
 
     return responses
 
