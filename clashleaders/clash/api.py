@@ -17,11 +17,8 @@ class ClanNotFound(Exception):
 
 async def __fetch(url, session, params={}):
     async with session.get(url, params=params) as response:
-        if response.status != 200:
-            return response.status, None
-        else:
-            data = await response.json()
-            return 200, data
+        data = await response.json()
+        return response.status, data
 
 
 def __get_all(urls):
