@@ -4,62 +4,68 @@ import os
 from urllib.parse import quote
 
 import aiohttp
-import requests
 
 API_TOKEN = os.getenv('API_TOKEN')
-HEADERS = {'authorization': 'Bearer ' + API_TOKEN}
+HEADERS = dict(authorization='Bearer ' + API_TOKEN)
 logger = logging.getLogger(__name__)
+session = aiohttp.ClientSession(cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS)
 
 
 class ClanNotFound(Exception):
     pass
 
 
-async def __fetch(url, session):
-    async with session.get(url) as response:
-        return await response.json()
+async def __fetch(url, session, params={}):
+    async with session.get(url, params=params) as response:
+        if response.status != 200:
+            return response.status, None
+        else:
+            data = await response.json()
+            return 200, data
 
 
 def __get_all(urls):
     loop = asyncio.get_event_loop()
-    jar = aiohttp.DummyCookieJar()
-    with aiohttp.ClientSession(loop=loop, cookie_jar=jar, headers=HEADERS) as session:
-        futures = [__fetch(url, session) for url in urls]
-        responses = loop.run_until_complete(asyncio.gather(*futures))
+    futures = [__fetch(url, session) for url in urls]
+    responses = loop.run_until_complete(asyncio.gather(*futures))
 
-    return responses
+    return [response for status, response in responses if response]
 
 
 def find_clan_by_tag(tag):
     tag = "#" + tag.lstrip("#")
     logger.info(f"Fetching clan from API {tag}.")
-    r = requests.get('https://api.clashofclans.com/v1/clans/' + quote(tag), headers=HEADERS)
 
-    if r.status_code != 200:
+    future = __fetch(f'https://api.clashofclans.com/v1/clans/{quote(tag)}', session)
+    code, response = asyncio.get_event_loop().run_until_complete(future)
+
+    if code != 200:
         raise ClanNotFound(f"Clan [{tag}] not found.")
 
-    return r.json()
+    return response
 
 
 def search_by_name(name, limit=10):
     logger.info(f"Searching for clan name '{name}'.")
-    r = requests.get('https://api.clashofclans.com/v1/clans', headers=HEADERS, params={'name': name, 'limit': limit})
+    future = __fetch('https://api.clashofclans.com/v1/clans', session, params={'name': name, 'limit': limit})
+    code, response = asyncio.get_event_loop().run_until_complete(future)
 
-    if r.status_code != 200:
+    if code != 200:
         return []
     else:
-        return r.json()['items']
+        return response['items']
 
 
 def clan_warlog(tag):
     tag = "#" + tag.lstrip("#")
     logger.info(f"Fetching clan warlog from API {tag}.")
-    r = requests.get(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog", headers=HEADERS)
+    future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog", session)
+    code, response = asyncio.get_event_loop().run_until_complete(future)
 
-    if r.status_code != 200:
+    if code != 200:
         raise ClanNotFound(f"Clan [{tag}] not found.")
 
-    return r.json()
+    return response
 
 
 def fetch_all_players(clan):

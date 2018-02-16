@@ -4,7 +4,6 @@ import time
 from datetime import datetime, timedelta
 
 import bugsnag
-import schedule
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
@@ -28,7 +27,6 @@ if DEBUG:
     logger.setLevel(logging.DEBUG)
 
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
-logging.getLogger("schedule").setLevel(logging.WARNING)
 
 logger.addHandler(handler)
 
@@ -44,12 +42,11 @@ def update_single_clan():
 
         query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago).no_cache()
         total = query_set.count()
-        clans = query_set.limit(3)
-        if clans:
-            for clan in clans:
-                logger.debug(f"Updating clan {clan.tag} with {total} eligible clans.")
-                clan.fetch_and_update_calculations()
-                tags_indexed.append(clan.tag)
+        clan = query_set.first()
+        if clan:
+            logger.debug(f"Updating clan {clan.tag} with {total} eligible clans.")
+            clan.fetch_and_update_calculations()
+            tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:
                 logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                 logger.info(f"Currently {total} eligible clans.")
@@ -64,13 +61,10 @@ def update_single_clan():
         time.sleep(5)
 
 
-schedule.every().second.do(update_single_clan)
-
-
 def main():
     while True:
-        schedule.run_pending()
-        time.sleep(1)
+        update_single_clan()
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":

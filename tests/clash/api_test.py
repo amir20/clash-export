@@ -1,22 +1,20 @@
 import pytest
+from aioresponses import aioresponses
 
 from clashleaders.clash import api
 
 
-def test_find_clan_bad(mocker):
-    r = mocker.Mock()
-    r.status_code = 400
-    mocker.patch('requests.get', return_value=r)
-    with pytest.raises(api.ClanNotFound):
-        api.find_clan_by_tag('ABC')
+def test_find_clan_bad():
+    with aioresponses() as m:
+        m.get('https://api.clashofclans.com/v1/clans/%23ABC', status=500)
+
+        with pytest.raises(api.ClanNotFound):
+            api.find_clan_by_tag('ABC')
 
 
-def test_find_clan_success(mocker):
-    r = mocker.Mock()
-    r.json = mocker.Mock()
-    r.status_code = 200
+def test_find_clan_success():
+    with aioresponses() as m:
+        p = dict(tag='#ABC')
+        m.get('https://api.clashofclans.com/v1/clans/%23ABC', status=200, payload=p)
 
-    mocker.patch('requests.get', return_value=r)
-    api.find_clan_by_tag('ABC')
-
-    r.json.assert_called_once_with()
+        assert api.find_clan_by_tag('ABC') == dict(tag='#ABC')
