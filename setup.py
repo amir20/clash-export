@@ -18,7 +18,7 @@ setup(
     entry_points={
         'console_scripts': [
             'scheduler=clashleaders.scheduler:main',
-            'worker=clashleaders.worker:run_clan_worker',
+            'worker=clashleaders.worker:main',
         ],
     }
 )
