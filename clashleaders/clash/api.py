@@ -20,7 +20,7 @@ async def __fetch(url, params=None, loop=None):
 
 
 async def __fetch_with_session(url, session, params=None):
-    async with aiohttp.Timeout(2):
+    async with aiohttp.Timeout(5):
         async with session.get(url, params=params) as response:
             data = await response.json()
             return response.status, data

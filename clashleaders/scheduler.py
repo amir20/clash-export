@@ -9,6 +9,7 @@ import schedule
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
+from clashleaders.clash.api import ClanNotFound
 from clashleaders.clustering.csv_export import clans_to_csv
 from clashleaders.clustering.kmeans import cluster_clans
 from clashleaders.model import Clan, ClanPreCalculated, Status
@@ -127,6 +128,8 @@ def index_random_war_clan():
                 try:
                     Clan.fetch_and_save(tag)
                     updated_tags.append(tag)
+                except ClanNotFound:
+                    logger.info(f"Skipping clan [{tag}] not found.")
                 except Exception:
                     logger.exception(f"Error while updating clan from war log.")
 
