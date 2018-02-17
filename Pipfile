@@ -43,6 +43,7 @@ bugsnag = {extras = ["flask"]}
 scikit-learn = "*"
 scipy = "*"
 pympler = "*"
+uvloop = "*"
 
 
 [dev-packages]

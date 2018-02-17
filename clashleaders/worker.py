@@ -1,9 +1,11 @@
+import asyncio
 import logging
 import os
 import time
 from datetime import datetime, timedelta
 
 import bugsnag
+import uvloop
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
@@ -23,14 +25,12 @@ logger = logging.getLogger(__name__)
 
 DEBUG = os.getenv('DEBUG', False)
 
-if DEBUG:
-    logger.setLevel(logging.DEBUG)
-
+logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
-
 logger.addHandler(handler)
 
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 tags_indexed = []
 
