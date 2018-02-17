@@ -75,6 +75,8 @@ def update_leaderboards():
             try:
                 logger.debug(f"Updating {column} leaderboard clan {c.tag}.")
                 Clan.fetch_and_save(c.tag).update_calculations()
+            except ClanNotFound:
+                logger.info(f"Skipping not found clan [{tag}].")
             except Exception:
                 logger.exception(f"Error while fetching leaderboard clan {c.tag}.")
 
@@ -114,12 +116,12 @@ def index_random_war_clan():
     count = ClanPreCalculated.objects(isWarLogPublic=True).count()
     random_clan = ClanPreCalculated.objects(isWarLogPublic=True)[randrange(0, count)]
 
-    logger.info(f"Indexing random clan war log ({random_clan.name}).")
+    logger.info(f"Indexing random clan war log ({random_clan.tag}).")
 
     try:
         tags = [war['opponent']['tag'] for war in random_clan.warlog()]
     except Exception:
-        logger.exception(f"Error while fetch war log.")
+        logger.info(f"Error while fetch war log for {random_clan.tag}.")
     else:
         updated_tags = []
         for tag in tags:
