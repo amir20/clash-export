@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import requests
 
 url = "https://api.uptimerobot.com/v2/getMonitors"
