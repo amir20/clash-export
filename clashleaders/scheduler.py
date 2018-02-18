@@ -76,7 +76,7 @@ def update_leaderboards():
                 logger.debug(f"Updating {column} leaderboard clan {c.tag}.")
                 Clan.fetch_and_save(c.tag).update_calculations()
             except ClanNotFound:
-                logger.info(f"Skipping not found clan [{tag}].")
+                logger.info(f"Skipping not found clan [{c.tag}].")
             except Exception:
                 logger.exception(f"Error while fetching leaderboard clan {c.tag}.")
 
