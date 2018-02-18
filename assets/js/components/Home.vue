@@ -11,7 +11,7 @@
                     </h2>
                 </div>
             </section>
-          <Card :tag="savedTag" @error="onClanError" :foundClan.sync="foundClan"></Card>
+          <card :tag="savedTag" @error="onClanError" :foundClan.sync="foundClan"></card>
           <p class="buttons">
             <button type="reset" class="button is-warning is-large">Change Clan</button>
             <a :href="`/clan/${foundClan.slug}`" class="button is-success is-large" :disabled="foundClan.slug == null">Continue &rsaquo;</a>
@@ -30,35 +30,7 @@
             </section>
             <div class="column field">
                 <p class="control">
-                    <b-autocomplete
-                        placeholder="Clan name or tag"
-                        field="tag"
-                        size="is-large"
-                        keep-first
-                        expanded
-                        v-model="tag"
-                        :data="data"
-                        :loading="isLoading"
-                        @input="fetchData"
-                        @select="option => savedTag = option ? option.tag : null">
-                        <template slot-scope="props">
-                            <div class="media">
-                                <div class="media-left">
-                                    <img width="32" :src="props.option.badge">
-                                </div>
-                                <div class="media-content">
-                                    <strong>{{ props.option.name }}</strong>
-                                    <small>
-                                      <i class="fa fa-tag"></i> {{ props.option.tag }}
-                                    </small>
-                                    <br>
-                                    <small>
-                                        <i class="fa fa-users"></i> {{ props.option.members}} members
-                                    </small>
-                                </div>
-                            </div>
-                        </template>
-                    </b-autocomplete>
+                    <search-box :selected-tag.sync="savedTag"></search-box>
                 </p>
             </div>
         </template>
@@ -67,21 +39,18 @@
 
 <script>
 import Card from "./ClanCard";
-import debounce from "lodash/debounce";
-import { bugsnagClient } from "../bugsnag";
+import SearchBox from "./SearchBox";
 
 const STORAGE_KEY = "lastTag";
 
 export default {
   components: {
-    Card
+    Card,
+    SearchBox
   },
   data() {
     return {
       savedTag: null,
-      tag: null,
-      isLoading: false,
-      data: [],
       foundClan: { slug: null }
     };
   },
@@ -101,20 +70,6 @@ export default {
     onClanError() {
       this.savedTag = null;
     },
-    fetchData: debounce(async function() {
-      this.data = [];
-      this.isLoading = true;
-
-      try {
-        const query = this.tag.replace("#", "");
-        this.data = await (await fetch(`/search.json?q=${query}`)).json();
-      } catch (e) {
-        console.error(e);
-        bugsnagClient.notify(e);
-      }
-
-      this.isLoading = false;
-    }, 600),
     prefetch(url) {
       const link = document.createElement("link");
       link.href = url;
