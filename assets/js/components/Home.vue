@@ -30,7 +30,7 @@
             </section>
             <div class="column field">
                 <p class="control">
-                    <search-box :selected-tag.sync="savedTag"></search-box>
+                    <search-box :selected-tag.sync="savedTag" size="is-large"></search-box>
                 </p>
             </div>
         </template>
