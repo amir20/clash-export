@@ -39,7 +39,8 @@
             <a href="/" class="navbar-item clashleader-logo">Clash Leader</a>
         </div>
         <div class="navbar-menu">
-            <div class="navbar-start">
+            <div class="navbar-start is-expanded">
+                {% block nav_header %}
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         Popular Clans
@@ -68,7 +69,7 @@
                         </a>
                         {% endfor %}
                     </div>
-                </div>
+                </div>{% endblock %}
             </div>
             <div class="navbar-end">
                 <a class="navbar-item is-hidden-desktop-only" href="https://github.com/amir20/clashstats" target="_blank">

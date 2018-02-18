@@ -5,7 +5,7 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 @import "~flag-icon-css/sass/flag-icon";
 @import "~bulma-tooltip";
 
-body  {
+body {
   font-family: "Titillium Web";
 }
 
@@ -32,6 +32,14 @@ body  {
   background-repeat: no-repeat;
   background-position: center;
   text-indent: -9999em;
+}
+
+.is-expanded {
+  flex: 1 0 auto;
+}
+
+.nav-search {
+  flex: 0 0 60%;
 }
 
 .DO-logo {
