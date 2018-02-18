@@ -1,8 +1,8 @@
 <template>
     <b-autocomplete
-        placeholder="Clan name or tag"
+        placeholder="Search for clans by name or tag"
         field="tag"
-        size="is-large"
+        :size="size"
         keep-first
         expanded
         v-model="tag"
@@ -35,6 +35,7 @@ import debounce from "lodash/debounce";
 import { bugsnagClient } from "../bugsnag";
 
 export default {
+  props: { size: { type: String } },
   data() {
     return {
       tag: null,

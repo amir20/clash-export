@@ -18,7 +18,12 @@
         </p>
     </div>
 </div>
-{%- endmacro %}{% block body %}
+{%- endmacro %}{% block nav_header %}
+<div class="navbar-item is-expanded">
+    <div class="field is-expanded nav-search">
+        <search-box :selected-tag.sync="selectedTag"></search-box>
+    </div>
+</div>{% endblock %}{% block body %}
 <section class="hero is-warning is-bold">
     <div class="hero-body">
         <div class="container">
