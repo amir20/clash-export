@@ -16,6 +16,10 @@ ol.leaderboard {
       & a {
         color: whitesmoke;
       }
+
+      &::before {
+        color: whitesmoke;
+      }
     }
 
     &:before {
@@ -23,7 +27,7 @@ ol.leaderboard {
       margin-left: 5px;
       content: attr(value)". ";
       border-radius: 100%;
-      color: whitesmoke;
+      color: #363636;
       font-weight: bold;
       font-size: 1.2em;
       top: -21px;
