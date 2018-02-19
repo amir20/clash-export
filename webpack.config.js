@@ -95,7 +95,7 @@ module.exports = {
       // will be included into this chunk
       minChunks: Infinity,
     }),
-    new ExtractTextPlugin("css/[name].[hash].css"),
+    new ExtractTextPlugin("css/[name].[chunkhash].css"),
     new CleanWebpackPlugin([
       __dirname + "/clashleaders/static/css",
       __dirname + "/clashleaders/static/js",
