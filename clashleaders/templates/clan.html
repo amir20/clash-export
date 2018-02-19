@@ -29,6 +29,12 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-narrow is-hidden-touch">
+                    <h5 class="title is-5 is-tooltip-right tooltip is-tooltip-multiline" data-tooltip="Similar clans are based on clan activity and progress in the last 24 hours.">
+                        Similar Clans
+                        <span class="icon">
+                            <i class="fas fa-info-circle"></i>
+                        </span>
+                    </h5>
                     <ol start="{{ similar_clans_start_count }}" class="leaderboard">
                         {% for similar in similar_clans %}
                         <li class="{{ 'active' if similar==clan else ''}}" value="{{ similar_clans_start_count + loop.index0}}">
@@ -88,44 +94,6 @@
                         <!-- Total Versus Wins -->
                         {{ insight('Total Versus Wins', clan.total_versus_wins, clan.week_delta.total_versus_wins) }}
                     </nav>
-                    <div class="columns is-centered">
-                        <div class="column is-narrow has-text-centered">
-                            <div class="dropdown is-hoverable is-right has-text-left">
-                                <div class="dropdown-trigger">
-                                    <button class="button is-danger" aria-haspopup="true" aria-controls="dropdown-menu">
-                                        <span class="icon">
-                                            <i class="fa fa-download"></i>
-                                        </span>
-                                        <span>Export to Excel</span>
-                                        <span class="icon is-small">
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                    <div class="dropdown-content">
-                                        <a class="dropdown-item" href="{{ clan.slug }}.xlsx">
-                                            Today
-                                        </a>
-                                        <hr class="dropdown-divider">
-                                        <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=1">
-                                            Yesterday
-                                        </a>
-                                        <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=2">
-                                            Two Days Ago
-                                        </a>
-                                        <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=3">
-                                            Three Days Ago
-                                        </a>
-                                        <hr class="dropdown-divider">
-                                        <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=7">
-                                            Last Week
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -133,8 +101,44 @@
     <div class="hero-footer">
         <nav class="navbar is-white" id="table-nav">
             <div class="navbar-menu">
-                <div class="navbar-start">
-                    <Table-Nav></Table-Nav>
+                <Table-Nav></Table-Nav>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="dropdown is-hoverable is-right has-text-left">
+                            <div class="dropdown-trigger">
+                                <button class="button is-danger" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span class="icon">
+                                        <i class="fa fa-download"></i>
+                                    </span>
+                                    <span>Export to Excel</span>
+                                    <span class="icon is-small">
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a class="dropdown-item" href="{{ clan.slug }}.xlsx">
+                                        Today
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=1">
+                                        Yesterday
+                                    </a>
+                                    <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=2">
+                                        Two Days Ago
+                                    </a>
+                                    <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=3">
+                                        Three Days Ago
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=7">
+                                        Last Week
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
