@@ -64,12 +64,16 @@ def clan_detail_page(slug):
         description = clan_description(clan)
         players = transform_players(clan.most_recent.players_data())
         delta = compute_oldest_days(clan)
-        similar_clans = find_similar_clans(clan)
+        start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
-        return render_template('clan.html', clan=clan, players=players, description=description, oldest_days=delta.days,
-                               similar_clans=similar_clans)
+        return render_template('clan.html', clan=clan,
+                               players=players,
+                               description=description,
+                               oldest_days=delta.days,
+                               similar_clans=similar_clans,
+                               similar_clans_start_count=start_count)
 
 
 @app.route("/clan/<tag>/short.json")
@@ -125,7 +129,10 @@ def repl(match):
 
 
 def find_similar_clans(clan):
-    less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by('-clanPoints').limit(2)
+    less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by('-clanPoints').limit(4)
     more = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clan.clanPoints).order_by('clanPoints').limit(2)
 
-    return sorted([*less, clan, *more], key=lambda c: c.clanPoints)
+    clans = sorted([*less, clan, *more], key=lambda c: c.clanPoints, reverse=True)[:5]
+    start_count = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clans[0].clanPoints).count() + 1
+
+    return start_count, clans

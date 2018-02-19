@@ -4,6 +4,7 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 @import "~buefy/src/scss/buefy";
 @import "~flag-icon-css/sass/flag-icon";
 @import "~bulma-tooltip";
+@import "./similar-clans.css";
 
 body {
   font-family: "Titillium Web";
