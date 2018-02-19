@@ -28,7 +28,7 @@
     <div class="hero-body">
         <div class="container">
             <div class="columns">
-                <div class="column is-narrow">
+                <div class="column is-narrow is-hidden-touch">
                     <ol start="{{ similar_clans_start_count }}" class="leaderboard">
                         {% for similar in similar_clans %}
                         <li class="{{ 'active' if similar==clan else ''}}" value="{{ similar_clans_start_count + loop.index0}}">
