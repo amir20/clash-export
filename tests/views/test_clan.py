@@ -10,7 +10,8 @@ def test_detail_page_oldest_days(client, mocker, clan_pre_calculated, first_clan
                                                                     oldest_days=12,
                                                                     players=mocker.ANY,
                                                                     similar_clans=mocker.ANY,
-                                                                    description=mocker.ANY)
+                                                                    description=mocker.ANY,
+                                                                    similar_clans_start_count=mocker.ANY)
 
 
 def test_detail_page_status(client, mocker, clan_pre_calculated, first_clan_with_players):
