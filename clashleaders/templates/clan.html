@@ -101,7 +101,7 @@
     <div class="hero-footer">
         <nav class="navbar is-white" id="table-nav">
             <div class="navbar-menu">
-                <Table-Nav></Table-Nav>
+                <table-nav></table-nav>
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="dropdown is-hoverable is-right has-text-left">
@@ -145,7 +145,7 @@
     </div>
 </section>
 <section id="clan-table">
-    <Clan-Table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"></Clan-Table>
+    <clan-table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"></clan-table>
 </section>
 <script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %} {% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
 <meta name=”description” content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">

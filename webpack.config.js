@@ -84,7 +84,16 @@ module.exports = {
     new ManifestPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
-      chunks: ["details-page", "index"]
+      chunks: ["details-page", "index"],
+      minChunks: module =>
+        module.context && module.context.includes("node_modules")
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'runtime',
+
+      // minChunks: Infinity means that no app modules
+      // will be included into this chunk
+      minChunks: Infinity,
     }),
     new ExtractTextPlugin("css/[name].[hash].css"),
     new CleanWebpackPlugin([
@@ -104,6 +113,7 @@ if (process.env.NODE_ENV === "production") {
         NODE_ENV: '"production"'
       }
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       compress: {
@@ -115,5 +125,5 @@ if (process.env.NODE_ENV === "production") {
     })
   ]);
 
-  module.exports.output.filename = "js/[name].[hash].js";
+  module.exports.output.filename = "js/[name].[chunkhash].js";
 }
