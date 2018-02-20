@@ -54,6 +54,8 @@ def update_calculations(clan):
         cpc.season_start = clan
 
     cpc.most_recent = clan
+    cpc.least_recent = clashleaders.model.Clan.find_last_by_tag(cpc.tag)
+    cpc.days_span = (cpc.most_recent.id.generation_time - cpc.least_recent.id.generation_time).days
 
     calculate_data(cpc)
     calculate_season(cpc)
