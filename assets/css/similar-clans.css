@@ -14,7 +14,7 @@ ol.leaderboard {
     &.active {
       background: #23d160;
       & a {
-        color: whitesmoke;
+        color: whitesmoke !important;
       }
 
       &::before {
