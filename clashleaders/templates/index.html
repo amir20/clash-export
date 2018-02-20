@@ -81,4 +81,5 @@
         </div>
     </div>
 </section>
-<script src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script>{% endblock %}{% block nav_class %}is-light{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script>{% endblock %} {% endblock %}{% block nav_class %}is-light{% endblock %}
