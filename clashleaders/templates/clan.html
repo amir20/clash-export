@@ -83,7 +83,8 @@
 
                     <nav class="level">
                         <!-- Total Trophies -->
-                        {{ insight('Total Trophies', clan.clanPoints, clan.week_delta.total_trophies, "Delta is calculated based on data between today and last week.") }}
+                        {{ insight('Total Trophies', clan.clanPoints, clan.week_delta.total_trophies, "Delta is calculated based on data between
+                        today and last week.") }}
                         <!-- Total BH Trophies -->
                         {{ insight('Total BH Trophies', clan.clanVersusPoints, clan.week_delta.total_bh_trophies) }}
                         <!-- Donations -->
@@ -145,8 +146,8 @@
 </section>
 <section id="clan-table">
     <clan-table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"></clan-table>
-</section>
-<script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %} {% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
+</section>{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script>{% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
 <meta name=”description” content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders">
