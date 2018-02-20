@@ -58,6 +58,8 @@ class ClanPreCalculated(Document):
 
     season_start = ReferenceField(Clan)
     most_recent = ReferenceField(Clan)
+    least_recent = ReferenceField(Clan)
+    days_span = IntField(default=0)
 
     avg_donations = FloatField(required=True)
     avg_gold_grab = FloatField(required=True)
@@ -70,7 +72,6 @@ class ClanPreCalculated(Document):
     avg_best_trophies = FloatField(required=True)
     avg_trophies = FloatField(required=True)
     avg_bh_trophies = FloatField(required=True)
-    avg_xp_level = FloatField()
     avg_bk_level = FloatField()
     avg_aq_level = FloatField()
     avg_gw_level = FloatField()
