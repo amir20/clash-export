@@ -8,13 +8,13 @@ from clashleaders.model import Clan
 
 def test_find_last_by_tag_with_hash(mocker):
     mocker.patch('clashleaders.model.Clan.objects')
-    Clan.find_last_by_tag('#XYZ')
+    Clan.find_least_recent_by_tag('#XYZ')
     Clan.objects.assert_called_once_with(tag='#XYZ')
 
 
 def test_find_last_by_tag_without_hash(mocker):
     mocker.patch('clashleaders.model.Clan.objects')
-    Clan.find_last_by_tag('XYZ')
+    Clan.find_least_recent_by_tag('XYZ')
     Clan.objects.assert_called_once_with(tag='#XYZ')
 
 

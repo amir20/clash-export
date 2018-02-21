@@ -19,6 +19,7 @@ setup(
         'console_scripts': [
             'scheduler=clashleaders.scheduler:main',
             'worker=clashleaders.worker:main',
+            'update_all=clashleaders.cli:update_all_calculations'
         ],
     }
 )

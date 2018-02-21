@@ -63,7 +63,6 @@ def clan_detail_page(slug):
         update_page_views(clan)
         description = clan_description(clan)
         players = transform_players(clan.most_recent.players_data())
-        delta = compute_oldest_days(clan)
         start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         return render_template('error.html'), 404
@@ -71,7 +70,7 @@ def clan_detail_page(slug):
         return render_template('clan.html', clan=clan,
                                players=players,
                                description=description,
-                               oldest_days=delta.days,
+                               oldest_days=clan.days_span,
                                similar_clans=similar_clans,
                                similar_clans_start_count=start_count)
 
@@ -109,12 +108,6 @@ def update_page_views(clan):
     user_agent = parse(request.user_agent.string)
     if not user_agent.is_bot:
         clan.update(inc__page_views=1)
-
-
-def compute_oldest_days(clan):
-    most_recent = clan.most_recent
-    least_recent = Clan.find_last_by_tag(clan.tag)
-    return most_recent.id.generation_time - least_recent.id.generation_time
 
 
 def clan_description(clan):
