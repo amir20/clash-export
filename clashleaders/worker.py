@@ -52,7 +52,7 @@ def update_single_clan():
                 logger.info(f"Currently {total} eligible clans.")
                 tags_indexed = []
     except ClanNotFound:
-        logger.exception(f"Clan not found when fetching {clan.tag}. Pausing for 5 seconds.")
+        logger.warning(f"Clan not found when fetching {clan.tag}. Pausing for 5 seconds.")
         eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
         clan.update(set__last_updated=eleven_hour_ago)
         time.sleep(5)
