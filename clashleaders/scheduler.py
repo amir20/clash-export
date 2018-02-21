@@ -41,7 +41,7 @@ def update_clan_calculations():
     for tag in available_clan_tags:
         try:
             logger.debug(f"Updating calculations for {tag}.")
-            Clan.find_first_by_tag(tag).update_calculations()
+            Clan.find_most_recent_by_tag(tag).update_calculations()
             updated_tags.append(tag)
         except Exception:
             logger.exception(f"Error during updating clan calculation for {tag}.")
