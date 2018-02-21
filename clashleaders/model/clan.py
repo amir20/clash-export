@@ -47,11 +47,11 @@ class Clan(DynamicDocument):
         return cls.objects(id__gte=object_id, tag=prepend_hash(tag))
 
     @classmethod
-    def find_first_by_tag(cls, tag):
+    def find_most_recent_by_tag(cls, tag):
         return cls.from_now_with_tag(tag=prepend_hash(tag), hours=13).order_by('-id').first()
 
     @classmethod
-    def find_last_by_tag(cls, tag):
+    def find_least_recent_by_tag(cls, tag):
         return cls.objects(tag=prepend_hash(tag)).first()
 
     @classmethod

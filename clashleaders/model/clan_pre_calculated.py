@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from mongoengine import BooleanField, DateTimeField, DictField, Document, EmbeddedDocument, EmbeddedDocumentField, FloatField, IntField, \
-    ReferenceField, StringField
+from mongoengine import BooleanField, DateTimeField, DictField, Document, DoesNotExist, EmbeddedDocument, EmbeddedDocumentField, FloatField, \
+    IntField, ReferenceField, StringField
 
 from clashleaders.clash.api import clan_warlog
 from clashleaders.model.clan import Clan
@@ -191,6 +191,12 @@ class ClanPreCalculated(Document):
 
     def fetch_and_update_calculations(self):
         return Clan.fetch_and_save(self.tag).update_calculations()
+
+    def update_without_fetching(self):
+        try:
+            return self.most_recent.update_calculations()
+        except DoesNotExist:
+            return Clan.find_most_recent_by_tag(self.tag).update_calculations()
 
     @classmethod
     def find_by_slug(cls, slug):

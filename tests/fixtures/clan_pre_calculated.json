@@ -2,6 +2,7 @@
   "_id": { "$oid": "5a37c85c499f310007c05057" },
   "last_updated": { "$date": 1517770427208 },
   "page_views": 116,
+  "days_span": 12,
   "tag": "#UGJPVJR",
   "slug": "reddit-dynasty-ugjpvjr",
   "name": "Reddit Dynasty",
