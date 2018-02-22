@@ -1,10 +1,28 @@
 $flag-icon-css-path: "~flag-icon-css/flags/";
 
 @import "~bulma";
-/* @import "~buefy/src/scss/buefy"; */
 @import "~flag-icon-css/sass/flag-icon";
-@import "~bulma-tooltip";
 @import "./similar-clans.css";
+@import "~buefy/src/scss/utils/_all";
+@import "~buefy/src/scss/components/_autocomplete";
+@import "~buefy/src/scss/components/_dropdown";
+@import "~buefy/src/scss/components/_form";
+@import "~buefy/src/scss/components/_icon";
+@import "~buefy/src/scss/components/_loading";
+@import "~buefy/src/scss/components/_message";
+@import "~buefy/src/scss/components/_notices";
+@import "~buefy/src/scss/components/_panel";
+@import "~buefy/src/scss/components/_select";
+@import "~buefy/src/scss/components/_table";
+@import "~buefy/src/scss/components/_tag";
+
+@import "~bulma-tooltip";
+
+.tooltip:before {
+  text-transform: none;
+  text-align: left;
+  line-height: 1.2em;
+}
 
 body {
   font-family: "Titillium Web";
@@ -34,7 +52,7 @@ body {
   background-position: center;
   text-indent: -9999em;
   line-height: 1.5;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   display: inline-block;
 }
 
@@ -45,7 +63,6 @@ body {
 .nav-search {
   flex: 0 0 60%;
 }
-
 
 .DO-logo {
   background-image: url("../images/DO_Powered_by_Badge_blue.svg");
