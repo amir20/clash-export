@@ -38,7 +38,7 @@ module.exports = {
         options: {
           name: "[name]-[hash].[ext]",
           outputPath: "flags/",
-          publicPath: "/static/"
+          publicPath: "/static/flags/"
         }
       },
       {
