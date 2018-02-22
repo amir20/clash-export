@@ -33,6 +33,9 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   text-indent: -9999em;
+  line-height: 1.5;
+  padding: .5rem 1rem;
+  display: inline-block;
 }
 
 .is-expanded {
