@@ -22,8 +22,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles.css')) }}">
 
-    <script async src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88927228-3"></script>
+    <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+    <script defer src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch"></script>
+    <script defer src="{{ url_for('static', filename=manifest_path('runtime.js')) }}"></script>
+    <script defer src="{{ url_for('static', filename=manifest_path('vendor.js')) }}"></script> {% block scripts %} {% endblock %}
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -134,9 +137,6 @@
             </a>
         </div>
     </footer>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch"></script>
-    <script src="{{ url_for('static', filename=manifest_path('runtime.js')) }}"></script>
-    <script src="{{ url_for('static', filename=manifest_path('vendor.js')) }}"></script> {% block scripts %} {% endblock %}
 </body>
 
 </html>
