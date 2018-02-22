@@ -82,4 +82,4 @@
     </div>
 </section>
 {% block scripts %}
-<script src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script>{% endblock %} {% endblock %}{% block nav_class %}is-light{% endblock %}
+<script defer src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script>{% endblock %} {% endblock %}{% block nav_class %}is-light{% endblock %}
