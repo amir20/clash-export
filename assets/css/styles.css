@@ -1,7 +1,7 @@
 $flag-icon-css-path: "~flag-icon-css/flags/";
 
 @import "~bulma";
-@import "~buefy/src/scss/buefy";
+/* @import "~buefy/src/scss/buefy"; */
 @import "~flag-icon-css/sass/flag-icon";
 @import "~bulma-tooltip";
 @import "./similar-clans.css";
@@ -46,11 +46,6 @@ body {
   flex: 0 0 60%;
 }
 
-.tooltip:after {
-  text-transform: none;
-  text-align: left;
-  line-height: 1.2em;
-}
 
 .DO-logo {
   background-image: url("../images/DO_Powered_by_Badge_blue.svg");
