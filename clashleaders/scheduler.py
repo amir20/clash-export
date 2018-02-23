@@ -44,10 +44,12 @@ def update_clan_calculations():
             logger.debug(f"Updating calculations for {clan.tag}.")
             clan.update_calculations()
             updated_tags.append(clan.tag)
+        except TypeError:
+            # Possibly a json error. Let's delete the instance
+            logger.warning(f"TypeError exception thrown for {clan.tag}. Deleting most recent instance.")
+            clan.delete()
         except Exception:
             logger.exception(f"Error during updating clan calculation for {tag}. Deleting instance of clan.")
-            if clan:
-                clan.delete()
 
     logger.info(f"Updated calculations: {updated_tags}")
 

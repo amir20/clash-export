@@ -10,7 +10,7 @@ from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
 from clashleaders.clash.api import ClanNotFound
-from clashleaders.model import ClanPreCalculated
+from clashleaders.model import ClanPreCalculated, Clan
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -57,10 +57,10 @@ def update_single_clan():
         time.sleep(5)
     except TypeError:
         # Possibly a json error. Let's delete the instance
-        logger.exception(f"TypeError exception thrown. Deleting most recent instance.")
+        logger.warning(f"TypeError exception thrown for {clan.tag}. Deleting most recent instance.")
         clan.most_recent.delete()
         eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
-        clan.update(set__last_updated=eleven_hour_ago)
+        clan.update(set__last_updated=eleven_hour_ago, set__most_recent=Clan.find_most_recent_by_tag(clan.tag))
         logger.info(f"Sleeping for 10 seconds.")
         time.sleep(10)
     except Exception:
