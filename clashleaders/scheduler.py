@@ -40,11 +40,14 @@ def update_clan_calculations():
     updated_tags = []
     for tag in available_clan_tags:
         try:
-            logger.debug(f"Updating calculations for {tag}.")
-            Clan.find_most_recent_by_tag(tag).update_calculations()
-            updated_tags.append(tag)
+            clan = Clan.find_most_recent_by_tag(tag)
+            logger.debug(f"Updating calculations for {clan.tag}.")
+            clan.update_calculations()
+            updated_tags.append(clan.tag)
         except Exception:
-            logger.exception(f"Error during updating clan calculation for {tag}.")
+            logger.exception(f"Error during updating clan calculation for {tag}. Deleting instance of clan.")
+            if clan:
+                clan.delete()
 
     logger.info(f"Updated calculations: {updated_tags}")
 
