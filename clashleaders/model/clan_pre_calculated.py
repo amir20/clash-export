@@ -189,6 +189,9 @@ class ClanPreCalculated(Document):
     def warlog(self):
         return clan_warlog(self.tag)['items']
 
+    def similar_clan(self):
+        return ClanPreCalculated.objects(cluster_label=self.cluster_label)
+
     def fetch_and_update_calculations(self):
         return Clan.fetch_and_save(self.tag).update_calculations()
 

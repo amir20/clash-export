@@ -37,15 +37,14 @@ tags_indexed = []
 
 def update_single_clan():
     global tags_indexed
+    twelve_hour_ago = datetime.now() - timedelta(hours=12)
     try:
-        twelve_hour_ago = datetime.now() - timedelta(hours=12)
-
         query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago).no_cache()
         total = query_set.count()
         clan = query_set.first()
         if clan:
             logger.debug(f"Updating clan {clan.tag} with {total} eligible clans.")
-            clan.fetch_and_update_calculations()
+            clan = clan.fetch_and_update_calculations()
             tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:
                 logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
@@ -56,6 +55,14 @@ def update_single_clan():
         eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
         clan.update(set__last_updated=eleven_hour_ago)
         time.sleep(5)
+    except TypeError:
+        # Possibly a json error. Let's delete the instance
+        logger.exception(f"TypeError exception thrown. Deleting most recent instance.")
+        clan.most_recent.delete()
+        eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
+        clan.update(set__last_updated=eleven_hour_ago)
+        logger.info(f"Sleeping for 10 seconds.")
+        time.sleep(10)
     except Exception:
         logger.exception(f"Error while fetching clan. Pausing for 5 seconds.")
         time.sleep(5)
