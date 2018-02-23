@@ -71,7 +71,6 @@ def update_single_clan():
 def main():
     while True:
         update_single_clan()
-        time.sleep(0.1)
 
 
 if __name__ == "__main__":
