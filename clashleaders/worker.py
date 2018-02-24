@@ -10,7 +10,7 @@ from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
 from clashleaders.clash.api import ClanNotFound
-from clashleaders.model import ClanPreCalculated, Clan
+from clashleaders.model import Clan, ClanPreCalculated
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -50,6 +50,8 @@ def update_single_clan():
                 logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                 logger.info(f"Currently {total} eligible clans.")
                 tags_indexed = []
+        else:
+            time.sleep(10)
     except ClanNotFound:
         logger.warning(f"Clan not found when fetching {clan.tag}. Pausing for 5 seconds.")
         eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
@@ -71,6 +73,7 @@ def update_single_clan():
 def main():
     while True:
         update_single_clan()
+        time.sleep(0.05)
 
 
 if __name__ == "__main__":
