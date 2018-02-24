@@ -27,14 +27,15 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-narrow is-hidden-touch has-tooltip">
-                    <h5 class="title is-5 is-tooltip-right tooltip is-tooltip-multiline" data-tooltip="Similar clans are based on clan activity and progress in the last 24 hours.">
+                    <h5 class="title is-5 is-tooltip-right tooltip is-tooltip-multiline"
+                        data-tooltip="Similar clans are based on clan activity and progress in the last 24 hours.">
                         Similar Clans
                         <i class="fas fa-info-circle"></i>
                     </h5>
                     <ol start="{{ similar_clans_start_count }}" class="leaderboard">
                         {% for similar in similar_clans %}
-                        <li class="{{ 'active' if similar==clan else ''}}" value="{{ similar_clans_start_count + loop.index0}}">
-                            <a href="{{ url_for('clan_detail_page', slug=similar.slug) }}">
+                        <li class="{{ 'active' if similar==clan else ''}}">
+                            <a href="{{ url_for('clan_detail_page', slug=similar.slug) }}" data-position="{{ similar_clans_start_count + loop.index0}}">
                                 <div class="media">
                                     <div class="media-left">
                                         <span class="icon is-large">
@@ -44,12 +45,20 @@
                                     <div class="media-content">
                                         <p>
                                             <strong>{{ similar.name }}</strong>
-                                            <br>
-                                            <small>
-                                                <i class="fas fa-trophy" aria-hidden="true"></i>
-                                                {{ "{:,}".format(similar.clanPoints) }}
-                                            </small>
                                         </p>
+                                        <div class="level is-mobile">
+                                            <small class="level-left">
+                                                {% if similar.location.countryCode %}
+                                                <span class="level-item">
+                                                    <span class="flag-icon flag-icon-{{ similar.location.countryCode | lower }}"></span>
+                                                </span>
+                                                {% endif %}
+                                                <span class="level-item">
+                                                    <span class="icon"><i class="fas fa-trophy" aria-hidden="true"></i></span>
+                                                    {{ "{:,}".format(similar.clanPoints) }}
+                                                </span>
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
@@ -143,8 +152,10 @@
 <section id="clan-table" class="has-buefy">
     <clan-table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"></clan-table>
 </section>{% endblock %} {% block scripts %}
-<script defer src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script>{% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
+<script defer src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script>
+{% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
 <meta name=”description” content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders">
-<meta property="og:description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders."> {% endblock %} {% block nav_class %}is-light{% endblock %}
+<meta property="og:description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders.">
+{% endblock %} {% block nav_class %}is-light{% endblock %}

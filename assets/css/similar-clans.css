@@ -2,40 +2,45 @@ ol.leaderboard {
   list-style: none;
 
   & li {
-    margin-bottom: 5px;
     display: block;
-    margin: 0.8em 0;
-    border-radius: 3px;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.1);
-    }
 
     &.active {
-      background: #23d160;
       & a {
+        background: #23d160;
         color: whitesmoke !important;
+        margin: 0.4em 0;
+        pointer-events: none;
+
+        &::before {
+          color: whitesmoke;
+        }
+      }
+    }
+
+    & a {
+      color: #363636;
+      display: block;
+      padding: 0.5em 0.8em;
+      border-radius: 3px;
+
+      & .media {
+        display: inline-flex;
+      }
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
       }
 
       &::before {
-        color: whitesmoke;
+        content: attr(data-position)". ";
+        border-radius: 100%;
+        color: #363636;
+        font-weight: bold;
+        position: relative;
+        font-size: 1.2em;
+        top: -20px;
+        left: -3px;
       }
-    }
-
-    &:before {
-      margin-right: 5px;
-      margin-left: 5px;
-      content: attr(value)". ";
-      border-radius: 100%;
-      color: #363636;
-      font-weight: bold;
-      font-size: 1.2em;
-      top: -21px;
-      position: relative;
-    }
-    & a {
-      color: #363636;
-      display: inline-block;
     }
   }
 }
