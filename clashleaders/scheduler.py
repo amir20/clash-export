@@ -11,7 +11,7 @@ from mongoengine import connect
 
 from clashleaders.clash.api import ClanNotFound
 from clashleaders.clustering.csv_export import clans_to_csv
-from clashleaders.clustering.kmeans import cluster_clans
+from clashleaders.clustering.kmeans import train_model
 from clashleaders.model import Clan, ClanPreCalculated, Status
 
 bugsnag.configure(
@@ -93,7 +93,7 @@ def update_status():
     Status.objects.update_one(
         set__ratio_indexed=ratio_indexed,
         set__total_clans=total_clans,
-        set__last_updated=datetime.now,
+        set__last_updated=datetime.now(),
         set__total_members=ClanPreCalculated.objects.sum('members'),
         set__total_countries=len(ClanPreCalculated.objects.distinct('location.countryCode')),
         upsert=True
@@ -107,8 +107,8 @@ def compute_similar_clans():
     with open(filename, 'w') as f:
         clans_to_csv(f)
 
-    logger.info(f"Computing kmeans for clans.")
-    labels = cluster_clans(filename)
+    logger.info(f"Computing kmeans for clans and saving model.")
+    labels = train_model(filename)
 
     os.remove(filename)
 
@@ -154,7 +154,7 @@ schedule.every().hour.do(update_leaderboards)
 schedule.every().day.do(reset_page_views)
 schedule.every().hour.do(index_random_war_clan)
 schedule.every().day.at("12:01").do(delete_old_clans)
-schedule.every().day.at("13:01").do(compute_similar_clans)
+schedule.every().monday.do(compute_similar_clans)
 
 
 def main():
