@@ -25,7 +25,8 @@ def train_model(file_or_stream):
     __save_model(SCALER, scaler)
     __save_model(KMEANS, kmeans)
 
-    return kmeans
+    df['label'] = kmeans.labels_
+    return df['label'].to_dict()
 
 
 def predict_clans(*clans):

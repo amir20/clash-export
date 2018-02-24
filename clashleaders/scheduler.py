@@ -107,8 +107,8 @@ def compute_similar_clans():
     with open(filename, 'w') as f:
         clans_to_csv(f)
 
-    logger.info(f"Computing kmeans for clans.")
-    train_model(filename)
+    logger.info(f"Computing kmeans for clans and saving model.")
+    labels = train_model(filename)
 
     os.remove(filename)
 
@@ -154,7 +154,7 @@ schedule.every().hour.do(update_leaderboards)
 schedule.every().day.do(reset_page_views)
 schedule.every().hour.do(index_random_war_clan)
 schedule.every().day.at("12:01").do(delete_old_clans)
-schedule.every().day.at("13:01").do(compute_similar_clans)
+schedule.every().monday.do(compute_similar_clans)
 
 
 def main():
