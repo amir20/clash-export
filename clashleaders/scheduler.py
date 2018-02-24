@@ -1,3 +1,4 @@
+import concurrent
 import logging
 import os
 import time
@@ -81,7 +82,9 @@ def update_leaderboards():
                 logger.debug(f"Updating {column} leaderboard clan {c.tag}.")
                 Clan.fetch_and_save(c.tag).update_calculations()
             except ClanNotFound:
-                logger.info(f"Skipping not found clan [{c.tag}].")
+                logger.warning(f"Skipping not found clan [{c.tag}].")
+            except concurrent.futures.TimeoutError:
+                logger.warning(f"Timeout error thrown [{c.tag}]. Skipping clan.")
             except Exception:
                 logger.exception(f"Error while fetching leaderboard clan {c.tag}.")
 
@@ -126,7 +129,7 @@ def index_random_war_clan():
     try:
         tags = [war['opponent']['tag'] for war in random_clan.warlog()]
     except Exception:
-        logger.info(f"Error while fetch war log for {random_clan.tag}.")
+        logger.warning(f"Error while fetch war log for {random_clan.tag}.")
     else:
         updated_tags = []
         for tag in tags:
@@ -136,7 +139,9 @@ def index_random_war_clan():
                     Clan.fetch_and_save(tag)
                     updated_tags.append(tag)
                 except ClanNotFound:
-                    logger.info(f"Skipping clan [{tag}] not found.")
+                    logger.warning(f"Skipping clan [{tag}] not found.")
+                except concurrent.futures.TimeoutError:
+                    logger.warning(f"Timeout error when fetching [{tag}].")
                 except Exception:
                     logger.exception(f"Error while updating clan from war log.")
 
