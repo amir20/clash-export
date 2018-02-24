@@ -9,7 +9,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-runtime": "^6.26.0",
     "buefy": "^0.6.3",
-    "bugsnag-js": "^4.2.0",
+    "bugsnag-js": "^4.3.0",
     "bugsnag-vue": "^1.0.1",
     "bulma": "^0.6.2",
     "bulma-tooltip": "^1.0.3",
