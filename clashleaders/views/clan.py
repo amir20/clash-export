@@ -97,6 +97,15 @@ def clan_meta(tag):
     return jsonify(data)
 
 
+@app.route("/clan/<tag>/trophies.json")
+@cache.cached(timeout=1000)
+def clan_trophies(tag):
+    series = Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints')
+    labels = [int(s.id.generation_time.timestamp()) for s in series]
+    points = [s.clanPoints for s in series]
+    return jsonify(dict(labels=labels, points=points))
+
+
 def clan_from_days_ago(days_ago, tag):
     if days_ago:
         return Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
