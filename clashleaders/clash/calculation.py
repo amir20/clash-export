@@ -6,6 +6,7 @@ from mongoengine.errors import DoesNotExist
 from slugify import slugify
 
 import clashleaders.model
+from clashleaders.clustering.kmeans import predict_clans
 from .transformer import transform_players
 
 
@@ -48,7 +49,7 @@ def update_calculations(clan):
     cpc.warTies = getattr(clan, 'warTies', 0)
     cpc.warLosses = getattr(clan, 'warLosses', 0)
 
-    cpc.last_updated = datetime.now
+    cpc.last_updated = datetime.now()
 
     if is_new_season(cpc.most_recent, clan):
         cpc.season_start = clan
@@ -60,6 +61,10 @@ def update_calculations(clan):
     calculate_data(cpc)
     calculate_season(cpc)
     calculate_week(cpc)
+
+    if cpc.cluster_label == -1:
+        [label] = predict_clans(cpc)
+        cpc.cluster_label = label
 
     cpc.save()
 
