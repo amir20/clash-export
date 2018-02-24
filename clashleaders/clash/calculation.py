@@ -49,7 +49,7 @@ def update_calculations(clan):
     cpc.warTies = getattr(clan, 'warTies', 0)
     cpc.warLosses = getattr(clan, 'warLosses', 0)
 
-    cpc.last_updated = datetime.now
+    cpc.last_updated = datetime.now()
 
     if is_new_season(cpc.most_recent, clan):
         cpc.season_start = clan
