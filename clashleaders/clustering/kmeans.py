@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 
-from clashleaders.model import TrainedModel
+import clashleaders.model
 from .csv_export import extract_features
 
 SCALER = 'SCALER_CLUSTER'
@@ -39,10 +39,10 @@ def predict_clans(*clans):
 
 
 def __save_model(name, model):
-    trained_model = TrainedModel.objects(name=name).first() or TrainedModel(name=name)
+    trained_model = clashleaders.model.TrainedModel.objects(name=name).first() or clashleaders.model.TrainedModel(name=name)
     trained_model.last_updated = datetime.now()
     trained_model.model = model
     trained_model.save()
 
 
-def __load_model(name): return TrainedModel.objects(name=name).first().model
+def __load_model(name): return clashleaders.model.TrainedModel.objects(name=name).first().model

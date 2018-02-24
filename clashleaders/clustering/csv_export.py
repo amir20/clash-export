@@ -1,6 +1,6 @@
 import csv
 
-from clashleaders.model import ClanPreCalculated
+import clashleaders.model
 
 
 def clans_to_csv(stream):
@@ -20,7 +20,7 @@ def clans_to_csv(stream):
                      'week_gold_grab',
                      'week_avg_war_stars'])
 
-    for clan in ClanPreCalculated.objects.no_cache():
+    for clan in clashleaders.model.ClanPreCalculated.objects.no_cache():
         writer.writerow([clan.tag, *extract_features(clan)])
 
 
