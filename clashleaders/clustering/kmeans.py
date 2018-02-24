@@ -1,16 +1,47 @@
+from datetime import datetime
+
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 
+from clashleaders.model import TrainedModel
+from .csv_export import extract_features
 
-def cluster_clans(file_or_stream):
+SCALER = 'SCALER_CLUSTER'
+KMEANS = 'KMEANS_CLUSTER'
+
+
+def train_model(file_or_stream):
     df = pd.read_csv(file_or_stream, index_col='tag')
 
-    scaled_features = MinMaxScaler().fit_transform(df.values)
+    scaler = MinMaxScaler().fit(df.values)
+    scaled_features = scaler.transform(df.values)
     scaled_df = pd.DataFrame(scaled_features, index=df.index, columns=df.columns)
-    X = scaled_df.as_matrix()
+    X = scaled_df.values
     total, _ = X.shape
 
     kmeans = KMeans(n_clusters=int(total / 90)).fit(X)
-    df['label'] = kmeans.labels_
-    return df['label'].to_dict()
+
+    __save_model(SCALER, scaler)
+    __save_model(KMEANS, kmeans)
+
+    return kmeans
+
+
+def predict_clans(*clans):
+    scaler = __load_model(SCALER)
+    kmeans = __load_model(KMEANS)
+    features = [extract_features(clan) for clan in clans]
+    transformed = scaler.transform(features)
+
+    return kmeans.predict(transformed).tolist()
+
+
+def __save_model(name, model):
+    trained_model = TrainedModel.objects(name=name).first() or TrainedModel(name=name)
+    trained_model.last_updated = datetime.now()
+    trained_model.model = model
+    trained_model.save()
+
+
+def __load_model(name): return TrainedModel.objects(name=name).first().model

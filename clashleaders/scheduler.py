@@ -11,7 +11,7 @@ from mongoengine import connect
 
 from clashleaders.clash.api import ClanNotFound
 from clashleaders.clustering.csv_export import clans_to_csv
-from clashleaders.clustering.kmeans import cluster_clans
+from clashleaders.clustering.kmeans import train_model
 from clashleaders.model import Clan, ClanPreCalculated, Status
 
 bugsnag.configure(
@@ -108,7 +108,7 @@ def compute_similar_clans():
         clans_to_csv(f)
 
     logger.info(f"Computing kmeans for clans.")
-    labels = cluster_clans(filename)
+    train_model(filename)
 
     os.remove(filename)
 
