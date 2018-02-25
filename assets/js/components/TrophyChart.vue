@@ -39,7 +39,14 @@ export default {
         showLine: false,
         width: "100%",
         height: "180px",
-        axisX: { showGrid: false }
+        axisX: {
+          showGrid: false,
+          labelInterpolationFnc(value, index) {
+            return index % 3 === 0
+              ? new Date(value).toLocaleDateString()
+              : null;
+          }
+        }
       }
     );
   }
