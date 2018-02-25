@@ -46,6 +46,11 @@ export default {
               ? new Date(value).toLocaleDateString()
               : null;
           }
+        },
+        axisY: {
+          labelInterpolationFnc(value, index) {
+            return value.toLocaleString();
+          }
         }
       }
     );
