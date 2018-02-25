@@ -1,4 +1,5 @@
 import re
+import pandas as pd
 
 from flask import jsonify, render_template, request, send_file
 from mongoengine import DoesNotExist
@@ -100,10 +101,14 @@ def clan_meta(tag):
 @app.route("/clan/<tag>/trophies.json")
 @cache.cached(timeout=1000)
 def clan_trophies(tag):
-    series = Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints')
-    labels = [int(s.id.generation_time.timestamp()) for s in series]
-    points = [s.clanPoints for s in series]
-    return jsonify(dict(labels=labels, points=points))
+    data = list(Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints'))
+    dates = [s.id.generation_time for s in data]
+    points = [s.clanPoints for s in data]
+    series = pd.Series(points, index=dates)
+    resampled = series.resample('D').mean().dropna()
+    map = {key.strftime("%Y-%m-%d"): value for key, value in resampled.items()}
+
+    return jsonify(dict(labels=list(map.keys()), points=list(map.values())))
 
 
 def clan_from_days_ago(days_ago, tag):
