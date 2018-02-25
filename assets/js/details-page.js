@@ -3,6 +3,7 @@ import Buefy from "buefy";
 import ClanTable from "./components/ClanTable";
 import TableNav from "./components/TableNav";
 import SearchBox from "./components/SearchBox";
+import TrophyChart from "./components/TrophyChart";
 import bugsnag from "./bugsnag";
 
 bugsnag(Vue);
@@ -22,6 +23,13 @@ new Vue({
   el: "#table-nav",
   components: {
     TableNav
+  }
+});
+
+new Vue({
+  el: "#trophy-chart",
+  components: {
+    TrophyChart
   }
 });
 
