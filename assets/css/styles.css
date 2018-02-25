@@ -24,6 +24,10 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
   line-height: 1.2em;
 }
 
+.ct-area {
+  fill-opacity: 0.4;
+}
+
 body {
   font-family: "Titillium Web";
 }

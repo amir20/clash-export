@@ -38,7 +38,8 @@ export default {
         showPoint: false,
         showLine: false,
         width: "100%",
-        height: "200px"
+        height: "180px",
+        axisX: { showGrid: false }
       }
     );
   }
