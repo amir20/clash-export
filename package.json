@@ -13,6 +13,7 @@
     "bugsnag-vue": "^1.0.1",
     "bulma": "^0.6.2",
     "bulma-tooltip": "^1.0.3",
+    "chartist": "^0.11.0",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.10",
     "docker-machine-deploy": "^1.1.3",

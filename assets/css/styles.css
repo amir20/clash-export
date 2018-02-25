@@ -15,13 +15,17 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 @import "~buefy/src/scss/components/_select";
 @import "~buefy/src/scss/components/_table";
 @import "~buefy/src/scss/components/_tag";
-
+@import "~chartist/dist/scss/chartist";
 @import "~bulma-tooltip";
 
 .tooltip:before {
   text-transform: none;
   text-align: left;
   line-height: 1.2em;
+}
+
+.ct-area {
+  fill-opacity: 0.4;
 }
 
 body {
