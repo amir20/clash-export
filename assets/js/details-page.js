@@ -13,22 +13,10 @@ Vue.use(Buefy, { defaultIconPack: "fa" });
 Vue.prototype.$bus = new Vue({});
 
 new Vue({
-  el: "#clan-table",
+  el: "#app",
   components: {
-    ClanTable
-  }
-});
-
-new Vue({
-  el: "#table-nav",
-  components: {
-    TableNav
-  }
-});
-
-new Vue({
-  el: "#trophy-chart",
-  components: {
+    ClanTable,
+    TableNav,
     TrophyChart
   }
 });
