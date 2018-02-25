@@ -14,6 +14,19 @@ ol.leaderboard {
         &::before {
           color: whitesmoke;
         }
+
+        &::after {
+          content: "";
+          border-top: 20px solid transparent;
+          border-bottom: 20px solid transparent;
+          border-left: 20px solid #23d160;
+          position: absolute;
+          right: -20px;
+          height: 0;
+          width: 0;
+          display: block;
+          top: 16px;
+        }
       }
     }
 
@@ -22,6 +35,7 @@ ol.leaderboard {
       display: block;
       padding: 0.5em 0.8em;
       border-radius: 3px;
+      position: relative;
 
       & .media {
         display: inline-flex;
