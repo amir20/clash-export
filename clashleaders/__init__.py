@@ -31,13 +31,21 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 import clashleaders.views  # noqa
 
+SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
+MANIFEST_FILE = os.path.join(SITE_ROOT, "static", "manifest.json")
+
 
 def manifest_path(file):
-    SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
-    manifest = os.path.join(SITE_ROOT, "static", "manifest.json")
-    with open(manifest) as f:
+    with open(MANIFEST_FILE) as f:
         data = json.load(f)
     return data[file]
 
 
+def inline_path(file):
+    path = os.path.join(SITE_ROOT, "static", manifest_path(file))
+    with open(path) as f:
+        return f.read()
+
+
 app.add_template_global(manifest_path, 'manifest_path')
+app.add_template_global(inline_path, 'inline_path')
