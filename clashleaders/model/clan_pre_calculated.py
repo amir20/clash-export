@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from mongoengine import BooleanField, DateTimeField, DictField, Document, DoesNotExist, EmbeddedDocument, EmbeddedDocumentField, FloatField, \
-    IntField, ReferenceField, StringField
+from mongoengine import BooleanField, DateTimeField, DictField, Document, DoesNotExist, EmbeddedDocument, EmbeddedDocumentField, \
+    FloatField, IntField, ListField, ReferenceField, StringField
 
 from clashleaders.clash.api import clan_warlog
 from clashleaders.model.clan import Clan
@@ -88,6 +88,7 @@ class ClanPreCalculated(Document):
     week_delta = EmbeddedDocumentField(ClanDelta)
 
     cluster_label = IntField(required=True, default=-1)
+    verified_accounts = ListField(StringField())
 
     meta = {
         'indexes': [
@@ -116,6 +117,7 @@ class ClanPreCalculated(Document):
             'isWarLogPublic',
 
             'cluster_label',
+            'verified_accounts',
 
             # 'warWinStreak',
             # 'warWins',
