@@ -77,3 +77,7 @@ body {
   width: 170px;
   display: inline-block;
 }
+
+.reddit-color {
+    color: #eb6200 !important;
+}
