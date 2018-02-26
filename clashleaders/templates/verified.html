@@ -3,8 +3,59 @@
 <main class="container section">
     <ol>
         {% for clan in clans %}
-        <li>{{ clan.name }}</li>
+        <li class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                    <img src="{{ clan.badgeUrls.medium }}">
+                </p>
+            </figure>
+            <div class="media-content columns">
+                <div class="content column">
+                    <p>
+                        <strong><a href="{{ url_for('clan_detail_page', slug=clan.slug) }}">{{ clan.name }}</a></strong>
+                        <small>from {% if clan.location.countryCode %}
+                            <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
+                            {% endif %} {{ clan.location.name }}
+                        </small>
+                        <small>with {{ clan.members }} members</small>
+                        <br>
+                        {{ clan.description }}
+                    </p>
+                </div>
+                <div class="column">
+                    <div class="level">
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
+                                <p class="heading">Total Trophies</p>
+                            </div>
+                        </div>
+
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="title">{{ "{:,}".format(clan.clanVersusPoints) }}</p>
+                                <p class="heading">Total BH Trophies</p>
+                            </div>
+                        </div>
+
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="title">{{ "{:,}".format(clan.total_donations) }}</p>
+                                <p class="heading">Total Donations</p>
+                            </div>
+                        </div>
+
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="title">{{ "{:,}".format(clan.total_attack_wins) }}</p>
+                                <p class="heading">Total Wins</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
         {% endfor %}
     </ol>
 </main>
-{% endblock %} {% block title %}Application Status &amp; Uptime{% endblock %}
+{% endblock %} {% block title %}Verified Reddit Accounts{% endblock %}
