@@ -1,0 +1,10 @@
+{% extends "layout.html" %} {% block body %}
+
+<main class="container section">
+    <ol>
+        {% for clan in clans %}
+        <li>{{ clan.name }}</li>
+        {% endfor %}
+    </ol>
+</main>
+{% endblock %} {% block title %}Application Status &amp; Uptime{% endblock %}
