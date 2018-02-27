@@ -10,38 +10,50 @@
                 </p>
             </figure>
             <div class="media-content columns">
-                <div class="content column">
-                    <p>
-                        <strong><a href="{{ url_for('clan_detail_page', slug=clan.slug) }}">{{ clan.name }}</a></strong>
-                        <small>from {% if clan.location.countryCode %}
-                            <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
-                            {% endif %} {{ clan.location.name }}
-                        </small>
-                        <small>with {{ clan.members }} members</small>
-                        <br>
-                        {{ clan.description }}
-                    </p>
+                <div class="column">
+                    <div class="content">
+                        <p>
+                            <strong>
+                                <a href="{{ url_for('clan_detail_page', slug=clan.slug) }}">{{ clan.name }}</a>
+                            </strong>
+                            <small>from {% if clan.location.countryCode %}
+                                <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
+                                {% endif %} {{ clan.location.name }}
+                            </small>
+                            <small>with {{ clan.members }} members</small>
+                            <br> {{ clan.description }}
+                        </p>
+                    </div>
                 </div>
                 <div class="column is-4">
-                    <div class="level is-mobile">
+                    <div class="level">
                         <div class="level-item has-text-centered">
                             <div>
-                                <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
                                 <p class="heading">Total Trophies</p>
+                                <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
+                                <p>
+                                    <span class="tag {{'is-success' if clan.week_delta.total_trophies > 0 else 'is-danger'}}">{{ "{:+,}".format(clan.week_delta.total_trophies) }}</span>
+                                </p>
                             </div>
                         </div>
 
                         <div class="level-item has-text-centered">
                             <div>
-                                <p class="title">{{ "{:,}".format(clan.clanVersusPoints) }}</p>
                                 <p class="heading">Total BH Trophies</p>
+                                <p class="title">{{ "{:,}".format(clan.clanVersusPoints) }}</p>
+                                <p>
+                                    <span class="tag {{'is-success' if clan.week_delta.total_bh_trophies > 0 else 'is-danger'}}">{{ "{:+,}".format(clan.week_delta.total_bh_trophies) }}</span>
+                                </p>
                             </div>
                         </div>
 
                         <div class="level-item has-text-centered">
                             <div>
-                                <p class="title">{{ "{:,}".format(clan.total_donations) }}</p>
                                 <p class="heading">Total Donations</p>
+                                <p class="title">{{ "{:,}".format(clan.total_donations) }}</p>
+                                <p>
+                                    <span class="tag {{'is-success' if clan.week_delta.total_donations > 0 else 'is-danger'}}">{{ "{:+,}".format(clan.week_delta.total_donations) }}</span>
+                                </p>
                             </div>
                         </div>
 
