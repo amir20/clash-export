@@ -1,9 +1,7 @@
 import logging
 import os
-from datetime import timedelta
 
 import bugsnag
-import requests_cache
 from bugsnag.flask import handle_exceptions
 from flask import Flask, json
 from flask_caching import Cache
@@ -23,7 +21,6 @@ handle_exceptions(app)
 logging.basicConfig(level=logging.INFO)
 
 # Cache settings
-requests_cache.install_cache(expire_after=timedelta(seconds=10), backend='memory')
 cache = Cache(app, config={'CACHE_TYPE': 'null' if app.debug else 'filesystem', 'CACHE_DIR': '/tmp'})
 
 # Set connect to False for pre-forking to work

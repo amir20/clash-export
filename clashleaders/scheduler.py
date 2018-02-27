@@ -56,8 +56,8 @@ def update_clan_calculations():
 
 
 def delete_old_clans():
-    deleted = Clan.older_than(days=33).delete()
-    logger.info(f"Deleted {deleted} clans that are older than 33 days.")
+    deleted = Clan.older_than(days=31).delete()
+    logger.info(f"Deleted {deleted} clans that are older than 31 days.")
 
     deleted = ClanPreCalculated.objects(members__lt=5).delete()
     Clan.objects(members__lt=5).delete()
@@ -71,7 +71,6 @@ def update_leaderboards():
                'week_delta.avg_gold_grab',
                'clanPoints',
                'clanVersusPoints',
-               'week_delta.avg_war_stars',
                'week_delta.avg_trophies',
                'avg_bh_level']
 
@@ -153,13 +152,14 @@ def reset_page_views():
     ClanPreCalculated.objects.update(set__page_views=0)
 
 
-schedule.every().minutes.do(update_status)
-schedule.every().minutes.do(update_clan_calculations)
-schedule.every().hour.do(update_leaderboards)
+schedule.every().minute.do(update_status)
+schedule.every().minute.do(update_clan_calculations)
 schedule.every().day.do(reset_page_views)
-schedule.every().hour.do(index_random_war_clan)
 schedule.every().day.at("12:01").do(delete_old_clans)
 schedule.every().monday.do(compute_similar_clans)
+
+schedule.every(6).hours.do(update_leaderboards)
+schedule.every(12).hours.do(index_random_war_clan)
 
 
 def main():
