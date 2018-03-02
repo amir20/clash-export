@@ -11,7 +11,7 @@ from clashleaders.clash.transformer import to_short_clan, transform_players
 from clashleaders.model import Clan, ClanPreCalculated
 
 URL_REGEX = re.compile(
-    r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[^\s]*)",
+    r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[/\w]*)",
     re.IGNORECASE)
 
 
