@@ -33,7 +33,7 @@ export default {
       {
         seriesBarDistance: -20,
         horizontalBars: true,
-        width: "80%",
+        width: "90vw",
         height: "400px",
         plugins: [Chartist.plugins.legend()],
         axisY: {},
