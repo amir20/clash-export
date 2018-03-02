@@ -5,3 +5,4 @@ import clashleaders.views.index
 import clashleaders.views.sitemap
 import clashleaders.views.status
 import clashleaders.views.privacy
+import clashleaders.views.similar_clans
