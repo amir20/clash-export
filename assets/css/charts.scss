@@ -19,13 +19,14 @@
       height: 12px;
       position: absolute;
       left: 0;
+      top: 5px;
       content: '';
       border: 3px solid transparent;
       border-radius: 2px;
   }
 
   li.inactive:before {
-      background-color: transparent;
+      background-color: transparent !important;
   }
 
   &.ct-legend-inside {
