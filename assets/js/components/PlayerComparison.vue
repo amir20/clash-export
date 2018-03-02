@@ -8,7 +8,7 @@ import "chartist-plugin-legend";
 import { bugsnagClient } from "../bugsnag";
 
 export default {
-  props: ["playerData", "allData"],
+  props: ["playerData", "clanAvg", "similarClansAvg"],
   data() {
     return { chart: null };
   },
@@ -24,9 +24,14 @@ export default {
             className: "player"
           },
           {
-            name: "Clan Average",
-            data: this.avgSeries,
+            name: "This clan average",
+            data: this.clanAvg,
             className: "clan"
+          },
+          {
+            name: "Similar clans average",
+            data: [this.similarClansAvg.de_grab, this.similarClansAvg.elixir_grab, this.similarClansAvg.gold_grab],
+            className: "similar-clans"
           }
         ]
       },
@@ -46,14 +51,6 @@ export default {
     );
   },
   methods: {
-    avg(column) {
-      return (
-        this.allData.reduce(
-          (total, player) => total + player[column].delta,
-          0
-        ) / this.allData.length
-      );
-    }
   },
   computed: {
     playerSeries() {
@@ -61,13 +58,6 @@ export default {
         this.playerData.totalDeGrab.delta,
         this.playerData.totalElixirGrab.delta,
         this.playerData.totalGoldGrab.delta
-      ];
-    },
-    avgSeries() {
-      return [
-        this.avg("totalDeGrab"),
-        this.avg("totalElixirGrab"),
-        this.avg("totalGoldGrab")
       ];
     }
   }
@@ -85,6 +75,9 @@ export default {
   &>>>.clan .ct-bar {
     stroke: hsl(217, 71%, 53%);
   }
+  &>>>.similar-clans .ct-bar {
+    stroke: hsl(348, 100%, 61%);
+  }
   &>>>.ct-legend .ct-series-0:before {
     background-color: hsl(141, 71%, 48%);
     border-color: hsl(141, 71%, 48%);
@@ -92,6 +85,10 @@ export default {
   &>>>.ct-legend .ct-series-1:before {
     background-color: hsl(217, 71%, 53%);
     border-color: hsl(217, 71%, 53%);
+  }
+  &>>>.ct-legend .ct-series-2:before {
+    background-color: hsl(348, 100%, 61%);
+    border-color: hsl(348, 100%, 61%);
   }
 }
 </style>
