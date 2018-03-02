@@ -166,7 +166,7 @@
         </div>
     </section>
     <section id="clan-table">
-        <clan-table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"></clan-table>
+        <clan-table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}" cluster-label="{{ clan.cluster_label}}"></clan-table>
     </section>
 </div>
 {% endblock %} {% block scripts %}

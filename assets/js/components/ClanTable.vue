@@ -30,7 +30,7 @@
                 </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
-              <player-comparison :player-data="props.row" :all-data="tableData"></player-comparison>
+              <player-comparison :player-data="props.row" :clan-avg="clanAverage" :similar-clans-avg="similarClansAvg"></player-comparison>
             </template>
         </b-table>
     </section>
@@ -45,7 +45,7 @@ import isNumber from "lodash/isNumber";
 import PlayerComparison from "./PlayerComparison";
 
 export default {
-  props: ["tag", "name", "players", "oldestDays"],
+  props: ["tag", "name", "players", "oldestDays", "clusterLabel"],
   components: {
     PlayerComparison
   },
@@ -56,7 +56,8 @@ export default {
       previousData: null,
       days: 7,
       selected: null,
-      sortField: "value"
+      sortField: "value", 
+      similarClansAvg: {}
     };
   },
   created() {
@@ -99,6 +100,10 @@ export default {
         );
       });
     },
+    clanAverage() {
+      const a = this.avg;
+      return [a("totalDeGrab"), a("totalElixirGrab"), a("totalGoldGrab")];
+    },
     header() {
       return this.clan[0].map((column, index) => ({
         label: column,
@@ -118,6 +123,10 @@ export default {
 
       this.previousData = await (await previousPromise).json();
       this.clan = await (await nowPromise).json();
+
+      this.similarClansAvg = await (await fetch(
+        `/similar-clans/${this.clusterLabel}/avg.json`
+      )).json();
     },
     async loadDaysAgo(days) {
       this.days = days;
@@ -145,6 +154,14 @@ export default {
           {}
         );
       });
+    },
+    avg(column) {
+      return (
+        this.tableData.reduce(
+          (total, player) => total + player[column].delta,
+          0
+        ) / this.tableData.length
+      );
     },
     showNoDataMessage() {
       this.$snackbar.open({
