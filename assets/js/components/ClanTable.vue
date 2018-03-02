@@ -8,6 +8,8 @@
             narrowed
             hoverable
             mobile-cards
+            detail-key="id"
+            detailed
             default-sort="currentTrophies.value"
             default-sort-direction="desc"
             :loading="loading"
@@ -27,6 +29,9 @@
                     </b>
                 </b-table-column>
             </template>
+            <template slot="detail" slot-scope="props">
+              <player-comparison :player-data="props.row" :all-data="tableData"></player-comparison>
+            </template>
         </b-table>
     </section>
   </div>
@@ -37,9 +42,13 @@ import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
 import isNumber from "lodash/isNumber";
+import PlayerComparison from "./PlayerComparison";
 
 export default {
   props: ["tag", "name", "players", "oldestDays"],
+  components: {
+    PlayerComparison
+  },
   data() {
     return {
       loading: true,
@@ -81,6 +90,9 @@ export default {
             const delta =
               previousRow && isNumber(value) ? value - previousRow[column] : 0;
             map[column] = { value, delta };
+            if (column == "tag") {
+              map["id"] = value;
+            }
             return map;
           },
           {}
