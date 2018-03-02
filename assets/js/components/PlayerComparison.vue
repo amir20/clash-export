@@ -34,7 +34,7 @@ export default {
         ]
       },
       {
-        seriesBarDistance: 20,
+        seriesBarDistance: -20,
         horizontalBars: true,
         reverseData: true,
         width: "80%",

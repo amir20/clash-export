@@ -7,14 +7,11 @@
 .ct-legend {
   position: relative;
   z-index: 10;
-  display: flex;
-  flex-direction: column-reverse;
 
   li {
       position: relative;
       padding-left: 23px;
-      margin-bottom: 3px;
-      flex: 0 0 auto;
+      margin-bottom: 3px;      
   }
 
   li:before {
