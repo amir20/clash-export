@@ -16,32 +16,31 @@ export default {
     this.chart = new Chartist.Bar(
       this.$refs.chart,
       {
-        labels: [
-          "Recent Gold Grab",
-          "Recent Elixer Grab",
-          "Recent DE Grab",
-          "Recent Doations"
-        ],
+        labels: ["Recent DE Grab", "Recent Elixer Grab", "Recent Gold Grab"],
         series: [
           {
             name: this.playerData.name.value,
-            data: this.playerSeries
+            data: this.playerSeries,
+            className: "player"
           },
           {
             name: "Clan Average",
-            data: this.avgSeries
+            data: this.avgSeries,
+            className: "clan"
           }
         ]
       },
       {
         seriesBarDistance: -20,
         horizontalBars: true,
-        reverseData: true,
         width: "80%",
         height: "400px",
         plugins: [Chartist.plugins.legend()],
-        axisY: {
-          offset: 80
+        axisY: {},
+        axisX: {
+          labelInterpolationFnc(value, index) {
+            return index % 2 === 0 ? value.toLocaleString() : null;
+          }
         }
       }
     );
@@ -59,18 +58,16 @@ export default {
   computed: {
     playerSeries() {
       return [
-        this.playerData.totalGoldGrab.delta,
-        this.playerData.totalElixirGrab.delta,
         this.playerData.totalDeGrab.delta,
-        this.playerData.totalDonations.delta
+        this.playerData.totalElixirGrab.delta,
+        this.playerData.totalGoldGrab.delta
       ];
     },
     avgSeries() {
       return [
-        this.avg("totalGoldGrab"),
-        this.avg("totalElixirGrab"),
         this.avg("totalDeGrab"),
-        this.avg("totalDonations")
+        this.avg("totalElixirGrab"),
+        this.avg("totalGoldGrab")
       ];
     }
   }
@@ -78,7 +75,23 @@ export default {
 </script>
 
 <style scoped>
-.player-comparison>>>.ct-bar {
-  stroke-width: 20px;
+.player-comparison {
+  &>>>.ct-bar {
+    stroke-width: 20px;
+  }
+  &>>>.player .ct-bar {
+    stroke: hsl(141, 71%, 48%);
+  }
+  &>>>.clan .ct-bar {
+    stroke: hsl(217, 71%, 53%);
+  }
+  &>>>.ct-legend .ct-series-0:before {
+    background-color: hsl(141, 71%, 48%);
+    border-color: hsl(141, 71%, 48%);
+  }
+  &>>>.ct-legend .ct-series-1:before {
+    background-color: hsl(217, 71%, 53%);
+    border-color: hsl(217, 71%, 53%);
+  }
 }
 </style>
