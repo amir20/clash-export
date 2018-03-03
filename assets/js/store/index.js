@@ -51,7 +51,7 @@ const mutations = {
 }
 
 const actions = {
-    async fetchClanData({ commit, getters: { path } }, clusterLabel) {
+    async fetchClanData({ commit, getters: { path } }) {
         const nowPromise = fetch(`${path}.json`);
         const previousPromise = fetch(`${path}.json?daysAgo=${state.days}`);
         commit('stopLoading');
@@ -62,7 +62,7 @@ const actions = {
         const clan = await (await nowPromise).json();
         commit('setClan', clan);
 
-        const similarClansAvg = await (await fetch(`/similar-clans/${clusterLabel}/avg.json`)).json();
+        const similarClansAvg = await (await fetch(`${path}/similar/avg.json`)).json();
         commit('setSimilarClansAvg', similarClansAvg);
     },
     async loadDaysAgo({ commit, getters: { path } }, days) {
