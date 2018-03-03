@@ -48,8 +48,7 @@ export default {
   },
   data() {
     return {
-      selected: null,
-      sortField: "value"
+      selected: null
     };
   },
   created() {
@@ -65,7 +64,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["loading"]),
+    ...mapState(["loading", "sortField"]),
     ...mapGetters(["path", "header", "tableData"])
   },
   methods: {

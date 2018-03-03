@@ -48,7 +48,7 @@
         </b-dropdown>
     </div>
     <div class="navbar-item">
-        <b-dropdown v-model="sort" @change="changeSort" hoverable>
+        <b-dropdown v-model="sort" @change="setSortField" hoverable>
             <button class="button is-info" type="button" slot="trigger" :key="sort">
                 <template v-if="sort === 'delta'">
                     <b-icon icon="clock" size="is-small" pack="far"></b-icon>
@@ -95,12 +95,10 @@ export default {
   },
   methods: {
     ...mapActions(["loadDaysAgo"]),
-    changeSort(sort) {
-      this.$bus.$emit("sort-changed-event", sort);
-    }
+    ...mapMutations(["setSortField"])
   },
   computed: {
-    ...mapState(["daysSpan"])
+    ...mapState(["daysSpan", "softField"])
   }
 };
 </script>

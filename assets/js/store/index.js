@@ -15,7 +15,8 @@ const state = {
     previousData: null,
     days: 7,
     similarClansAvg: {},
-    daysSpan: 7
+    daysSpan: 7,
+    sortField: 'value'
 }
 
 
@@ -43,7 +44,10 @@ const mutations = {
     },
     setDaysSpan(state, daysSpan) {
         state.daysSpan = daysSpan;
-    }
+    },
+    setSortField(state, field) {
+        state.sortField = field;
+    }    
 }
 
 const actions = {
