@@ -42,7 +42,7 @@ import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import PlayerComparison from "./PlayerComparison";
 
 export default {
-  props: ["tag", "name", "players", "oldestDays", "clusterLabel"],
+  props: ["tag", "name", "players", "oldestDays"],
   components: {
     PlayerComparison
   },
@@ -56,7 +56,7 @@ export default {
     this.setDaysSpan(this.oldestDays);
     this.setClan(this.players);
     this.setPreviousData(this.players);
-    this.fetchClanData(this.clusterLabel);
+    this.fetchClanData();
 
     if (this.oldestDays < 3) {
       this.setDaysSpan(1);
