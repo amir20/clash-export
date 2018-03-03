@@ -10,7 +10,6 @@ bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
-Vue.prototype.$bus = new Vue({});
 
 new Vue({
   el: "#app",

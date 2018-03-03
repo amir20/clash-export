@@ -30,7 +30,7 @@
                 </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
-              <!-- <player-comparison :player-data="props.row" :clan-avg="clanAverage" :similar-clans-avg="similarClansAvg"></player-comparison> -->
+              <player-comparison :player-data="props.row"></player-comparison>
             </template>
         </b-table>
     </section>
@@ -54,30 +54,22 @@ export default {
   },
   created() {
     this.setTag(this.tag);
+    this.setDaysSpan(this.oldestDays);
     this.setClan(this.players);
     this.setPreviousData(this.players);
     this.fetchClanData(this.clusterLabel);
 
-    // if (this.oldestDays < 3) {
-    //   this.showNoDataMessage();
-    //   this.$nextTick(() => {
-    //     this.$bus.$emit("days-changed-event", 1);
-    //   });
-    // }
-    // this.$nextTick(() => {
-    //   this.$bus.$emit("days-of-data", this.oldestDays);
-    // });
+    if (this.oldestDays < 3) {
+      this.showNoDataMessage();
+      this.setDaysSpan(1);
+    }
   },
   computed: {
     ...mapState(["loading"]),
     ...mapGetters(["path", "header", "tableData"])
-    // clanAverage() {
-    //   const a = this.avg;
-    //   return [a("totalDeGrab"), a("totalElixirGrab"), a("totalGoldGrab")];
-    // }
   },
   methods: {
-    ...mapMutations(["setClan", "setPreviousData", "setTag"]),
+    ...mapMutations(["setClan", "setPreviousData", "setTag", "setDaysSpan"]),
     ...mapActions(["fetchClanData", "loadDaysAgo"]),
     changedSortField(sort) {
       if (this.sortField != sort) {
@@ -85,14 +77,6 @@ export default {
         const column = this.$refs.table.currentSortColumn;
         this.$nextTick(() => this.$refs.table.sort(column, true));
       }
-    },
-    avg(column) {
-      return (
-        this.tableData.reduce(
-          (total, player) => total + player[column].delta,
-          0
-        ) / this.tableData.length
-      );
     },
     showNoDataMessage() {
       this.$snackbar.open({

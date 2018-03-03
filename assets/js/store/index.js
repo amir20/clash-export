@@ -14,7 +14,8 @@ const state = {
     clan: null,
     previousData: null,
     days: 7,
-    similarClansAvg: null
+    similarClansAvg: {},
+    daysSpan: 7
 }
 
 
@@ -31,14 +32,17 @@ const mutations = {
     setDays(state, days) {
         state.days = days;
     },
-    setSimilarClans(state, similarClans) {
-        state.similarClans = similarClans;
+    setSimilarClansAvg(state, similarClansAvg) {
+        state.similarClansAvg = similarClansAvg;
     },
     startLoading(state) {
         state.loading = true;
     },
     stopLoading(state) {
         state.loading = false;
+    },
+    setDaysSpan(state, daysSpan) {
+        state.daysSpan = daysSpan;
     }
 }
 
@@ -55,7 +59,7 @@ const actions = {
         commit('setClan', clan);
 
         const similarClansAvg = await (await fetch(`/similar-clans/${clusterLabel}/avg.json`)).json();
-        commit('setSimilarClans', similarClansAvg);
+        commit('setSimilarClansAvg', similarClansAvg);
     },
     async loadDaysAgo({ commit, getters: { path } }, days) {
         commit('setDays', days);
@@ -78,6 +82,10 @@ const getters = {
     },
     path({ tag }) {
         return `/clan/${tag.replace("#", "")}`;
+    },
+    clanAverage(state, { tableData }) {
+        const a = (c) => average(tableData, c);
+        return [a("totalDeGrab"), a("totalElixirGrab"), a("totalGoldGrab")];
     },
     tableData(state, getters) {
         const data = convertToMap(getters.header, state.clan.slice(1));
@@ -116,6 +124,12 @@ const convertToMap = (header, matrix) => {
     });
 }
 
+const average = (tableData, column) => (
+    tableData.reduce(
+        (total, player) => total + player[column].delta,
+        0
+    ) / tableData.length
+);
 
 export default new Vuex.Store({
     strict: true,
