@@ -67,16 +67,15 @@ export default {
     ...mapState(["loading", "sortField"]),
     ...mapGetters(["path", "header", "tableData"])
   },
+  watch: {
+    sortField(newValue) {
+      const column = this.$refs.table.currentSortColumn;
+      this.$nextTick(() => this.$refs.table.sort(column, true));
+    }
+  },
   methods: {
     ...mapMutations(["setClan", "setPreviousData", "setTag", "setDaysSpan"]),
     ...mapActions(["fetchClanData", "loadDaysAgo"]),
-    changedSortField(sort) {
-      if (this.sortField != sort) {
-        this.sortField = sort;
-        const column = this.$refs.table.currentSortColumn;
-        this.$nextTick(() => this.$refs.table.sort(column, true));
-      }
-    },
     showNoDataMessage() {
       this.$snackbar.open({
         message:
