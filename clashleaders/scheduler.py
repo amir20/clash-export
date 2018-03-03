@@ -26,6 +26,7 @@ handler.setLevel(logging.ERROR)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
+logging.getLogger("schedule").setLevel(logging.WARNING)
 logger.addHandler(handler)
 
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
