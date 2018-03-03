@@ -59,7 +59,6 @@ export default {
     this.fetchClanData(this.clusterLabel);
 
     if (this.oldestDays < 3) {
-      this.showNoDataMessage();
       this.setDaysSpan(1);
     }
   },
@@ -75,17 +74,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setClan", "setPreviousData", "setTag", "setDaysSpan"]),
-    ...mapActions(["fetchClanData", "loadDaysAgo"]),
-    showNoDataMessage() {
-      this.$snackbar.open({
-        message:
-          "Hey stranger! This is the first time I am seeing your clan and so it will take a while to collect historical data. Come back again in a few days to see your updated stats.",
-        type: "is-warning",
-        position: "is-bottom-left",
-        actionText: "Got it",
-        duration: 20000
-      });
-    }
+    ...mapActions(["fetchClanData", "loadDaysAgo"])
   }
 };
 </script>
