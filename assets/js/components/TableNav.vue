@@ -1,7 +1,7 @@
 <template>
 <div class="navbar-start">
     <div class="navbar-item">
-        <b-dropdown v-model="days" @change="changeDays" hoverable>
+        <b-dropdown v-model="days" @change="loadDaysAgo" hoverable>
             <button class="button is-info" type="button" slot="trigger" :key="days">
                 <template v-if="days == 1">
                     <b-icon icon="hourglass" size="is-small" pack="far"></b-icon>
@@ -18,7 +18,7 @@
                 <b-icon icon="chevron-down" size="is-small"></b-icon>
             </button>
 
-            <b-dropdown-item :value="1" v-if="totalDays > 0">
+            <b-dropdown-item :value="1" v-if="daysSpan > 0">
                 <div class="media">
                     <b-icon class="media-left" icon="hourglass" pack="far"></b-icon>
                     <div class="media-content">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </b-dropdown-item>
-            <b-dropdown-item :value="7" v-if="totalDays > 2">
+            <b-dropdown-item :value="7" v-if="daysSpan > 2">
                 <div class="media">
                     <b-icon class="media-left" icon="calendar-alt" pack="far"></b-icon>
                     <div class="media-content">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </b-dropdown-item>
-            <b-dropdown-item :value="30" v-if="totalDays > 15">
+            <b-dropdown-item :value="30" v-if="daysSpan > 15">
                 <div class="media">
                     <b-icon class="media-left" icon="calendar" pack="far"></b-icon>
                     <div class="media-content">
@@ -48,7 +48,7 @@
         </b-dropdown>
     </div>
     <div class="navbar-item">
-        <b-dropdown v-model="sort" @change="changeSort" hoverable>
+        <b-dropdown v-model="sort" @change="setSortField" hoverable>
             <button class="button is-info" type="button" slot="trigger" :key="sort">
                 <template v-if="sort === 'delta'">
                     <b-icon icon="clock" size="is-small" pack="far"></b-icon>
@@ -84,26 +84,21 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+
 export default {
   data() {
     return {
       days: 7,
-      totalDays: 30,
       sort: "value"
     };
   },
-  created() {
-    this.$bus.$on("days-of-data", totalDays => {
-      this.totalDays = totalDays;
-    });
-  },
   methods: {
-    changeDays(days) {
-      this.$bus.$emit("days-changed-event", days);
-    },
-    changeSort(sort) {
-      this.$bus.$emit("sort-changed-event", sort);
-    }
+    ...mapActions(["loadDaysAgo"]),
+    ...mapMutations(["setSortField"])
+  },
+  computed: {
+    ...mapState(["daysSpan", "softField"])
   }
 };
 </script>
