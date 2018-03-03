@@ -6,9 +6,10 @@
 import Chartist from "chartist";
 import "chartist-plugin-legend";
 import { bugsnagClient } from "../bugsnag";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 export default {
-  props: ["playerData", "clanAvg", "similarClansAvg"],
+  props: ["playerData"],
   data() {
     return { chart: null };
   },
@@ -25,7 +26,7 @@ export default {
           },
           {
             name: "This clan average",
-            data: this.clanAvg,
+            data: this.clanAverage,
             className: "clan"
           },
           {
@@ -53,6 +54,8 @@ export default {
   methods: {
   },
   computed: {
+    ...mapGetters(["clanAverage"]),
+    ...mapState(["similarClansAvg"]),
     playerSeries() {
       return [
         this.playerData.totalDeGrab.delta,

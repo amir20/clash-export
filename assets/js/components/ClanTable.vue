@@ -30,7 +30,7 @@
                 </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
-              <player-comparison :player-data="props.row" :clan-avg="clanAverage" :similar-clans-avg="similarClansAvg"></player-comparison>
+              <player-comparison :player-data="props.row"></player-comparison>
             </template>
         </b-table>
     </section>
@@ -38,10 +38,7 @@
 </template>
 
 <script>
-import camelCase from "lodash/camelCase";
-import reduce from "lodash/reduce";
-import keyBy from "lodash/keyBy";
-import isNumber from "lodash/isNumber";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import PlayerComparison from "./PlayerComparison";
 
 export default {
@@ -51,118 +48,34 @@ export default {
   },
   data() {
     return {
-      loading: true,
-      clan: null,
-      previousData: null,
-      days: 7,
-      selected: null,
-      sortField: "value", 
-      similarClansAvg: {}
+      selected: null
     };
   },
   created() {
-    this.clan = this.players;
-    this.previousData = this.players;
-    this.fetchData();
-    this.$bus.$on("days-changed-event", days => this.loadDaysAgo(days));
-    this.$bus.$on("sort-changed-event", sort => this.changedSortField(sort));
+    this.setTag(this.tag);
+    this.setDaysSpan(this.oldestDays);
+    this.setClan(this.players);
+    this.setPreviousData(this.players);
+    this.fetchClanData(this.clusterLabel);
 
     if (this.oldestDays < 3) {
       this.showNoDataMessage();
-      this.$nextTick(() => {
-        this.$bus.$emit("days-changed-event", 1);
-      });
+      this.setDaysSpan(1);
     }
-    this.$nextTick(() => {
-      this.$bus.$emit("days-of-data", this.oldestDays);
-    });
   },
   computed: {
-    tableData() {
-      const data = this.convertToMap(this.clan.slice(1));
-      const previousData = this.convertToMap(this.previousData.slice(1));
-      const previousByTag = keyBy(previousData, "tag");
-
-      return data.map(row => {
-        const previousRow = previousByTag[row.tag];
-        return reduce(
-          row,
-          (map, value, column) => {
-            const delta =
-              previousRow && isNumber(value) ? value - previousRow[column] : 0;
-            map[column] = { value, delta };
-            if (column == "tag") {
-              map["id"] = value;
-            }
-            return map;
-          },
-          {}
-        );
-      });
-    },
-    clanAverage() {
-      const a = this.avg;
-      return [a("totalDeGrab"), a("totalElixirGrab"), a("totalGoldGrab")];
-    },
-    header() {
-      return this.clan[0].map((column, index) => ({
-        label: column,
-        field: camelCase(column),
-        numeric: index > 1
-      }));
-    },
-    path() {
-      return `/clan/${this.tag.replace("#", "")}`;
+    ...mapState(["loading", "sortField"]),
+    ...mapGetters(["path", "header", "tableData"])
+  },
+  watch: {
+    sortField(newValue) {
+      const column = this.$refs.table.currentSortColumn;
+      this.$nextTick(() => this.$refs.table.sort(column, true));
     }
   },
   methods: {
-    async fetchData() {
-      const nowPromise = fetch(`${this.path}.json`);
-      const previousPromise = fetch(`${this.path}.json?daysAgo=${this.days}`);
-      this.loading = false;
-
-      this.previousData = await (await previousPromise).json();
-      this.clan = await (await nowPromise).json();
-
-      this.similarClansAvg = await (await fetch(
-        `/similar-clans/${this.clusterLabel}/avg.json`
-      )).json();
-    },
-    async loadDaysAgo(days) {
-      this.days = days;
-      this.loading = true;
-      const data = await fetch(`${this.path}.json?daysAgo=${days}`);
-      this.previousData = await data.json();
-      this.loading = false;
-    },
-    changedSortField(sort) {
-      if (this.sortField != sort) {
-        this.sortField = sort;
-        const column = this.$refs.table.currentSortColumn;
-        this.$nextTick(() => this.$refs.table.sort(column, true));
-      }
-    },
-    convertToMap(matrix) {
-      const header = this.header;
-      return matrix.map(row => {
-        return reduce(
-          row,
-          (map, value, columnIndex) => {
-            map[header[columnIndex].field] = value;
-            return map;
-          },
-          {}
-        );
-      });
-    },
-    avg(column) {
-      return (
-        this.tableData.reduce(
-          (total, player) => total + player[column].delta,
-          0
-        ) / this.tableData.length
-      );
-    },
+    ...mapMutations(["setClan", "setPreviousData", "setTag", "setDaysSpan"]),
+    ...mapActions(["fetchClanData", "loadDaysAgo"]),
     showNoDataMessage() {
       this.$snackbar.open({
         message:
