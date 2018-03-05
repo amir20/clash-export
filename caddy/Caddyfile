@@ -8,7 +8,8 @@ https://www.clashleaders.com {
         except /favicon.ico /robots.txt /static
     }
 
-    expires {        
+    expires {
+        match /static 1y
         match /clan/.*/short.json$ 1d
         match /clan/.*/trophies.json$ 1d
         match /clan/.*/similar/avg.json$ 1d
