@@ -54,8 +54,6 @@ export default {
   created() {
     this.setTag(this.tag);
     this.setDaysSpan(this.oldestDays);
-    this.setClan(this.players);
-    this.setPreviousData(this.players);
     this.fetchClanData();
 
     if (this.oldestDays < 3) {

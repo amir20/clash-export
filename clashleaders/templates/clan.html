@@ -166,13 +166,15 @@
         </div>
     </section>
     <section id="clan-table">
-        <clan-table tag="{{ clan.tag }}" name="{{ clan.name }}" :players='{{ players | tojson | safe}}' oldest-days="{{ oldest_days }}"></clan-table>
+        <clan-table tag="{{ clan.tag }}" name="{{ clan.name }}" oldest-days="{{ oldest_days }}"></clan-table>
         <notification></notification>
     </section>
 </div>
 {% endblock %} {% block scripts %}
-<script defer
-        src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
+<script>
+    window.__CLAN__ = {{ players | tojson | safe }};
+</script>
+<script defer src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
 <meta name=”description” content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders">
