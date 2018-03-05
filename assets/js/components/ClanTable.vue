@@ -71,7 +71,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setClan", "setPreviousData", "setTag", "setDaysSpan"]),
+    ...mapMutations(["setTag", "setDaysSpan"]),
     ...mapActions(["fetchClanData", "loadDaysAgo"])
   }
 };
