@@ -1,7 +1,7 @@
 import re
 
 import pandas as pd
-from flask import jsonify, make_response, render_template, request, send_file
+from flask import jsonify, render_template, request, send_file
 from mongoengine import DoesNotExist
 from user_agents import parse
 
