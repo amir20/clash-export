@@ -209,5 +209,5 @@ class ClanPreCalculated(Document):
 
     @classmethod
     def find_by_tag(cls, tag):
-        tag = "#" + tag.lstrip("#")
+        tag = "#" + tag.lstrip("#").upper()
         return cls.objects.get(tag=tag)

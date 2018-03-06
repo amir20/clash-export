@@ -27,7 +27,7 @@
         </linearGradient>
     </defs>
     <rect width="100%" height="100%" fill="url(#background)"/>
-    <image width="100" height="100" xlink:href="{{ clan.badgeUrls.medium }}"/>
+    <image width="100" height="100" xlink:href="{{ base64_png(clan.badgeUrls.medium) }}"/>
     <text x="110" y="40" fill="#333" font-size="32">
         {{ clan.name }}
         <tspan fill="#444" font-size="14">{{ clan.members }} members</tspan>
