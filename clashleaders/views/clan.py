@@ -76,18 +76,6 @@ def clan_detail_page(slug):
                                similar_clans_start_count=start_count)
 
 
-@app.route("/clan/<slug>.svg")
-def clan_detail_svg(slug):
-    try:
-        clan = ClanPreCalculated.find_by_slug(slug)
-    except DoesNotExist:
-        return render_template('error.html'), 404
-    else:
-        response = make_response(render_template('clan.svg', clan=clan))
-        response.headers['Content-type'] = "image/svg+xml"
-        return response
-
-
 @app.route("/clan/<tag>/short.json")
 @cache.cached(timeout=1000)
 def clan_meta(tag):
