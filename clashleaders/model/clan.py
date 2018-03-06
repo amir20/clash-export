@@ -67,7 +67,7 @@ class Clan(DynamicDocument):
 
 
 def prepend_hash(tag):
-    return "#" + tag.lstrip("#")
+    return "#" + tag.lstrip("#").upper()
 
 
 def object_id_from_now(**kwargs):
