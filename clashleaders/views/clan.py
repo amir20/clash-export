@@ -1,7 +1,7 @@
 import re
-import pandas as pd
 
-from flask import jsonify, render_template, request, send_file
+import pandas as pd
+from flask import jsonify, make_response, render_template, request, send_file
 from mongoengine import DoesNotExist
 from user_agents import parse
 
@@ -74,6 +74,18 @@ def clan_detail_page(slug):
                                oldest_days=clan.days_span,
                                similar_clans=similar_clans,
                                similar_clans_start_count=start_count)
+
+
+@app.route("/clan/<slug>.svg")
+def clan_detail_svg(slug):
+    try:
+        clan = ClanPreCalculated.find_by_slug(slug)
+    except DoesNotExist:
+        return render_template('error.html'), 404
+    else:
+        response = make_response(render_template('clan.svg', clan=clan))
+        response.headers['Content-type'] = "image/svg+xml"
+        return response
 
 
 @app.route("/clan/<tag>/short.json")
