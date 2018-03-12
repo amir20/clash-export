@@ -44,7 +44,8 @@ RUN apt-get update \
     && pipenv install --system \
     && apt-get remove -y curl gcc \
     && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /root/.cache
 
 # Custom Supervisord config
 COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
