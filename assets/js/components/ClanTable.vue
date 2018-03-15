@@ -14,6 +14,7 @@
             default-sort-direction="desc"
             :loading="loading"
             :selected.sync="selected"
+            :opened-detailed="openDetails"
             focusable>
              <template slot-scope="props">
                 <b-table-column v-for="column in header"
@@ -42,13 +43,14 @@ import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import PlayerComparison from "./PlayerComparison";
 
 export default {
-  props: ["tag", "name", "players", "oldestDays"],
+  props: ["tag", "name", "oldestDays"],
   components: {
     PlayerComparison
   },
   data() {
     return {
-      selected: null
+      selected: null,
+      openDetails: []
     };
   },
   created() {
@@ -61,13 +63,18 @@ export default {
     }
   },
   computed: {
-    ...mapState(["loading", "sortField"]),
+    ...mapState(["loading", "sortField", "similarClansAvg"]),
     ...mapGetters(["path", "header", "tableData"])
   },
   watch: {
     sortField(newValue) {
       const column = this.$refs.table.currentSortColumn;
       this.$nextTick(() => this.$refs.table.sort(column, true));
+    },
+    similarClansAvg(newValue) {
+      if (newValue && newValue.gold_grab > 0) {
+        this.openDetails = [this.tableData[0].id];
+      }
     }
   },
   methods: {
