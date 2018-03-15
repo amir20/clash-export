@@ -36,13 +36,13 @@ def search():
 @app.route("/clan/<tag>.json")
 def clan_detail_json(tag):
     try:
-        api.find_clan_by_tag(tag)
-    except api.ClanNotFound:
-        return render_template('error.html'), 404
-    else:
         days_ago = request.args.get('daysAgo')
         clan = clan_from_days_ago(days_ago, tag)
         return jsonify(transform_players(clan.players_data()))
+    except api.ClanNotFound:
+        return jsonify(dict(error=f"{tag} not found")), 404
+    except api.ApiException:
+        return jsonify(dict(error=f"Clash of Clans API is down right now.")), 500
 
 
 @app.route("/clan/<slug>.xlsx")
@@ -106,9 +106,9 @@ def clan_trophies(tag):
     points = [s.clanPoints for s in data]
     series = pd.Series(points, index=dates)
     resampled = series.resample('D').mean().dropna()
-    map = {key.strftime("%Y-%m-%d"): value for key, value in resampled.items()}
+    items = {key.strftime("%Y-%m-%d"): value for key, value in resampled.items()}
 
-    return jsonify(dict(labels=list(map.keys()), points=list(map.values())))
+    return jsonify(dict(labels=list(items.keys()), points=list(items.values())))
 
 
 def clan_from_days_ago(days_ago, tag):
