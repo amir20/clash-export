@@ -10,7 +10,7 @@ import uvloop
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
-from clashleaders.clash.api import ClanNotFound
+from clashleaders.clash.api import ApiException, ClanNotFound
 from clashleaders.model import Clan, ClanPreCalculated
 
 bugsnag.configure(
@@ -54,10 +54,15 @@ def update_single_clan():
         else:
             time.sleep(10)
     except ClanNotFound:
-        logger.warning(f"Clan not found when fetching {clan.tag}. Pausing for 5 seconds.")
+        logger.warning(f"Clan with tag {clan.tag} not found. Pausing for 1 second.")
         eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
         clan.update(set__last_updated=eleven_hour_ago)
-        time.sleep(5)
+        time.sleep(1)
+    except ApiException:
+        logger.warning(f"API exception when fetching {clan.tag}. Pausing for 10 seconds.")
+        eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
+        clan.update(set__last_updated=eleven_hour_ago)
+        time.sleep(10)
     except TypeError:
         # Possibly a json error. Let's delete the instance
         logger.warning(f"TypeError exception thrown for {clan.tag}. Deleting most recent instance.")

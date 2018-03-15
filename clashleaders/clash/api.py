@@ -14,6 +14,10 @@ class ClanNotFound(Exception):
     pass
 
 
+class ApiException(Exception):
+    pass
+
+
 async def __fetch(url, params=None, loop=None):
     with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
         return await __fetch_with_session(url, session=session, params=params)
@@ -41,8 +45,11 @@ def find_clan_by_tag(tag):
     future = __fetch(f'https://api.clashofclans.com/v1/clans/{quote(tag)}')
     code, response = asyncio.get_event_loop().run_until_complete(future)
 
-    if code != 200:
+    if code == 404:
         raise ClanNotFound(f"Clan [{tag}] not found.")
+
+    if code != 200:
+        raise ApiException(f"API returned non-200 status code: {code}")
 
     return response
 

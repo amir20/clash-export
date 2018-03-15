@@ -10,7 +10,7 @@ import schedule
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
-from clashleaders.clash.api import ClanNotFound
+from clashleaders.clash.api import ClanNotFound, ApiException
 from clashleaders.clustering.csv_export import clans_to_csv
 from clashleaders.clustering.kmeans import train_model
 from clashleaders.model import Clan, ClanPreCalculated, Status
@@ -83,6 +83,8 @@ def update_leaderboards():
                 Clan.fetch_and_save(c.tag).update_calculations()
             except ClanNotFound:
                 logger.warning(f"Skipping not found clan [{c.tag}].")
+            except ApiException:
+                logger.warning(f"API exception while fetching [{c.tag}].")
             except concurrent.futures.TimeoutError:
                 logger.warning(f"Timeout error thrown [{c.tag}]. Skipping clan.")
             except Exception:
