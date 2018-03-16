@@ -191,6 +191,10 @@ class ClanPreCalculated(Document):
     def warlog(self):
         return clan_warlog(self.tag)['items']
 
+    @property
+    def created_on(self):
+        return self.id.generation_time
+
     def similar_clan(self):
         return ClanPreCalculated.objects(cluster_label=self.cluster_label)
 
