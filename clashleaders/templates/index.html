@@ -81,5 +81,22 @@
         </div>
     </div>
 </section>
+{% endblock %}
 {% block scripts %}
-<script defer src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script>{% endblock %} {% endblock %}{% block nav_class %}is-light{% endblock %}
+<script type="application/ld+json">
+{
+  "@context":"http://schema.org",
+  "@type":"ItemList",
+  "itemListElement":[
+  {% for clan in most_points %}
+    {
+      "@type":"ListItem",
+      "position": {{ loop.index }},
+      "url":"{{ url_for('clan_detail_page', slug=clan.slug, _external=True) }}"
+    }{% if not loop.last %},{% endif %}
+   {% endfor %}
+  ]
+}
+</script>
+<script defer src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script>
+{% endblock %}{% block nav_class %}is-light{% endblock %}
