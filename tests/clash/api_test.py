@@ -8,6 +8,14 @@ def test_find_clan_bad():
     with aioresponses() as m:
         m.get('https://api.clashofclans.com/v1/clans/%23ABC', status=500)
 
+        with pytest.raises(api.ApiException):
+            api.find_clan_by_tag('ABC')
+
+
+def test_find_clan_not_found():
+    with aioresponses() as m:
+        m.get('https://api.clashofclans.com/v1/clans/%23ABC', status=404)
+
         with pytest.raises(api.ClanNotFound):
             api.find_clan_by_tag('ABC')
 
