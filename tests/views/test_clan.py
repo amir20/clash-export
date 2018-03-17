@@ -17,7 +17,7 @@ def test_detail_page_oldest_days(client, mocker, clan_pre_calculated):
 def test_detail_page_status(client, mocker, clan_pre_calculated):
     patch_all(mocker, clan_pre_calculated)
     r = client.get('/clan/reddit-dynasty-ugjpvjr')
-    assert r.status_code == 500 # Should fix this later
+    assert r.status_code == 500  # Should fix this later
 
 
 def patch_all(mocker, clan_pre_calculated):
