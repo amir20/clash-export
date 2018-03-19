@@ -1,7 +1,7 @@
 # Build assets
 FROM node:9-alpine as builder
 
-RUN apk add --no-cache git openssh
+RUN apk add --no-cache git openssh python make g++
 
 WORKDIR /build
 COPY package*.json ./
