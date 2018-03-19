@@ -3,7 +3,7 @@ const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
   context: __dirname + "/assets",
@@ -90,11 +90,11 @@ module.exports = {
         module.context && module.context.includes("node_modules")
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'runtime',
+      name: "runtime",
 
       // minChunks: Infinity means that no app modules
       // will be included into this chunk
-      minChunks: Infinity,
+      minChunks: Infinity
     }),
     new ExtractTextPlugin("css/[name].[hash].css"),
     new CleanWebpackPlugin([
@@ -125,7 +125,7 @@ if (process.env.NODE_ENV === "production") {
       minimize: true
     }),
     new OptimizeCssAssetsPlugin({
-      cssProcessorOptions: { discardComments: { removeAll: true } },
+      cssProcessorOptions: { discardComments: { removeAll: true } }
     })
   ]);
 
