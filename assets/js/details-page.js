@@ -6,11 +6,10 @@ import TrophyChart from "./components/TrophyChart";
 import Notification from "./components/Notification";
 import bugsnag from "./bugsnag";
 import "./top-search-nav";
-import store from './store'
+import store from "./store";
 bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
-
 
 new Vue({
   el: "#app",
