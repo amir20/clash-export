@@ -44,6 +44,7 @@ def transform_players(players):
         ('Friend in Need', 'Total Donations'),
         ('Treasurer', 'Total War Collected Gold'),
         ('War Hero', 'Total War Stars'),
+        ('Games Champion', 'Clan Games XP'),
         ('Sharing is caring', 'Total Spells Donated'),
         ('donations', 'Donations'),
         ('donationsReceived', 'Donations Received'),
