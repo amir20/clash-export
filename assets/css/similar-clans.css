@@ -46,7 +46,7 @@ ol.leaderboard {
       }
 
       &::before {
-        content: attr(data-position)". ";
+        content: attr(data-position) ". ";
         border-radius: 100%;
         color: #363636;
         font-weight: bold;
