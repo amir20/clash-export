@@ -116,19 +116,19 @@ export default {
   position: relative;
   width: 90vw;
 
-  &>>>.ct-bar {
+  & >>> .ct-bar {
     stroke-width: 20px;
   }
-  &>>>.player .ct-bar {
+  & >>> .player .ct-bar {
     stroke: hsl(141, 71%, 48%);
   }
-  &>>>.clan .ct-bar {
+  & >>> .clan .ct-bar {
     stroke: hsl(217, 71%, 53%);
   }
-  &>>>.similar-clans .ct-bar {
+  & >>> .similar-clans .ct-bar {
     stroke: hsl(348, 100%, 61%);
   }
-  &>>>.ct-legend {
+  & >>> .ct-legend {
     position: absolute;
     font-size: 90%;
     right: 20px;
