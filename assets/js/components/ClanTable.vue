@@ -86,7 +86,7 @@ export default {
 
 <style scoped>
 .b-table {
-  &>>>.table {
+  & >>> .table {
     &.is-striped tbody tr:not(.is-selected):nth-child(even) {
       background-color: #eee;
     }
@@ -96,11 +96,11 @@ export default {
     }
   }
 
-  &>>>table {
+  & >>> table {
     font-size: 90%;
   }
 
-  &>>>thead {
+  & >>> thead {
     background-color: #00d1b2;
 
     & th {
@@ -108,7 +108,7 @@ export default {
     }
   }
 
-  &>>>b {
+  & >>> b {
     white-space: nowrap;
     display: block;
     line-height: 1;
