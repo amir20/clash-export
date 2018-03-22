@@ -140,6 +140,7 @@ def index_random_war_clan():
                 try:
                     Clan.fetch_and_save(tag)
                     updated_tags.append(tag)
+                    time.sleep(0.2)
                 except ClanNotFound:
                     logger.warning(f"Skipping clan [{tag}] not found.")
                 except concurrent.futures.TimeoutError:
