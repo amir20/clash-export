@@ -4,6 +4,7 @@ import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
 import isNumber from "lodash/isNumber";
+import meanBy from "lodash/meanBy";
 
 Vue.use(Vuex);
 
@@ -95,7 +96,7 @@ const getters = {
     return `/clan/${tag.replace("#", "")}`;
   },
   clanAverage(state, { tableData }) {
-    const a = c => average(tableData, c);
+    const a = c => meanBy(tableData, c);
     return [a("totalDeGrab"), a("totalElixirGrab"), a("totalGoldGrab")];
   },
   tableData(state, getters) {
@@ -140,10 +141,6 @@ const convertToMap = (header, matrix) => {
     );
   });
 };
-
-const average = (tableData, column) =>
-  tableData.reduce((total, player) => total + player[column].delta, 0) /
-  tableData.length;
 
 export default new Vuex.Store({
   strict: true,
