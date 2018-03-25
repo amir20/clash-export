@@ -96,7 +96,7 @@ const getters = {
     return `/clan/${tag.replace("#", "")}`;
   },
   clanAverage(state, { tableData }) {
-    const a = c => meanBy(tableData, c);
+    const a = c => meanBy(tableData, c + ".delta");
     return [a("totalDeGrab"), a("totalElixirGrab"), a("totalGoldGrab")];
   },
   tableData(state, getters) {
