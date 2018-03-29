@@ -1,5 +1,3 @@
-import re
-
 import pandas as pd
 from flask import jsonify, render_template, request, send_file
 from mongoengine import DoesNotExist
@@ -9,10 +7,7 @@ from clashleaders import app, cache
 from clashleaders.clash import api, excel
 from clashleaders.clash.transformer import to_short_clan, transform_players
 from clashleaders.model import Clan, ClanPreCalculated
-
-URL_REGEX = re.compile(
-    r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[/\w]*)",
-    re.IGNORECASE)
+from clashleaders.text.clan_description_processor import transform_description
 
 
 @app.context_processor
@@ -62,7 +57,7 @@ def clan_detail_page(slug):
     try:
         clan = ClanPreCalculated.find_by_slug(slug)
         update_page_views(clan)
-        description = clan_description(clan)
+        description = transform_description(clan.description)
         players = transform_players(clan.most_recent.players_data())
         start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
@@ -125,17 +120,6 @@ def update_page_views(clan):
     user_agent = parse(request.user_agent.string)
     if not user_agent.is_bot:
         clan.update(inc__page_views=1)
-
-
-def clan_description(clan):
-    return URL_REGEX.sub(repl, clan.description)
-
-
-def repl(match):
-    if match.group(0).startswith('http'):
-        return f"<a href=\"{match.group(0)}\" target=\"_blank\">{match.group(0)}</a>"
-    else:
-        return f"<a href=\"http://{match.group(0)}\" target=\"_blank\">{match.group(0)}</a>"
 
 
 def find_similar_clans(clan):
