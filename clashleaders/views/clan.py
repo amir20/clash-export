@@ -115,7 +115,10 @@ def clan_from_days_ago(days_ago, tag):
     if days_ago:
         return Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
     else:
-        return Clan.fetch_and_save(tag)
+        try:
+            return Clan.fetch_and_save(tag)
+        except api.TooManyRequests:
+            return Clan.find_most_recent_by_tag(tag)
 
 
 def update_page_views(clan):
