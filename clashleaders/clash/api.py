@@ -18,6 +18,10 @@ class ApiException(Exception):
     pass
 
 
+class TooManyRequests(Exception):
+    pass
+
+
 async def __fetch(url, params=None, loop=None):
     with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
         return await __fetch_with_session(url, session=session, params=params)
@@ -47,6 +51,9 @@ def find_clan_by_tag(tag):
 
     if code == 404:
         raise ClanNotFound(f"Clan [{tag}] not found.")
+
+    if code == 429:
+        raise TooManyRequests(f"Too many requests when fetching clan [{tag}].")
 
     if code != 200:
         raise ApiException(f"API returned non-200 status code: {code}")
