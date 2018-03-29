@@ -21,7 +21,7 @@
                                 {% endif %} {{ clan.location.name }}
                             </small>
                             <small>with {{ clan.members }} members</small>
-                            <br> {{ clan.description }}
+                            <br> {{ clan.description | safe }}
                         </p>
                     </div>
                 </div>
