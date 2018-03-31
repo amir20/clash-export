@@ -3,10 +3,11 @@ import Vuex from "vuex";
 import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
-import isNumber from "lodash/isNumber";
 import meanBy from "lodash/meanBy";
 
 Vue.use(Vuex);
+
+const nonNumericColumns = new Set(["tag", "name"]);
 
 const state = {
   tag: null,
@@ -86,7 +87,7 @@ const getters = {
       return clan[0].map((column, index) => ({
         label: column,
         field: camelCase(column),
-        numeric: index > 1
+        numeric: !nonNumericColumns.has(camelCase(column))
       }));
     } else {
       return [];
@@ -116,7 +117,9 @@ const getters = {
         row,
         (map, value, column) => {
           const delta =
-            previousRow && isNumber(value) ? value - previousRow[column] : 0;
+            previousRow && !nonNumericColumns.has(column)
+              ? value - previousRow[column]
+              : 0;
           map[column] = { value, delta };
           if (column == "tag") {
             map["id"] = value;
