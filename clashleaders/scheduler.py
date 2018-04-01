@@ -168,7 +168,7 @@ schedule.every().day.at("12:01").do(delete_old_clans)
 schedule.every().monday.do(compute_similar_clans)
 
 schedule.every(6).hours.do(update_leaderboards)
-schedule.every(12).hours.do(index_random_war_clan)
+schedule.every(1).hours.do(index_random_war_clan)
 
 
 def main():
