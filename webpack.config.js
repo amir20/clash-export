@@ -14,6 +14,8 @@ module.exports = {
     styles: "./css/styles.css"
   },
   optimization: {
+    concatenateModules: true,
+    // runtimeChunk: true,
     splitChunks: {
       cacheGroups: {
         commons: {
