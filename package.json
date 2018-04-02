@@ -39,10 +39,11 @@
     "vuex": "^3.0.1",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13",
-    "webpack-manifest-plugin": "git+https://github.com/danethurber/webpack-manifest-plugin.git#finalise-webpack-4"
+    "webpack-manifest-plugin":
+      "git+https://github.com/danethurber/webpack-manifest-plugin.git#finalise-webpack-4"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1"    
+    "concurrently": "^3.5.1"
   },
   "scripts": {
     "build": "NODE_ENV='production' webpack --progress --mode production",
