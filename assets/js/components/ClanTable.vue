@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-       <b-table
+      <b-table
             ref="table"
             :data="tableData"
             striped
@@ -16,7 +16,7 @@
             :selected.sync="selected"
             :opened-detailed="openDetails"
             focusable>
-             <template slot-scope="props">
+            <template slot-scope="props">
                 <b-table-column v-for="column in header"
                                 :label="column.label"
                                 :field="`${column.field}.${sortField}`"
@@ -25,7 +25,7 @@
                                 sortable>
                     {{ props.row[column.field].value.toLocaleString() }}
                     <b v-show="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
-                      <b-icon :icon="props.row[column.field].delta > 0 ? 'caret-up' : 'caret-down'" size="is-small"></b-icon> 
+                      <span :class="{'fa-caret-up': props.row[column.field].delta > 0 , 'fa-caret-down': props.row[column.field].delta < 0}" class="fa-sm fa"></span>
                       {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
                     </b>
                 </b-table-column>
