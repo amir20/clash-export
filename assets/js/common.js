@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Buefy from "buefy";
+import bugsnag from "./bugsnag";
 import SearchBox from "./components/SearchBox";
+
+bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
 new Vue({
-  el: ".navbar-start",
+  el: ".navbar",
   components: {
     SearchBox
   },

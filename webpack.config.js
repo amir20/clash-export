@@ -10,6 +10,7 @@ module.exports = {
   entry: {
     "details-page": "./js/details-page.js",
     index: "./js/index.js",
+    common: "./js/common.js",
     styles: "./css/styles.css"
   },
   output: {
@@ -85,7 +86,7 @@ module.exports = {
     new ManifestPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
-      chunks: ["details-page", "index"],
+      chunks: ["details-page", "index", "common"],
       minChunks: module =>
         module.context && module.context.includes("node_modules")
     }),
