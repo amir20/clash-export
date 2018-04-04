@@ -8,11 +8,16 @@ from clashleaders.clash import api, excel
 from clashleaders.clash.transformer import to_short_clan, transform_players
 from clashleaders.model import Clan, ClanPreCalculated
 from clashleaders.text.clan_description_processor import transform_description
+from .index import aggregate_by_country
 
 
 @app.context_processor
+@cache.cached(timeout=14400)
 def inject_most_popular():
-    return dict(most_popular=ClanPreCalculated.objects.order_by('-page_views').limit(6))
+    return dict(
+        most_popular=ClanPreCalculated.objects.order_by('-page_views').limit(6),
+        popular_countries=aggregate_by_country("week_delta.avg_attack_wins")
+    )
 
 
 @app.route("/search.json")

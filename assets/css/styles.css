@@ -60,8 +60,8 @@ body {
   flex: 1 0 auto;
 }
 
-.nav-search {
-  flex: 0 0 60%;
+.navbar-item.nav-search-item {
+  min-width: 285px;
 }
 
 .DO-logo {

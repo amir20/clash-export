@@ -20,12 +20,12 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon-96.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">
-    
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88927228-3"></script>
     <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
     <script defer src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch,Set&amp;unknown=polyfill"></script>
     <script>{{ inline_path('runtime.js') | safe }}</script>
-    <script defer src="{{ url_for('static', filename=manifest_path('vendor.js')) }}"></script> {% block scripts %} {% endblock %}
+    <script defer src="{{ url_for('static', filename=manifest_path('vendor.js')) }}"></script> 
+    <script defer src="{{ url_for('static', filename=manifest_path('common.js')) }}"></script> {% block scripts %} {% endblock %}
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -34,7 +34,6 @@
     </script>
 
     <link rel="manifest" href="{{ url_for('static', filename='web-manifest.json') }}">
-
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Clash Leaders">
@@ -47,7 +46,6 @@
 
     <link rel="icon" type="image/png" sizes="200x200" href="/static/images/logo.png">
     <link rel="apple-touch-icon" type="image/png" sizes="200x200" href="{{ url_for('static', filename='images/logo.png') }}">
-    
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles.css')) }}">
 </head>
 
@@ -88,14 +86,43 @@
                         {% endfor %}
                     </div>
                 </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Country Leaderboards
+                        </a>
+                        <div class="navbar-dropdown">
+                            {% for country in popular_countries %}
+                            <a class="navbar-item" href="{{ url_for('country_clans', code=country.code) }}">
+                                <div class="media">
+                                    <div class="media-left">
+                                            <span class="flag-icon flag-icon-{{ country.code }}"></span>
+                                    </div>
+                                    <div class="media-content">
+                                        <p>
+                                            <strong>{{ country.name }}</strong>
+                                            <br>
+                                            <small>
+                                                {{ "{:,.1f}".format(country.score / 1000) }}K Average Attacks
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
                 <a class="navbar-item" href="/verified/reddit">
-                    <span class="tag is-success is-small">New!</span>
                     Reddit Clans
                 </a>
                 {% endblock %}
 
             </div>
             <div class="navbar-end">
+                <div class="navbar-item nav-search-item">
+                    <div class="field is-expanded">
+                        <search-box :selected-tag.sync="selectedTag"></search-box>
+                    </div>
+                </div>
                 <a class="navbar-item is-hidden-desktop-only" href="https://github.com/amir20/clashstats" target="_blank">
                     <span class="icon">
                         <i class="fab fa-lg fa-github"></i>
