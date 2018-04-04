@@ -1,18 +1,68 @@
-{% macro country_leaderboard(name, aggregate_by_country, formatter="{:,.1f}M", factor=1000000) -%}
-<nav class="panel leaderboard">
-        <h3 class="panel-heading">
-            {{ name | safe }}
-        </h3>
+{% extends "layout.html" %} {% block body %}
 
-        {% for country in aggregate_by_country %}
-        <span class="panel-block">
-            <span class="panel-icon">
-                <span class="flag-icon flag-icon-{{ country.code }}"></span>
-            </span>
-            {{ country['name'] }}
-            <span class="value subtitle is-7">{{ formatter.format(country.score / factor) }}</span>
-        </span>
+<main class="container section">
+    <h1 class="title is-2">Top {{ name }} Clans</h1>
+    <ol>
+        {% for clan in clans %}
+        <li class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                    <img src="{{ clan.badgeUrls.medium }}">
+                </p>
+            </figure>
+            <div class="media-content columns">
+                <div class="column">
+                    <div class="content">
+                        <p>
+                            <strong>
+                                <a href="{{ url_for('clan_detail_page', slug=clan.slug) }}">{{ clan.name }}</a>
+                            </strong>
+                            <small>from {% if clan.location.countryCode %}
+                                <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
+                                {% endif %} {{ clan.location.name }}
+                            </small>
+                            <small>with {{ clan.members }} members</small>
+                            <br> {{ clan.description | safe }}
+                        </p>
+                    </div>
+                </div>
+                <div class="column is-5-desktop is-6-tablet is-4-widescreen">
+                    <div class="level">
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Total Trophies</p>
+                                <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
+                                <p>
+                                    <span class="tag {{'is-success' if clan.week_delta.total_trophies > 0 else 'is-danger'}}">{{ "{:+,}".format(clan.week_delta.total_trophies) }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Total BH Trophies</p>
+                                <p class="title">{{ "{:,}".format(clan.clanVersusPoints) }}</p>
+                                <p>
+                                    <span class="tag {{'is-success' if clan.week_delta.total_bh_trophies > 0 else 'is-danger'}}">{{ "{:+,}".format(clan.week_delta.total_bh_trophies) }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Total Donations</p>
+                                <p class="title">{{ "{:,}".format(clan.total_donations) }}</p>
+                                <p>
+                                    <span class="tag {{'is-success' if clan.week_delta.total_donations > 0 else 'is-danger'}}">{{ "{:+,}".format(clan.week_delta.total_donations) }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </li>
         {% endfor %}
-
-    </nav>
-{%- endmacro %}
+    </ol>
+</main>
+{% endblock %} {% block title %}Verified Reddit Accounts{% endblock %}
