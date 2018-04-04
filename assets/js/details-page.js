@@ -5,7 +5,6 @@ import TableNav from "./components/TableNav";
 import TrophyChart from "./components/TrophyChart";
 import Notification from "./components/Notification";
 import bugsnag from "./bugsnag";
-import "./top-search-nav";
 import store from "./store";
 bugsnag(Vue);
 

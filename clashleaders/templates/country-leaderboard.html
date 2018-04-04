@@ -9,7 +9,7 @@
             <span class="panel-icon">
                 <span class="flag-icon flag-icon-{{ country.code }}"></span>
             </span>
-            {{ country['name'] }}
+            {{ country.name }}
             <span class="value subtitle is-7">{{ formatter.format(country.score / factor) }}</span>
         </a>
         {% endfor %}

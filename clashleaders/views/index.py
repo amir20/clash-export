@@ -38,7 +38,7 @@ def leaderboard(field):
     return clans_leaderboard(ClanPreCalculated.objects(members__gt=20).order_by(f"-{field}").limit(10), field)
 
 
-def aggregate_by_country(score_column="week_delta.avg_gold_grab"):
+def aggregate_by_country(score_column="week_delta.avg_attack_wins"):
     group = {"$group": {"_id": "$location.countryCode", "score": {"$sum": f"${score_column}"}}}
     sort = {'$sort': {'score': -1}}
     aggregated = list(ClanPreCalculated.objects(location__countryCode__ne=None).aggregate(group, sort))
