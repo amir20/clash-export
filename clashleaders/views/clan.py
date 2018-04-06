@@ -15,8 +15,9 @@ from .index import aggregate_by_country
 @cache.cached(timeout=14400)
 def inject_most_popular():
     return dict(
-        most_popular=ClanPreCalculated.objects.order_by('-page_views').limit(6),
-        popular_countries=aggregate_by_country("week_delta.avg_attack_wins")
+        most_popular=ClanPreCalculated.objects.order_by('-page_views').limit(10),
+        popular_countries=aggregate_by_country("week_delta.avg_attack_wins"),
+        reddit_clans=ClanPreCalculated.objects(verified_accounts='reddit').order_by('-clanPoints').limit(10)
     )
 
 

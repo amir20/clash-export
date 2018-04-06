@@ -87,33 +87,58 @@
                     </div>
                 </div>
                 <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            Country Leaderboards
-                        </a>
-                        <div class="navbar-dropdown">
-                            {% for country in popular_countries %}
-                            <a class="navbar-item" href="{{ url_for('country_clans', code=country.code) }}">
-                                <div class="media">
-                                    <div class="media-left">
-                                            <span class="flag-icon flag-icon-{{ country.code }}"></span>
-                                    </div>
-                                    <div class="media-content">
-                                        <p>
-                                            <strong>{{ country.name }}</strong>
-                                            <br>
-                                            <small>
-                                                {{ "{:,.1f}".format(country.score / 1000) }}K Average Attacks
-                                            </small>
-                                        </p>
-                                    </div>
+                    <a class="navbar-link">
+                        Country Leaderboards
+                    </a>
+                    <div class="navbar-dropdown">
+                        {% for country in popular_countries %}
+                        <a class="navbar-item" href="{{ url_for('country_clans', code=country.code) }}">
+                            <div class="media">
+                                <div class="media-left">
+                                        <span class="flag-icon flag-icon-{{ country.code }}"></span>
                                 </div>
-                            </a>
-                            {% endfor %}
-                        </div>
+                                <div class="media-content">
+                                    <p>
+                                        <strong>{{ country.name }}</strong>
+                                        <br>
+                                        <small>
+                                            {{ "{:,.1f}".format(country.score / 1000) }}K Average Attacks
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
                     </div>
-                <a class="navbar-item" href="/verified/reddit">
-                    Reddit Clans
-                </a>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="/verified/reddit">
+                        Reddit Clans
+                    </a>
+                    <div class="navbar-dropdown">
+                        {% for clan in reddit_clans %}
+                        <a class="navbar-item" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
+                            <div class="media">
+                                <div class="media-left">
+                                    <span class="icon is-large">
+                                        <img src="{{ clan.badgeUrls.small }}" alt="{{ clan.name }}">
+                                    </span>
+                                </div>
+                                <div class="media-content">
+                                    <p>
+                                        <strong>{{ clan.name }}</strong>
+                                        <br>
+                                        <small>
+                                            <i class="fas fa-map-pin" aria-hidden="true"></i>
+                                            {{ clan.location.name }}
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
                 {% endblock %}
 
             </div>
