@@ -88,6 +88,7 @@ def update_leaderboards():
             try:
                 logger.debug(f"Updating {column} leaderboard clan {c.tag}.")
                 Clan.fetch_and_save(c.tag).update_calculations()
+                time.sleep(0.5)
             except ClanNotFound:
                 logger.warning(f"Skipping not found clan [{c.tag}].")
             except ApiException:
@@ -177,6 +178,7 @@ def fetch_clan_leaderboards():
             if tag:
                 Clan.fetch_and_save(tag)
                 updated_tags.append(tag)
+                time.sleep(0.2)
         except ClanNotFound:
             logger.warning(f"Skipping clan [{tag}] not found.")
         except concurrent.futures.TimeoutError:
@@ -189,6 +191,7 @@ def fetch_clan_leaderboards():
             tag = clan['tag']
             Clan.fetch_and_save(tag)
             updated_tags.append(tag)
+            time.sleep(0.2)
         except ClanNotFound:
             logger.warning(f"Skipping clan [{tag}] not found.")
         except concurrent.futures.TimeoutError:
