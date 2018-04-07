@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 
 import bugsnag
 from bugsnag.flask import handle_exceptions
@@ -32,16 +33,19 @@ SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 MANIFEST_FILE = os.path.join(SITE_ROOT, "static", "manifest.json")
 
 
+@cache.cached(timeout=50, key_prefix='manifest_path')
 def manifest_path(file):
     with open(MANIFEST_FILE) as f:
         data = json.load(f)
     return data[file]
 
 
+@cache.cached(timeout=50, key_prefix='inline_path')
 def inline_path(file):
     path = os.path.join(SITE_ROOT, "static", manifest_path(file))
     with open(path) as f:
-        return f.read()
+        content = f.read()
+        return re.sub(r'^//# sourceMappingURL=.*$', '', content, flags=re.MULTILINE)
 
 
 app.add_template_global(manifest_path, 'manifest_path')
