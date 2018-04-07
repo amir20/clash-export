@@ -33,14 +33,14 @@ SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 MANIFEST_FILE = os.path.join(SITE_ROOT, "static", "manifest.json")
 
 
-@cache.cached(timeout=50, key_prefix='manifest_path')
+@cache.memoize(timeout=86400)
 def manifest_path(file):
     with open(MANIFEST_FILE) as f:
         data = json.load(f)
     return data[file]
 
 
-@cache.cached(timeout=50, key_prefix='inline_path')
+@cache.memoize(timeout=86400)
 def inline_path(file):
     path = os.path.join(SITE_ROOT, "static", manifest_path(file))
     with open(path) as f:
