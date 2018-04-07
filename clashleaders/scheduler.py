@@ -6,11 +6,12 @@ from datetime import datetime, timedelta
 from random import randrange
 
 import bugsnag
+import requests
 import schedule
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
-from clashleaders.clash.api import ClanNotFound, ApiException
+from clashleaders.clash.api import ApiException, ClanNotFound
 from clashleaders.clustering.csv_export import clans_to_csv
 from clashleaders.clustering.kmeans import train_model
 from clashleaders.model import Clan, ClanPreCalculated, Status
@@ -161,6 +162,42 @@ def reset_page_views():
     ClanPreCalculated.objects.update(set__page_views=0)
 
 
+def fetch_clan_leaderboards():
+    data = requests.get('https://clashofclans.com/api/leaderboards.json').json()
+    leaderboards = data['hallOfFame']['leaderboards']
+    players = leaderboards['topPlayers']['players']
+    clans = leaderboards['topClans']['clans']
+
+    updated_tags = []
+
+    for player in players:
+        try:
+            tag = player['clanTag']
+            if tag:
+                Clan.fetch_and_save(tag)
+                updated_tags.append(tag)
+        except ClanNotFound:
+            logger.warning(f"Skipping clan [{tag}] not found.")
+        except concurrent.futures.TimeoutError:
+            logger.warning(f"Timeout error when fetching [{tag}].")
+        except Exception:
+            logger.exception(f"Error while fetching top player clans.")
+
+    for clan in clans:
+        try:
+            tag = clan['tag']
+            Clan.fetch_and_save(tag)
+            updated_tags.append(tag)
+        except ClanNotFound:
+            logger.warning(f"Skipping clan [{tag}] not found.")
+        except concurrent.futures.TimeoutError:
+            logger.warning(f"Timeout error when fetching [{tag}].")
+        except Exception:
+            logger.exception(f"Error while fetching top clans.")
+
+    logger.info(f"Updated clan leaderboards: {updated_tags}")
+
+
 schedule.every().minute.do(update_status)
 schedule.every().minute.do(update_clan_calculations)
 schedule.every().day.do(reset_page_views)
@@ -169,6 +206,7 @@ schedule.every().monday.do(compute_similar_clans)
 
 schedule.every(6).hours.do(update_leaderboards)
 schedule.every(1).hours.do(index_random_war_clan)
+schedule.every(1).hours.do(fetch_clan_leaderboards)
 
 
 def main():
