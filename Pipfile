@@ -1,28 +1,25 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 aiodns = "*"
 aiohttp = "==2.3.6"
-async-timeout = "==2.0.0"
+async_timeout = "==2.0.0"
 blinker = "==1.4"
 cchardet = "*"
 certifi = "==2017.11.5"
 chardet = "==3.0.4"
 click = "==6.7"
 "contextlib2" = "==0.5.5"
-flask = "==0.12.2"
-flask-caching = "==1.3.3"
+Flask = "==0.12.2"
+Flask-Caching = "==1.3.3"
 gunicorn = "==19.7.1"
 idna = "==2.6"
 itsdangerous = "==0.24"
-"jinja2" = "==2.10"
-markupsafe = "==1.0"
+"Jinja2" = "==2.10"
+MarkupSafe = "==1.0"
 mongoengine = "==0.15.0"
 multidict = "==3.3.2"
 numpy = "==1.13.3"
@@ -30,11 +27,10 @@ pandas = "==0.21.1"
 pycares = "==2.3.0"
 pymongo = "==3.6.0"
 requests = {extras = ["security"]}
-requests-cache = "==0.4.13"
 schedule = "==0.5.0"
 "urllib3" = "==1.22"
-werkzeug = "==0.13"
-xlsxwriter = "==1.0.2"
+Werkzeug = "==0.13"
+XlsxWriter = "==1.0.2"
 yarl = "==0.16.0"
 awesome-slugify = "*"
 flask-shell-ipython = "*"
@@ -42,12 +38,10 @@ user-agents = "*"
 bugsnag = {extras = ["flask"]}
 scikit-learn = "*"
 scipy = "*"
-pympler = "*"
+Pympler = "*"
 uvloop = "*"
 
-
 [dev-packages]
-
 pytest = "*"
 pytest-runner = "*"
 snapshottest = "*"
