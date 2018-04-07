@@ -39,22 +39,23 @@ def update_clan_calculations():
     calculated_tags = set(ClanPreCalculated.objects(last_updated__gte=hour_ago).distinct('tag'))
     available_clan_tags = recent_tags - calculated_tags
 
-    logger.info(f"Updating {len(available_clan_tags)} clan calculations.")
-    updated_tags = []
-    for tag in available_clan_tags:
-        try:
-            clan = Clan.find_most_recent_by_tag(tag)
-            logger.debug(f"Updating calculations for {clan.tag}.")
-            clan.update_calculations()
-            updated_tags.append(clan.tag)
-        except TypeError:
-            # Possibly a json error. Let's delete the instance
-            logger.warning(f"TypeError exception thrown for {clan.tag}. Deleting most recent instance.")
-            clan.delete()
-        except Exception:
-            logger.exception(f"Error during updating clan calculation for {tag}. Deleting instance of clan.")
+    if available_clan_tags:
+        logger.info(f"Updating {len(available_clan_tags)} clan calculations.")
+        updated_tags = []
+        for tag in available_clan_tags:
+            try:
+                clan = Clan.find_most_recent_by_tag(tag)
+                logger.debug(f"Updating calculations for {clan.tag}.")
+                clan.update_calculations()
+                updated_tags.append(clan.tag)
+            except TypeError:
+                # Possibly a json error. Let's delete the instance
+                logger.warning(f"TypeError exception thrown for {clan.tag}. Deleting most recent instance.")
+                clan.delete()
+            except Exception:
+                logger.exception(f"Error during updating clan calculation for {tag}. Deleting instance of clan.")
 
-    logger.info(f"Updated calculations: {updated_tags}")
+        logger.info(f"Updated calculations: {updated_tags}")
 
 
 def delete_old_clans():
