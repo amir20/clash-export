@@ -77,11 +77,14 @@
                                         </h1>
                                         <h2 class="subtitle is-6">
                                             {% if clan.location.countryCode %}
+                                            From 
                                             <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
                                             <a href="{{ url_for('country_clans', code=clan.location.countryCode.lower()) }}">
-                                                    {{ clan.location.name }}
-                                                </a>
+                                                <b>{{ clan.location.name }}</b>
+                                            </a>
+                                            with 
                                             {% endif %}
+                                            <b>{{ clan.members }} members</b>
                                         </h2>
                                     </div>
                                     <div class="column is-narrow has-text-weight-bold">
