@@ -38,8 +38,8 @@
     "vue-template-compiler": "^2.5.16",
     "vuex": "^3.0.1",
     "webpack": "^4.5.0",
-    "webpack-cli": "^2.0.13",
-    "webpack-manifest-plugin": "git+https://github.com/danethurber/webpack-manifest-plugin.git#finalise-webpack-4"
+    "webpack-cli": "^2.0.14",
+    "webpack-manifest-plugin": "^2.0.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.1"
