@@ -13,6 +13,19 @@ module.exports = {
     common: "./js/common.js",
     styles: "./css/styles.css"
   },
+  optimization: {
+    concatenateModules: true,
+    // runtimeChunk: true,
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all"
+        }
+      }
+    }
+  },
   output: {
     path: __dirname + "/clashleaders/static/",
     filename: "js/[name].js"
@@ -84,19 +97,6 @@ module.exports = {
   },
   plugins: [
     new ManifestPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      chunks: ["details-page", "index", "common"],
-      minChunks: module =>
-        module.context && module.context.includes("node_modules")
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "runtime",
-
-      // minChunks: Infinity means that no app modules
-      // will be included into this chunk
-      minChunks: Infinity
-    }),
     new ExtractTextPlugin("css/[name].[hash].css"),
     new CleanWebpackPlugin([
       __dirname + "/clashleaders/static/css",
@@ -108,23 +108,7 @@ module.exports = {
 
 if (process.env.NODE_ENV === "production") {
   module.exports.devtool = "#source-map";
-  // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
     new OptimizeCssAssetsPlugin({
       cssProcessorOptions: { discardComments: { removeAll: true } }
     })
