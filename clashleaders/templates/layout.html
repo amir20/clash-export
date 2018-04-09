@@ -20,11 +20,11 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon-96.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88927228-3"></script>
     <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-    <script defer src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch,Set&amp;unknown=polyfill"></script>
-    <script>{{ inline_path('runtime.js') | safe }}</script>
-    <script defer src="{{ url_for('static', filename=manifest_path('vendor.js')) }}"></script> 
+    <script defer src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch,Set&amp;unknown=polyfill"></script>    
+    <script defer src="{{ url_for('static', filename=manifest_path('vendors.js')) }}"></script>
     <script defer src="{{ url_for('static', filename=manifest_path('common.js')) }}"></script> {% block scripts %} {% endblock %}
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -46,6 +46,7 @@
 
     <link rel="icon" type="image/png" sizes="200x200" href="/static/images/logo.png">
     <link rel="apple-touch-icon" type="image/png" sizes="200x200" href="{{ url_for('static', filename='images/logo.png') }}">
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles.css')) }}">
 </head>
 
