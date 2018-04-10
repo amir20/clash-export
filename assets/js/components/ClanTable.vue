@@ -86,6 +86,14 @@ export default {
 
 <style scoped>
 .b-table {
+  & >>> thead th {
+    position:sticky;
+    top: 0;  
+    z-index: 11;
+    background-color: #00d1b2;
+    color: #fff;
+  }
+
   & >>> .table {
     &.is-striped tbody tr:not(.is-selected):nth-child(even) {
       background-color: #eee;
@@ -98,14 +106,6 @@ export default {
 
   & >>> table {
     font-size: 90%;
-  }
-
-  & >>> thead {
-    background-color: #00d1b2;
-
-    & th {
-      color: #fff;
-    }
   }
 
   & >>> b {
@@ -126,8 +126,11 @@ export default {
     }
   }
 }
+</style>
 
-section {
-  overflow-y: scroll;
+<style>
+html {
+  overflow: unset;
 }
 </style>
+
