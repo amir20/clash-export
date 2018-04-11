@@ -20,23 +20,3 @@ new Vue({
     Notification
   }
 });
-
-let ticking = false;
-const items = [
-  document.querySelector(".hero.is-warning.is-bold"),
-  document.querySelector("nav.navbar"),
-  document.querySelector("footer")
-];
-
-items.forEach(item => (item.style.position = "relative"));
-window.addEventListener("scroll", function(e) {
-  const leftOffset = window.scrollX;
-
-  if (!ticking) {
-    window.requestAnimationFrame(function() {
-      items.forEach(item => (item.style.left = leftOffset + "px"));
-      ticking = false;
-    });
-    ticking = true;
-  }
-});
