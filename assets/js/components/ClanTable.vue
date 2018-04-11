@@ -132,5 +132,9 @@ export default {
 html {
   overflow: unset;
 }
+
+.navbar {
+  z-index: 99;
+}
 </style>
 
