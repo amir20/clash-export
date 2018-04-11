@@ -114,7 +114,7 @@ export default {
 <style scoped>
 .player-comparison {
   position: relative;
-  width: 90vw;
+  width: calc(100vw - 4em);
 
   & >>> .ct-bar {
     stroke-width: 20px;
