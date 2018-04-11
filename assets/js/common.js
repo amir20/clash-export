@@ -2,6 +2,7 @@ import Vue from "vue";
 import Buefy from "buefy";
 import bugsnag from "./bugsnag";
 import SearchBox from "./components/SearchBox";
+import browser from "./util/brower"
 
 bugsnag(Vue);
 
@@ -28,3 +29,5 @@ new Vue({
     }
   }
 });
+
+document.documentElement.classList.add(browser);
