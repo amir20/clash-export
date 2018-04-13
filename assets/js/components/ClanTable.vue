@@ -41,27 +41,6 @@
 <script>
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import PlayerComparison from "./PlayerComparison";
-import debounce from "lodash/debounce";
-
-const fixPage = debounce(
-  () => {
-    const items = [
-      document.querySelector(".hero.is-warning.is-bold"),
-      document.querySelector("nav.navbar"),
-      document.querySelector("footer")
-    ];
-    const table = document.querySelector(".b-table table");
-    const width = table.offsetWidth;
-    items.forEach(item => (item.style.width = `${width}px`));
-    items.forEach(
-      item => (item.style.paddingRight = `calc(${width}px - 100vw)`)
-    );
-  },
-  150,
-  { maxWait: 1000 }
-);
-
-window.addEventListener("resize", fixPage, false);
 
 export default {
   props: ["tag", "name", "oldestDays"],
@@ -82,9 +61,6 @@ export default {
     if (this.oldestDays < 3) {
       this.setDaysSpan(1);
     }
-  },
-  updated() {
-    fixPage();
   },
   computed: {
     ...mapState(["loading", "sortField", "similarClansAvg"]),

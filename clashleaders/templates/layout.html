@@ -51,113 +51,112 @@
 </head>
 
 <body>
-    <nav class="navbar {% block nav_class %} {% endblock %}" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a href="/" class="navbar-item clashleader-logo">Clash Leader</a>
-        </div>
-        <div class="navbar-menu">
-            <div class="navbar-start is-expanded">
-                {% block nav_header %}
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Popular Clans
-                    </a>
-                    <div class="navbar-dropdown">
-                        {% for clan in most_popular %}
-                        <a class="navbar-item" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
-
-                            <div class="media">
-                                <div class="media-left">
-                                    <span class="icon is-large">
-                                        <img src="{{ clan.badgeUrls.small }}" alt="{{ clan.name }}">
-                                    </span>
-                                </div>
-                                <div class="media-content">
-                                    <p>
-                                        <strong>{{ clan.name }}</strong>
-                                        <br>
-                                        <small>
-                                            <i class="fas fa-map-pin" aria-hidden="true"></i>
-                                            {{ clan.location.name }}
-                                        </small>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Country Leaderboards
-                    </a>
-                    <div class="navbar-dropdown">
-                        {% for country in popular_countries %}
-                        <a class="navbar-item" href="{{ url_for('country_clans', code=country.code) }}">
-                            <div class="media">
-                                <div class="media-left">
-                                        <span class="flag-icon flag-icon-{{ country.code }}"></span>
-                                </div>
-                                <div class="media-content">
-                                    <p>
-                                        <strong>{{ country.name }}</strong>
-                                        <br>
-                                        <small>
-                                            {{ "{:,.1f}".format(country.score / 1000) }}K Average Attacks
-                                        </small>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link" href="/verified/reddit">
-                        Reddit Clans
-                    </a>
-                    <div class="navbar-dropdown">
-                        {% for clan in reddit_clans %}
-                        <a class="navbar-item" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
-                            <div class="media">
-                                <div class="media-left">
-                                    <span class="icon is-large">
-                                        <img src="{{ clan.badgeUrls.small }}" alt="{{ clan.name }}">
-                                    </span>
-                                </div>
-                                <div class="media-content">
-                                    <p>
-                                        <strong>{{ clan.name }}</strong>
-                                        <br>
-                                        <small>
-                                            <i class="fas fa-map-pin" aria-hidden="true"></i>
-                                            {{ clan.location.name }}
-                                        </small>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endblock %}
-
+    <header>
+        <nav class="navbar {% block nav_class %} {% endblock %}" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-item clashleader-logo">Clash Leader</a>
             </div>
-            <div class="navbar-end">
-                <div class="navbar-item nav-search-item">
-                    <div class="field is-expanded">
-                        <search-box :selected-tag.sync="selectedTag"></search-box>
+            <div class="navbar-menu">
+                <div class="navbar-start is-expanded">
+                    {% block nav_header %}
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Popular Clans
+                        </a>
+                        <div class="navbar-dropdown">
+                            {% for clan in most_popular %}
+                            <a class="navbar-item" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
+    
+                                <div class="media">
+                                    <div class="media-left">
+                                        <span class="icon is-large">
+                                            <img src="{{ clan.badgeUrls.small }}" alt="{{ clan.name }}">
+                                        </span>
+                                    </div>
+                                    <div class="media-content">
+                                        <p>
+                                            <strong>{{ clan.name }}</strong>
+                                            <br>
+                                            <small>
+                                                <i class="fas fa-map-pin" aria-hidden="true"></i>
+                                                {{ clan.location.name }}
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Country Leaderboards
+                        </a>
+                        <div class="navbar-dropdown">
+                            {% for country in popular_countries %}
+                            <a class="navbar-item" href="{{ url_for('country_clans', code=country.code) }}">
+                                <div class="media">
+                                    <div class="media-left">
+                                            <span class="flag-icon flag-icon-{{ country.code }}"></span>
+                                    </div>
+                                    <div class="media-content">
+                                        <p>
+                                            <strong>{{ country.name }}</strong>
+                                            <br>
+                                            <small>
+                                                {{ "{:,.1f}".format(country.score / 1000) }}K Average Attacks
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link" href="/verified/reddit">
+                            Reddit Clans
+                        </a>
+                        <div class="navbar-dropdown">
+                            {% for clan in reddit_clans %}
+                            <a class="navbar-item" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <span class="icon is-large">
+                                            <img src="{{ clan.badgeUrls.small }}" alt="{{ clan.name }}">
+                                        </span>
+                                    </div>
+                                    <div class="media-content">
+                                        <p>
+                                            <strong>{{ clan.name }}</strong>
+                                            <br>
+                                            <small>
+                                                <i class="fas fa-map-pin" aria-hidden="true"></i>
+                                                {{ clan.location.name }}
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endblock %}
+    
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item nav-search-item">
+                        <div class="field is-expanded">
+                            <search-box :selected-tag.sync="selectedTag"></search-box>
+                        </div>
                     </div>
                 </div>
-                <a class="navbar-item is-hidden-desktop-only" href="https://github.com/amir20/clashstats" target="_blank">
-                    <span class="icon">
-                        <i class="fab fa-lg fa-github"></i>
-                    </span>
-                </a>
             </div>
-        </div>
-    </nav>
-    {% block body %}{% endblock %}
+        </nav>
+    </header>
+    <main>
+        {% block body %}{% endblock %}
+    </main>
 
     <footer class="section footer is-size-6">
         <div class="container">
