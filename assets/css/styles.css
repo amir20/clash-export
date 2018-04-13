@@ -31,15 +31,20 @@ body {
 
 header {
   background-color: whitesmoke;
-  z-index: 100;
+  z-index: 1100;
 }
 
-header > nav.navbar, main > #app > section.hero > div, footer > section {
+#app .hero-footer {
+  z-index: 1000;
+}
+
+header > nav.navbar,
+main > #app > section.hero > div,
+footer > section {
   width: 100vw;
   position: sticky;
   left: 0;
 }
-
 
 .leaderboard {
   & .panel-icon {
