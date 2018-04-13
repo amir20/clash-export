@@ -33,7 +33,7 @@ header {
   background-color: whitesmoke;
 }
 
-header > nav.navbar, main > #app > section > .hero-body, footer > .container {
+header > nav.navbar, main > #app > section.hero > div, footer > section {
   width: 100vw;
   position: sticky;
   left: 0;
