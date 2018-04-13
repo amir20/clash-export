@@ -1,4 +1,5 @@
 import clashleaders.views.clan
+from clashleaders.model import Status
 
 
 def test_detail_page_oldest_days(client, mocker, clan_pre_calculated):
@@ -24,3 +25,4 @@ def patch_all(mocker, clan_pre_calculated):
     mocker.patch('clashleaders.model.ClanPreCalculated.find_by_slug', return_value=clan_pre_calculated)
     mocker.patch('clashleaders.views.clan.update_page_views')
     mocker.patch('clashleaders.views.clan.render_template')
+    mocker.patch('clashleaders.model.Status.objects.first', Status())
