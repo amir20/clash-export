@@ -4,6 +4,7 @@ import os
 from urllib.parse import quote
 
 import aiohttp
+import requests
 
 API_TOKEN = os.getenv('API_TOKEN')
 HEADERS = dict(authorization='Bearer ' + API_TOKEN)
@@ -70,6 +71,14 @@ def search_by_name(name, limit=10):
         return []
     else:
         return response['items']
+
+
+def top_players_and_clan():
+    data = requests.get('https://clashofclans.com/api/leaderboards.json').json()
+    leaderboards = data['hallOfFame']['leaderboards']
+    players = leaderboards['topPlayers']['players']
+    clans = leaderboards['topClans']['clans']
+    return players, clans
 
 
 def clan_warlog(tag):
