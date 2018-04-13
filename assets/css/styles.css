@@ -26,7 +26,19 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 
 body {
   font-family: "Titillium Web";
+  display: grid;
 }
+
+header {
+  background-color: whitesmoke;
+}
+
+header > nav.navbar, main > #app > section > .hero-body, footer > .container {
+  width: 100vw;
+  position: sticky;
+  left: 0;
+}
+
 
 .leaderboard {
   & .panel-icon {
