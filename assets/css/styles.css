@@ -35,6 +35,8 @@ header {
 
 header > nav.navbar, main > #app > section > .hero-body, footer > .container {
   width: 100vw;
+  position: sticky;
+  left: 0;
 }
 
 
