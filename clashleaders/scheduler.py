@@ -17,7 +17,7 @@ from mongoengine import connect
 from clashleaders.batch.purge import delete_outdated, reset_stats
 from clashleaders.batch.similar_clan import compute_similar_clans
 from clashleaders.clash import api
-from clashleaders.clash.api import ApiException, ClanNotFound
+from clashleaders.clash.api import ApiException, ClanNotFound, TooManyRequests
 from clashleaders.model import Clan, ClanPreCalculated, Status
 
 bugsnag.configure(
@@ -43,14 +43,24 @@ def worker():
     loop = uvloop.new_event_loop()
     asyncio.set_event_loop(loop)
 
+    tags_indexed = []
+
     while True:
         try:
             tag = queue.get()
-            logger.info(f"Fetching and updating clan {tag}.")
+            logger.debug(f"Fetching and updating clan {tag}.")
             Clan.fetch_and_save(tag).update_calculations()
+            tags_indexed.append(tag)
             time.sleep(0.25)
+
+            if len(tags_indexed) > 99:
+                logger.info(f"Fetched {len(tags_indexed)} clans: {tags_indexed}")
+                tags_indexed = []
         except ClanNotFound:
             logger.warning(f"Skipping not found clan [{tag}].")
+        except TooManyRequests:
+            logger.warning(f"Too many requests while fetching [{tag}]. Sleeping for one second.")
+            time.sleep(1)
         except ApiException:
             logger.warning(f"API exception while fetching [{tag}].")
         except concurrent.futures.TimeoutError:
@@ -145,7 +155,7 @@ schedule.every(1).hours.do(fetch_clan_leaderboards)
 def main():
     importer_thread = threading.Thread(target=worker)
     importer_thread.start()
-    
+
     while True:
         schedule.run_pending()
         time.sleep(1)
