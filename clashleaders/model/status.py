@@ -17,6 +17,10 @@ class Status(Document):
     reddit_clans = ListField(ReferenceField(ClanPreCalculated))
 
     @classmethod
+    def get_instance(cls):
+        return Status.objects.first()
+
+    @classmethod
     def update_status(cls):
         twelve_hour_ago = datetime.now() - timedelta(hours=12)
         total_clans = ClanPreCalculated.objects.count()
