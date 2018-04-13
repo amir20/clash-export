@@ -31,6 +31,7 @@ body {
 
 header {
   background-color: whitesmoke;
+  z-index: 100;
 }
 
 header > nav.navbar, main > #app > section.hero > div, footer > section {

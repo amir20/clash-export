@@ -15,6 +15,6 @@ script:
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin;
     docker-compose -f docker-compose.yml push;
     fi
