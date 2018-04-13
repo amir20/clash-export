@@ -1,19 +1,23 @@
+import asyncio
 import concurrent
 import logging
 import os
+import queue
+import threading
 import time
 from datetime import datetime, timedelta
 from random import randrange
 
 import bugsnag
-import requests
 import schedule
+import uvloop
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
+from clashleaders.batch.purge import delete_outdated, reset_stats
+from clashleaders.batch.similar_clan import compute_similar_clans
+from clashleaders.clash import api
 from clashleaders.clash.api import ApiException, ClanNotFound
-from clashleaders.clustering.csv_export import clans_to_csv
-from clashleaders.clustering.kmeans import train_model
 from clashleaders.model import Clan, ClanPreCalculated, Status
 
 bugsnag.configure(
@@ -31,6 +35,28 @@ logging.getLogger("schedule").setLevel(logging.WARNING)
 logger.addHandler(handler)
 
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
+
+queue = queue.Queue(1)
+
+
+def worker():
+    loop = uvloop.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    while True:
+        try:
+            tag = queue.get()
+            logger.info(f"Fetching and updating clan {tag}.")
+            Clan.fetch_and_save(tag).update_calculations()
+            time.sleep(0.25)
+        except ClanNotFound:
+            logger.warning(f"Skipping not found clan [{tag}].")
+        except ApiException:
+            logger.warning(f"API exception while fetching [{tag}].")
+        except concurrent.futures.TimeoutError:
+            logger.warning(f"Timeout error thrown [{tag}]. Skipping clan.")
+        except Exception:
+            logger.exception(f"Error while fetching clan {tag}.")
 
 
 def update_clan_calculations():
@@ -58,20 +84,6 @@ def update_clan_calculations():
         logger.info(f"Updated calculations: {updated_tags}")
 
 
-def delete_old_clans():
-    deleted = Clan.older_than(days=31).delete()
-    logger.info(f"Deleted {deleted} clans that are older than 31 days.")
-
-    deleted = ClanPreCalculated.objects(members__lt=5).delete()
-    Clan.objects(members__lt=5).delete()
-    logger.info(f"Deleted {deleted} clans with less than 5 members.")
-
-    not_active_tags = [c.tag for c in ClanPreCalculated.objects(total_attack_wins=0).only('tag')]
-    Clan.objects(tag__in=not_active_tags).delete()
-    not_active_deleted = ClanPreCalculated.objects(total_attack_wins=0).delete()
-    logger.info(f"Deleted {not_active_deleted} clans with zero attacks.")
-
-
 def update_leaderboards():
     columns = ['week_delta.avg_donations',
                'week_delta.avg_attack_wins',
@@ -85,49 +97,7 @@ def update_leaderboards():
     for column in columns:
         logger.info(f"Updating {column} leaderboard.")
         for c in ClanPreCalculated.objects(members__gt=20).order_by(f"-{column}").limit(15):
-            try:
-                logger.debug(f"Updating {column} leaderboard clan {c.tag}.")
-                Clan.fetch_and_save(c.tag).update_calculations()
-                time.sleep(0.5)
-            except ClanNotFound:
-                logger.warning(f"Skipping not found clan [{c.tag}].")
-            except ApiException:
-                logger.warning(f"API exception while fetching [{c.tag}].")
-            except concurrent.futures.TimeoutError:
-                logger.warning(f"Timeout error thrown [{c.tag}]. Skipping clan.")
-            except Exception:
-                logger.exception(f"Error while fetching leaderboard clan {c.tag}.")
-
-
-def update_status():
-    twelve_hour_ago = datetime.now() - timedelta(hours=12)
-    total_clans = ClanPreCalculated.objects.count()
-    ratio_indexed = 100 * (ClanPreCalculated.objects(last_updated__gt=twelve_hour_ago).count() / total_clans)
-    Status.objects.update_one(
-        set__ratio_indexed=ratio_indexed,
-        set__total_clans=total_clans,
-        set__last_updated=datetime.now(),
-        set__total_members=ClanPreCalculated.objects.sum('members'),
-        set__total_countries=len(ClanPreCalculated.objects.distinct('location.countryCode')),
-        upsert=True
-    )
-
-
-def compute_similar_clans():
-    filename = '/tmp/clans.csv'
-
-    logger.info(f"Writing clans to csv file.")
-    with open(filename, 'w') as f:
-        clans_to_csv(f)
-
-    logger.info(f"Computing kmeans for clans and saving model.")
-    labels = train_model(filename)
-
-    os.remove(filename)
-
-    logger.info(f"Updating labels for {len(labels)} clans.")
-    for tag, label in labels.items():
-        ClanPreCalculated.objects(tag=tag).update_one(set__cluster_label=label)
+            queue.put(c.tag)
 
 
 def index_random_war_clan():
@@ -141,71 +111,30 @@ def index_random_war_clan():
     except Exception:
         logger.warning(f"Error while fetch war log for {random_clan.tag}.")
     else:
-        updated_tags = []
         for tag in tags:
             if not ClanPreCalculated.objects(tag=tag).first():
-                logger.debug(f"Fetching new clan with tag {tag}")
-                try:
-                    Clan.fetch_and_save(tag)
-                    updated_tags.append(tag)
-                    time.sleep(0.8)
-                except ClanNotFound:
-                    logger.warning(f"Skipping clan [{tag}] not found.")
-                except concurrent.futures.TimeoutError:
-                    logger.warning(f"Timeout error when fetching [{tag}].")
-                except Exception:
-                    logger.exception(f"Error while updating clan from war log.")
-
-        logger.info(f"Indexed new war clans: {updated_tags}")
-
-
-def reset_page_views():
-    logger.info("Resetting page views...")
-    ClanPreCalculated.objects.update(set__page_views=0)
+                queue.put(tag)
 
 
 def fetch_clan_leaderboards():
-    data = requests.get('https://clashofclans.com/api/leaderboards.json').json()
-    leaderboards = data['hallOfFame']['leaderboards']
-    players = leaderboards['topPlayers']['players']
-    clans = leaderboards['topClans']['clans']
-
-    updated_tags = []
+    logger.info(f"Updating clan leaderboards from CoC website.")
+    players, clans = api.top_players_and_clan()
 
     for player in players:
-        try:
-            tag = player['clanTag']
-            if tag:
-                Clan.fetch_and_save(tag)
-                updated_tags.append(tag)
-                time.sleep(0.2)
-        except ClanNotFound:
-            logger.warning(f"Skipping clan [{tag}] not found.")
-        except concurrent.futures.TimeoutError:
-            logger.warning(f"Timeout error when fetching [{tag}].")
-        except Exception:
-            logger.exception(f"Error while fetching top player clans.")
+        tag = player['clanTag']
+        if tag:
+            queue.put(tag)
 
     for clan in clans:
-        try:
-            tag = clan['tag']
-            Clan.fetch_and_save(tag)
-            updated_tags.append(tag)
-            time.sleep(0.2)
-        except ClanNotFound:
-            logger.warning(f"Skipping clan [{tag}] not found.")
-        except concurrent.futures.TimeoutError:
-            logger.warning(f"Timeout error when fetching [{tag}].")
-        except Exception:
-            logger.exception(f"Error while fetching top clans.")
-
-    logger.info(f"Updated clan leaderboards: {updated_tags}")
+        tag = clan['tag']
+        if tag:
+            queue.put(tag)
 
 
-schedule.every().minute.do(update_status)
+schedule.every().minute.do(Status.update_status)
 schedule.every().minute.do(update_clan_calculations)
-schedule.every().day.do(reset_page_views)
-schedule.every().day.at("12:01").do(delete_old_clans)
+schedule.every().day.do(reset_stats)
+schedule.every().day.at("12:01").do(delete_outdated)
 schedule.every().monday.do(compute_similar_clans)
 
 schedule.every(6).hours.do(update_leaderboards)
@@ -214,6 +143,9 @@ schedule.every(1).hours.do(fetch_clan_leaderboards)
 
 
 def main():
+    importer_thread = threading.Thread(target=worker)
+    importer_thread.start()
+    
     while True:
         schedule.run_pending()
         time.sleep(1)

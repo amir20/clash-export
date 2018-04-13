@@ -6,19 +6,18 @@ from user_agents import parse
 from clashleaders import app, cache
 from clashleaders.clash import api, excel
 from clashleaders.clash.transformer import to_short_clan, transform_players
-from clashleaders.model import Clan, ClanPreCalculated
+from clashleaders.model import Clan, ClanPreCalculated, Status
 from clashleaders.text.clan_description_processor import transform_description
-from .index import aggregate_by_country
 
 
 @app.context_processor
-@cache.cached(timeout=14400)
 def inject_most_popular():
-    return dict(
-        most_popular=ClanPreCalculated.objects.order_by('-page_views').limit(10),
-        popular_countries=aggregate_by_country("week_delta.avg_attack_wins"),
-        reddit_clans=ClanPreCalculated.objects(verified_accounts='reddit').order_by('-clanPoints').limit(10)
-    )
+    status = Status.objects.first()
+    return dict(status=status,
+                most_popular=status.popular_clans,
+                popular_countries=status.top_countries,
+                reddit_clans=status.reddit_clans
+                )
 
 
 @app.route("/search.json")

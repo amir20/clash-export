@@ -5,7 +5,7 @@ from flask import render_template
 
 from clashleaders import app, cache
 from clashleaders.clash.transformer import clans_leaderboard
-from clashleaders.model import ClanPreCalculated, Status
+from clashleaders.model import ClanPreCalculated
 
 parent = os.path.abspath(os.path.dirname(__file__))
 
@@ -29,8 +29,7 @@ def index():
                            most_trophies=leaderboard('week_delta.avg_trophies'),
                            avg_bh_level=leaderboard('avg_bh_level'),
                            most_active_country=aggregate_by_country('week_delta.avg_attack_wins'),
-                           most_trophies_country=aggregate_by_country('clanPoints'),
-                           status=Status.objects.first()
+                           most_trophies_country=aggregate_by_country('clanPoints')
                            )
 
 
