@@ -1,8 +1,9 @@
 <template>
     <b-autocomplete
-        placeholder="Search for clans by name or tag"
+        placeholder="Search by name or tag"
         field="tag"
         :size="size"
+        icon="search"
         keep-first
         expanded
         v-model="tag"
