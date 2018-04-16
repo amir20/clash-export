@@ -136,4 +136,8 @@ html {
 .navbar {
   z-index: 99;
 }
+
+.table-wrapper {
+  overflow: unset;
+}
 </style>
