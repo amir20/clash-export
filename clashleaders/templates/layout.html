@@ -50,7 +50,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles.css')) }}">
 </head>
 
-<body>
+<body class="{{ request.endpoint }}">
     <header>
         <nav class="navbar {% block nav_class %} {% endblock %}" aria-label="main navigation">
             <div class="navbar-brand">
@@ -71,7 +71,6 @@
                         <div class="navbar-dropdown">
                             {% for clan in most_popular %}
                             <a class="navbar-item" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
-    
                                 <div class="media">
                                     <div class="media-left">
                                         <span class="icon is-large">

@@ -38,13 +38,16 @@ header {
   z-index: 1000;
 }
 
-header > nav.navbar,
-main > #app > section.hero > div,
-footer > section {
-  width: 100vw;
-  position: sticky;
-  left: 0;
+.clan_detail_page {
+  & header > nav.navbar,
+  & main > #app > section.hero > div,
+  & footer > section {
+    width: 100vw;
+    position: sticky;
+    left: 0;
+  }
 }
+
 
 .leaderboard {
   & .panel-icon {
