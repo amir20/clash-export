@@ -85,10 +85,14 @@ export default {
   },
   watch: {
     savedTag(newValue) {
-      if (newValue == null) {
-        localStorage.removeItem(STORAGE_KEY);
-      } else {
-        localStorage.setItem(STORAGE_KEY, newValue);
+      try {
+        if (newValue == null) {
+          localStorage.removeItem(STORAGE_KEY);
+        } else {
+          localStorage.setItem(STORAGE_KEY, newValue);
+        }
+      } catch (e) {
+        // Do nothing as some browsers block this in private mode
       }
     }
   }
