@@ -8,13 +8,14 @@ bugsnag(Vue);
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
 new Vue({
-  el: ".navbar",
+  el: "header",
   components: {
     SearchBox
   },
   data() {
     return {
-      selectedTag: null
+      selectedTag: null,
+      showNav: false
     };
   },
   watch: {
