@@ -26,7 +26,6 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 
 body {
   font-family: "Titillium Web";
-  display: grid;
 }
 
 header {
@@ -38,7 +37,9 @@ header {
   z-index: 1000;
 }
 
-.clan_detail_page {
+body.clan_detail_page {
+  display: grid;
+
   & header > nav.navbar,
   & main > #app > section.hero > div,
   & footer > section {
@@ -47,7 +48,6 @@ header {
     left: 0;
   }
 }
-
 
 .leaderboard {
   & .panel-icon {
