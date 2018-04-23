@@ -42,14 +42,21 @@
     "webpack-manifest-plugin": "^2.0.1"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.4",
+    "prettier": "^1.12.1"
   },
   "scripts": {
     "build": "NODE_ENV='production' webpack --progress --mode production",
     "watch": "webpack --watch --mode development",
     "prestart": "docker-compose stop web",
     "start": "concurrently 'docker-compose up web' 'npm run watch'",
-    "docker-deploy": "docker-machine-deploy"
+    "docker-deploy": "docker-machine-deploy",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,vue,json,css,md}": ["prettier --write", "git add"]
   },
   "repository": {
     "type": "git",
