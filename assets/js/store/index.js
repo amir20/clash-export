@@ -70,7 +70,13 @@ const actions = {
     )).json();
     commit("setSimilarClansAvg", similarClansAvg);
   },
-  async loadDaysAgo({ commit, getters: { path } }, days) {
+  async loadDaysAgo(
+    {
+      commit,
+      getters: { path }
+    },
+    days
+  ) {
     commit("setDays", days);
     commit("startLoading");
     const data = await fetch(`${path}.json?daysAgo=${days}`);
