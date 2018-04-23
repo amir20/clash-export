@@ -72,7 +72,7 @@ export default {
       this.$nextTick(() => this.$refs.table.sort(column, true));
     },
     similarClansAvg(newValue) {
-      if (newValue && newValue.gold_grab > 0) {
+      if (newValue && newValue.gold_grab > 0 && this.tableData[0]) {
         this.openDetails = [this.tableData[0].id];
       }
     }
