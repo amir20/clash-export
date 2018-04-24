@@ -63,7 +63,7 @@ def worker():
             time.sleep(1)
         except ApiException:
             logger.warning(f"API exception while fetching [{tag}].")
-        except concurrent.futures.TimeoutError:
+        except asyncio.TimeoutError:
             logger.warning(f"Timeout error thrown [{tag}]. Skipping clan.")
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")

@@ -4,6 +4,7 @@ import os
 from urllib.parse import quote
 
 import aiohttp
+from async_timeout import timeout
 import requests
 
 API_TOKEN = os.getenv('API_TOKEN')
@@ -24,21 +25,21 @@ class TooManyRequests(ApiException):
 
 
 async def __fetch(url, params=None, loop=None):
-    with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
+    async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
         return await __fetch_with_session(url, session=session, params=params)
 
 
 async def __fetch_with_session(url, session, params=None):
-    async with aiohttp.Timeout(5):
+    async with timeout(5):
         async with session.get(url, params=params) as response:
             data = await response.json()
             return response.status, data
 
 
-def __fetch_all(urls, loop=None):
-    with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
+async def __fetch_all(urls, loop=None):
+    async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
         futures = [__fetch_with_session(url, session) for url in urls]
-        responses = loop.run_until_complete(asyncio.gather(*futures))
+        responses = await asyncio.gather(*futures)
 
         return [response for status, response in responses if status == 200]
 
@@ -97,4 +98,5 @@ def fetch_all_players(clan):
     logger.info(f"Fetching all player stats for {clan['tag']}.")
     tags = [member['tag'] for member in clan['memberList']]
     urls = ['https://api.clashofclans.com/v1/players/' + quote(tag) for tag in tags]
-    return __fetch_all(urls, loop=asyncio.get_event_loop())
+    future = __fetch_all(urls, loop=asyncio.get_event_loop())
+    return asyncio.get_event_loop().run_until_complete(future)

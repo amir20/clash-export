@@ -72,7 +72,7 @@ def update_single_clan():
         clan.update(set__last_updated=eleven_hour_ago, set__most_recent=Clan.find_most_recent_by_tag(clan.tag))
         logger.info(f"Sleeping for 10 seconds.")
         time.sleep(10)
-    except concurrent.futures.TimeoutError:
+    except asyncio.TimeoutError:
         logger.warning(f"Timeout error when fetching [{clan.tag}]. Waiting 1 second and trying again.")
         time.sleep(1)
     except Exception:
