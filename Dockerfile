@@ -23,7 +23,8 @@ FROM python:3.6.5-slim
 # Create app directoy
 WORKDIR /app
 
-RUN pip install pipenv
+RUN pip install --upgrade pip \ 
+    && pip install pipenv
 
 # Copy requirements file
 COPY ./Pipfile* /app/
