@@ -195,6 +195,10 @@ class ClanPreCalculated(Document):
     def created_on(self):
         return self.id.generation_time
 
+    @property
+    def players(self):
+        return self.most_recent.players_data()
+
     def similar_clan(self):
         return ClanPreCalculated.objects(cluster_label=self.cluster_label)
 

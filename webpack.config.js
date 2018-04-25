@@ -2,6 +2,8 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   context: __dirname + "/assets",
@@ -20,6 +22,12 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           name: "vendors",
           chunks: "all"
+        },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
         }
       }
     }
@@ -63,44 +71,45 @@ module.exports = {
       },
       {
         test: /\.(sass|scss|css)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: [
-            {
-              loader: "css-loader",
-              query: {
-                importLoaders: 1
-              }
-            },
-            {
-              loader: "postcss-loader",
-              options: {
-                ident: "postcss",
-                plugins: loader => [
-                  require("postcss-import")(),
-                  require("postcss-cssnext")({
-                    features: {
-                      customProperties: { warnings: false }
-                    }
-                  }),
-                  require("postcss-font-magician")()
-                ]
-              }
-            },
-            "sass-loader"
-          ]
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            query: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              ident: "postcss",
+              plugins: loader => [
+                require("postcss-import")(),
+                require("postcss-cssnext")({
+                  features: {
+                    customProperties: { warnings: false }
+                  }
+                }),
+                require("postcss-font-magician")()
+              ]
+            }
+          },
+          "sass-loader"
+        ]
       }
     ]
   },
   plugins: [
     new ManifestPlugin(),
-    new ExtractTextPlugin("css/[name].[hash].css"),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash].css'
+    }),
     new CleanWebpackPlugin([
       __dirname + "/clashleaders/static/css",
       __dirname + "/clashleaders/static/js",
       __dirname + "/clashleaders/static/flags"
-    ])
+    ]),
+    new VueLoaderPlugin()
   ]
 };
 
