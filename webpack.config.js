@@ -1,4 +1,3 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -16,6 +15,13 @@ module.exports = {
   optimization: {
     concatenateModules: true,
     // runtimeChunk: true,
+    minimizer: [
+      new OptimizeCssAssetsPlugin({
+        cssProcessorOptions: {
+          safe: true
+        }
+      })
+    ],
     splitChunks: {
       cacheGroups: {
         commons: {
@@ -23,10 +29,10 @@ module.exports = {
           name: "vendors",
           chunks: "all"
         },
-        styles: {
-          name: 'styles',
+        "styles-compiled": {
+          name: "styles-compiled",
           test: /\.css$/,
-          chunks: 'all',
+          chunks: "all",
           enforce: true
         }
       }
@@ -102,7 +108,7 @@ module.exports = {
   plugins: [
     new ManifestPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash].css'
+      filename: "css/[name].[contenthash].css"
     }),
     new CleanWebpackPlugin([
       __dirname + "/clashleaders/static/css",
@@ -115,13 +121,5 @@ module.exports = {
 
 if (process.env.NODE_ENV === "production") {
   module.exports.devtool = "#source-map";
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new OptimizeCssAssetsPlugin({
-      cssProcessorOptions: {
-        safe: true
-      }
-    })
-  ]);
-
   module.exports.output.filename = "js/[name].[chunkhash].js";
 }
