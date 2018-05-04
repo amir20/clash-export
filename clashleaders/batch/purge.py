@@ -13,9 +13,9 @@ def delete_outdated():
     Clan.objects(members__lt=5).delete()
     logger.info(f"Deleted {deleted} clans with less than 5 members.")
 
-    not_active_tags = [c.tag for c in ClanPreCalculated.objects(total_attack_wins=0).only('tag')]
+    not_active_tags = [c.tag for c in ClanPreCalculated.objects(week_delta__total_donations=0, week_delta__total_attack_wins=0).only('tag')]
     Clan.objects(tag__in=not_active_tags).delete()
-    not_active_deleted = ClanPreCalculated.objects(total_attack_wins=0).delete()
+    not_active_deleted = ClanPreCalculated.objects(week_delta__total_donations=0, week_delta__total_attack_wins=0).delete()
     logger.info(f"Deleted {not_active_deleted} clans with zero attacks.")
 
 
