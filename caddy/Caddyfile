@@ -20,7 +20,7 @@ https://www.clashleaders.com {
     }
 
     gzip
-    log / stdout "{combined}"
+    log / stdout
     errors stdout
 }
 
