@@ -31,8 +31,9 @@ module.exports = {
         },
         "styles-compiled": {
           name: "styles-compiled",
-          test: /\.css$/,
-          chunks: "all",
+          test: /\.(s?css|vue)$/,
+          chunks: "initial",
+          minChunks: 1,
           enforce: true
         }
       }
