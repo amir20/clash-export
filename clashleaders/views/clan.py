@@ -41,6 +41,8 @@ def clan_detail_json(tag):
         return jsonify(transform_players(clan.players_data()))
     except api.ClanNotFound:
         return jsonify(dict(error=f"{tag} not found")), 404
+    except api.ApiTimeout:
+        return jsonify(dict(error=f"API timed out while fetching all players for {tag}")), 504
     except api.ApiException:
         return jsonify(dict(error=f"Clash of Clans API is down right now.")), 500
 

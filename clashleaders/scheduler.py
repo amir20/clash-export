@@ -1,5 +1,4 @@
 import asyncio
-import concurrent
 import logging
 import os
 import queue
@@ -17,7 +16,7 @@ from mongoengine import connect
 from clashleaders.batch.purge import delete_outdated, reset_stats
 from clashleaders.batch.similar_clan import compute_similar_clans
 from clashleaders.clash import api
-from clashleaders.clash.api import ApiException, ClanNotFound, TooManyRequests
+from clashleaders.clash.api import ApiException, ClanNotFound, TooManyRequests, ApiTimeout
 from clashleaders.model import Clan, ClanPreCalculated, Status
 
 bugsnag.configure(
@@ -61,10 +60,11 @@ def worker():
         except TooManyRequests:
             logger.warning(f"Too many requests while fetching [{tag}]. Sleeping for one second.")
             time.sleep(1)
+        except ApiTimeout:
+            logger.warning(f"Timeout error thrown [{tag}]. Skipping clan.")
         except ApiException:
             logger.warning(f"API exception while fetching [{tag}].")
-        except asyncio.TimeoutError:
-            logger.warning(f"Timeout error thrown [{tag}]. Skipping clan.")
+
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")
 
