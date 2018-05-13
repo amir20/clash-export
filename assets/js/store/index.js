@@ -17,7 +17,8 @@ const state = {
   days: 7,
   similarClansAvg: {},
   daysSpan: 7,
-  sortField: "value"
+  sortField: "value",
+  error: null
 };
 
 const mutations = {
@@ -47,28 +48,41 @@ const mutations = {
   },
   setSortField(state, field) {
     state.sortField = field;
+  },
+  setApiError(state, field) {
+    state.sortField = field;
   }
 };
+
+async function handleResponse(promise, commit, success, error = "setApiError") {
+  const response = await promise;
+  if (response.status == 200) {
+    const data = await response.json();
+    commit(success, data);
+  } else {
+    const e = await response.json();
+    console.warn(
+      `Error while fetch data from API. Status: ${response.status}, Message: ${
+        e.error
+      }`
+    );
+    commit(error, e);
+  }
+}
 
 const actions = {
   async fetchClanData({ commit, dispatch, getters: { path } }) {
     const nowPromise = fetch(`${path}.json`);
     const previousPromise = fetch(`${path}.json?daysAgo=${state.days}`);
     commit("stopLoading");
-
-    const previousData = await (await previousPromise).json();
-    commit("setPreviousData", previousData);
-
-    const clan = await (await nowPromise).json();
-    commit("setClan", clan);
+    await handleResponse(previousPromise, commit, "setPreviousData");
+    await handleResponse(nowPromise, commit, "setClan");
 
     dispatch("fetchSimilarClansStats");
   },
   async fetchSimilarClansStats({ commit, getters: { path } }) {
-    const similarClansAvg = await (await fetch(
-      `${path}/similar/avg.json`
-    )).json();
-    commit("setSimilarClansAvg", similarClansAvg);
+    const similarClansPromise = await fetch(`${path}/similar/avg.json`);
+    await handleResponse(similarClansPromise, commit, "setSimilarClansAvg");
   },
   async loadDaysAgo(
     {
@@ -79,9 +93,8 @@ const actions = {
   ) {
     commit("setDays", days);
     commit("startLoading");
-    const data = await fetch(`${path}.json?daysAgo=${days}`);
-    const previousData = await data.json();
-    commit("setPreviousData", previousData);
+    const promise = await fetch(`${path}.json?daysAgo=${days}`);
+    await handleResponse(promise, commit, "setPreviousData");
     commit("stopLoading");
   }
 };

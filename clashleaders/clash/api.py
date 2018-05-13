@@ -4,8 +4,8 @@ import os
 from urllib.parse import quote
 
 import aiohttp
-from async_timeout import timeout
 import requests
+from async_timeout import timeout
 
 API_TOKEN = os.getenv('API_TOKEN')
 HEADERS = dict(authorization='Bearer ' + API_TOKEN)
@@ -24,13 +24,17 @@ class TooManyRequests(ApiException):
     pass
 
 
+class ApiTimeout(ApiException):
+    pass
+
+
 async def __fetch(url, params=None, loop=None):
     async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
         return await __fetch_with_session(url, session=session, params=params)
 
 
 async def __fetch_with_session(url, session, params=None):
-    async with timeout(5):
+    async with timeout(8):
         async with session.get(url, params=params) as response:
             data = await response.json()
             return response.status, data
@@ -39,7 +43,11 @@ async def __fetch_with_session(url, session, params=None):
 async def __fetch_all(urls, loop=None):
     async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
         futures = [__fetch_with_session(url, session) for url in urls]
-        responses = await asyncio.gather(*futures)
+
+        try:
+            responses = await asyncio.gather(*futures)
+        except asyncio.TimeoutError:
+            raise ApiTimeout("API timed while fetching all requests.")
 
         return [response for status, response in responses if status == 200]
 
