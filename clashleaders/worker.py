@@ -1,5 +1,4 @@
 import asyncio
-import concurrent
 import logging
 import os
 import time
@@ -10,7 +9,7 @@ import uvloop
 from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
-from clashleaders.clash.api import ApiException, ClanNotFound, TooManyRequests
+from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
 from clashleaders.model import Clan, ClanPreCalculated
 
 bugsnag.configure(
@@ -60,6 +59,9 @@ def update_single_clan():
     except TooManyRequests:
         logger.warning(f"Too many requests for {clan.tag}. Trying again in 3 seconds.")
         time.sleep(3)
+    except ApiTimeout:
+        logger.warning(f"Timeout error when fetching [{clan.tag}]. Waiting 1 second and trying again.")
+        time.sleep(1)
     except ApiException:
         logger.warning(f"API exception when fetching {clan.tag}. Pausing for 10 seconds.")
         try_again_clan(clan)
@@ -72,9 +74,6 @@ def update_single_clan():
         clan.update(set__last_updated=eleven_hour_ago, set__most_recent=Clan.find_most_recent_by_tag(clan.tag))
         logger.info(f"Sleeping for 10 seconds.")
         time.sleep(10)
-    except asyncio.TimeoutError:
-        logger.warning(f"Timeout error when fetching [{clan.tag}]. Waiting 1 second and trying again.")
-        time.sleep(1)
     except Exception:
         logger.exception(f"Error while fetching clan. Pausing for 5 seconds.")
         time.sleep(5)
