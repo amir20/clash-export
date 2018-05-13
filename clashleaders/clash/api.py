@@ -57,7 +57,11 @@ def find_clan_by_tag(tag):
     logger.info(f"Fetching clan from API {tag}.")
 
     future = __fetch(f'https://api.clashofclans.com/v1/clans/{quote(tag)}')
-    code, response = asyncio.get_event_loop().run_until_complete(future)
+
+    try:
+        code, response = asyncio.get_event_loop().run_until_complete(future)
+    except asyncio.TimeoutError:
+        raise ApiTimeout(f"API timed while fetching {tag} clan.")
 
     if code == 404:
         raise ClanNotFound(f"Clan [{tag}] not found.")
