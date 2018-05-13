@@ -50,7 +50,7 @@ const mutations = {
     state.sortField = field;
   },
   setApiError(state, field) {
-    state.sortField = field;
+    state.error = field;
   }
 };
 
