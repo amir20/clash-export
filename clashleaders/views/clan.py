@@ -73,6 +73,7 @@ def clan_detail_page(slug):
         return render_template('clan.html', clan=clan,
                                players=players,
                                description=description,
+                               last_updated=clan.last_updated,
                                oldest_days=clan.days_span,
                                similar_clans=similar_clans,
                                similar_clans_start_count=start_count)

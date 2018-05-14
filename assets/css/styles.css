@@ -28,6 +28,10 @@ body {
   font-family: "Titillium Web";
 }
 
+.notices {
+  z-index: 1200;
+}
+
 header {
   background-color: whitesmoke;
   z-index: 1100;
