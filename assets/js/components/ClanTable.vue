@@ -77,10 +77,10 @@ export default {
       }
     },
     apiError(newValue, oldValue) {
-      if (newValue && !oldValue) {
+      if (newValue && !oldValue && newValue.status >= 500) {
         const last = this.lastUpdatedAgo;
         this.$snackbar.open({
-          message: `Well chief, this is embarrassing. It seems Clash of Clan API is down right now. Last time this clan was updated was ${last}. But don't worry, I'll keep checking for updates even after you leave.`,
+          message: `Well Chief, this is embarrassing. It seems Clash of Clans' API is not responding right now. This clan was last updated ${last}. I'll keep checking for updates even after you leave.`,
           type: "is-warning",
           position: "is-top",
           duration: 20000
