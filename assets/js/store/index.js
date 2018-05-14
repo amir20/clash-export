@@ -4,6 +4,7 @@ import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
 import meanBy from "lodash/meanBy";
+import moment from "moment";
 
 Vue.use(Vuex);
 
@@ -14,11 +15,12 @@ const state = {
   loading: true,
   clan: window.__CLAN__ || [],
   previousData: window.__CLAN__ || [],
+  lastUpdated: window.__LAST_UPDATED__ || "",
   days: 7,
   similarClansAvg: {},
   daysSpan: 7,
   sortField: "value",
-  error: null
+  apiError: null
 };
 
 const mutations = {
@@ -50,7 +52,7 @@ const mutations = {
     state.sortField = field;
   },
   setApiError(state, field) {
-    state.error = field;
+    state.apiError = field;
   }
 };
 
@@ -61,8 +63,9 @@ async function handleResponse(promise, commit, success, error = "setApiError") {
     commit(success, data);
   } else {
     const e = await response.json();
+    e.status = response.status;
     console.warn(
-      `Error while fetch data from API. Status: ${response.status}, Message: ${
+      `Error while fetch data from API. Status: ${e.status}, Message: ${
         e.error
       }`
     );
@@ -114,6 +117,9 @@ const getters = {
   },
   path({ tag }) {
     return `/clan/${tag.replace("#", "")}`;
+  },
+  lastUpdatedAgo({ lastUpdated }) {
+    return moment(lastUpdated).fromNow();
   },
   clanAverage(state, { tableData }) {
     const a = c => meanBy(tableData, c + ".delta");

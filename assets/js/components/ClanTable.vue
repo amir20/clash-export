@@ -63,8 +63,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(["loading", "sortField", "similarClansAvg"]),
-    ...mapGetters(["path", "header", "tableData"])
+    ...mapState(["loading", "sortField", "similarClansAvg", "apiError"]),
+    ...mapGetters(["path", "header", "tableData", "lastUpdatedAgo"])
   },
   watch: {
     sortField(newValue) {
@@ -74,6 +74,17 @@ export default {
     similarClansAvg(newValue) {
       if (newValue && newValue.gold_grab > 0 && this.tableData[0]) {
         this.openDetails = [this.tableData[0].id];
+      }
+    },
+    apiError(newValue, oldValue) {
+      if (newValue && !oldValue) {
+        const last = this.lastUpdatedAgo;
+        this.$snackbar.open({
+          message: `Well chief, this is embarrassing. It seems Clash of Clan API is down right now. Last time this clan was updated was ${last}. But don't worry, I'll keep checking for updates even after you leave.`,
+          type: "is-warning",
+          position: "is-top",
+          duration: 20000
+        });
       }
     }
   },
