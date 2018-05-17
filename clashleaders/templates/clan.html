@@ -87,12 +87,17 @@
                                             <span class="has-text-weight-semibold">{{ clan.members }} members</span>
                                         </h2>
                                     </div>
-                                    <div class="column is-narrow has-text-weight-bold">
+                                    <div class="column is-narrow has-text-right has-text-centered-mobile">
                                         {% if 'reddit' in clan.verified_accounts %}
-                                        <i class="fab fa-reddit fa-lg reddit-color"></i>
-                                        Verified Reddit Clan
-                                        <i class="fas fa-check has-text-success"></i>
+                                        <div class="has-text-weight-bold">
+                                            <i class="fab fa-reddit fa-lg reddit-color"></i>
+                                            Verified Reddit Clan
+                                            <i class="fas fa-check has-text-success"></i>
+                                        </div>
                                         {% endif %}
+                                        <div class="has-text-weight-light">
+                                            <i><last-updated></last-updated></i>
+                                        </div>
                                     </div>
                                 </div>
                                 <p class="subtitle clan-description">
