@@ -15,7 +15,7 @@ const state = {
   loading: true,
   clan: window.__CLAN__ || [],
   previousData: window.__CLAN__ || [],
-  lastUpdated: window.__LAST_UPDATED__ || "",
+  lastUpdated: moment(window.__LAST_UPDATED__) || null,
   days: 7,
   similarClansAvg: {},
   daysSpan: 7,
@@ -29,6 +29,7 @@ const mutations = {
   },
   setClan(state, clan) {
     state.clan = clan;
+    state.lastUpdated = moment();
   },
   setPreviousData(state, previousData) {
     state.previousData = previousData;
