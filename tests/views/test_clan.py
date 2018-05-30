@@ -8,6 +8,7 @@ def test_detail_page_oldest_days(client, mocker, clan_pre_calculated):
 
     clashleaders.views.clan.render_template.assert_called_once_with('clan.html',
                                                                     clan=clan_pre_calculated,
+                                                                    last_updated=clan_pre_calculated.last_updated,
                                                                     oldest_days=12,
                                                                     players=mocker.ANY,
                                                                     similar_clans=mocker.ANY,
