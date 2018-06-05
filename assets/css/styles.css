@@ -24,6 +24,10 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
   line-height: 1.2em;
 }
 
+.tooltip.is-tooltip-multiline::before {
+  min-width: 24rem;
+}
+
 body {
   font-family: "Titillium Web";
 }
