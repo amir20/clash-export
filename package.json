@@ -10,7 +10,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-runtime": "^6.26.0",
     "buefy": "^0.6.6",
-    "bugsnag-js": "^4.7.0",
+    "bugsnag-js": "^4.7.1",
     "bugsnag-vue": "^1.0.1",
     "bulma": "^0.7.1",
     "bulma-tooltip": "^1.0.5",
@@ -38,8 +38,8 @@
     "vue-loader": "^14.2.2",
     "vue-template-compiler": "^2.5.16",
     "vuex": "^3.0.1",
-    "webpack": "^4.10.2",
-    "webpack-cli": "^3.0.0",
+    "webpack": "^4.11.0",
+    "webpack-cli": "^3.0.2",
     "webpack-manifest-plugin": "^2.0.3"
   },
   "devDependencies": {
