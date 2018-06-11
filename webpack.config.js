@@ -4,7 +4,10 @@ const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const PROD = process.env.NODE_ENV === "production";
+
 module.exports = {
+  devtool: false,
   context: __dirname + "/assets",
   entry: {
     "details-page": "./js/details-page.js",
@@ -31,7 +34,10 @@ module.exports = {
         },
         "styles-compiled": {
           name: "styles-compiled",
-          test: /\.(s?css|vue)$/,
+          test: module =>
+            module.nameForCondition &&
+            /\.(s?css|vue)$/.test(module.nameForCondition()) &&
+            !/^javascript/.test(module.type),
           chunks: "initial",
           minChunks: 1,
           enforce: true
@@ -41,7 +47,7 @@ module.exports = {
   },
   output: {
     path: __dirname + "/clashleaders/static/",
-    filename: "js/[name].js"
+    filename: PROD ? "js/[name].[chunkhash].js" : "js/[name].js"
   },
   resolve: {
     extensions: [".js", ".vue", ".json"],
@@ -107,6 +113,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new VueLoaderPlugin(),
     new ManifestPlugin(),
     new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash].css"
@@ -115,12 +122,6 @@ module.exports = {
       __dirname + "/clashleaders/static/css",
       __dirname + "/clashleaders/static/js",
       __dirname + "/clashleaders/static/flags"
-    ]),
-    new VueLoaderPlugin()
+    ])
   ]
 };
-
-if (process.env.NODE_ENV === "production") {
-  module.exports.devtool = "#source-map";
-  module.exports.output.filename = "js/[name].[chunkhash].js";
-}
