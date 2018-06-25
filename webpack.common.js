@@ -27,8 +27,7 @@ module.exports = {
             module.nameForCondition &&
             /\.(s?css|vue)$/.test(module.nameForCondition()) &&
             !/^javascript/.test(module.type),
-          chunks: "initial",
-          minChunks: 1,
+          chunks: "all",
           enforce: true
         }
       }

@@ -1,7 +1,11 @@
 import Vue from "vue";
+import Buefy from "buefy";
 import Home from "./components/Home";
+import bugsnag from "./bugsnag";
 
-console.log("This is index.js");
+bugsnag(Vue);
+
+Vue.use(Buefy, { defaultIconPack: "fa" });
 
 new Vue({
   el: "#home",
