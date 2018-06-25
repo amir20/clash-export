@@ -79,6 +79,23 @@ def clan_detail_page(slug):
                                similar_clans_start_count=start_count)
 
 
+@app.route("/clan/<tag>/stats.json")
+def clan_stats(tag):
+    clan = ClanPreCalculated.find_by_tag(tag)
+    gold = clan.week_delta.avg_gold_grab
+    elixir = clan.week_delta.avg_elixir_grab
+    de = clan.week_delta.avg_de_grab
+
+    data = {
+        'gold_grab': gold,
+        'elixir_grab': elixir,
+        'de_grab': de,
+        'name': clan.name
+    }
+
+    return jsonify(data)
+
+
 @app.route("/clan/<tag>/short.json")
 @cache.cached(timeout=1000)
 def clan_meta(tag):

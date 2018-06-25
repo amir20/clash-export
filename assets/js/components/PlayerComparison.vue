@@ -21,27 +21,7 @@ export default {
       this.$refs.chart,
       {
         labels: ["Recent DE Grab", "Recent Elixer Grab", "Recent Gold Grab"],
-        series: [
-          {
-            name: this.playerData.name.value,
-            data: this.playerSeries,
-            className: "player"
-          },
-          {
-            name: "This clan's average",
-            data: this.clanAverage,
-            className: "clan"
-          },
-          {
-            name: "Similar clans' average",
-            data: [
-              this.similarClansAvg.de_grab,
-              this.similarClansAvg.elixir_grab,
-              this.similarClansAvg.gold_grab
-            ],
-            className: "similar-clans"
-          }
-        ]
+        series: this.series
       },
       {
         seriesBarDistance: -20,
@@ -61,27 +41,7 @@ export default {
   methods: {
     update() {
       this.chart.update({
-        series: [
-          {
-            name: this.playerData.name.value,
-            data: this.playerSeries,
-            className: "player"
-          },
-          {
-            name: "This clan's average",
-            data: this.clanAverage,
-            className: "clan"
-          },
-          {
-            name: "Similar clans' average",
-            data: [
-              this.similarClansAvg.de_grab,
-              this.similarClansAvg.elixir_grab,
-              this.similarClansAvg.gold_grab
-            ],
-            className: "similar-clans"
-          }
-        ]
+        series: this.series
       });
     }
   },
@@ -91,21 +51,64 @@ export default {
         this.update();
       }
     },
-    clanAverage(newValue) {
-      if (newValue && newValue[0] > 0) {
+    clanStats(newValue) {
+      if (newValue && newValue.gold_grab > 0) {
+        this.update();
+      }
+    },
+    savedClanStats(newValue) {
+      if (newValue && newValue.gold_grab > 0) {
         this.update();
       }
     }
   },
   computed: {
-    ...mapGetters(["clanAverage"]),
-    ...mapState(["similarClansAvg"]),
-    playerSeries() {
-      return [
-        this.playerData.totalDeGrab.delta,
-        this.playerData.totalElixirGrab.delta,
-        this.playerData.totalGoldGrab.delta
-      ];
+    ...mapState(["similarClansAvg", "clanStats", "savedClanStats"]),
+    series() {
+      const s = [];
+      s.push({
+        name: this.playerData.name.value,
+        data: [
+          this.playerData.totalDeGrab.delta,
+          this.playerData.totalElixirGrab.delta,
+          this.playerData.totalGoldGrab.delta
+        ],
+        className: "player"
+      });
+
+      s.push({
+        name: "This clan's average",
+        data: [
+          this.clanStats.de_grab,
+          this.clanStats.elixir_grab,
+          this.clanStats.gold_grab
+        ],
+        className: "clan"
+      });
+
+      s.push({
+        name: "Similar clans' average",
+        data: [
+          this.similarClansAvg.de_grab,
+          this.similarClansAvg.elixir_grab,
+          this.similarClansAvg.gold_grab
+        ],
+        className: "similar-clans"
+      });
+
+      if (this.savedClanStats && this.savedClanStats.name) {
+        s.push({
+          name: this.savedClanStats.name,
+          data: [
+            this.savedClanStats.de_grab,
+            this.savedClanStats.elixir_grab,
+            this.savedClanStats.gold_grab
+          ],
+          className: "saved-clan"
+        });
+      }
+
+      return s;
     }
   }
 };
@@ -128,6 +131,11 @@ export default {
   & >>> .similar-clans .ct-bar {
     stroke: hsl(348, 100%, 61%);
   }
+
+  & >>> .saved-clan .ct-bar {
+    stroke: hsl(48, 100%, 67%);
+  }
+
   & >>> .ct-legend {
     position: absolute;
     font-size: 90%;
@@ -149,6 +157,10 @@ export default {
     & .ct-series-2:before {
       background-color: hsl(348, 100%, 61%);
       border-color: hsl(348, 100%, 61%);
+    }
+    & .ct-series-3:before {
+      background-color: hsl(48, 100%, 67%);
+      border-color: hsl(48, 100%, 67%);
     }
   }
 }
