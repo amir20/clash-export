@@ -51,8 +51,13 @@ export default {
         this.update();
       }
     },
-    clanAverage(newValue) {
-      if (newValue && newValue[0] > 0) {
+    clanStats(newValue) {
+      if (newValue && newValue.gold_grab > 0) {
+        this.update();
+      }
+    },
+    savedClanStats(newValue) {
+      if (newValue && newValue.gold_grab > 0) {
         this.update();
       }
     }
