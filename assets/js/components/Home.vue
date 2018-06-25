@@ -3,17 +3,6 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      savedTag: null,
-      foundClan: { slug: null }
-    };
-  }
-};
+console.log("This is Home.vue");
+export default {};
 </script>
-<style scoped>
-a[disabled="disabled"] {
-  pointer-events: none;
-}
-</style>

@@ -12,14 +12,14 @@ module.exports = {
     styles: "./css/styles.css"
   },
   optimization: {
-    concatenateModules: true,
+    // concatenateModules: true,
     // runtimeChunk: true,
     splitChunks: {
       cacheGroups: {
         commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
-          chunks: "all"
+          test: /node_modules/,
+          chunks: "initial",
+          name: "vendors"
         },
         "styles-compiled": {
           name: "styles-compiled",
