@@ -6,3 +6,10 @@
 console.log("This is Home.vue");
 export default {};
 </script>
+
+<style scoped>
+h1 {
+  font-size: 400%;
+  color: red;
+}
+</style>
