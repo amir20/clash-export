@@ -18,6 +18,8 @@ const state = {
   lastUpdated: moment(window.__LAST_UPDATED__) || null,
   days: 7,
   similarClansAvg: {},
+  savedClanStats: {},
+  clanStats: {},
   daysSpan: 7,
   sortField: "value",
   apiError: null
@@ -54,6 +56,12 @@ const mutations = {
   },
   setApiError(state, field) {
     state.apiError = field;
+  },
+  setSavedClanStats(state, field) {
+    state.savedClanStats = field;
+  },
+  setClanStats(state, field) {
+    state.clanStats = field;
   }
 };
 
@@ -70,7 +78,9 @@ async function handleResponse(promise, commit, success, error = "setApiError") {
         e.error
       }`
     );
-    commit(error, e);
+    if (error) {
+      commit(error, e);
+    }
   }
 }
 
@@ -78,15 +88,33 @@ const actions = {
   async fetchClanData({ commit, dispatch, getters: { path } }) {
     const nowPromise = fetch(`${path}.json`);
     const previousPromise = fetch(`${path}.json?daysAgo=${state.days}`);
+    const clanStatsPromise = fetch(`${path}/stats.json`);
     commit("stopLoading");
     await handleResponse(previousPromise, commit, "setPreviousData");
     await handleResponse(nowPromise, commit, "setClan");
+    await handleResponse(clanStatsPromise, commit, "setClanStats");
 
     dispatch("fetchSimilarClansStats");
+    dispatch("fetchSavedClanStats");
   },
   async fetchSimilarClansStats({ commit, getters: { path } }) {
     const similarClansPromise = await fetch(`${path}/similar/avg.json`);
     await handleResponse(similarClansPromise, commit, "setSimilarClansAvg");
+  },
+  async fetchSavedClanStats({ commit, state: { tag } }) {
+    const savedTag = localStorage.getItem("lastTag");
+    if (savedTag && savedTag != tag) {
+      console.log(`Found saved tag value [${savedTag}].`);
+      const savedClanStatsPromise = await fetch(
+        `/clan/${savedTag.replace("#", "")}/stats.json`
+      );
+      await handleResponse(
+        savedClanStatsPromise,
+        commit,
+        "setSavedClanStats",
+        false
+      );
+    }
   },
   async loadDaysAgo(
     {
@@ -121,10 +149,6 @@ const getters = {
   },
   lastUpdatedAgo({ lastUpdated }) {
     return moment(lastUpdated).fromNow();
-  },
-  clanAverage(state, { tableData }) {
-    const a = c => meanBy(tableData, c + ".delta");
-    return [a("totalDeGrab"), a("totalElixirGrab"), a("totalGoldGrab")];
   },
   tableData(state, getters) {
     if (state.clan.length === 0) {
