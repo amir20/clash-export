@@ -25,7 +25,8 @@
     <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
     <script defer src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch,Set&amp;unknown=polyfill"></script>    
     <script defer src="{{ url_for('static', filename=manifest_path('vendors.js')) }}"></script>
-    <script defer src="{{ url_for('static', filename=manifest_path('common.js')) }}"></script> {% block scripts %} {% endblock %}
+    <script defer src="{{ url_for('static', filename=manifest_path('common.js')) }}"></script>
+    <script>{{ inline_path("styles-compiled.js") | safe }}</script> {% block scripts %} {% endblock %}
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -47,7 +48,7 @@
     <link rel="icon" type="image/png" sizes="200x200" href="/static/images/logo.png">
     <link rel="apple-touch-icon" type="image/png" sizes="200x200" href="{{ url_for('static', filename='images/logo.png') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles.css')) }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles-compiled.css')) }}">
 </head>
 
 <body class="{{ request.endpoint }}">
