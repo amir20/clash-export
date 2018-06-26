@@ -138,17 +138,3 @@ export default {
   }
 }
 </style>
-
-<style>
-html {
-  overflow: unset;
-}
-
-.navbar {
-  z-index: 99;
-}
-
-.table-wrapper {
-  overflow: unset;
-}
-</style>
