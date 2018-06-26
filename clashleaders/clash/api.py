@@ -41,15 +41,12 @@ async def __fetch_with_session(url, session, params=None):
 
 
 async def __fetch_all(urls, loop=None):
-    async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
-        futures = [__fetch_with_session(url, session) for url in urls]
-
-        try:
+    async with timeout(8):
+        async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
+            futures = [__fetch_with_session(url, session) for url in urls]
             responses = await asyncio.gather(*futures)
-        except asyncio.TimeoutError:
-            raise ApiTimeout("API timed while fetching all requests.")
 
-        return [response for status, response in responses if status == 200]
+            return [response for status, response in responses if status == 200]
 
 
 def find_clan_by_tag(tag):
