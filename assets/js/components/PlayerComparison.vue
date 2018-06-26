@@ -119,24 +119,24 @@ export default {
   position: relative;
   width: calc(100vw - 4em);
 
-  & >>> .ct-bar {
+  & /deep/ .ct-bar {
     stroke-width: 20px;
   }
-  & >>> .player .ct-bar {
+  & /deep/ .player .ct-bar {
     stroke: hsl(141, 71%, 48%);
   }
-  & >>> .clan .ct-bar {
+  & /deep/ .clan .ct-bar {
     stroke: hsl(217, 71%, 53%);
   }
-  & >>> .similar-clans .ct-bar {
+  & /deep/ .similar-clans .ct-bar {
     stroke: hsl(348, 100%, 61%);
   }
 
-  & >>> .saved-clan .ct-bar {
+  & /deep/ .saved-clan .ct-bar {
     stroke: hsl(48, 100%, 67%);
   }
 
-  & >>> .ct-legend {
+  & /deep/ .ct-legend {
     position: absolute;
     font-size: 90%;
     right: 20px;

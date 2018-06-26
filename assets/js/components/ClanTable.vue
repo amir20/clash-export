@@ -97,7 +97,7 @@ export default {
 
 <style scoped>
 .b-table {
-  & >>> thead th {
+  & /deep/ thead th {
     position: sticky;
     top: 0;
     z-index: 11;
@@ -105,7 +105,7 @@ export default {
     color: #fff;
   }
 
-  & >>> .table {
+  & /deep/ .table {
     &.is-striped tbody tr:not(.is-selected):nth-child(even) {
       background-color: #eee;
     }
@@ -115,11 +115,11 @@ export default {
     }
   }
 
-  & >>> table {
+  & /deep/ table {
     font-size: 90%;
   }
 
-  & >>> b {
+  & /deep/ b {
     white-space: nowrap;
     display: block;
     line-height: 1;
