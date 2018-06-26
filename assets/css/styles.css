@@ -24,7 +24,8 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
   line-height: 1.2em;
 }
 
-html {
+html,
+.table-wrapper {
   overflow: unset;
 }
 
