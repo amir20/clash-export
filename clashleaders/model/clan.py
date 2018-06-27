@@ -8,6 +8,7 @@ from mongoengine import BinaryField, DynamicDocument
 import clashleaders.clash.calculation
 import clashleaders.model
 from clashleaders.clash import api
+from clashleaders.clash.calculation import to_data_frame
 
 
 class Clan(DynamicDocument):
@@ -63,6 +64,14 @@ class Clan(DynamicDocument):
         del clan['memberList']
 
         clan = Clan(**clan).save()
+
+        df = to_data_frame(clan)
+        clan['avg_gold_grab'] = df['Total Gold Grab'].mean()
+        clan['avg_elixir_grab'] = df['Total Elixir Grab'].mean()
+        clan['avg_de_grab'] = df['Total DE Grab'].mean()
+
+        clan.save()
+
         return clan
 
 
