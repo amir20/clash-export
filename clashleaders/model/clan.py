@@ -65,10 +65,13 @@ class Clan(DynamicDocument):
 
         clan = Clan(**clan).save()
 
-        df = to_data_frame(clan)
-        clan['avg_gold_grab'] = df['Total Gold Grab'].mean()
-        clan['avg_elixir_grab'] = df['Total Elixir Grab'].mean()
-        clan['avg_de_grab'] = df['Total DE Grab'].mean()
+        try:
+            df = to_data_frame(clan)
+            clan['avg_gold_grab'] = df['Total Gold Grab'].mean()
+            clan['avg_elixir_grab'] = df['Total Elixir Grab'].mean()
+            clan['avg_de_grab'] = df['Total DE Grab'].mean()
+        except:
+            pass
 
         clan.save()
 
