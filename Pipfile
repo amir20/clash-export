@@ -40,6 +40,7 @@ scikit-learn = "*"
 scipy = "*"
 Pympler = "*"
 uvloop = "*"
+cairosvg = "*"
 
 [dev-packages]
 pytest = "*"
