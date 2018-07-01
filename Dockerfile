@@ -37,6 +37,7 @@ RUN apt-get update \
     && apt-get install make supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \
     && apt-get install gcc -y \
+    && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
     && curl https://getcaddy.com | bash -s personal ${plugins} \
     && pipenv install --system \
     && apt-get remove -y curl gcc \
