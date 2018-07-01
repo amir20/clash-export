@@ -15,7 +15,7 @@ TEMPLATE = dict(small="badges/small.svg", large="badges/large.svg")
 
 @app.route("/b/<size>/<tag>.svg")
 @cache.cached(timeout=10800)
-def clan_detail_svg(size, tag):
+def clan_badge_svg(size, tag):
     template = TEMPLATE.get(size)
     svg = render_as_svg(template, tag)
     response = make_response(svg)
@@ -25,7 +25,7 @@ def clan_detail_svg(size, tag):
 
 @app.route("/b/<size>/<tag>.png")
 @cache.cached(timeout=10800)
-def clan_detail_png(size, tag):
+def clan_badge_png(size, tag):
     template = TEMPLATE.get(size)
     svg = render_as_svg(template, tag)
     png = svg2png(bytestring=svg)
