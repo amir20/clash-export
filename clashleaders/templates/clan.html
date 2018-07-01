@@ -216,7 +216,7 @@
   "datePublished": "{{ clan.created_on.isoformat() }}",
   "dateModified": "{{ clan.last_updated.isoformat() }}",
   "image": [
-    "{{ clan.badgeUrls.large }}"
+    "{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}"
    ],
    "publisher": {
     "@type": "Organization",
@@ -241,4 +241,6 @@
 <meta name=”description” content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders">
-<meta property="og:description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders."> {% endblock %} {% block nav_class %}is-light{% endblock %}
+<meta property="og:image" content="{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}">
+<meta property="og:description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders.">
+{% endblock %} {% block nav_class %}is-light{% endblock %}
