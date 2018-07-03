@@ -52,4 +52,4 @@ pytest-freezegun = "*"
 pytest-cov = "*"
 xlrd = "*"
 aioresponses = "*"
-"pep8" = "*"
+
