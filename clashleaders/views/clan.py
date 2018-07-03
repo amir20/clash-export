@@ -131,6 +131,19 @@ def clan_trophies(tag):
     return jsonify(dict(labels=list(items.keys()), points=list(items.values())))
 
 
+@app.route("/clan/<tag>/chart.json")
+@cache.cached(timeout=1000)
+def clan_chart(tag):
+    data = list(Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints', 'avg_gold_grab'))
+    dates = [s.id.generation_time for s in data]
+    columns = [dict(points=s.clanPoints, gold=getattr(s, 'avg_gold_grab', 0)) for s in data]
+    df = pd.DataFrame(columns, index=dates)
+    resampled = df.resample('D').mean().dropna()
+    labels = [k.strftime("%Y-%m-%d") for k in resampled.index.tolist()]
+
+    return jsonify(dict(labels=labels, points=list(resampled['points'].values), gold=list(resampled['gold'].values)))
+
+
 def clan_from_days_ago(days_ago, tag):
     if days_ago:
         return Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
