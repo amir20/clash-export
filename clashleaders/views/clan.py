@@ -141,7 +141,7 @@ def clan_chart(tag):
     resampled = df.resample('D').mean().dropna()
     labels = [k.strftime("%Y-%m-%d") for k in resampled.index.tolist()]
 
-    return jsonify(dict(labels=labels, points=list(resampled['points'].values), gold=list(resampled['gold'].values)))
+    return jsonify(dict(labels=labels, points=list(resampled['points'].values), avg_gold=list(resampled['gold'].values)))
 
 
 def clan_from_days_ago(days_ago, tag):
