@@ -53,3 +53,5 @@ pytest-cov = "*"
 xlrd = "*"
 aioresponses = "*"
 
+[requires]
+python_version = "3.6.5"
