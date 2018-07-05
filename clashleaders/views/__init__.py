@@ -5,6 +5,6 @@ import clashleaders.views.error
 import clashleaders.views.index
 import clashleaders.views.sitemap
 import clashleaders.views.status
-import clashleaders.views.privacy
+import clashleaders.views.static
 import clashleaders.views.similar_clans
 import clashleaders.views.badge
