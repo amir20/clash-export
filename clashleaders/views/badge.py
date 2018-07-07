@@ -1,11 +1,10 @@
 import base64
+from io import BytesIO
 
 import requests
+from cairosvg import svg2png
 from flask import make_response, render_template, send_file
 from mongoengine import DoesNotExist
-from enum import Enum
-from cairosvg import svg2png
-from io import BytesIO
 
 from clashleaders import app, cache
 from clashleaders.model import ClanPreCalculated

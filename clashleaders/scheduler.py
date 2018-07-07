@@ -16,7 +16,7 @@ from mongoengine import connect
 from clashleaders.batch.purge import delete_outdated, reset_stats
 from clashleaders.batch.similar_clan import compute_similar_clans
 from clashleaders.clash import api
-from clashleaders.clash.api import ApiException, ClanNotFound, TooManyRequests, ApiTimeout
+from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
 from clashleaders.model import Clan, ClanPreCalculated, Status
 
 bugsnag.configure(
