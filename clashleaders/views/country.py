@@ -13,4 +13,7 @@ def country_clans(code):
     for c in clans:
         c.description = transform_description(c.description)
 
-    return render_template('country.html', clans=clans, name=clans[0].location['name'])
+    if clans:
+        return render_template('country.html', clans=clans, name=clans[0].location['name'])
+    else:
+        return render_template('404.html'), 404
