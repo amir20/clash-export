@@ -12,7 +12,7 @@ export default {
     if (this.daysSpan < 3) {
       this.$snackbar.open({
         message:
-          "Hey stranger! This is the first time I am seeing your clan and so it will take a while to collect historical data. Come back again in a few days to see your updated stats.",
+          "Hey stranger! This is the first time I am seeing your clan. It will take a few days to collect historical data. Come back again to see your clan's activity.",
         type: "is-warning",
         position: "is-bottom-left",
         actionText: "Got it",
