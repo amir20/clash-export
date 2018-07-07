@@ -62,13 +62,18 @@ def clan_detail_xlsx(slug):
 @app.route("/clan/<slug>")
 def clan_detail_page(slug):
     try:
+        clan = None
         clan = ClanPreCalculated.find_by_slug(slug)
         update_page_views(clan)
         description = transform_description(clan.description)
         players = transform_players(clan.most_recent.players_data())
         start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
-        return render_template('error.html'), 404
+        if clan:
+            clan = Clan.fetch_and_save(clan.tag).update_calculations()
+            return clan_detail_page(clan.slug)
+        else:
+            return render_template('error.html'), 404
     else:
         return render_template('clan.html', clan=clan,
                                players=players,
