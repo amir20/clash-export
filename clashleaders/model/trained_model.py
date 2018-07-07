@@ -1,6 +1,6 @@
+import pickle
 from datetime import datetime
 
-import pickle
 from mongoengine import BinaryField, DateTimeField, Document, StringField
 
 
