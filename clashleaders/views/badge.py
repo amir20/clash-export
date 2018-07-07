@@ -35,7 +35,7 @@ def render_as_svg(template, tag):
     try:
         clan = ClanPreCalculated.find_by_tag(tag)
     except DoesNotExist:
-        return render_template('error.html'), 404
+        return render_template('404.html'), 404
     else:
         return render_template(template, clan=clan)
 
