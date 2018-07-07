@@ -213,8 +213,13 @@
   "@context": "http://schema.org",
   "@type": "Article",
   "headline": "{{ clan.name }}",
+  "description": "{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders",
   "datePublished": "{{ clan.created_on.isoformat() }}",
   "dateModified": "{{ clan.last_updated.isoformat() }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://www.clashleaders.com/"
+  },
   "image": [
     "{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}"
    ],
