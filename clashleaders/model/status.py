@@ -24,7 +24,8 @@ class Status(Document):
     def update_status(cls):
         twelve_hour_ago = datetime.now() - timedelta(hours=12)
         total_clans = ClanPreCalculated.objects.count()
-        ratio_indexed = 100 * (ClanPreCalculated.objects(last_updated__gt=twelve_hour_ago).count() / total_clans)
+        total_eligible_clans = ClanPreCalculated.objects(members__gte=5, week_delta__total_attack_wins__gt=0).count()
+        ratio_indexed = 100 * (ClanPreCalculated.objects(last_updated__gt=twelve_hour_ago, members__gte=5, week_delta__total_attack_wins__gt=0).count() / total_eligible_clans)
         Status.objects.update_one(
             set__ratio_indexed=ratio_indexed,
             set__total_clans=total_clans,
