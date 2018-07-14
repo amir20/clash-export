@@ -7,7 +7,7 @@
                         Welcome Back, Chief!
                     </h1>
                     <h2 class="subtitle">
-                        Let's continue with the last clan you viewed or start over again.
+                        I found your clan! Let's continue or start over again.
                     </h2>
                 </div>
             </section>
@@ -24,7 +24,9 @@
                         Hey, Chief!
                     </h1>
                     <h2 class="subtitle">
-                        Welcome to Clash Leaders. Let's try to find your clan by tag or name first.
+                        Welcome to Clash Leaders. This website shows trending clans in Clash of Clans game. 
+                        Clan achievements can be exported to a spreadsheet or compared to historical data over time. 
+                        Let's start by finding your clan first.
                     </h2>
                 </div>
             </section>
