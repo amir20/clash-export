@@ -1,4 +1,5 @@
 import re
+from flask import escape
 
 URL_LINK_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[/\w]*)",
                             flags=re.IGNORECASE)
@@ -19,7 +20,7 @@ def lookup(token):
     if link:
         return link
 
-    return token
+    return escape(token)
 
 
 def reddit_link(token):
