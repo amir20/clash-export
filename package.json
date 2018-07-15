@@ -25,7 +25,7 @@
     "mini-css-extract-plugin": "^0.4.1",
     "moment": "^2.22.2",
     "node-sass": "^4.9.2",
-    "optimize-css-assets-webpack-plugin": "^4.0.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-custom-properties": "^7.0.0",
     "postcss-font-magician": "^2.2.1",
@@ -49,6 +49,7 @@
     "concurrently": "^3.6.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
+    "postcss-safe-parser": "^3.0.1",
     "prettier": "^1.13.7"
   },
   "scripts": {
