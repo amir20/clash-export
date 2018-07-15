@@ -35,6 +35,16 @@
                         <p class="title">{{ "{:.2f}".format(ratio_indexed) }}%</p>
                     </div>
                 </div>
+                <div class="tile is-parent is-vertical">
+                    <div class="tile is-child box">
+                        <p class="heading">Total Active Players</p>
+                        <p class="title">{{ "{:,}".format(total_active_players) }}</p>
+                    </div>
+                    <div class="tile is-child box">
+                        <p class="heading">Total Active Clans</p>
+                        <p class="title">{{ "{:,}".format(total_active_clans) }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
