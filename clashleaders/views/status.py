@@ -15,5 +15,7 @@ def status():
     return render_template('status.html',
                            uptime_ratio=uptime_ratio,
                            total_clans=stats.total_clans,
+                           total_active_clans=stats.total_active_clans,
                            ratio_indexed=stats.ratio_indexed,
-                           total_players=stats.total_members)
+                           total_players=stats.total_members,
+                           total_active_players=stats.total_active_members)
