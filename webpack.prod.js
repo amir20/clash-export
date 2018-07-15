@@ -17,7 +17,7 @@ module.exports = merge(common, {
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessorOptions: {
-          safe: true
+          parser: require("postcss-safe-parser")
         }
       })
     ]
