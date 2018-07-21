@@ -7,7 +7,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>{% block title %}Trending Clash of Clans Leaderboards{% endblock %} | Clash Leaders</title>
-
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api-assets.clashofclans.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles-compiled.css')) }}">
     {% block meta %}
     <meta name=”description” content="Clash Leaders shows trending clans in Clash of Clans game. Clan achievements can be exported to a spreadsheet and compared to historical data over time.">
     <meta name="keywords" content="clash of clans, export, excel, achievements, Amir Raminfar, download">
@@ -23,7 +25,7 @@
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88927228-3"></script>
     <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-    <script defer src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch,Set&amp;unknown=polyfill"></script>    
+    <script defer src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch,Set&amp;unknown=polyfill"></script>
     <script defer src="{{ url_for('static', filename=manifest_path('vendors.js')) }}"></script>
     <script defer src="{{ url_for('static', filename=manifest_path('common.js')) }}"></script>
     <script>{{ inline_path("styles-compiled.js") | safe }}</script> {% block scripts %} {% endblock %}
@@ -47,8 +49,6 @@
 
     <link rel="icon" type="image/png" sizes="200x200" href="/static/images/logo.png">
     <link rel="apple-touch-icon" type="image/png" sizes="200x200" href="{{ url_for('static', filename='images/logo.png') }}">
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=manifest_path('styles-compiled.css')) }}">
 </head>
 
 <body class="{{ request.endpoint }}">
