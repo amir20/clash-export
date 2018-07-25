@@ -244,7 +244,7 @@
 </script>
 <script defer src="{{ url_for('static', filename=manifest_path('details-page.js')) }}"></script> {% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
 <meta name="twitter:card" content="summary">
-<meta name=”description” content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
+<meta name="description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders">
 <meta property="og:image" content="{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}">
