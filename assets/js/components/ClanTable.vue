@@ -113,6 +113,10 @@ export default {
     & tr.is-selected {
       background-color: #555;
     }
+
+    tr.detail .detail-container {
+      padding: 0;
+    }
   }
 
   & /deep/ table {

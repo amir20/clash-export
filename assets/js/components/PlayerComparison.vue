@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="component">
     <div class="media" v-if="player">
       <figure class="media-left">
         <p class="image is-64x64" v-if="player.league">
@@ -146,6 +146,16 @@ export default {
 </script>
 
 <style scoped>
+.component {
+  padding: 1em;
+
+  @media screen and (max-width: 769px) {
+    & {
+      padding: 1em 0;
+    }
+  }
+}
+
 .player-comparison {
   position: relative;
   width: calc(100vw - 4em);
