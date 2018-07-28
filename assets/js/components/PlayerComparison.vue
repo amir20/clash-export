@@ -1,6 +1,18 @@
 <template>
   <div>
-    <p class="title">{{ playerData.name.value }}</p>
+    <div class="media" v-if="player">
+      <figure class="media-left">
+        <p class="image is-64x64">
+          <img :src="player.league.iconUrls.small" :alt="player.tag">
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+          <h2 class="title is-marginless">{{ player.name }}</h2>
+          <small class="subtitle">{{ player.league.name }}</small>
+        </div>
+      </div>
+    </div>
     <div ref="chart" class="player-comparison"></div>
   </div>
 </template>
@@ -14,7 +26,13 @@ import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 export default {
   props: ["playerData"],
   data() {
-    return { chart: null };
+    return {
+      chart: null,
+      player: null
+    };
+  },
+  created() {
+    this.fetchPlayer();
   },
   mounted() {
     this.chart = new Chartist.Bar(
@@ -43,6 +61,19 @@ export default {
       this.chart.update({
         series: this.series
       });
+    },
+    async fetchPlayer() {
+      try {
+        this.player = await (await fetch(
+          `/clan/${this.tag.replace(
+            "#",
+            ""
+          )}/${this.playerData.tag.value.replace("#", "")}.json`
+        )).json();
+      } catch (e) {
+        console.error(e);
+        bugsnagClient.notify(e);
+      }
     }
   },
   watch: {
@@ -63,7 +94,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["similarClansAvg", "clanStats", "savedClanStats"]),
+    ...mapState(["similarClansAvg", "clanStats", "savedClanStats", "tag"]),
     series() {
       const s = [];
       s.push({
