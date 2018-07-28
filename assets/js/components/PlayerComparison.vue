@@ -2,14 +2,14 @@
   <div>
     <div class="media" v-if="player">
       <figure class="media-left">
-        <p class="image is-64x64">
+        <p class="image is-64x64" v-if="player.league">
           <img :src="player.league.iconUrls.small" :alt="player.tag">
         </p>
       </figure>
       <div class="media-content">
         <div class="content">
           <h2 class="title is-marginless">{{ player.name }}</h2>
-          <small class="subtitle">{{ player.league.name }}</small>
+          <small class="subtitle" v-if="player.league">{{ player.league.name }}</small>
         </div>
       </div>
     </div>
