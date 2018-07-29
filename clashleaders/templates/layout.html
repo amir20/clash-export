@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88927228-3"></script>
-    <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+    <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>    
     <script defer src="{{ url_for('static', filename=manifest_path('vendors.js')) }}"></script>
     <script defer src="{{ url_for('static', filename=manifest_path('common.js')) }}"></script>
     <script>{{ inline_path("styles-compiled.js") | safe }}</script> {% block scripts %} {% endblock %}
