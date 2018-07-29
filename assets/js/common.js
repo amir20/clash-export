@@ -1,3 +1,4 @@
+import "whatwg-fetch";
 import Vue from "vue";
 import Buefy from "buefy";
 import bugsnag from "./bugsnag";
