@@ -193,7 +193,7 @@ const convertToMap = (header, matrix) => {
   });
 };
 
-const isNonNumericColumns = key => ["tag", "name"].includes(key);
+const isNonNumericColumns = key => key == "tag" || key == "name";
 
 export default new Vuex.Store({
   strict: true,
