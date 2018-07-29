@@ -25,7 +25,6 @@
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88927228-3"></script>
     <script defer src="//use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-    <script defer src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise,fetch,Set&amp;unknown=ignore"></script>
     <script defer src="{{ url_for('static', filename=manifest_path('vendors.js')) }}"></script>
     <script defer src="{{ url_for('static', filename=manifest_path('common.js')) }}"></script>
     <script>{{ inline_path("styles-compiled.js") | safe }}</script> {% block scripts %} {% endblock %}
