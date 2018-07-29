@@ -4,6 +4,7 @@ const common = require("./webpack.common.js");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = merge(common, {
   mode: "production",
@@ -28,6 +29,9 @@ module.exports = merge(common, {
     }),
     new MiniCssExtractPlugin({
       filename: "css/[name].[chunkhash].css"
+    }),
+    new CompressionPlugin({
+      test: /\.js$|\.css$|\.map$|\.svg$/
     })
   ],
   output: {
