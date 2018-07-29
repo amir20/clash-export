@@ -8,8 +8,6 @@ import moment from "moment";
 
 Vue.use(Vuex);
 
-const nonNumericColumns = new Set(["tag", "name"]);
-
 const state = {
   tag: null,
   loading: true,
@@ -138,7 +136,7 @@ const getters = {
       return clan[0].map((column, index) => ({
         label: column,
         field: camelCase(column),
-        numeric: !nonNumericColumns.has(camelCase(column))
+        numeric: !isNonNumericColumns(camelCase(column))
       }));
     } else {
       return [];
@@ -167,7 +165,7 @@ const getters = {
         row,
         (map, value, column) => {
           const delta =
-            previousRow && !nonNumericColumns.has(column)
+            previousRow && !isNonNumericColumns(column)
               ? value - previousRow[column]
               : 0;
           map[column] = { value, delta };
@@ -194,6 +192,8 @@ const convertToMap = (header, matrix) => {
     );
   });
 };
+
+const isNonNumericColumns = key => ["tag", "name"].includes(key);
 
 export default new Vuex.Store({
   strict: true,
