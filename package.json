@@ -33,6 +33,7 @@
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.6",
     "postcss-safe-parser": "^4.0.1",
+    "promise-polyfill": "^8.0.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "svg-url-loader": "^2.3.2",
