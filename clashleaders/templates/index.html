@@ -1,14 +1,17 @@
 {% from 'country-leaderboard.html' import country_leaderboard %} {% from 'leaderboard.html' import leaderboard %} {% extends "layout.html"
 %} {% block body %}
 <section class="section hero is-light">
-    <div class="container">
+    <div class="container" id="app">
         <div class="columns is-centered is-vcentered">
             <div class="column is-3 is-hidden-mobile">
                 <img src="{{ url_for('static', filename='images/strongman.png') }}" alt="Clash of Clan's Strongman">
             </div>
-            <div class="column" id="home">
-                <Home></Home>
+            <div class="column">
+                <home></home>
             </div>
+        </div>
+        <div>
+            <trophy-distribution></trophy-distribution>
         </div>
 
         <nav class="level">
@@ -95,6 +98,9 @@
    {% endfor %}
   ]
 }
+</script>
+<script>
+    window.__DISTRIBUTION__ = {{ trophy_distribution | tojson | safe }};
 </script>
 <script defer src="{{ url_for('static', filename=manifest_path('index.js')) }}"></script>
 {% endblock %}{% block nav_class %}is-light{% endblock %}
