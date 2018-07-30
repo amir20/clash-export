@@ -29,7 +29,8 @@ def index():
                            most_trophies=leaderboard('week_delta.avg_trophies'),
                            avg_bh_level=leaderboard('avg_bh_level'),
                            most_active_country=aggregate_by_country('week_delta.avg_attack_wins'),
-                           most_trophies_country=aggregate_by_country('clanPoints')
+                           most_trophies_country=aggregate_by_country('clanPoints'),
+                           trophy_distribution=trophy_distribution()
                            )
 
 
@@ -43,3 +44,17 @@ def aggregate_by_country(score_column="week_delta.avg_attack_wins"):
     aggregated = list(ClanPreCalculated.objects(location__countryCode__ne=None).aggregate(group, sort))
     aggregated = [{'code': c['_id'].lower(), 'name': COUNTRIES[c['_id']]['name'], 'score': c['score']} for c in aggregated[:10]]
     return aggregated
+
+
+def trophy_distribution():
+    counts = list(ClanPreCalculated.objects.aggregate({
+        '$group': {
+            '_id': {'$subtract': ['$clanPoints', {'$mod': ['$clanPoints', 500]}]},
+            'count': {'$sum': 1}}},
+        {'$sort': {'_id': 1}}
+    ))
+
+    labels = [c['_id'] for c in counts]
+    values = [c['count'] for c in counts]
+
+    return dict(labels=labels, values=values)

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Buefy from "buefy";
 import Home from "./components/Home";
+import TrophyDistribution from "./components/TrophyDistribution";
 import bugsnag from "./bugsnag";
 
 bugsnag(Vue);
@@ -8,8 +9,9 @@ bugsnag(Vue);
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
 new Vue({
-  el: "#home",
+  el: "#app",
   components: {
-    Home
+    Home,
+    TrophyDistribution
   }
 });
