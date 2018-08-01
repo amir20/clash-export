@@ -39,7 +39,7 @@ def update_single_clan():
     global tags_indexed
     twelve_hour_ago = datetime.now() - timedelta(hours=12)
     try:
-        query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago, members__gte=5, week_delta__total_attack_wins__gt=0).no_cache()
+        query_set = ClanPreCalculated.objects(last_updated__lte=twelve_hour_ago, members__gte=5, week_delta__total_attack_wins__ne=0).no_cache()
         total = query_set.count()
         clan = query_set.first()
         if clan:
