@@ -2,7 +2,7 @@
   "name": "clashleaders",
   "version": "1.0.0",
   "dependencies": {
-    "autoprefixer": "^9.0.1",
+    "autoprefixer": "^9.0.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -10,7 +10,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-runtime": "^6.26.0",
     "buefy": "^0.6.6",
-    "bugsnag-js": "^4.7.2",
+    "bugsnag-js": "^4.7.3",
     "bugsnag-vue": "^1.0.1",
     "bulma": "^0.7.1",
     "bulma-tooltip": "^2.0.1",
