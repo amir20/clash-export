@@ -34,7 +34,7 @@ class Status(Document):
             set__total_active_clans=total_eligible_clans,
             set__last_updated=datetime.now(),
             set__total_members=ClanPreCalculated.objects.sum('members'),
-            set__total_active_members=ClanPreCalculated.objects(members__gte=5, week_delta__total_attack_wins__gt=0).sum('members'),
+            set__total_active_members=ClanPreCalculated.objects(members__gte=5, week_delta__total_attack_wins__ne=0).sum('members'),
             set__total_countries=len(ClanPreCalculated.objects.distinct('location.countryCode')),
             set__popular_clans=ClanPreCalculated.objects.order_by('-page_views').limit(10),
             set__top_countries=aggregate_by_country("week_delta.avg_attack_wins"),
