@@ -52,7 +52,6 @@ pytest-freezegun = "*"
 pytest-cov = "*"
 xlrd = "*"
 aioresponses = "*"
-"bump2version" = "*"
 
 [requires]
 python_version = "3.6.5"
