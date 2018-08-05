@@ -55,6 +55,7 @@ export default {
       this.$emit("error");
     }
     this.$emit("update:foundClan", this.data);
+    this.$eventHub.$emit("found-clan", this.data);
     this.loading = false;
   }
 };

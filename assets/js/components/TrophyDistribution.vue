@@ -8,13 +8,18 @@ import { bugsnagClient } from "../bugsnag";
 
 export default {
   data() {
-    return { data: null, chart: null };
+    return { data: null, chart: null, clan: null };
   },
   created() {
     this.data = window.__DISTRIBUTION__;
+    this.$eventHub.$on("found-clan", this.onClanFound);
+  },
+  beforeDestroy() {
+    this.$eventHub.$off("found-clan");
   },
   mounted() {
-    this.chart = new Chartist.Bar(
+    const { labels } = this.data;
+    const chart = new Chartist.Bar(
       this.$refs.chart,
       {
         labels: this.data.labels,
@@ -22,8 +27,11 @@ export default {
       },
       {
         axisX: {
-          showLabel: false,
-          showGrid: false
+          showLabel: true,
+          showGrid: false,
+          labelInterpolationFnc(value, index) {
+            return index % 20 === 0 ? value.toLocaleString() : null;
+          }
         },
         axisY: {
           showLabel: true,
@@ -35,11 +43,17 @@ export default {
       }
     );
 
-    this.chart.on("draw", function(data) {
+    chart.on("created", () => {
+      chart.detach();
+      this.highlightClan(this.clan);
+    });
+
+    chart.on("draw", data => {
       if (data.type == "bar") {
+        data.element.attr({ label: labels[data.seriesIndex] });
         data.element.animate({
           y2: {
-            dur: "400ms",
+            dur: "350ms",
             from: data.y1,
             to: data.y2,
             easing: Chartist.Svg.Easing.easeOutQuint
@@ -47,9 +61,25 @@ export default {
         });
       }
     });
-    this.chart.on("created", function() {
-      chart.detach(); // it will detach resize and media query listeners
-    });
+
+    this.chart = chart;
+  },
+  methods: {
+    onClanFound(clan) {
+      this.clan = clan;
+      this.highlightClan(this.clan);
+    },
+    highlightClan(clan) {
+      if (clan) {
+        const label = clan.clanPoints - (clan.clanPoints % 500);
+        const bar = this.$refs.chart.querySelector(
+          `line[label='${label}'].ct-bar`
+        );
+        if (bar) {
+          bar.classList.add("highlight");
+        }
+      }
+    }
   }
 };
 </script>
@@ -62,7 +92,10 @@ export default {
   & /deep/ .ct-bar {
     stroke-width: 6px;
     stroke: #bbb;
-    stroke-linecap: round;
+
+    &.highlight {
+      stroke: #ff3860;
+    }
   }
 }
 </style>
