@@ -10,6 +10,7 @@ from mongoengine import connect
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
+SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -29,7 +30,6 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 import clashleaders.views  # noqa
 
-SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 MANIFEST_FILE = os.path.join(SITE_ROOT, "static", "manifest.json")
 
 
