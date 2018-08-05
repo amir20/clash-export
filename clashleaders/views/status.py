@@ -1,6 +1,9 @@
-from flask import render_template
+import os
+import json
 
-from clashleaders import app, cache
+from flask import render_template, jsonify
+
+from clashleaders import app, cache, SITE_ROOT
 from clashleaders.clash import uptime
 from clashleaders.model import Status
 
@@ -19,3 +22,13 @@ def status():
                            ratio_indexed=stats.ratio_indexed,
                            total_players=stats.total_members,
                            total_active_players=stats.total_active_members)
+
+
+@app.route("/version.json")
+def version():
+    with open(os.path.join(SITE_ROOT, "..", "package.json")) as f:
+        data = json.load(f)
+    version = data['version']
+    commit = os.getenv('SOURCE_COMMIT')
+
+    return jsonify(dict(version=version, commit=commit))
