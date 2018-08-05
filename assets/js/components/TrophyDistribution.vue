@@ -4,11 +4,11 @@
 
 <script>
 import Chartist from "chartist";
-import { bugsnagClient } from "../bugsnag";
+import debounce from "lodash/debounce";
 
 export default {
   data() {
-    return { data: null, chart: null, clan: null };
+    return { data: null, chart: null, clan: null, started: false };
   },
   created() {
     this.data = window.__DISTRIBUTION__;
@@ -44,27 +44,32 @@ export default {
     );
 
     chart.on("created", () => {
-      chart.detach();
       this.highlightClan(this.clan);
     });
 
     chart.on("draw", data => {
       if (data.type == "bar") {
+        this.animationStarted();
+        if (!this.started) {
+          data.element.animate({
+            y2: {
+              dur: "350ms",
+              from: data.y1,
+              to: data.y2,
+              easing: Chartist.Svg.Easing.easeOutQuint
+            }
+          });
+        }
         data.element.attr({ label: labels[data.seriesIndex] });
-        data.element.animate({
-          y2: {
-            dur: "350ms",
-            from: data.y1,
-            to: data.y2,
-            easing: Chartist.Svg.Easing.easeOutQuint
-          }
-        });
       }
     });
 
     this.chart = chart;
   },
   methods: {
+    animationStarted: debounce(function() {
+      this.started = true;
+    }, 1000),
     onClanFound(clan) {
       this.clan = clan;
       this.highlightClan(this.clan);
