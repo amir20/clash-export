@@ -31,8 +31,6 @@ RUN pip install --upgrade pip \
 COPY ./Pipfile* /app/
 
 ARG plugins=http.expires
-ARG SOURCE_COMMIT=DIRTY
-ENV SOURCE_COMMIT $SOURCE_COMMIT
 
 # Install caddy and clean up
 RUN apt-get update \
@@ -62,6 +60,8 @@ COPY --from=builder /build/clashleaders/static /app/clashleaders/static
 
 RUN pip install -e .
 ENV FLASK_APP=clashleaders
+ARG SOURCE_COMMIT=DIRTY
+ENV SOURCE_COMMIT $SOURCE_COMMIT
 
 VOLUME /root/.caddy
 EXPOSE 80 443
