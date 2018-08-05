@@ -8,6 +8,8 @@ bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
+Vue.prototype.$eventHub = new Vue();
+
 new Vue({
   el: "#app",
   components: {
