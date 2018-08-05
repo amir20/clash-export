@@ -31,6 +31,8 @@ RUN pip install --upgrade pip \
 COPY ./Pipfile* /app/
 
 ARG plugins=http.expires
+ARG SOURCE_COMMIT=DIRTY
+ENV SOURCE_COMMIT $SOURCE_COMMIT
 
 # Install caddy and clean up
 RUN apt-get update \
