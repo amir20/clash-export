@@ -11,10 +11,10 @@
                     </h2>
                 </div>
             </section>
-          <card :tag="savedTag" @error="onClanError" :foundClan.sync="foundClan"></card>
+          <card :tag="savedTag" @error="onClanError"></card>
           <p class="buttons">
             <button type="reset" class="button is-warning is-large">Change Clan</button>
-            <a :href="`/clan/${foundClan.slug}`" class="button is-success is-large" :disabled="foundClan.slug == null">Continue &rsaquo;</a>
+            <a :href="`/clan/${foundClan ? foundClan.slug : ''}`" class="button is-success is-large" :disabled="foundClan == null">Continue &rsaquo;</a>
           </p>
         </template>
         <template v-else>
@@ -32,7 +32,7 @@
             </section>
             <div class="column field">
                 <p class="control">
-                    <search-box :selected-tag.sync="savedTag" size="is-large"></search-box>
+                    <search-box :selected-tag.sync="selectedTag" size="is-large"></search-box>
                 </p>
             </div>
         </template>
@@ -42,8 +42,7 @@
 <script>
 import Card from "./ClanCard";
 import SearchBox from "./SearchBox";
-
-const STORAGE_KEY = "lastTag";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   components: {
@@ -52,25 +51,26 @@ export default {
   },
   data() {
     return {
-      savedTag: null,
-      foundClan: { slug: null }
+      selectedTag: String
     };
   },
   created() {
-    this.savedTag = localStorage.getItem(STORAGE_KEY);
     if (this.savedTag) {
       console.log(`Found saved tag value [${this.savedTag}].`);
       this.prefetch(`${this.url}.json`);
       this.prefetch(`${this.url}.json?daysAgo=7`);
     }
   },
+  computed: {
+    ...mapState(["savedTag"])
+  },
   methods: {
+    ...mapMutations(["setSavedTag", "clearSavedTag"]),
     onReset() {
-      this.savedTag = null;
-      this.tag = null;
+      this.clearSavedTag();
     },
     onClanError() {
-      this.savedTag = null;
+      this.clearSavedTag();
     },
     prefetch(url) {
       const link = document.createElement("link");
@@ -81,20 +81,15 @@ export default {
     }
   },
   computed: {
+    ...mapState(["foundClan", "savedTag"]),
     url() {
       return this.savedTag ? `/clan/${this.savedTag.replace("#", "")}` : "";
     }
   },
   watch: {
-    savedTag(newValue) {
-      try {
-        if (newValue == null) {
-          localStorage.removeItem(STORAGE_KEY);
-        } else {
-          localStorage.setItem(STORAGE_KEY, newValue);
-        }
-      } catch (e) {
-        // Do nothing as some browsers block this in private mode
+    selectedTag(newValue) {
+      if (newValue) {
+        this.setSavedTag(newValue);
       }
     }
   }

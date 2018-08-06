@@ -5,17 +5,14 @@
 <script>
 import Chartist from "chartist";
 import debounce from "lodash/debounce";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   data() {
-    return { data: null, chart: null, clan: null, started: false };
+    return { data: null, chart: null, started: false };
   },
   created() {
     this.data = window.__DISTRIBUTION__;
-    this.$eventHub.$on("found-clan", this.onClanFound);
-  },
-  beforeDestroy() {
-    this.$eventHub.$off("found-clan");
   },
   mounted() {
     const { labels } = this.data;
@@ -44,7 +41,7 @@ export default {
     );
 
     chart.on("created", () => {
-      this.highlightClan(this.clan);
+      this.highlightClan(this.foundClan);
     });
 
     chart.on("draw", data => {
@@ -70,11 +67,11 @@ export default {
     animationStarted: debounce(function() {
       this.started = true;
     }, 1000),
-    onClanFound(clan) {
-      this.clan = clan;
-      this.highlightClan(this.clan);
-    },
     highlightClan(clan) {
+      const oldBar = this.$refs.chart.querySelector("line.ct-bar.highlight");
+      if (oldBar) {
+        oldBar.classList.remove("highlight");
+      }
       if (clan) {
         const label = clan.clanPoints - (clan.clanPoints % 500);
         const bar = this.$refs.chart.querySelector(
@@ -85,6 +82,14 @@ export default {
         }
       }
     }
+  },
+  watch: {
+    foundClan(newValue) {
+      this.highlightClan(newValue);
+    }
+  },
+  computed: {
+    ...mapState(["foundClan"])
   }
 };
 </script>
