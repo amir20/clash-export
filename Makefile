@@ -28,4 +28,12 @@ test:
 start:
 	@npm start
 
+.PHONY: release_patch
+release_patch:
+	@npm version patch
+
+.PHONY: release_minor
+release_minor:
+	@npm version minor
+
 
