@@ -7,7 +7,7 @@ deploy: push
 
 .PHONY: build
 build:
-	docker-compose build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD)
+	docker-compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD)
 
 .PHONY: push
 push: TAG=$(shell cat package.json | jq -r .version)
