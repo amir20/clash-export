@@ -26,6 +26,7 @@
 
 <script>
 import { bugsnagClient } from "../bugsnag";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   props: ["tag", "foundClan"],
@@ -54,9 +55,11 @@ export default {
       bugsnagClient.notify(e);
       this.$emit("error");
     }
-    this.$emit("update:foundClan", this.data);
-    this.$eventHub.$emit("found-clan", this.data);
+    this.setFoundClan(this.data);
     this.loading = false;
+  },
+  methods: {
+    ...mapMutations(["setFoundClan"])
   }
 };
 </script>
