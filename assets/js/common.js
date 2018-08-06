@@ -1,5 +1,4 @@
-import "whatwg-fetch";
-import "promise-polyfill/src/polyfill";
+import "./polyfill";
 import Vue from "vue";
 import Buefy from "buefy";
 import bugsnag from "./bugsnag";
