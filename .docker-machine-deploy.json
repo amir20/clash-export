@@ -1,7 +1,0 @@
-{
-  "machine": "clashstats",
-  "mode": "compose",
-  "build": "local",
-  "name": "clashstats",
-  "additional-compose-files": ["docker-compose.production.yml"]
-}
