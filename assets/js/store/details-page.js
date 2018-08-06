@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
-import meanBy from "lodash/meanBy";
 import moment from "moment";
 
 Vue.use(Vuex);
