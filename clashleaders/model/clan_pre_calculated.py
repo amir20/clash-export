@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from mongoengine import BooleanField, DateTimeField, DictField, Document, DoesNotExist, EmbeddedDocument, EmbeddedDocumentField, \
-    FloatField, IntField, ListField, ReferenceField, StringField
+    FloatField, IntField, ListField, ReferenceField, StringField, Q
 
 from clashleaders.clash.api import clan_warlog
 from clashleaders.model.clan import Clan
@@ -92,102 +92,28 @@ class ClanPreCalculated(Document):
 
     meta = {
         'indexes': [
-            {
-                'fields': ['$name', "$tag"],
-                'default_language': 'english',
-                'weights': {'name': 1, 'tag': 10}
-            },
             'last_updated',
             'page_views',
-            'name',
             'slug',
             'tag',
             'members',
             'clanPoints',
             'clanVersusPoints',
-            'total_donations',
-            'total_attack_wins',
-            'total_versus_wins',
-
-            'location.id',
-            'location.name',
             'location.countryCode',
-            'location.isCountry',
-
             'isWarLogPublic',
-
             'cluster_label',
             'verified_accounts',
-
-            # 'warWinStreak',
-            # 'warWins',
-            # 'warTies',
-            # 'warLosses',
-
-            # 'avg_donations',
-            # 'avg_gold_grab',
-            # 'avg_elixir_grab',
-            # 'avg_de_grab',
-            # 'avg_war_stars',
-            # 'avg_th_level',
-            # 'avg_bh_level',
-            # 'avg_xp_level',
-            # 'avg_best_trophies',
-            # 'avg_trophies',
-            # 'avg_bh_trophies',
-            # 'avg_attack_wins',
-            # 'avg_versus_wins',
-
-            # 'season_delta.avg_donations',
-            # 'season_delta.avg_donations_received',
-            # 'season_delta.avg_gold_grab',
-            # 'season_delta.avg_elixir_grab',
-            # 'season_delta.avg_de_grab',
-            # 'season_delta.avg_war_stars',
-            # 'season_delta.avg_th_level',
-            # 'season_delta.avg_bh_level',
-            # 'season_delta.avg_xp_level',
-            # 'season_delta.avg_best_trophies',
-            # 'season_delta.avg_trophies',
-            # 'season_delta.avg_bh_trophies',
-            # 'season_delta.avg_attack_wins',
-            # 'season_delta.avg_versus_wins',
-
-            # 'season_delta.total_trophies',
-            # 'season_delta.total_bh_trophies',
-            # 'season_delta.total_gold_grab',
-            # 'season_delta.total_elixir_grab',
-            # 'season_delta.total_de_grab',
-            # 'season_delta.total_donations',
-            # 'season_delta.total_attack_wins',
-            # 'season_delta.total_versus_wins',
-
+            'warWinStreak',
+            'avg_bh_level',
             'week_delta.avg_donations',
-            'week_delta.avg_donations_received',
             'week_delta.avg_gold_grab',
-            'week_delta.avg_elixir_grab',
-            'week_delta.avg_de_grab',
-            'week_delta.avg_war_stars',
-            'week_delta.avg_th_level',
-            'week_delta.avg_bh_level',
-            'week_delta.avg_xp_level',
-            'week_delta.avg_best_trophies',
             'week_delta.avg_trophies',
-            'week_delta.avg_bh_trophies',
             'week_delta.avg_attack_wins',
             'week_delta.avg_versus_wins',
-
-            'week_delta.total_trophies',
-            'week_delta.total_bh_trophies',
-            'week_delta.total_gold_grab',
-            'week_delta.total_elixir_grab',
-            'week_delta.total_de_grab',
-            'week_delta.total_donations',
             'week_delta.total_attack_wins',
-            'week_delta.total_versus_wins',
 
             # Worker indexes
-            ['last_updated', 'members', 'week_delta.total_attack_wins']
+            ['week_delta.total_attack_wins', 'last_updated', 'members'],
         ]
     }
 
@@ -222,3 +148,11 @@ class ClanPreCalculated(Document):
     def find_by_tag(cls, tag):
         tag = "#" + tag.lstrip("#").upper()
         return cls.objects.get(tag=tag)
+
+    @classmethod
+    def active_clans(cls, update_before=None):
+        query = Q(members__gte=5) & Q(week_delta__total_attack_wins__ne=0)
+        if update_before:
+            query = Q(last_updated__lte=update_before) & query
+
+        return cls.objects(query).no_cache()
