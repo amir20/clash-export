@@ -8,8 +8,8 @@
       </figure>
       <div class="media-content">
         <div class="content">
-          <h2 class="title is-marginless">{{ player.name }}</h2>
-          <small class="subtitle" v-if="player.league">{{ player.league.name }}</small>
+          <h2 class="title is-marginless">{{ player.name }} <small class="subtitle is-6">{{ player.role | role }}</small></h2>
+          <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
         </div>
       </div>
     </div>
@@ -22,6 +22,13 @@ import Chartist from "chartist";
 import "chartist-plugin-legend";
 import { bugsnagClient } from "../bugsnag";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+
+const role = {
+  coLeader: "Co-leader",
+  leader: "Leader",
+  admin: "Elder",
+  member: "Member"
+};
 
 export default {
   props: ["playerData"],
@@ -55,6 +62,11 @@ export default {
         }
       }
     );
+  },
+  filters: {
+    role(value) {
+      return role[value];
+    }
   },
   methods: {
     update() {
