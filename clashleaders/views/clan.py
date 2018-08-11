@@ -53,7 +53,7 @@ def clan_detail_page(slug):
         clan = ClanPreCalculated.find_by_slug(slug)
         update_page_views(clan)
         description = transform_description(clan.description)
-        players = transform_players(clan.most_recent.players_data())
+        players = transform_players(clan.players)
         start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         if clan:
