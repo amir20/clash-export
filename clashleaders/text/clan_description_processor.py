@@ -1,7 +1,7 @@
 import re
 from flask import escape
 
-URL_LINK_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|gl|ly|co|me|gd)[/\w]*)",
+URL_LINK_REGEX = re.compile(r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|ga|gl|ly|co|me|gd|xyz)[/\w]*)",
                             flags=re.IGNORECASE)
 
 REDDIT_LINK_REGEX = re.compile(r"((reddit.com)?(/r/\w+))", flags=re.IGNORECASE)
