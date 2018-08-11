@@ -5,7 +5,7 @@ from user_agents import parse
 
 from clashleaders import app, cache
 from clashleaders.clash import api, excel
-from clashleaders.clash.transformer import to_short_clan, transform_players
+from clashleaders.clash.transformer import transform_players
 from clashleaders.model import Clan, ClanPreCalculated, Status
 from clashleaders.text.clan_description_processor import transform_description
 
@@ -18,19 +18,6 @@ def inject_most_popular():
                 popular_countries=status.top_countries,
                 reddit_clans=status.reddit_clans
                 )
-
-
-@app.route("/search.json")
-def search():
-    query = request.args.get('q')
-    try:
-        clan = api.find_clan_by_tag(query)
-        results = [Clan(**clan)]
-    except api.ClanNotFound:
-        results = [Clan(**c) for c in api.search_by_name(query, limit=6)]
-
-    results = sorted(results, key=lambda c: c.members, reverse=True)
-    return jsonify([to_short_clan(c)._asdict() for c in results])
 
 
 @app.route("/clan/<tag>.json")
@@ -146,7 +133,8 @@ def clan_chart(tag):
     resampled = df.resample('D').mean().dropna()
     labels = [k.strftime("%Y-%m-%d") for k in resampled.index.tolist()]
 
-    return jsonify(dict(labels=labels, points=list(resampled['points'].values), avg_gold=list(resampled['gold'].values)))
+    return jsonify(
+        dict(labels=labels, points=list(resampled['points'].values), avg_gold=list(resampled['gold'].values)))
 
 
 def clan_from_days_ago(days_ago, tag):
@@ -166,10 +154,13 @@ def update_page_views(clan):
 
 
 def find_similar_clans(clan):
-    less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by('-clanPoints').limit(4)
-    more = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clan.clanPoints).order_by('clanPoints').limit(2)
+    less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by(
+        '-clanPoints').limit(4)
+    more = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clan.clanPoints).order_by(
+        'clanPoints').limit(2)
 
     clans = sorted([*less, clan, *more], key=lambda c: c.clanPoints, reverse=True)[:5]
-    start_count = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clans[0].clanPoints).count() + 1
+    start_count = ClanPreCalculated.objects(cluster_label=clan.cluster_label,
+                                            clanPoints__gt=clans[0].clanPoints).count() + 1
 
     return start_count, clans
