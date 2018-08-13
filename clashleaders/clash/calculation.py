@@ -1,13 +1,11 @@
 from datetime import datetime
 
 import numpy as np
-import pandas as pd
 from mongoengine.errors import DoesNotExist
 from slugify import slugify
 
 import clashleaders.model
 from clashleaders.clustering.kmeans import predict_clans
-from .transformer import transform_players
 
 
 def update_calculations(clan):
@@ -78,7 +76,7 @@ def calculate_data(cpc):
     :param cpc:
     :return:
     """
-    df = to_data_frame(cpc.most_recent)
+    df = cpc.most_recent.to_data_frame()
 
     cpc.avg_donations = mean_single_column('Donations', df)
 
@@ -124,8 +122,9 @@ def calculate_week(cpc):
     :param cpc:
     :return:
     """
-    start_df = to_data_frame(clashleaders.model.Clan.from_now_with_tag(cpc.tag, days=7).first())
-    now_df = to_data_frame(cpc.most_recent)
+    start = clashleaders.model.Clan.from_now_with_tag(cpc.tag, days=7).first()
+    start_df = start.to_data_frame()
+    now_df = cpc.most_recent.to_data_frame()
 
     cpc.week_delta = calculate_delta(now_df, start_df)
 
@@ -136,8 +135,8 @@ def calculate_season(cpc):
     :param cpc:
     :return:
     """
-    start_df = to_data_frame(cpc.season_start)
-    now_df = to_data_frame(cpc.most_recent)
+    start_df = cpc.season_start.to_data_frame()
+    now_df = cpc.most_recent.to_data_frame()
 
     cpc.season_delta = calculate_delta(now_df, start_df)
 
@@ -213,18 +212,10 @@ def is_new_season(before, now):
     :param now:
     :return:
     """
-    before_df = to_data_frame(before)
-    now_df = to_data_frame(now)
+    before_df = before.to_data_frame()
+    now_df = now.to_data_frame()
 
     before_donations = before_df['Donations']
     now_donations = now_df['Donations']
 
     return before_donations.gt(now_donations).any()
-
-
-def to_data_frame(clan):
-    tf = transform_players(clan.players_data())
-    df = pd.DataFrame(data=tf, columns=tf[0])
-    df = df.set_index('Tag')
-    df = df.iloc[1:]
-    return df

@@ -6,9 +6,9 @@ from bson.objectid import ObjectId
 from mongoengine import BinaryField, DynamicDocument
 
 import clashleaders.clash.calculation
+import clashleaders.clash.transformer
 import clashleaders.model
 from clashleaders.clash import api
-from clashleaders.clash.calculation import to_data_frame
 
 
 class Clan(DynamicDocument):
@@ -31,6 +31,9 @@ class Clan(DynamicDocument):
 
     def players_data(self):
         return self.players if 'players' in self else decode_player_bytes(self.players_bytes)
+
+    def to_data_frame(self):
+        return clashleaders.clash.transformer.to_data_frame(self)
 
     @classmethod
     def from_now(cls, **kwargs):
@@ -66,7 +69,7 @@ class Clan(DynamicDocument):
         clan = Clan(**clan).save()
 
         try:
-            df = to_data_frame(clan)
+            df = clan.to_data_frame()
             clan['avg_gold_grab'] = df['Total Gold Grab'].mean()
             clan['avg_elixir_grab'] = df['Total Elixir Grab'].mean()
             clan['avg_de_grab'] = df['Total DE Grab'].mean()

@@ -8,8 +8,22 @@
       </figure>
       <div class="media-content">
         <div class="content">
-          <h2 class="title is-marginless">{{ player.name }} <small class="subtitle is-6">{{ player.role | role }}</small></h2>
-          <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
+          <div class="columns">
+            <div class="column">
+              <h2 class="title is-marginless">{{ player.name }} <small class="subtitle is-6">{{ player.role | role }}</small></h2>
+              <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
+            </div>
+            <div class="column is-narrow">
+              <div class="level">
+                <div class="level-item has-text-centered">
+                  <div>
+                    <div class="title">{{ (player.percentile * 100).toFixed(0) }}%</div>
+                    <div class="heading">Player Activity Percentile</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -160,6 +174,7 @@ export default {
 <style scoped>
 .component {
   padding: 1em;
+  width: calc(100vw - 1em);
 
   @media screen and (max-width: 769px) {
     & {
@@ -170,7 +185,6 @@ export default {
 
 .player-comparison {
   position: relative;
-  width: calc(100vw - 4em);
 
   & /deep/ .ct-bar {
     stroke-width: 20px;

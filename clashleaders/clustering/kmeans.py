@@ -45,4 +45,4 @@ def __save_model(name, model):
     trained_model.save()
 
 
-def __load_model(name): return clashleaders.model.TrainedModel.objects(name=name).first().model
+def __load_model(name): return clashleaders.model.TrainedModel.objects.get(name=name).model
