@@ -17,7 +17,7 @@
               <div class="level">
                 <div class="level-item has-text-centered">
                   <div>
-                    <div class="title">{{ (player.percentile * 100).toFixed(0) }}%</div>
+                    <div class="title">{{ (player.percentile * 100).toFixed(0) }} / 100</div>
                     <div class="heading">Player Activity Percentile</div>
                   </div>
                 </div>
