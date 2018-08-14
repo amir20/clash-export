@@ -35,4 +35,4 @@ def about():
 
 @cache.cached(timeout=90, key_prefix='changelog')
 def fetch_changelog():
-    return client.entries({'content_type': 'changelog'})
+    return list(client.entries({'content_type': 'changelog'}))
