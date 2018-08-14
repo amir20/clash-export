@@ -3,7 +3,7 @@ import Vue from "vue";
 import Buefy from "buefy";
 import bugsnag from "./bugsnag";
 import SearchBox from "./components/SearchBox";
-import Updates from "./components/Updates";
+import Changelog from "./components/Changelog";
 
 bugsnag(Vue);
 
@@ -13,7 +13,7 @@ new Vue({
   el: "header",
   components: {
     SearchBox,
-    Updates
+    Changelog
   },
   data() {
     return {

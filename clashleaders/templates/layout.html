@@ -33,6 +33,9 @@
         gtag('js', new Date());
         gtag('config', 'UA-88927228-3');
     </script>
+    <script>
+        window.__CHANGELOG__ = {{ changelog | tojson | safe }};
+    </script>
 
     <link rel="manifest" href="{{ url_for('static', filename='web-manifest.json') }}">
     <meta name="mobile-web-app-capable" content="yes">
@@ -148,7 +151,7 @@
 
                 </div>
                 <div class="navbar-end">
-                    <updates> </updates>
+                    <changelog> </changelog>
                     <div class="navbar-item nav-search-item">
                         <div class="field is-expanded">
                             <search-box :selected-tag.sync="selectedTag"></search-box>
