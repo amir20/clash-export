@@ -41,6 +41,8 @@ scipy = "*"
 Pympler = "*"
 uvloop = "*"
 cairosvg = "*"
+markdown = "*"
+contentful = "*"
 
 [dev-packages]
 pytest = "*"
