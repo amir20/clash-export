@@ -7,6 +7,7 @@ from bugsnag.flask import handle_exceptions
 from flask import Flask, json
 from flask_caching import Cache
 from mongoengine import connect
+from markdown import markdown
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
@@ -48,5 +49,10 @@ def inline_path(file):
         return re.sub(r'^//# sourceMappingURL=.*$', '', content, flags=re.MULTILINE)
 
 
+def first(list, i): return list[:i]
+
+
 app.add_template_global(manifest_path, 'manifest_path')
 app.add_template_global(inline_path, 'inline_path')
+app.add_template_filter(markdown, 'markdown')
+app.add_template_filter(first, 'first')
