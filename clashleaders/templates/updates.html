@@ -3,13 +3,13 @@
     <h1>Updates</h1>
     <ul>
         {% for item in changelog %}
-        <li class="media" id="{{ item.fields.slug }}">
+        <li class="media" id="{{ item.slug }}">
             <div class="media-content">
                 <div class="content">
                     <br>
-                    <h3 class="title is-4 is-marginless">{{ item.fields.title }} </h3>
-                    <small class="subtitle is-6" data-from-now="{{ item.sys.createdAt }}"></small>
-                    <br><br> {{ item.fields.text | markdown | safe }}
+                    <h3 class="title is-4 is-marginless">{{ item.title }} </h3>
+                    <small class="subtitle is-6" data-from-now="{{ item.created_at }}"></small>
+                    <br><br> {{ item.text | markdown | safe }}
                     <br>
                 </div>
             </div>

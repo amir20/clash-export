@@ -6,11 +6,11 @@
       </span>
   </a>
 
-  <b-dropdown-item custom v-for="item in items" :key="item.sys.id">
-      <strong>{{ item.fields.title }}</strong>
-      <span class="has-text-weight-light">{{ item.fields.summary }}</span>
+  <b-dropdown-item custom v-for="item in items" :key="item.id">
+      <strong>{{ item.title }}</strong>
+      <span class="has-text-weight-light">{{ item.summary }}</span>
       <br>
-      <a :href="`/updates#${item.fields.slug}`">Read More</a>
+      <a :href="`/updates#${item.slug}`">Read More</a>
   </b-dropdown-item>
 
   <b-dropdown-item separator></b-dropdown-item>
@@ -35,17 +35,17 @@ export default {
     return { items: [] };
   },
   created() {
-    this.items = this.data = window.__CHANGELOG__;
+    this.items = this.data = window.__UPDATES__;
   },
   mounted() {
-    if (localStorage.getItem(KEY) != this.items[0].sys.id) {
+    if (localStorage.getItem(KEY) != this.items[0].id) {
       this.showBadge();
     }
   },
   methods: {
     onMenuClick() {
       try {
-        localStorage.setItem(KEY, this.items[0].sys.id);
+        localStorage.setItem(KEY, this.items[0].id);
       } catch (e) {}
       this.hideBadge();
     },
