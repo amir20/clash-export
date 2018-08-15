@@ -16,7 +16,7 @@
   <b-dropdown-item separator></b-dropdown-item>
 
   <b-dropdown-item custom paddingless>
-    <a href="/updates" class="button is-text is-fullwidth is-small more">See all</a>
+    <a href="/updates" class="button is-text is-fullwidth">See all updates</a>
   </b-dropdown-item>
 </b-dropdown>
 </template>
