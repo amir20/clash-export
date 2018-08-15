@@ -10,7 +10,8 @@ client = contentful.Client('zmnodi6xws9d', '8017b7370aaf68e6caefc204d56fc6f2b3ce
 @app.context_processor
 def inject_changelog():
     logs = fetch_changelog()
-    return dict(updates=[{'id': e.id, 'slug': e.slug, 'summary': e.summary, 'createdAt': e.created_at} for e in logs])
+    updates = [{'id': e.id, 'slug': e.slug, 'title': e.title, 'summary': e.summary, 'createdAt': e.created_at} for e in logs]
+    return dict(updates=updates)
 
 
 @app.route("/updates")
