@@ -1,0 +1,20 @@
+{% extends "layout.html" %} {% block body %}
+<section class="container content section">
+    <h1>Updates</h1>
+    <ul>
+        {% for item in changelog %}
+        <li class="media" id="{{ item.fields.slug }}">
+            <div class="media-content">
+                <div class="content">
+                    <br>
+                    <h3 class="title is-4 is-marginless">{{ item.fields.title }} </h3>
+                    <small class="subtitle is-6" data-from-now="{{ item.sys.createdAt }}"></small>
+                    <br><br> {{ item.fields.text | markdown | safe }}
+                    <br>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}{% block title %}Updates{% endblock %}

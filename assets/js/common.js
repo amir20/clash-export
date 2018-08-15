@@ -4,6 +4,7 @@ import Buefy from "buefy";
 import bugsnag from "./bugsnag";
 import SearchBox from "./components/SearchBox";
 import Changelog from "./components/Changelog";
+import moment from "moment";
 
 bugsnag(Vue);
 
@@ -32,3 +33,7 @@ new Vue({
     }
   }
 });
+
+document
+  .querySelectorAll("[data-from-now]")
+  .forEach(i => (i.innerHTML = moment(i.dataset.fromNow).fromNow()));
