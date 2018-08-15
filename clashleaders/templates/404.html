@@ -2,7 +2,11 @@
 <main class="container section">
     <div class="columns is-centered is-vcentered section">
         <div class="column is-3 is-hidden-mobile">
-            <img src="{{ url_for('static', filename='images/oops.png') }}" alt="Barbarian">
+                <picture>
+                    <source srcset="{{ url_for('static', filename='images/oops.webp') }}" type="image/webp">
+                    <source srcset="{{ url_for('static', filename='images/oops.png') }}" type="image/png">
+                    <img src="{{ url_for('static', filename='images/oops.png') }}" alt="Barbarian">
+                </picture>
         </div>
         <div class="column">
             <section class="hero">

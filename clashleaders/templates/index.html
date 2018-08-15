@@ -4,7 +4,11 @@
     <div class="container" id="app">
         <div class="columns is-centered is-vcentered">
             <div class="column is-3 is-hidden-mobile">
-                <img src="{{ url_for('static', filename='images/strongman.png') }}" alt="Clash of Clan's Strongman">
+                <picture>
+                    <source srcset="{{ url_for('static', filename='images/strongman.webp') }}" type="image/webp">
+                    <source srcset="{{ url_for('static', filename='images/strongman.png') }}" type="image/png">
+                    <img src="{{ url_for('static', filename='images/strongman.png') }}" alt="Clash of Clan's Strongman">
+                </picture>
             </div>
             <div class="column">
                 <home></home>
