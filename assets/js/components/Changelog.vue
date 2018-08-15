@@ -1,5 +1,5 @@
 <template>
-<b-dropdown class="updates" position="is-bottom-left">
+<b-dropdown class="changelog" position="is-bottom-left">
   <a class="navbar-item" slot="trigger" @click="onMenuClick">
       <span class="badge is-badge-warning is-badge-small" ref="badge">
         Updates
@@ -22,7 +22,7 @@
 </template>
 
 <style scoped>
-.updates /deep/ .dropdown-menu {
+.changelog /deep/ .dropdown-menu {
   min-width: 20em;
 }
 </style>
