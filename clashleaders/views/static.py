@@ -10,7 +10,7 @@ client = contentful.Client('zmnodi6xws9d', '8017b7370aaf68e6caefc204d56fc6f2b3ce
 @app.context_processor
 def inject_changelog():
     logs = fetch_changelog()
-    updates = [{'id': e.id, 'slug': e.slug, 'title': e.title, 'summary': e.summary, 'createdAt': e.created_at} for e in logs]
+    updates = [{'id': e.id, 'slug': e.slug, 'title': e.title, 'summary': e.summary, 'publishedOn': e.published_on} for e in logs]
     return dict(updates=updates)
 
 
@@ -36,4 +36,4 @@ def about():
 
 @cache.cached(timeout=90, key_prefix='changelog')
 def fetch_changelog():
-    return list(client.entries({'content_type': 'changelog', 'order': '-sys.createdAt'}))
+    return list(client.entries({'content_type': 'changelog', 'order': '-fields.publishedOn'}))

@@ -1,7 +1,7 @@
 <template>
 <b-dropdown class="changelog" position="is-bottom-left">
   <a class="navbar-item" slot="trigger" @click="onMenuClick">
-      <span class="badge is-badge-warning is-badge-small" ref="badge">
+      <span class="badge is-badge-warning is-badge-small" :data-badge="hasUpdates ? '' : false">
         Updates
       </span>
   </a>
@@ -32,14 +32,14 @@ const KEY = "changelog";
 
 export default {
   data() {
-    return { items: [] };
+    return { items: [], hasUpdates: false };
   },
   created() {
     this.items = this.data = window.__UPDATES__;
   },
   mounted() {
     if (localStorage.getItem(KEY) != this.items[0].id) {
-      this.showBadge();
+      this.hasUpdates = true;
     }
   },
   methods: {
@@ -47,13 +47,7 @@ export default {
       try {
         localStorage.setItem(KEY, this.items[0].id);
       } catch (e) {}
-      this.hideBadge();
-    },
-    showBadge() {
-      this.$refs.badge.dataset.badge = "";
-    },
-    hideBadge() {
-      delete this.$refs.badge.dataset.badge;
+      this.hasUpdates = false;
     }
   }
 };

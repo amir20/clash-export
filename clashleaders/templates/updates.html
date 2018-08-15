@@ -8,7 +8,7 @@
                 <div class="content">
                     <br>
                     <h3 class="title is-4 is-marginless">{{ item.title }} </h3>
-                    <small class="subtitle is-6" data-from-now="{{ item.created_at }}"></small>
+                    <small class="subtitle is-6" data-from-now="{{ item.published_on }}"></small>
                     <br><br> {{ item.text | markdown | safe }}
                     <br>
                 </div>
