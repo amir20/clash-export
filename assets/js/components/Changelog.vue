@@ -1,12 +1,12 @@
 <template>
 <b-dropdown class="updates" position="is-bottom-left">
-  <a class="navbar-item" slot="trigger">
-      <span class="badge is-badge-warning is-badge-small" data-badge="">
+  <a class="navbar-item" slot="trigger" @click="onMenuClick">
+      <span class="badge is-badge-warning is-badge-small" ref="badge">
         Updates
       </span>
   </a>
 
-  <b-dropdown-item custom v-for="item in items" :key="item.sys.id">    
+  <b-dropdown-item custom v-for="item in items" :key="item.sys.id">
       <strong>{{ item.fields.title }}</strong>
       <span class="has-text-weight-light">{{ item.fields.summary }}</span>
       <br>
@@ -28,6 +28,8 @@
 </style>
 
 <script>
+const KEY = "changelog";
+
 export default {
   data() {
     return { items: [] };
@@ -35,6 +37,24 @@ export default {
   created() {
     this.items = this.data = window.__CHANGELOG__;
   },
-  methods: {}
+  mounted() {
+    if (localStorage.getItem(KEY) != this.items[0].sys.id) {
+      this.showBadge();
+    }
+  },
+  methods: {
+    onMenuClick() {
+      try {
+        localStorage.setItem(KEY, this.items[0].sys.id);
+      } catch (e) {}
+      this.hideBadge();
+    },
+    showBadge() {
+      this.$refs.badge.dataset.badge = "";
+    },
+    hideBadge() {
+      delete this.$refs.badge.dataset.badge;
+    }
+  }
 };
 </script>
