@@ -1,6 +1,8 @@
 from collections import OrderedDict, namedtuple
 from functools import reduce
 
+import pandas as pd
+
 ShortClan = namedtuple('ShortClan', 'name tag badge slug members score')
 
 
@@ -82,6 +84,14 @@ def to_short_clan(clan, prop=None):
     score = None if prop is None else deepgetattr(clan, prop)
     return ShortClan(name=clan.name, tag=clan.tag, badge=clan.badgeUrls.get('small'), members=clan.members,
                      slug=getattr(clan, 'slug', None), score=score)
+
+
+def to_data_frame(clan):
+    tf = transform_players(clan.players_data())
+    df = pd.DataFrame(data=tf, columns=tf[0])
+    df = df.set_index('Tag')
+    df = df.iloc[1:]
+    return df
 
 
 def clans_leaderboard(clans, prop):
