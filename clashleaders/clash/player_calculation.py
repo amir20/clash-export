@@ -22,7 +22,6 @@ def player_percentile(cpc, player_tag):
 
     for c in ['Total Gold Grab', 'Total Elixir Grab']:
         ranks.loc[diff[c] == 0, c] = ranks.loc[diff[c] == 0, 'Total DE Grab']
-        ranks.loc[diff[c] == 0, c] = ranks.loc[diff[c] == 0, 'Total DE Grab']
 
     percentiles = ranks.mean(axis=1)
     return percentiles[player_tag]
