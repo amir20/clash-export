@@ -7,23 +7,17 @@
         </p>
       </figure>
       <div class="media-content">
-        <div class="content">
-          <div class="columns">
-            <div class="column">
-              <h2 class="title is-marginless">{{ player.name }} <small class="subtitle is-6">{{ player.role | role }}</small></h2>
-              <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
-            </div>
-            <div class="column is-narrow">
-              <div class="level">
-                <div class="level-item has-text-centered">
-                  <div>
-                    <div class="title">{{ Math.ceil(player.percentile * 100) }} / 100</div>
-                    <div class="heading">Player Activity Score</div>
-                  </div>
-                </div>
+        <div class="content">          
+          <div class="level is-pulled-right">
+            <div class="level-item has-text-centered">
+              <div>
+                <div class="title">{{ Math.ceil(player.percentile * 100) }} / 100</div>
+                <div class="heading">Player Activity Score</div>
               </div>
             </div>
           </div>
+          <h2 class="title is-marginless">{{ player.name }} <small class="subtitle is-6">{{ player.role | role }}</small></h2>
+          <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
         </div>
       </div>
     </div>
