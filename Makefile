@@ -14,7 +14,7 @@ push: TAG=$(shell cat package.json | jq -r .version)
 push: build
 	docker tag amir20/clashleaders amir20/clashleaders:$(TAG)
 	docker push amir20/clashleaders:$(TAG)
-	docker push amir20/clashleaders
+	docker push amir20/clashleaders:latest
 
 .PHONY: init
 init:
