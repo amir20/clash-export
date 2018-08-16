@@ -122,7 +122,7 @@ def calculate_week(cpc):
     :param cpc:
     :return:
     """
-    start = clashleaders.model.Clan.from_now_with_tag(cpc.tag, days=7).first()
+    start = cpc.previous_data(days=7)
     start_df = start.to_data_frame()
     now_df = cpc.most_recent.to_data_frame()
 
