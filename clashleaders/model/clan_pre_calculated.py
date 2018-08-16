@@ -120,6 +120,9 @@ class ClanPreCalculated(Document):
     def warlog(self):
         return clan_warlog(self.tag)['items']
 
+    def previous_data(self, **kwargs):
+        return Clan.from_now_with_tag(self.tag, **kwargs).first()
+
     @property
     def created_on(self):
         return self.id.generation_time
