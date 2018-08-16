@@ -34,6 +34,8 @@ new Vue({
   }
 });
 
-document
-  .querySelectorAll("[data-from-now]")
-  .forEach(i => (i.innerHTML = moment(i.dataset.fromNow).fromNow()));
+const items = document.querySelectorAll("[data-from-now]");
+[].forEach.call(
+  items,
+  i => (i.innerHTML = moment(i.dataset.fromNow).fromNow())
+);
