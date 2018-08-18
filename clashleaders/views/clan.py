@@ -5,6 +5,7 @@ from user_agents import parse
 
 from clashleaders import app, cache
 from clashleaders.clash import api, excel
+from clashleaders.clash.player_calculation import clan_status
 from clashleaders.clash.transformer import transform_players
 from clashleaders.model import Clan, ClanPreCalculated, Status
 from clashleaders.text.clan_description_processor import transform_description
@@ -64,6 +65,7 @@ def clan_detail_page(slug):
     else:
         return render_template('clan.html', clan=clan,
                                players=players,
+                               players_status=clan_status(clan),
                                description=description,
                                last_updated=clan.last_updated,
                                oldest_days=clan.days_span,

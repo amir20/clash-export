@@ -13,6 +13,7 @@ const state = {
   clan: window.__CLAN__ || [],
   previousData: window.__CLAN__ || [],
   lastUpdated: moment(window.__LAST_UPDATED__) || null,
+  playerStatus: window.__PLAYER_STATUS__,
   days: 7,
   similarClansAvg: {},
   savedClanStats: {},
