@@ -154,6 +154,11 @@ export default {
 
   & .tag {
     font-size: 10px;
+
+    &.mvp {
+      background-color: #ff3860;
+      color: #fff;
+    }
   }
 }
 </style>
