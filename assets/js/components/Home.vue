@@ -57,7 +57,7 @@ export default {
   created() {
     if (this.savedTag) {
       console.log(`Found saved tag value [${this.savedTag}].`);
-      this.prefetch(`${this.url}.json`);
+      this.prefetch(`${this.url}/refresh.json`);
       this.prefetch(`${this.url}.json?daysAgo=7`);
     }
   },
