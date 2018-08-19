@@ -5,6 +5,7 @@ from user_agents import parse
 
 from clashleaders import app, cache
 from clashleaders.clash import api, excel
+from clashleaders.clash.player_calculation import clan_status
 from clashleaders.clash.transformer import transform_players
 from clashleaders.model import Clan, ClanPreCalculated, Status
 from clashleaders.text.clan_description_processor import transform_description
@@ -32,6 +33,22 @@ def clan_detail_json(tag):
         return jsonify(dict(error=f"API timed out while fetching all players for {tag}")), 504
     except api.ApiException:
         return jsonify(dict(error=f"Clash of Clans API is down right now.")), 500
+
+
+@app.route("/clan/<tag>/refresh.json")
+def clan_refresh_json(tag):
+    clan = Clan.fetch_and_save(tag)
+    cpc = clan.pre_calculated()
+
+    loot = {
+        'gold_grab': cpc.week_delta.avg_gold_grab,
+        'elixir_grab': cpc.week_delta.avg_elixir_grab,
+        'de_grab': cpc.week_delta.avg_de_grab
+    }
+    player_data = transform_players(clan.players_data())
+    players_status = clan_status(cpc)
+
+    return jsonify(dict(lootStats=loot, playerData=player_data, playersStatus=players_status))
 
 
 @app.route("/clan/<slug>.xlsx")
@@ -66,7 +83,7 @@ def clan_detail_page(slug):
                                players=players,
                                description=description,
                                last_updated=clan.last_updated,
-                               oldest_days=clan.days_span,
+                               oldest_days=clan.days_span,  # TODO
                                similar_clans=similar_clans,
                                similar_clans_start_count=start_count)
 
