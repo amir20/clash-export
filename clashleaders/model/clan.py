@@ -3,7 +3,7 @@ from codecs import decode, encode
 from datetime import datetime, timedelta
 
 from bson.objectid import ObjectId
-from mongoengine import BinaryField, DynamicDocument
+from mongoengine import BinaryField, DynamicDocument, DoesNotExist
 
 import clashleaders.clash.calculation
 import clashleaders.clash.transformer
@@ -67,6 +67,14 @@ class Clan(DynamicDocument):
         del clan['memberList']
 
         clan = Clan(**clan).save()
+
+        try:
+            cpc = clan.pre_calculated()
+            cpc.most_recent = clan
+            cpc.save()
+        except DoesNotExist:
+            # don't do anything
+            pass
 
         try:
             df = clan.to_data_frame()
