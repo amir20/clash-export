@@ -38,17 +38,20 @@ def clan_percentiles(cpc):
 
 
 def clan_status(cpc):
-    diff = clan_diff(cpc)
-    percentiles = clan_percentiles(cpc)
+    status = {}
 
-    most_active = percentiles.sort_values(ascending=False)
+    if cpc.days_span > 3:
+        diff = clan_diff(cpc)
+        percentiles = clan_percentiles(cpc)
 
-    inactive = (diff == 0).all(axis=1)
-    inactive = inactive[inactive]
+        most_active = percentiles.sort_values(ascending=False)
 
-    status = {most_active.index[0]: 'mvp'}
+        inactive = (diff == 0).all(axis=1)
+        inactive = inactive[inactive]
 
-    for p in inactive.index.tolist():
-        status[p] = 'inactive'
+        status[most_active.index[0]] = 'mvp'
+
+        for p in inactive.index.tolist():
+            status[p] = 'inactive'
 
     return status
