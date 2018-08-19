@@ -24,7 +24,8 @@
                                 :numeric="column.numeric"
                                 sortable>
                     {{ props.row[column.field].value.toLocaleString() }}
-                    <b v-show="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
+                    <span v-if="column.field == 'name' && playersStatus[props.row.tag.value]" class="tag is-uppercase is-warning" :class="playersStatus[props.row.tag.value]">{{ playersStatus[props.row.tag.value] }}</span>
+                    <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
                       <span :class="{'fa-caret-up': props.row[column.field].delta > 0 , 'fa-caret-down': props.row[column.field].delta < 0}" class="fa-sm fa"></span>
                       {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
                     </b>
@@ -63,7 +64,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(["loading", "sortField", "similarClansAvg", "apiError"]),
+    ...mapState([
+      "loading",
+      "sortField",
+      "similarClansAvg",
+      "apiError",
+      "playersStatus"
+    ]),
     ...mapGetters(["path", "header", "tableData", "lastUpdatedAgo"])
   },
   watch: {
@@ -105,6 +112,10 @@ export default {
     color: #fff;
   }
 
+  & /deep/ td[data-label="Name"] {
+    white-space: nowrap;
+  }
+
   & /deep/ .table {
     &.is-striped tbody tr:not(.is-selected):nth-child(even) {
       background-color: #eee;
@@ -139,6 +150,10 @@ export default {
     & .icon > svg {
       height: auto;
     }
+  }
+
+  & .tag {
+    font-size: 10px;
   }
 }
 </style>
