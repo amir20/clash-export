@@ -112,6 +112,10 @@ export default {
     color: #fff;
   }
 
+  & /deep/ td[data-label="Name"] {
+    white-space: nowrap;
+  }
+
   & /deep/ .table {
     &.is-striped tbody tr:not(.is-selected):nth-child(even) {
       background-color: #eee;
