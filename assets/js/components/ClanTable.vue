@@ -24,7 +24,7 @@
                                 :numeric="column.numeric"
                                 sortable>
                     {{ props.row[column.field].value.toLocaleString() }}
-                    <span v-if="column.field == 'name' && playerStatus[props.row.tag.value]" class="tag is-uppercase is-warning" :class="playerStatus[props.row.tag.value]">{{ playerStatus[props.row.tag.value] }}</span>
+                    <span v-if="column.field == 'name' && playersStatus[props.row.tag.value]" class="tag is-uppercase is-warning" :class="playersStatus[props.row.tag.value]">{{ playersStatus[props.row.tag.value] }}</span>
                     <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
                       <span :class="{'fa-caret-up': props.row[column.field].delta > 0 , 'fa-caret-down': props.row[column.field].delta < 0}" class="fa-sm fa"></span>
                       {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
@@ -69,7 +69,7 @@ export default {
       "sortField",
       "similarClansAvg",
       "apiError",
-      "playerStatus"
+      "playersStatus"
     ]),
     ...mapGetters(["path", "header", "tableData", "lastUpdatedAgo"])
   },

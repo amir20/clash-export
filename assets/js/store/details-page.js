@@ -13,7 +13,7 @@ const state = {
   clan: window.__CLAN__ || [],
   previousData: window.__CLAN__ || [],
   lastUpdated: moment(window.__LAST_UPDATED__) || null,
-  playerStatus: window.__PLAYER_STATUS__,
+  playersStatus: {},
   days: 7,
   similarClansAvg: {},
   savedClanStats: {},
@@ -26,6 +26,12 @@ const state = {
 const mutations = {
   setTag(state, tag) {
     state.tag = tag;
+  },
+  setRefreshData(state, data) {
+    state.clan = data.playerData;
+    state.clanStats = data.lootStats;
+    state.playersStatus = data.playersStatus;
+    state.lastUpdated = moment();
   },
   setClan(state, clan) {
     state.clan = clan;
@@ -84,13 +90,11 @@ async function handleResponse(promise, commit, success, error = "setApiError") {
 
 const actions = {
   async fetchClanData({ commit, dispatch, getters: { path } }) {
-    const nowPromise = fetch(`${path}.json`);
+    const refreshPromise = fetch(`${path}/refresh.json`);
     const previousPromise = fetch(`${path}.json?daysAgo=${state.days}`);
-    const clanStatsPromise = fetch(`${path}/stats.json`);
     commit("stopLoading");
     await handleResponse(previousPromise, commit, "setPreviousData");
-    await handleResponse(nowPromise, commit, "setClan");
-    await handleResponse(clanStatsPromise, commit, "setClanStats");
+    await handleResponse(refreshPromise, commit, "setRefreshData");
 
     dispatch("fetchSimilarClansStats");
     dispatch("fetchSavedClanStats");
