@@ -37,6 +37,13 @@ def clan_percentiles(cpc):
     return ranks.mean(axis=1)
 
 
+def clan_new_players(cpc):
+    pd_df = cpc.previous_data(days=2).to_data_frame()
+    mr_df = cpc.most_recent.to_data_frame()
+    df = mr_df['Total Gold Grab'] - pd_df['Total Gold Grab']
+    return df[df.isnull()].index.tolist()
+
+
 def clan_status(cpc):
     status = {}
 
@@ -46,12 +53,14 @@ def clan_status(cpc):
 
         most_active = percentiles.sort_values(ascending=False)
 
-        inactive = (diff == 0).all(axis=1)
-        inactive = inactive[inactive]
-
         status[most_active.index[0]] = 'mvp'
 
+        inactive = (diff == 0).all(axis=1)
+        inactive = inactive[inactive]
         for p in inactive.index.tolist():
             status[p] = 'inactive'
+
+        for p in clan_new_players(cpc):
+            status[p] = 'new'
 
     return status
