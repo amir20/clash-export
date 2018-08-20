@@ -33,10 +33,6 @@ const mutations = {
     state.playersStatus = data.playersStatus;
     state.lastUpdated = moment();
   },
-  setClan(state, clan) {
-    state.clan = clan;
-    state.lastUpdated = moment();
-  },
   setPreviousData(state, previousData) {
     state.previousData = previousData;
   },
@@ -63,9 +59,6 @@ const mutations = {
   },
   setSavedClanStats(state, field) {
     state.savedClanStats = field;
-  },
-  setClanStats(state, field) {
-    state.clanStats = field;
   }
 };
 
