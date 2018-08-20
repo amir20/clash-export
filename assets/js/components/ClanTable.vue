@@ -24,7 +24,7 @@
                                 :numeric="column.numeric"
                                 sortable>
                     {{ props.row[column.field].value.toLocaleString() }}
-                    <span v-if="column.field == 'name' && playersStatus[props.row.tag.value]" class="tag is-uppercase is-warning" :class="playersStatus[props.row.tag.value]">{{ playersStatus[props.row.tag.value] }}</span>
+                    <span v-if="column.field == 'name' && playersStatus[props.row.tag.value]" class="tag is-uppercase" :class="playersStatus[props.row.tag.value]">{{ playersStatus[props.row.tag.value] }}</span>
                     <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
                       <span :class="{'fa-caret-up': props.row[column.field].delta > 0 , 'fa-caret-down': props.row[column.field].delta < 0}" class="fa-sm fa"></span>
                       {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
@@ -155,8 +155,18 @@ export default {
   & .tag {
     font-size: 10px;
 
+    &.inactive {
+      background-color: #ffdd57;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
     &.mvp {
       background-color: #ff3860;
+      color: #fff;
+    }
+
+    &.new {
+      background-color: #23d160;
       color: #fff;
     }
   }
