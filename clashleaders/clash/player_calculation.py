@@ -51,16 +51,16 @@ def clan_status(cpc):
         diff = clan_diff(cpc)
         percentiles = clan_percentiles(cpc)
 
-        most_active = percentiles.sort_values(ascending=False)
+        if not percentiles.empty:
+            most_active = percentiles.sort_values(ascending=False)
+            status[most_active.index[0]] = 'mvp'
 
-        status[most_active.index[0]] = 'mvp'
+            inactive = (diff == 0).all(axis=1)
+            inactive = inactive[inactive]
+            for p in inactive.index.tolist():
+                status[p] = 'inactive'
 
-        inactive = (diff == 0).all(axis=1)
-        inactive = inactive[inactive]
-        for p in inactive.index.tolist():
-            status[p] = 'inactive'
-
-        for p in clan_new_players(cpc):
-            status[p] = 'new'
+            for p in clan_new_players(cpc):
+                status[p] = 'new'
 
     return status
