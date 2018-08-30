@@ -46,6 +46,7 @@ def aggregate_by_country(score_column="week_delta.avg_attack_wins"):
     return aggregated
 
 
+@cache.cached(timeout=28800, key_prefix='trophy_distribution')
 def trophy_distribution():
     counts = list(ClanPreCalculated.objects.aggregate({
         '$group': {
