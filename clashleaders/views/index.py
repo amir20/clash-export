@@ -15,7 +15,7 @@ with open(os.path.join(parent, "../data/countries.json")) as f:
 
 
 @app.route("/")
-@cache.cached(timeout=30)
+@cache.cached(timeout=300)
 def index():
     return render_template('index.html',
                            most_donations=leaderboard('week_delta.avg_donations'),
@@ -38,6 +38,7 @@ def leaderboard(field):
     return clans_leaderboard(ClanPreCalculated.objects(members__gt=20).order_by(f"-{field}").limit(10), field)
 
 
+@cache.memoize(28800)
 def aggregate_by_country(score_column="week_delta.avg_attack_wins"):
     group = {"$group": {"_id": "$location.countryCode", "score": {"$sum": f"${score_column}"}}}
     sort = {'$sort': {'score': -1}}
@@ -46,7 +47,7 @@ def aggregate_by_country(score_column="week_delta.avg_attack_wins"):
     return aggregated
 
 
-@cache.cached(timeout=28800, key_prefix='trophy_distribution')
+@cache.memoize(28800)
 def trophy_distribution():
     counts = list(ClanPreCalculated.objects.aggregate({
         '$group': {
