@@ -1,5 +1,5 @@
 <template>
-    <time :datetime="lastUpdated.format()">Updated {{text}}</time>
+    <time>Updated {{text}}</time>
 </template>
 
 <script>
