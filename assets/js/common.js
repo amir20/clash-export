@@ -5,6 +5,7 @@ import bugsnag from "./bugsnag";
 import SearchBox from "./components/SearchBox";
 import Changelog from "./components/Changelog";
 import formatDistance from "date-fns/formatDistance";
+import parse from "date-fns/parse";
 
 bugsnag(Vue);
 
@@ -38,7 +39,11 @@ const items = document.querySelectorAll("[data-from-now]");
 [].forEach.call(
   items,
   i =>
-    (i.innerHTML = formatDistance(new Date(i.dataset.fromNow), new Date(), {
-      addSuffix: true
-    }))
+    (i.innerHTML = formatDistance(
+      parse(i.dataset.fromNow, "yyyy-MM-dd HH:mm:ss", new Date()),
+      new Date(),
+      {
+        addSuffix: true
+      }
+    ))
 );
