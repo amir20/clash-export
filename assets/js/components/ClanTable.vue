@@ -42,6 +42,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import PlayerComparison from "./PlayerComparison";
+import formatDistance from "date-fns/formatDistance";
 
 export default {
   props: ["tag", "name", "oldestDays"],
@@ -71,7 +72,7 @@ export default {
       "apiError",
       "playersStatus"
     ]),
-    ...mapGetters(["path", "header", "tableData", "lastUpdatedAgo"])
+    ...mapGetters(["path", "header", "tableData", "lastUpdated"])
   },
   watch: {
     sortField(newValue) {
@@ -85,7 +86,9 @@ export default {
     },
     apiError(newValue, oldValue) {
       if (newValue && !oldValue && newValue.status >= 500) {
-        const last = this.lastUpdatedAgo;
+        const last = formatDistance(this.lastUpdatedAgo, new Date(), {
+          addSuffix: true
+        });
         this.$snackbar.open({
           message: `Well Chief, this is embarrassing. It seems Clash of Clans' API is not responding right now. This clan was last updated ${last}. I'll keep checking for updates even after you leave.`,
           type: "is-warning",
