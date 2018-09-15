@@ -4,7 +4,7 @@ import Buefy from "buefy";
 import bugsnag from "./bugsnag";
 import SearchBox from "./components/SearchBox";
 import Changelog from "./components/Changelog";
-import moment from "moment";
+import formatDistance from "date-fns/formatDistance";
 
 bugsnag(Vue);
 
@@ -37,5 +37,8 @@ new Vue({
 const items = document.querySelectorAll("[data-from-now]");
 [].forEach.call(
   items,
-  i => (i.innerHTML = moment(i.dataset.fromNow).fromNow())
+  i =>
+    (i.innerHTML = formatDistance(new Date(i.dataset.fromNow), new Date(), {
+      addSuffix: true
+    }))
 );
