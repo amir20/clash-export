@@ -4,6 +4,7 @@
 
 <script>
 import { mapState } from "vuex";
+import formatDistance from "date-fns/formatDistance";
 
 export default {
   data() {
@@ -13,7 +14,7 @@ export default {
     };
   },
   mounted() {
-    this.text = this.lastUpdated.fromNow();
+    this.updateFromNow();
     this.interval = setInterval(() => this.updateFromNow(), 30000);
   },
   destroyed() {
@@ -24,7 +25,9 @@ export default {
   },
   methods: {
     updateFromNow() {
-      this.text = this.lastUpdated.fromNow();
+      this.text = formatDistance(this.lastUpdated, new Date(), {
+        addSuffix: true
+      });
     }
   },
   watch: {

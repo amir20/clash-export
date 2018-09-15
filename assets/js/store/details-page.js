@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
-import moment from "moment";
 
 Vue.use(Vuex);
 
@@ -12,7 +11,7 @@ const state = {
   loading: true,
   clan: window.__CLAN__ || [],
   previousData: window.__CLAN__ || [],
-  lastUpdated: moment(window.__LAST_UPDATED__) || null,
+  lastUpdated: new Date(window.__LAST_UPDATED__) || null,
   playersStatus: {},
   days: 7,
   similarClansAvg: {},
@@ -31,7 +30,7 @@ const mutations = {
     state.clan = data.playerData;
     state.clanStats = data.lootStats;
     state.playersStatus = data.playersStatus;
-    state.lastUpdated = moment();
+    state.lastUpdated = new Date();
   },
   setPreviousData(state, previousData) {
     state.previousData = previousData;
@@ -141,9 +140,6 @@ const getters = {
   },
   path({ tag }) {
     return `/clan/${tag.replace("#", "")}`;
-  },
-  lastUpdatedAgo({ lastUpdated }) {
-    return moment(lastUpdated).fromNow();
   },
   tableData(state, getters) {
     if (state.clan.length === 0) {
