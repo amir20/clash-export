@@ -1,6 +1,6 @@
 {
   "name": "clashleaders",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "dependencies": {
     "@babel/core": "^7.0.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
