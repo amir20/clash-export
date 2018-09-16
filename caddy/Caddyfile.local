@@ -11,6 +11,15 @@ http://clashstats.local, localhost:80 {
         except /favicon.ico /robots.txt /static
     }
 
+    header / {
+        # Enable cross-site filter (XSS) and tell browser to block detected attacks
+        X-XSS-Protection "1; mode=block"
+        # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
+        X-Content-Type-Options "nosniff"
+        # Disallow the site to be rendered within a frame (clickjacking protection)
+        X-Frame-Options "DENY"
+    }
+
     gzip
     log / stdout
     errors stdout
