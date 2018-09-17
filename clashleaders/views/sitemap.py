@@ -4,7 +4,7 @@ from math import ceil
 from clashleaders import app
 from clashleaders.model import ClanPreCalculated
 
-TOTAL_PER_PAGE = 20000
+TOTAL_PER_PAGE = 10000
 
 
 @app.route("/sitemap_index.xml")
@@ -30,8 +30,6 @@ def sitemap(page):
     end = start + TOTAL_PER_PAGE
 
     pages = []
-
-    pages.append({'url': url_for('index', _external=True)})
 
     for clan in ClanPreCalculated.objects[start:end].only('slug'):
         pages.append({
