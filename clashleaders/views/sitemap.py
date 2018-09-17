@@ -1,21 +1,44 @@
 from flask import make_response, render_template, url_for
+from math import ceil
 
 from clashleaders import app
 from clashleaders.model import ClanPreCalculated
 
+TOTAL_PER_PAGE = 20000
 
-@app.route("/sitemap.xml")
-def sitemap():
+
+@app.route("/sitemap_index.xml")
+def sitemap_index():
+    sitemaps = []
+
+    pages = ceil(ClanPreCalculated.objects.count() / TOTAL_PER_PAGE)
+    for i in range(pages):
+        sitemaps.append({
+            'url': url_for('sitemap', page=i, _external=True),
+        })
+
+    sitemap_xml = render_template('sitemap_index.xml', sitemaps=sitemaps)
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"
+
+    return response
+
+
+@app.route("/sitemap_<page>.xml")
+def sitemap(page):
+    start = int(page) * TOTAL_PER_PAGE
+    end = start + TOTAL_PER_PAGE
+
     pages = []
 
     pages.append({'url': url_for('index', _external=True)})
 
-    for clan in ClanPreCalculated.objects.only('slug'):
+    for clan in ClanPreCalculated.objects[start:end].only('slug'):
         pages.append({
             'url': url_for('clan_detail_page', slug=clan.slug, _external=True),
         })
 
-    sitemap_xml = render_template('sitemap_template.xml', pages=pages)
+    sitemap_xml = render_template('sitemap.xml', pages=pages)
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
 
