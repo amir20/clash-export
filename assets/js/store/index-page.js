@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { event } from "../ga";
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ const mutations = {
     state.foundClan = clan;
   },
   setSavedTag(state, tag) {
+    event("saved-clan", "Save Clan", "Clan Tag", tag);
     state.savedTag = tag;
     try {
       if (tag == null) {
@@ -27,6 +29,7 @@ const mutations = {
     }
   },
   clearSavedTag(state) {
+    event("saved-clan", "Reset Clan");
     state.savedTag = null;
     state.foundClan = null;
     try {

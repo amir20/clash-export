@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
+import { event } from "../ga";
 
 Vue.use(Vuex);
 
@@ -51,6 +52,7 @@ const mutations = {
     state.daysSpan = daysSpan;
   },
   setSortField(state, field) {
+    event("sort-field", "Chnage Sort Field", "Type", field);
     state.sortField = field;
   },
   setApiError(state, field) {
@@ -117,6 +119,7 @@ const actions = {
     },
     days
   ) {
+    event("days-ago", "Change Days", "Days", days);
     commit("setDays", days);
     commit("startLoading");
     const promise = await fetch(`${path}.json?daysAgo=${days}`);
