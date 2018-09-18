@@ -6,6 +6,7 @@ import SearchBox from "./components/SearchBox";
 import Changelog from "./components/Changelog";
 import formatDistance from "date-fns/formatDistance";
 import parse from "date-fns/parse";
+import { event } from "./ga";
 
 bugsnag(Vue);
 
@@ -26,6 +27,7 @@ new Vue({
   watch: {
     async selectedTag(newValue) {
       if (newValue) {
+        event("search-clans", "Search", "Tag", newValue);
         const clan = await (await fetch(
           `/clan/${newValue.replace("#", "")}/short.json`
         )).json();

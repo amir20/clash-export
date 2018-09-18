@@ -15,6 +15,9 @@
             :loading="loading"
             :selected.sync="selected"
             :opened-detailed="openDetails"
+            @details-open="row => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
+            @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
+            @click="row => gaEvent('click-row', 'Click Player Row', 'Row Tag', row.tag.value)"
             focusable>
             <template slot-scope="props">
                 <b-table-column v-for="column in header"
@@ -43,8 +46,10 @@
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import PlayerComparison from "./PlayerComparison";
 import formatDistance from "date-fns/formatDistance";
+import { gaMixin } from "../ga";
 
 export default {
+  mixins: [gaMixin],
   props: ["tag", "name", "oldestDays"],
   components: {
     PlayerComparison
