@@ -1,5 +1,5 @@
-export const event = (eventName, event_category, event_label, value) =>
-  gtag("event", eventName, {
+export const event = (action, event_category, event_label, value) =>
+  gtag("event", action, {
     event_category,
     event_label,
     value
