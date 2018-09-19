@@ -16,7 +16,7 @@ const mutations = {
     state.foundClan = clan;
   },
   setSavedTag(state, tag) {
-    event("saved-clan", "Save Clan", "Clan Tag", tag);
+    event("saved-clan", "Save Clan");
     state.savedTag = tag;
     try {
       if (tag == null) {
