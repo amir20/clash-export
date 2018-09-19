@@ -28,7 +28,7 @@ new Vue({
   watch: {
     async selectedTag(newValue) {
       if (newValue) {
-        event("search-clans", "Search", "Tag", newValue);
+        event("search-clans", "Search");
         const clan = await (await fetch(
           `/clan/${newValue.replace("#", "")}/short.json`
         )).json();

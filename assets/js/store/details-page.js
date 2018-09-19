@@ -52,7 +52,7 @@ const mutations = {
     state.daysSpan = daysSpan;
   },
   setSortField(state, field) {
-    event("sort-field", "Chnage Sort Field", "Type", field);
+    event("sort-field", "Change Sort Field");
     state.sortField = field;
   },
   setApiError(state, field) {
@@ -132,7 +132,7 @@ const actions = {
 const getters = {
   header({ clan }) {
     if (clan.length > 0) {
-      return clan[0].map((column, index) => ({
+      return clan[0].map(column => ({
         label: column,
         field: camelCase(column),
         numeric: !isNonNumericColumns(camelCase(column))
