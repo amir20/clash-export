@@ -13,12 +13,10 @@
             default-sort="currentTrophies.value"
             default-sort-direction="desc"
             :loading="loading"
-            :selected.sync="selected"
             :opened-detailed="openDetails"
             @details-open="row => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
             @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
-            @click="row => gaEvent('click-row', 'Click Player Row', 'Row Tag', row.tag.value)"
-            focusable>
+            @click="onRowclicked">
             <template slot-scope="props">
                 <b-table-column v-for="column in header"
                                 :label="column.label"
@@ -105,7 +103,15 @@ export default {
   },
   methods: {
     ...mapMutations(["setTag", "setDaysSpan"]),
-    ...mapActions(["fetchClanData", "loadDaysAgo"])
+    ...mapActions(["fetchClanData", "loadDaysAgo"]),
+    onRowclicked(row) {
+      this.gaEvent("click-row", "Click Player Row", "Row Tag", row.tag.value);
+      if (this.openDetails.indexOf(row.id) === -1) {
+        this.openDetails.push(row.id);
+      } else {
+        this.openDetails.splice(this.openDetails.indexOf(row.id), 1);
+      }
+    }
   }
 };
 </script>
@@ -127,10 +133,6 @@ export default {
   & /deep/ .table {
     &.is-striped tbody tr:not(.is-selected):nth-child(even) {
       background-color: #eee;
-    }
-
-    & tr.is-selected {
-      background-color: #555;
     }
 
     tr.detail .detail-container {
