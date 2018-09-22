@@ -131,9 +131,8 @@ def clan_meta(tag):
 @cache.cached(timeout=1000)
 def clan_trophies(tag):
     data = list(Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints'))
-    dates = [s.id.generation_time for s in data]
     points = [s.clanPoints for s in data]
-    series = pd.Series(points, index=dates)
+    series = pd.Series(points, index=pd.to_datetime([s.id.generation_time for s in data]))
     resampled = series.resample('D').mean().dropna()
     items = {key.strftime("%Y-%m-%d"): value for key, value in resampled.items()}
 
