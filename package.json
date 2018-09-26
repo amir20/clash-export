@@ -60,8 +60,7 @@
     "build": "webpack --config webpack.prod.js",
     "watch": "webpack --watch --config webpack.dev.js",
     "prestart": "docker-compose stop web",
-    "start": "concurrently 'docker-compose up web' 'npm run watch'",
-    "precommit": "lint-staged"
+    "start": "concurrently 'docker-compose up web' 'npm run watch'"
   },
   "lint-staged": {
     "*.{js,vue,json,css,md}": [
@@ -78,5 +77,10 @@
   "bugs": {
     "url": "https://github.com/amir20/clash-export/issues"
   },
-  "homepage": "https://github.com/amir20/clash-export#readme"
+  "homepage": "https://github.com/amir20/clash-export#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
