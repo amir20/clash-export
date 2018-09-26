@@ -29,7 +29,7 @@
     "node-sass": "^4.9.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-cssnext": "^3.1.0",
-    "postcss-custom-properties": "^8.0.5",
+    "postcss-custom-properties": "^8.0.6",
     "postcss-font-magician": "^2.2.1",
     "postcss-import": "^12.0.0",
     "postcss-loader": "^3.0.0",
