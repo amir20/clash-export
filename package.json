@@ -9,7 +9,7 @@
     "@babel/runtime": "^7.0.0",
     "@fortawesome/fontawesome-free": "^5.3.1",
     "autoprefixer": "^9.1.5",
-    "babel-loader": "^8.0.2",
+    "babel-loader": "^8.0.4",
     "buefy": "^0.6.7",
     "bugsnag-js": "^4.7.3",
     "bugsnag-vue": "^1.0.1",
