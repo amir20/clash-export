@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install --production
 
 # Copy all files for webpack
-COPY webpack* .babelrc postcss.config.js ./
+COPY webpack* .babelrc ./
 COPY assets/ assets/
 COPY clashleaders/static clashleaders/static
 
