@@ -6,7 +6,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
-    "@babel/runtime": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
     "@fortawesome/fontawesome-free": "^5.3.1",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.4",
