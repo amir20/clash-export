@@ -21,7 +21,12 @@
         </div>
       </div>
     </div>
-    <div ref="chart" class="player-comparison"></div>
+    <div>
+      <div ref="chart" class="player-comparison"></div>
+    </div>
+    <div class="buttons is-right is-block-mobile" v-if="player">
+      <a class="button is-info is-block-mobile" :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`">View Player in Game</a>
+    </div>
   </div>
 </template>
 
