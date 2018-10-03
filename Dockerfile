@@ -53,6 +53,9 @@ COPY ./caddy/Caddyfile /etc/Caddyfile
 
 # Copy all other files
 COPY ./clashleaders /app/clashleaders
+COPY ./tests /app/tests
+COPY ./Makefile /app/
+COPY ./setup.cfg /app/
 COPY ./*.json /app/
 COPY ./*.py /app/
 
