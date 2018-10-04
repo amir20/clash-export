@@ -14,16 +14,6 @@ jobs:
               make
             pip install \
               docker-compose
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/amir20_clashleaders.tar
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/amir20_clashleaders.tar | true
       - run:
           name: Build application Docker image
           command: |
@@ -32,12 +22,3 @@ jobs:
           name: Run tests
           command: |
             docker-compose -f docker-compose.yml -f docker-compose.test.yml run test
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/amir20_clashleaders.tar amir20/clashleaders
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/amir20_clashleaders.tar
