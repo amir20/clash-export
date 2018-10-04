@@ -24,8 +24,13 @@
     <div>
       <div ref="chart" class="player-comparison"></div>
     </div>
-    <div class="buttons is-right is-block-mobile" v-if="player">
-      <a class="button is-info is-block-mobile" :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`">View Player in Game</a>
+    <div class="buttons is-right mobile is-hidden-desktop" v-if="player">
+      <a class="button is-info is-fullwidth-mobile" :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`">
+        <span class="icon">
+          <i class="fas fa-gamepad"></i>
+        </span>
+        <span>View Player in Game</span>
+      </a>
     </div>
   </div>
 </template>
@@ -171,6 +176,15 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  .is-fullwidth-mobile {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+  }
+}
+
 .component {
   padding: 1em;
   width: calc(100vw - 1em);
