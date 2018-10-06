@@ -7,9 +7,12 @@ import aiohttp
 import requests
 from async_timeout import timeout
 
-API_TOKEN = os.getenv('API_TOKEN')
-HEADERS = dict(authorization='Bearer ' + API_TOKEN)
+
 logger = logging.getLogger(__name__)
+
+
+def headers():
+    return dict(authorization=f"Bearer {os.getenv('API_TOKEN')}")
 
 
 class ApiException(Exception):
@@ -29,7 +32,7 @@ class ApiTimeout(ApiException):
 
 
 async def __fetch(url, params=None, loop=None):
-    async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
+    async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=headers()) as session:
         return await __fetch_with_session(url, session=session, params=params)
 
 
@@ -42,7 +45,7 @@ async def __fetch_with_session(url, session, params=None):
 
 async def __fetch_all(urls, loop=None):
     async with timeout(8):
-        async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=HEADERS) as session:
+        async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=headers()) as session:
             futures = [__fetch_with_session(url, session) for url in urls]
             responses = await asyncio.gather(*futures)
 
