@@ -26,7 +26,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            make init
+            pip install pip==18.0
+            pip install pipenv
+            pipenv install --dev
       - run:
           name: Run tests
           command: |
