@@ -26,8 +26,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            pip install pip==18.0
-            pip install pipenv
+            sudo pip install pip==18.0
+            sudo pip install pipenv
             pipenv install --dev
       - run:
           name: Run tests
