@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pandas as pd
-from sklearn.cluster import KMeans
+from sklearn.cluster import MiniBatchKMeans
 from sklearn.preprocessing import MinMaxScaler
 
 import clashleaders.model
@@ -20,7 +20,7 @@ def train_model(file_or_stream):
     X = scaled_df.values
     total, _ = X.shape
 
-    kmeans = KMeans(n_clusters=int(total / 90)).fit(X)
+    kmeans = MiniBatchKMeans(n_clusters=int(total / 90), batch_size=20000).fit(X)
 
     __save_model(SCALER, scaler)
     __save_model(KMEANS, kmeans)
