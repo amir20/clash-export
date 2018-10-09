@@ -24,8 +24,8 @@ FROM python:3.6.5-slim
 # Create app directoy
 WORKDIR /app
 
-RUN pip install pip==18.0 \
-    && pip install pipenv==2018.7.1
+RUN pip install pip==18.1 \
+    && pip install pipenv==2018.10.9
 
 # Copy requirements file
 COPY ./Pipfile* /app/
