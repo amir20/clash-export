@@ -7,7 +7,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Install dependencies
+          name: Install build dependencies
           command: |
             apk add --no-cache \
               py-pip \
@@ -18,7 +18,38 @@ jobs:
           name: Build application Docker image
           command: |
             make build
+  python_test:
+    docker:
+      - image: circleci/python:3.6.5
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo pip install pip==18.0
+            sudo pip install pipenv
+            pipenv install --dev
       - run:
           name: Run tests
           command: |
-            docker-compose -f docker-compose.yml -f docker-compose.test.yml run test
+            make test
+  assets_build:
+    docker:
+      - image: circleci/node:10.11.0
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
+      - run:
+          name: Build assets
+          command: |
+            npm run build
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - python_test
+      - assets_build
