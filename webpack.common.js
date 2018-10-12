@@ -107,6 +107,7 @@ module.exports = {
   ],
   output: {
     path: __dirname + "/clashleaders/static/",
-    filename: "js/[name].js"
+    filename: "js/[name].js",
+    publicPath: "/static/"
   }
 };

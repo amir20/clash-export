@@ -43,7 +43,7 @@ def manifest_path(file):
 
 @cache.memoize(timeout=86400)
 def inline_path(file):
-    path = os.path.join(SITE_ROOT, "static", manifest_path(file))
+    path = os.path.join(SITE_ROOT, manifest_path(file).lstrip('/'))
     with open(path) as f:
         content = f.read()
         return re.sub(r'^//# sourceMappingURL=.*$', '', content, flags=re.MULTILINE)
