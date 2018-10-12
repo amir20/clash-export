@@ -12,9 +12,6 @@ export default {
     return { data: null, chart: null };
   },
   async created() {
-    const d3 = await import("d3");
-    console.log(d3);
-
     try {
       this.data = await (await fetch(
         `/clan/${this.tag.replace("#", "")}/trophies.json`
