@@ -20,11 +20,11 @@ export default {
         this.chart = new Chartist.Line(
           this.$refs.chart,
           {
-            labels: this.data.labels,
+            labels: this.data.dates,
             series: [
               {
                 name: "series-1",
-                data: this.data.points
+                data: this.data.trophies
               }
             ]
           },
