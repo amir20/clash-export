@@ -130,13 +130,13 @@ def clan_meta(tag):
 @app.route("/clan/<tag>/trophies.json")
 @cache.cached(timeout=1000)
 def clan_trophies(tag):
-    data = list(Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints'))
-    points = [s.clanPoints for s in data]
-    series = pd.Series(points, index=pd.to_datetime([s.id.generation_time for s in data]))
-    resampled = series.resample('D').mean().dropna()
-    items = {key.strftime("%Y-%m-%d"): value for key, value in resampled.items()}
+    clans = list(Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints', 'members'))
+    data = [[c.members, c.clanPoints] for c in clans]
+    df = pd.DataFrame(data, index=pd.to_datetime([s.id.generation_time for s in clans]), columns=['members', 'trophies'])
+    resampled = df.resample('D').mean().dropna()
+    data = dict(dates=[i.strftime("%Y-%m-%d") for i in resampled.index], members=list(resampled['members'].values), trophies=list(resampled['trophies'].values))
 
-    return jsonify(dict(labels=list(items.keys()), points=list(items.values())))
+    return jsonify(data)
 
 
 @app.route("/clan/<tag>/chart.json")
