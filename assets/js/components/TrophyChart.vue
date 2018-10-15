@@ -76,7 +76,7 @@ export default {
           d3
             .axisBottom(x)
             .tickFormat(d3.timeFormat("%x"))
-            .ticks(15)
+            .ticks(10)
         );
 
       svg
