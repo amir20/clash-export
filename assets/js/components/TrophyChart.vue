@@ -94,33 +94,33 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .trophy-chart {
-  .members-line {
+  /deep/ .members-line {
     fill: none;
     stroke: hsl(204, 86%, 53%);
     stroke-width: 1px;
     stroke-dasharray: 4, 2;
   }
 
-  .area {
+  /deep/ .area {
     fill: #d70206;
     fill-opacity: 0.4;
   }
 
-  .axis text {
+  /deep/ .axis text {
     color: rgba(0, 0, 0, 0.6);
     font-family: "Titillium Web";
   }
 
-  .axis.x .domain {
+  /deep/ .axis.x .domain {
     stroke: rgba(0, 0, 0, 0.25);
   }
-  .axis.y .domain {
+  /deep/ .axis.y .domain {
     stroke: none;
   }
 
-  .axis line {
+  /deep/ .axis line {
     stroke: none;
   }
 }
