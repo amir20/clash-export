@@ -27,7 +27,7 @@
     "flag-icon-css": "^3.2.0",
     "lodash": "^4.17.11",
     "mini-css-extract-plugin": "^0.4.4",
-    "node-sass": "^4.9.3",
+    "node-sass": "^4.9.4",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-cssnext": "^3.1.0",
     "postcss-custom-properties": "^8.0.8",
