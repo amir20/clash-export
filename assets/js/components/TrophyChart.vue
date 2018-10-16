@@ -9,8 +9,6 @@ import { timeFormat } from "d3-time-format";
 import { scaleLinear, scaleTime } from "d3-scale";
 import { line, area } from "d3-shape";
 
-import { bugsnagClient } from "../bugsnag";
-
 // https://www.giacomodebidda.com/how-to-import-d3-plugins-with-webpack/
 const d3 = Object.assign(
   {},
