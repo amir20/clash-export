@@ -3,8 +3,28 @@
 </template>
 
 <script>
-import * as d3 from "d3";
+import { select } from "d3-selection";
+import { extent } from "d3-array";
+import { timeFormat } from "d3-time-format";
+import { scaleLinear, scaleTime } from "d3-scale";
+import { line, area } from "d3-shape";
+
 import { bugsnagClient } from "../bugsnag";
+
+// https://www.giacomodebidda.com/how-to-import-d3-plugins-with-webpack/
+const d3 = Object.assign(
+  {},
+  {
+    select,
+    extent,
+    timeFormat,
+    range,
+    scaleLinear,
+    scaleTime,
+    line,
+    area
+  }
+);
 
 export default {
   props: ["tag"],
