@@ -3,6 +3,7 @@ ol.leaderboard {
 
   & li {
     display: block;
+    margin: 1.5em 0;
 
     &.active {
       & a {
