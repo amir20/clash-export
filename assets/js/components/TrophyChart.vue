@@ -146,7 +146,6 @@ export default {
 <style scoped>
 .trophy-chart {
   margin-top: 3.5em;
-  overflow: hidden;
 
   /deep/ .members-line {
     fill: none;
