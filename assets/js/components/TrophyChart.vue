@@ -5,22 +5,27 @@
 <script>
 import { select } from "d3-selection";
 import { extent } from "d3-array";
-import { timeFormat } from "d3-time-format";
+import { timeFormat, timeParse } from "d3-time-format";
 import { scaleLinear, scaleTime } from "d3-scale";
-import { line, area } from "d3-shape";
+import { line, area, curveMonotoneX } from "d3-shape";
+import { axisBottom, axisLeft, axisRight } from "d3-axis";
 
 // https://www.giacomodebidda.com/how-to-import-d3-plugins-with-webpack/
 const d3 = Object.assign(
   {},
   {
+    axisBottom,
+    axisLeft,
+    axisRight,
     select,
     extent,
     timeFormat,
-    range,
+    timeParse,
     scaleLinear,
     scaleTime,
     line,
-    area
+    area,
+    curveMonotoneX
   }
 );
 
