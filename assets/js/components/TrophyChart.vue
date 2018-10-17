@@ -94,7 +94,8 @@ export default {
         rightAxis
       } = this;
 
-      const width = svg.node().clientWidth - margin.left - margin.right;
+      const width =
+        svg.node().getBoundingClientRect().width - margin.left - margin.right;
       const x = d3.scaleTime().range([0, width]);
       const yLeft = d3.scaleLinear().range([height, 0]);
       const yRight = d3.scaleLinear().range([height, 0]);
