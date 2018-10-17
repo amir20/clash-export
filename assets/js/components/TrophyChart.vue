@@ -61,7 +61,12 @@ export default {
     this.$nextTick(this.render);
   },
   mounted() {
-    this.svg = d3.select(this.$refs.chart).append("svg");
+    this.svg = d3
+      .select(this.$refs.chart)
+      .append("svg")
+      .attr("width", "100%")
+      .attr("height", height + margin.top + margin.bottom);
+
     const root = this.svg
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -89,13 +94,7 @@ export default {
         rightAxis
       } = this;
 
-      let width = this.$refs.chart.clientWidth - margin.left - margin.right;
-      if (window.innerWidth < this.clientWidth) {
-        width -= this.clientWidth - window.innerWidth;
-      }
-
-      this.clientWidth = window.innerWidth;
-
+      const width = svg.node().clientWidth - margin.left - margin.right;
       const x = d3.scaleTime().range([0, width]);
       const yLeft = d3.scaleLinear().range([height, 0]);
       const yRight = d3.scaleLinear().range([height, 0]);
@@ -113,10 +112,6 @@ export default {
         .x(d => x(d.date))
         .y(d => yRight(d.members))
         .curve(d3.curveMonotoneX);
-
-      svg
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
 
       x.domain(d3.extent(data, d => d.date));
       yLeft.domain(d3.extent(data, d => d.trophies));
@@ -138,7 +133,7 @@ export default {
       rightAxis
         .attr("transform", "translate( " + width + ", 0 )")
         .call(d3.axisRight(yRight).ticks(4));
-    }, 150)
+    }, 80)
   }
 };
 </script>
