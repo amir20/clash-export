@@ -23,7 +23,7 @@
     "compression-webpack-plugin": "^2.0.0",
     "css-loader": "^1.0.0",
     "d3": "^5.7.0",
-    "date-fns": "^2.0.0-alpha.20",
+    "date-fns": "^2.0.0-alpha.23",
     "file-loader": "^2.0.0",
     "flag-icon-css": "^3.2.0",
     "lodash": "^4.17.11",
