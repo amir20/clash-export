@@ -30,7 +30,7 @@ const d3 = Object.assign(
   }
 );
 
-const margin = { top: 10, right: 30, bottom: 40, left: 50 };
+const margin = { top: 10, right: 50, bottom: 40, left: 70 };
 const height = 190 - margin.top - margin.bottom;
 
 export default {
@@ -45,7 +45,8 @@ export default {
       bottomAxis: null,
       leftAxis: null,
       rightAxis: null,
-      clientWidth: window.innerWidth
+      rightLabel: null,
+      leftLabel: null
     };
   },
   async created() {
@@ -76,6 +77,23 @@ export default {
     this.bottomAxis = root.append("g").attr("class", "axis x");
     this.leftAxis = root.append("g").attr("class", "axis y");
     this.rightAxis = root.append("g").attr("class", "axis y");
+    this.rightLabel = root
+      .append("text")
+      .attr("transform", "rotate(90)")
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .attr("y", 1000)
+      .attr("x", 1000)
+      .text("Members");
+
+    this.leftLabel = root
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .attr("y", 1000)
+      .attr("x", 1000)
+      .text("Trophy Points");
 
     window.addEventListener("resize", this.render);
   },
@@ -91,7 +109,9 @@ export default {
         trophyPath,
         bottomAxis,
         leftAxis,
-        rightAxis
+        rightAxis,
+        rightLabel,
+        leftLabel
       } = this;
 
       const width =
@@ -107,7 +127,6 @@ export default {
         .y1(d => yLeft(d.trophies))
         .curve(d3.curveMonotoneX);
 
-      // define the line 1
       const membersLine = d3
         .line()
         .x(d => x(d.date))
@@ -129,11 +148,14 @@ export default {
           .ticks(width > 1000 ? 9 : 6)
       );
 
-      leftAxis.call(d3.axisLeft(yLeft).ticks(4));
+      leftAxis.call(d3.axisLeft(yLeft).ticks(4, "s"));
 
       rightAxis
         .attr("transform", "translate( " + width + ", 0 )")
         .call(d3.axisRight(yRight).ticks(4));
+
+      rightLabel.attr("y", 0 - width - margin.right).attr("x", height / 2);
+      leftLabel.attr("y", 0 - margin.left).attr("x", -height / 2);
     }, 80)
   }
 };
@@ -155,10 +177,10 @@ export default {
     fill-opacity: 0.4;
   }
 
-  /deep/ .axis text {
-    color: rgba(0, 0, 0, 0.6);
+  /deep/ text {
+    fill: rgba(0, 0, 0, 0.6);
     font-family: "Titillium Web";
-    font-size: 1.2em;
+    font-size: 13px;
   }
 
   /deep/ .axis.x .domain {
