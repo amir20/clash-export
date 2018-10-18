@@ -12,23 +12,20 @@ import { axisBottom, axisLeft, axisRight } from "d3-axis";
 import debounce from "lodash/debounce";
 
 // https://www.giacomodebidda.com/how-to-import-d3-plugins-with-webpack/
-const d3 = Object.assign(
-  {},
-  {
-    axisBottom,
-    axisLeft,
-    axisRight,
-    select,
-    extent,
-    timeFormat,
-    timeParse,
-    scaleLinear,
-    scaleTime,
-    line,
-    area,
-    curveMonotoneX
-  }
-);
+const d3 = {
+  axisBottom,
+  axisLeft,
+  axisRight,
+  select,
+  extent,
+  timeFormat,
+  timeParse,
+  scaleLinear,
+  scaleTime,
+  line,
+  area,
+  curveMonotoneX
+};
 
 const margin = { top: 10, right: 50, bottom: 40, left: 70 };
 const height = 190 - margin.top - margin.bottom;
@@ -39,7 +36,6 @@ export default {
     return {
       data: [],
       svg: null,
-      root: null,
       trophyPath: null,
       membersPath: null,
       bottomAxis: null,
@@ -156,7 +152,7 @@ export default {
 
       rightLabel.attr("y", 0 - width - margin.right).attr("x", height / 2);
       leftLabel.attr("y", 0 - margin.left).attr("x", -height / 2);
-    }, 80)
+    }, 10)
   }
 };
 </script>
