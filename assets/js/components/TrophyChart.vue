@@ -84,7 +84,7 @@ export default {
     this.rightLabel
       .append("tspan")
       .attr("class", "members-legend")
-      .text("⬤ ");
+      .text("● ");
     this.rightLabel.append("tspan").text("Members");
 
     this.leftLabel = root
@@ -97,7 +97,7 @@ export default {
     this.leftLabel
       .append("tspan")
       .attr("class", "trophy-legend")
-      .text("⬤ ");
+      .text("● ");
     this.leftLabel.append("tspan").text("Trophy Points");
 
     window.addEventListener("resize", this.render);
