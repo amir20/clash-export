@@ -79,8 +79,13 @@ export default {
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .attr("y", 1000)
-      .attr("x", 1000)
-      .text("Members");
+      .attr("x", 1000);
+
+    this.rightLabel
+      .append("tspan")
+      .attr("class", "members-legend")
+      .text("⬤ ");
+    this.rightLabel.append("tspan").text("Members");
 
     this.leftLabel = root
       .append("text")
@@ -88,8 +93,12 @@ export default {
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .attr("y", 1000)
-      .attr("x", 1000)
-      .text("Trophy Points");
+      .attr("x", 1000);
+    this.leftLabel
+      .append("tspan")
+      .attr("class", "trophy-legend")
+      .text("⬤ ");
+    this.leftLabel.append("tspan").text("Trophy Points");
 
     window.addEventListener("resize", this.render);
   },
@@ -166,6 +175,15 @@ export default {
     stroke: hsl(204, 86%, 53%);
     stroke-width: 1px;
     stroke-dasharray: 4, 2;
+  }
+
+  /deep/ .trophy-legend {
+    fill: #d70206;
+    fill-opacity: 0.4;
+  }
+
+  /deep/ .members-legend {
+    fill: hsl(204, 86%, 53%);
   }
 
   /deep/ .area {
