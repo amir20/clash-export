@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.2"
 services:
   db:
     image: mongo:3.6
@@ -9,7 +9,7 @@ services:
 
   worker:
     env_file: .env
-    restart: 'no'
+    restart: "no"
     volumes:
       - ./clashleaders:/app/clashleaders
       - .ipython/scheduler:/root/.ipython/profile_default
@@ -18,7 +18,7 @@ services:
 
   web:
     env_file: .env
-    restart: 'no'
+    restart: "no"
     depends_on:
       - db
     ports:
@@ -33,7 +33,7 @@ services:
 
   scheduler:
     env_file: .env
-    restart: 'no'
+    restart: "no"
     volumes:
       - ./clashleaders:/app/clashleaders
       - .ipython/scheduler:/root/.ipython/profile_default

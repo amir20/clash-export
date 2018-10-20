@@ -1,12 +1,12 @@
-version: '3.2'
+version: "3.2"
 services:
   db:
     image: mongo:3.6
     hostname: mongo
-    
+
   test:
     image: amir20/clashleaders:latest
-    command: 'make init test'
+    command: "make init test"
     depends_on:
       - db
     environment:
