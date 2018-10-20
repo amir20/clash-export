@@ -5,6 +5,7 @@ services:
     hostname: mongo
     volumes:
       - ./:/clashleaders
+      - ./mongosnapshot:/docker-entrypoint-initdb.d
 
   worker:
     env_file: .env
