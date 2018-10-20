@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from flask import jsonify, render_template, request, send_file
 from mongoengine import DoesNotExist
 from user_agents import parse
@@ -134,7 +135,11 @@ def clan_trophies(tag):
     data = [[c.members, c.clanPoints] for c in clans]
     df = pd.DataFrame(data, index=pd.to_datetime([s.id.generation_time for s in clans]), columns=['members', 'trophies'])
     resampled = df.resample('D').mean().dropna()
-    data = dict(dates=[i.strftime("%Y-%m-%d") for i in resampled.index], members=list(resampled['members'].values), trophies=list(resampled['trophies'].values))
+    data = dict(
+        dates=[i.strftime("%Y-%m-%d") for i in resampled.index],
+        members=resampled['members'].values.tolist(),
+        trophies=resampled['trophies'].values.tolist()
+    )
 
     return jsonify(data)
 
@@ -150,7 +155,9 @@ def clan_chart(tag):
     labels = [k.strftime("%Y-%m-%d") for k in resampled.index.tolist()]
 
     return jsonify(
-        dict(labels=labels, points=list(resampled['points'].values), avg_gold=list(resampled['gold'].values)))
+        dict(labels=labels,
+             points=resampled['points'].values.tolist(),
+             avg_gold=resampled['gold'].values.tolist()))
 
 
 def clan_from_days_ago(days_ago, tag):
