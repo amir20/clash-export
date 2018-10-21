@@ -29,6 +29,8 @@ services:
     deploy:
       update_config:
         order: start-first
+    volumes:
+      - /etc/certs:/etc/certs
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImIwMGVkYTdmLThlMzktNDAxNS1hZDViLWNhYjUyNDdlMTY3OCIsImlhdCI6MTUyNzc4MDEwMSwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE1OS44OS4xMzkuMzUiLCIxMDQuMTMxLjE2MS4xOTMiXSwidHlwZSI6ImNsaWVudCJ9XX0.EH386Oa7I2jfAoyKKXHF9Bt5AY2ZrC9wgYovc1OcfVBU7Hbe_7B7FoaWTeR-d_H6D_xxb39qOC1yxR8fNPrCmg
       - DB_HOST=localhost
