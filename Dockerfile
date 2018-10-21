@@ -50,7 +50,7 @@ COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
 
 # Copy caddy file
 COPY ./caddy/Caddyfile /etc/Caddyfile
-
+COPY ./caddy /etc/caddy
 # Copy all other files
 COPY ./clashleaders /app/clashleaders
 COPY ./tests /app/tests
@@ -58,6 +58,7 @@ COPY ./Makefile /app/
 COPY ./setup.cfg /app/
 COPY ./*.json /app/
 COPY ./*.py /app/
+
 
 # Copy the js files
 COPY --from=builder /build/clashleaders/static /app/clashleaders/static
