@@ -1,7 +1,7 @@
-https://www.clashleaders.com {
+www.clashleaders.com:443 {
     root /app/clashleaders
 
-    tls findamir@gmail.com
+    tls /etc/certs/www_clashleaders_com.crt /etc/certs/www_clashleaders_com.key
 
     proxy / unix:/tmp/gunicorn.sock {
         transparent
@@ -37,10 +37,7 @@ https://www.clashleaders.com {
 }
 
 
-clashleaders.com {
+clashleaders.com:80 {
    redir https://www.clashleaders.com
-}
-
-https://clashstats.download {
-   redir https://www.clashleaders.com{uri}
+   tls off
 }
