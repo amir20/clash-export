@@ -26,6 +26,8 @@ services:
   web:
     networks:
       - outside
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/version.json"]
     deploy:
       update_config:
         order: start-first
