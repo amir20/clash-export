@@ -41,3 +41,9 @@ clashleaders.com:80 {
    redir https://www.clashleaders.com
    tls off
 }
+
+localhost:8000 {
+   proxy / unix:/tmp/gunicorn.sock {
+        transparent
+    }
+}
