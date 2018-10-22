@@ -87,7 +87,7 @@ module.exports = {
                     customProperties: { warnings: false }
                   }
                 }),
-                require("postcss-font-magician")()
+                require("postcss-font-magician")({ display: "swap" })
               ]
             }
           },
