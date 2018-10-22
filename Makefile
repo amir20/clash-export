@@ -1,9 +1,10 @@
 default: start
 
 .PHONY: deploy
-deploy: push
-	eval $$(docker-machine env clashstats --shell bash); docker-compose -f docker-compose.yml pull
-	eval $$(docker-machine env clashstats --shell bash); docker-compose -f docker-compose.yml -f docker-compose.production.yml -p clashstats up -d --remove-orphans
+deploy: TAG=$(shell cat package.json | jq -r .version)
+deploy:
+	eval $$(docker-machine env clashstats --shell bash); docker pull amir20/clashleaders:$(TAG)
+	eval $$(docker-machine env clashstats --shell bash); docker stack deploy -c docker-compose.yml -c docker-compose.production.yml clashleaders
 
 .PHONY: build
 build:
