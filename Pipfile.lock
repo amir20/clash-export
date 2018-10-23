@@ -213,10 +213,10 @@
         },
         "contentful": {
             "hashes": [
-                "sha256:ce7bdb0c51efa54551c10c466732d2c3b639230bd8c3d0baac236242488a7c50"
+                "sha256:299f48b71a5aed6fddbe19e509da65c856949daa18678841f9f563f710ad2197"
             ],
             "index": "pypi",
-            "version": "==1.11.1"
+            "version": "==1.11.2"
         },
         "contextlib2": {
             "hashes": [
