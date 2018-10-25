@@ -20,13 +20,14 @@
           <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
         </div>
       </div>
-    </div>
-    <div>
+    </div>    
+    <section class="section">
       <troops :player="player"></troops>
-    </div>
-    <div>
+    </section>    
+    <section class="section">
+      <h4 class="title is-4 is-marginless">Average Loot Grab</h4>
       <div ref="chart" class="player-comparison"></div>
-    </div>
+    </section>
     <div class="buttons is-right mobile is-hidden-desktop" v-if="player">
       <a class="button is-info is-fullwidth-mobile" :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`">
         <span class="icon">
