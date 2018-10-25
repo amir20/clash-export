@@ -5,6 +5,7 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 @import "./similar-clans";
 @import "./components";
 @import "./charts";
+@import "./coc-sprite";
 
 .tooltip:before {
   text-transform: none;
