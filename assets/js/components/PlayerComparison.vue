@@ -8,7 +8,7 @@
       </figure>
       <div class="media-content">
         <div class="content">
-          <div class="level is-pulled-right">
+          <div class="level is-pulled-right is-marginless">
             <div class="level-item has-text-centered">
               <div>
                 <div class="title is-size-4-mobile">{{ Math.ceil(player.percentile * 100) }} / 100</div>
@@ -20,6 +20,9 @@
           <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
         </div>
       </div>
+    </div>
+    <div>
+      <troops :player="player"></troops>
     </div>
     <div>
       <div ref="chart" class="player-comparison"></div>
@@ -39,6 +42,7 @@
 import Chartist from "chartist";
 import "chartist-plugin-legend";
 import { bugsnagClient } from "../bugsnag";
+import Troops from "./Troops";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 const role = {
@@ -49,6 +53,9 @@ const role = {
 };
 
 export default {
+  components: {
+    Troops
+  },
   props: ["playerData"],
   data() {
     return {
