@@ -30,7 +30,7 @@ class Clan(DynamicDocument):
         return clashleaders.clash.calculation.update_calculations(self)
 
     def players_data(self):
-        return self.players if 'players' in self else decode_player_bytes(self.players_bytes)
+        return decode_player_bytes(self.players_bytes)
 
     def to_data_frame(self):
         return clashleaders.clash.transformer.to_data_frame(self)
@@ -81,6 +81,12 @@ class Clan(DynamicDocument):
             clan['avg_gold_grab'] = df['Total Gold Grab'].mean()
             clan['avg_elixir_grab'] = df['Total Elixir Grab'].mean()
             clan['avg_de_grab'] = df['Total DE Grab'].mean()
+        except:
+            pass
+
+        try:
+            for player in clan.players_data():
+                clashleaders.model.Player.upsert_player(player['tag'], **player)
         except:
             pass
 

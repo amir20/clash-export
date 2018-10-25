@@ -4,7 +4,7 @@ from mongoengine import DynamicDocument, BinaryField, signals, StringField
 
 
 class Player(DynamicDocument):
-    BINARY_FIELDS = ['achievements', 'clan', 'heroes', 'league', 'legendStatistics', 'spells', 'troops']
+    COMPRESSED_FIELDS = ['achievements', 'clan', 'heroes', 'league', 'legendStatistics', 'spells', 'troops']
 
     binary_bytes = BinaryField()
     tag = StringField(required=True, unique=True)
@@ -35,14 +35,14 @@ class Player(DynamicDocument):
         if document.binary_bytes:
             data = decode_data(document.binary_bytes)
 
-            for f in cls.BINARY_FIELDS:
+            for f in cls.COMPRESSED_FIELDS:
                 setattr(document, f, data[f])
 
     @classmethod
     def pre_save(cls, sender, document, **kwargs):
         data = dict()
 
-        for f in cls.BINARY_FIELDS:
+        for f in cls.COMPRESSED_FIELDS:
             data[f] = getattr(document, f)
             delattr(document, f)
 
