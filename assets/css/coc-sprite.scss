@@ -36,7 +36,6 @@ $spells: (
   display: inline-block;
   width: $sprite-grid-size;
   height: $sprite-grid-size;
-  line-height: $sprite-grid-size;
   background-image: url(#{$sprite-image-url});
   background-repeat: no-repeat;
   border-radius: 4px;
