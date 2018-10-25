@@ -2,29 +2,29 @@
    <div class="columns" v-if="player && player.troops">
      <div class="column is-6">
        <h4 class="title is-4 is-marginless">Troops</h4>
-       <div v-for="troop in filterTroops(player.troops, 'home')" :key="troop.name + 'home'" :class="troop.name | iconClass">
+       <div v-for="troop in filterTroops(player.troops, 'home')" :key="troop.name + 'home'" :class="troop.name | iconClass" class="is-tooltip-right tooltip" :data-tooltip="troop.name">
          <small>{{ troop.level }}</small>
        </div>
 
        <h4 class="subtitle is-5 is-marginless">Builder Troops</h4>
-       <div v-for="troop in filterTroops(player.troops, 'builderBase')" :key="troop.name + 'builder'" :class="troop.name | iconClass">
+       <div v-for="troop in filterTroops(player.troops, 'builderBase')" :key="troop.name + 'builder'" :class="troop.name | iconClass" class="is-tooltip-right tooltip" :data-tooltip="troop.name">
          <small>{{ troop.level }}</small>
        </div>
      </div>
 
      <div class="column is-3">
        <h4 class="title is-4 is-marginless">Spells</h4>
-       <div v-for="spell in this.player.spells" :key="spell.name" :class="spell.name | iconClass">
+       <div v-for="spell in this.player.spells" :key="spell.name" :class="spell.name | iconClass" class="is-tooltip-right tooltip" :data-tooltip="spell.name">
          <small>{{ spell.level }}</small>
        </div>
      </div>
      <div class="column is-3">
        <h4 class="title is-4 is-marginless">Heros</h4>
-       <div v-for="hero in filterTroops(player.heroes, 'home')" :key="hero.name" :class="hero.name | iconClass">
+       <div v-for="hero in filterTroops(player.heroes, 'home')" :key="hero.name" :class="hero.name | iconClass" class="is-tooltip-right tooltip" :data-tooltip="hero.name">
          <small>{{ hero.level }}</small>
        </div>
        <h4 class="subtitle is-5 is-marginless">Builder Base</h4>
-       <div v-for="hero in filterTroops(player.heroes, 'builderBase')" :key="hero.name" :class="hero.name | iconClass">
+       <div v-for="hero in filterTroops(player.heroes, 'builderBase')" :key="hero.name" :class="hero.name | iconClass" class="is-tooltip-right tooltip" :data-tooltip="hero.name">
          <small>{{ hero.level }}</small>
        </div>
      </div>
