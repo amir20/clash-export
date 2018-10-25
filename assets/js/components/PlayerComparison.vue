@@ -21,10 +21,11 @@
         </div>
       </div>
     </div>    
-    <section class="section">
+    <section>
       <troops :player="player"></troops>
     </section>    
-    <section class="section">
+    <br>
+    <section>
       <h4 class="title is-4 is-marginless">Average Loot Grab</h4>
       <div ref="chart" class="player-comparison"></div>
     </section>
