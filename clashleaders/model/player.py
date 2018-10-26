@@ -60,8 +60,9 @@ class Player(DynamicDocument):
 
         data = dict()
         for f in cls.COMPRESSED_FIELDS:
-            data[f] = getattr(document, f)
-            delattr(document, f)
+            if hasattr(document, f):
+                data[f] = getattr(document, f)
+                delattr(document, f)
 
         document.binary_bytes = encode_data(data)
 
