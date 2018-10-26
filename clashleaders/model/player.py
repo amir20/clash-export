@@ -1,6 +1,6 @@
 import json
 from codecs import decode, encode
-from mongoengine import DynamicDocument, BinaryField, signals, StringField
+from mongoengine import DynamicDocument, BinaryField, signals, StringField, DictField
 
 
 class Player(DynamicDocument):
@@ -8,6 +8,7 @@ class Player(DynamicDocument):
 
     binary_bytes = BinaryField()
     tag = StringField(required=True, unique=True)
+    lab_levels = DictField()
 
     meta = {
         'indexes': [
@@ -49,8 +50,15 @@ class Player(DynamicDocument):
 
     @classmethod
     def pre_save(cls, sender, document, **kwargs):
-        data = dict()
+        document.heroes = document.heroes or []
+        document.troops = document.troops or []
+        document.spells = document.spells or []
 
+        for lab in document.heroes + document.troops + document.spells:
+            key = f"{lab['village']}_{lab['name'].replace('.', '')}"
+            document.lab_levels[key] = lab['level']
+
+        data = dict()
         for f in cls.COMPRESSED_FIELDS:
             data[f] = getattr(document, f)
             delattr(document, f)
@@ -60,6 +68,7 @@ class Player(DynamicDocument):
 
 signals.post_init.connect(Player.post_init, sender=Player)
 signals.pre_save.connect(Player.pre_save, sender=Player)
+signals.post_save.connect(Player.post_init, sender=Player)
 
 
 def encode_data(map):

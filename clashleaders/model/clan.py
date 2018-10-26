@@ -1,4 +1,5 @@
 import json
+import logging
 from codecs import decode, encode
 from datetime import datetime, timedelta
 
@@ -9,6 +10,8 @@ import clashleaders.clash.calculation
 import clashleaders.clash.transformer
 import clashleaders.model
 from clashleaders.clash import api
+
+logger = logging.getLogger(__name__)
 
 
 class Clan(DynamicDocument):
@@ -82,13 +85,13 @@ class Clan(DynamicDocument):
             clan['avg_elixir_grab'] = df['Total Elixir Grab'].mean()
             clan['avg_de_grab'] = df['Total DE Grab'].mean()
         except:
-            pass
+            logging.exception("Error while saving averages for loot in clan#fetch_and_save()")
 
         try:
             for player in clan.players_data():
                 clashleaders.model.Player.upsert_player(player['tag'], **player)
         except:
-            pass
+            logging.exception("Error while updating players clan#fetch_and_save()")
 
         clan.save()
 
