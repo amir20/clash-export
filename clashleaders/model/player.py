@@ -46,7 +46,8 @@ class Player(DynamicDocument):
             data = decode_data(document.binary_bytes)
 
             for f in cls.COMPRESSED_FIELDS:
-                setattr(document, f, data[f])
+                if hasattr(document, f):
+                    setattr(document, f, data[f])
 
     @classmethod
     def pre_save(cls, sender, document, **kwargs):
