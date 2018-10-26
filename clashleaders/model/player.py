@@ -46,7 +46,7 @@ class Player(DynamicDocument):
             data = decode_data(document.binary_bytes)
 
             for f in cls.COMPRESSED_FIELDS:
-                if hasattr(document, f):
+                if f in data:
                     setattr(document, f, data[f])
 
     @classmethod
