@@ -12,7 +12,16 @@ class Player(DynamicDocument):
     meta = {
         'indexes': [
             'name',
-            'tag'
+            'tag',
+            'townHallWeaponLevel',
+            'townHallLevel',
+            'trophies',
+            'warStars',
+            'expLevel',
+            'builderHallLevel',
+            'defenseWins',
+            'attackWins',
+            'donations'
         ]
     }
 
