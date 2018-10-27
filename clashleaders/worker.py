@@ -24,6 +24,7 @@ handler.setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
 
 DEBUG = os.getenv('DEBUG', False)
+WORKER_OFFSET = int(os.getenv('WORKER_OFFSET', 1))
 
 logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
@@ -33,6 +34,7 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 tags_indexed = []
+index = (WORKER_OFFSET - 1) * 10
 
 
 def update_single_clan():
@@ -41,9 +43,11 @@ def update_single_clan():
     try:
         query_set = ClanPreCalculated.active_clans(twelve_hour_ago)
         total = query_set.count()
-        clan = query_set.first()
+        clan = None
+        if total > index:
+            clan = query_set[index]
         if clan:
-            logger.debug(f"Updating clan {clan.tag} with {total} eligible clans.")
+            logger.debug(f"Worker #{WORKER_OFFSET}: Updating clan {clan.tag} with {total} eligible clans.")
             clan = clan.fetch_and_update_calculations()
             tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:

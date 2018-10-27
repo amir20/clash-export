@@ -9,7 +9,6 @@ services:
 
   worker:
     env_file: .env
-    restart: "no"
     volumes:
       - ./clashleaders:/app/clashleaders
       - .ipython/scheduler:/root/.ipython/profile_default
@@ -18,7 +17,6 @@ services:
 
   web:
     env_file: .env
-    restart: "no"
     depends_on:
       - db
     ports:
@@ -33,7 +31,6 @@ services:
 
   scheduler:
     env_file: .env
-    restart: "no"
     volumes:
       - ./clashleaders:/app/clashleaders
       - .ipython/scheduler:/root/.ipython/profile_default
