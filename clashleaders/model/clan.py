@@ -33,7 +33,7 @@ class Clan(DynamicDocument):
         return clashleaders.clash.calculation.update_calculations(self)
 
     def players_data(self):
-        return decode_player_bytes(self.players_bytes)
+        return self.players if 'players' in self else decode_player_bytes(self.players_bytes)
 
     def to_data_frame(self):
         return clashleaders.clash.transformer.to_data_frame(self)
