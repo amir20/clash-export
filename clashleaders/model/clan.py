@@ -7,6 +7,7 @@ from bson.objectid import ObjectId
 from mongoengine import BinaryField, DynamicDocument, DoesNotExist
 
 import clashleaders.clash.calculation
+import clashleaders.clash.player_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
 from clashleaders.clash import api
@@ -37,6 +38,19 @@ class Clan(DynamicDocument):
 
     def to_data_frame(self):
         return clashleaders.clash.transformer.to_data_frame(self)
+
+    def to_player_matrix(self):
+        return clashleaders.clash.player_calculation.df_to_matrix(
+            clashleaders.clash.player_calculation.augment_with_percentiles(self))
+
+    def from_before(self, **kwargs):
+        dt = self.created_on - timedelta(**kwargs)
+        object_id = ObjectId.from_datetime(dt)
+        return Clan.objects(tag=self.tag, id__gte=object_id).order_by('id').first()
+
+    @property
+    def created_on(self):
+        return self.id.generation_time
 
     @classmethod
     def from_now(cls, **kwargs):
@@ -87,11 +101,11 @@ class Clan(DynamicDocument):
         except:
             logging.exception("Error while saving averages for loot in clan#fetch_and_save()")
 
-        try:
-            for player in clan.players_data():
-                clashleaders.model.Player.upsert_player(player['tag'], **player)
-        except:
-            logging.exception("Error while updating players clan#fetch_and_save()")
+        # try:
+        #     for player in clan.players_data():
+        #         clashleaders.model.Player.upsert_player(player['tag'], **player)
+        # except:
+        #     logging.exception("Error while updating players clan#fetch_and_save()")
 
         clan.save()
 
