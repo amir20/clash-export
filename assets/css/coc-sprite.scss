@@ -58,7 +58,7 @@ $spells: (
   $column: nth($hero, 3);
 
   .#{$class-prefix}#{$name} {
-    @include icon($row, $column, 15);
+    @include icon($row, $column, 18);
   }
 }
 
