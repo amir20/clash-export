@@ -38,6 +38,15 @@ class Clan(DynamicDocument):
     def to_data_frame(self):
         return clashleaders.clash.transformer.to_data_frame(self)
 
+    def from_before(self, **kwargs):
+        dt = self.created_on - timedelta(**kwargs)
+        object_id = ObjectId.from_datetime(dt)
+        return Clan.objects(tag=self.tag, id__gte=object_id).order_by('id').first()
+
+    @property
+    def created_on(self):
+        return self.id.generation_time
+
     @classmethod
     def from_now(cls, **kwargs):
         object_id = object_id_from_now(**kwargs)

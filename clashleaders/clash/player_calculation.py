@@ -1,4 +1,5 @@
 from clashleaders.model.clan import prepend_hash
+import numpy as np
 
 
 def find_player_details(cpc, player_tag):
@@ -13,13 +14,16 @@ def find_player_details(cpc, player_tag):
 
 
 def player_percentile(cpc, player_tag):
-    percentiles = clan_percentiles(cpc)
+    most_recent = cpc.most_recent
+    previous = cpc.previous_data(days=7)
+
+    percentiles = clan_percentiles(previous, most_recent)
     return percentiles[player_tag]
 
 
-def clan_diff(cpc):
-    pd_df = cpc.previous_data(days=7).to_data_frame()
-    mr_df = cpc.most_recent.to_data_frame()
+def clan_diff(previous, most_recent):
+    pd_df = previous.to_data_frame()
+    mr_df = most_recent.to_data_frame()
     columns = ['Total Gold Grab', 'Total Elixir Grab', 'Total DE Grab', 'Total Donations', 'Total Spells Donated',
                'Total War Collected Gold', 'Clan Games XP']
     diff = mr_df[columns] - pd_df[columns]
@@ -27,8 +31,8 @@ def clan_diff(cpc):
     return diff
 
 
-def clan_percentiles(cpc):
-    diff = clan_diff(cpc)
+def clan_percentiles(previous, most_recent):
+    diff = clan_diff(previous, most_recent)
     ranks = diff.rank(ascending=True, pct=True, na_option='top')
 
     for c in ['Total Gold Grab', 'Total Elixir Grab']:
@@ -47,9 +51,12 @@ def clan_new_players(cpc):
 def clan_status(cpc):
     status = {}
 
+    most_recent = cpc.most_recent
+    previous = cpc.previous_data(days=7)
+
     if cpc.days_span > 3:
-        diff = clan_diff(cpc)
-        percentiles = clan_percentiles(cpc)
+        diff = clan_diff(previous, most_recent)
+        percentiles = clan_percentiles(previous, most_recent)
 
         if not percentiles.empty:
             most_active = percentiles.sort_values(ascending=False)
@@ -64,3 +71,20 @@ def clan_status(cpc):
                 status[p] = 'new'
 
     return status
+
+
+def augment_with_percentiles(clan):
+    df = clan.to_data_frame()
+    df_p = clan_percentiles(previous=clan.from_before(days=7), most_recent=clan).to_frame('Activity Score')
+    df_p['Activity Score'] = np.ceil(df_p['Activity Score'] * 100)
+    df['Tag'] = df.index
+    joined = df.join(df_p)
+    columns = joined.columns.tolist()
+    new_order = columns[:-2]
+    new_order[1:1] = columns[-2:]
+    joined = joined[new_order]
+    return joined
+
+
+def df_to_list(df):
+    return [df.columns.tolist()] + df.values.tolist()

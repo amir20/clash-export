@@ -6,8 +6,7 @@ from user_agents import parse
 
 from clashleaders import app, cache
 from clashleaders.clash import api, excel
-from clashleaders.clash.player_calculation import clan_status
-from clashleaders.clash.transformer import transform_players
+from clashleaders.clash.player_calculation import clan_status, augment_with_percentiles, df_to_list
 from clashleaders.model import Clan, ClanPreCalculated, Status
 from clashleaders.text.clan_description_processor import transform_description
 
@@ -27,7 +26,7 @@ def clan_detail_json(tag):
     try:
         days_ago = request.args.get('daysAgo')
         clan = clan_from_days_ago(days_ago, tag)
-        return jsonify(transform_players(clan.players_data()))
+        return jsonify(df_to_list(augment_with_percentiles(clan)))
     except api.ClanNotFound:
         return jsonify(dict(error=f"{tag} not found")), 404
     except api.ApiTimeout:
@@ -46,7 +45,7 @@ def clan_refresh_json(tag):
         'elixir_grab': cpc.week_delta.avg_elixir_grab,
         'de_grab': cpc.week_delta.avg_de_grab
     }
-    player_data = transform_players(clan.players_data())
+    player_data = df_to_list(augment_with_percentiles(clan))
     players_status = clan_status(cpc)
 
     return jsonify(dict(lootStats=loot, playerData=player_data, playersStatus=players_status))
@@ -71,7 +70,7 @@ def clan_detail_page(slug):
         clan = ClanPreCalculated.find_by_slug(slug)
         update_page_views(clan)
         description = transform_description(clan.description)
-        players = transform_players(clan.players)
+        players = df_to_list(augment_with_percentiles(clan.most_recent))
         start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         if clan:
