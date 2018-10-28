@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 from mongoengine import BinaryField, DynamicDocument, DoesNotExist
 
-import clashleaders.clash.calculation
+import clashleaders.clash.clan_calculation
 import clashleaders.clash.player_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
@@ -31,7 +31,7 @@ class Clan(DynamicDocument):
         return clashleaders.model.ClanPreCalculated.find_by_tag(self.tag)
 
     def update_calculations(self):
-        return clashleaders.clash.calculation.update_calculations(self)
+        return clashleaders.clash.clan_calculation.update_calculations(self)
 
     def players_data(self):
         return self.players if 'players' in self else decode_player_bytes(self.players_bytes)
