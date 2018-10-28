@@ -1,9 +1,9 @@
-from clashleaders.model.clan import prepend_hash
+import clashleaders.model.clan
 import numpy as np
 
 
 def find_player_details(cpc, player_tag):
-    player_tag = prepend_hash(player_tag)
+    player_tag = clashleaders.model.clan.prepend_hash(player_tag)
     player = next((p for p in cpc.players if p['tag'] == player_tag), None)
 
     if player:
@@ -86,5 +86,5 @@ def augment_with_percentiles(clan):
     return joined
 
 
-def df_to_list(df):
+def df_to_matrix(df):
     return [df.columns.tolist()] + df.values.tolist()

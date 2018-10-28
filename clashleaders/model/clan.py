@@ -7,6 +7,7 @@ from bson.objectid import ObjectId
 from mongoengine import BinaryField, DynamicDocument, DoesNotExist
 
 import clashleaders.clash.calculation
+import clashleaders.clash.player_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
 from clashleaders.clash import api
@@ -37,6 +38,10 @@ class Clan(DynamicDocument):
 
     def to_data_frame(self):
         return clashleaders.clash.transformer.to_data_frame(self)
+
+    def to_player_matrix(self):
+        return clashleaders.clash.player_calculation.df_to_matrix(
+            clashleaders.clash.player_calculation.augment_with_percentiles(self))
 
     def from_before(self, **kwargs):
         dt = self.created_on - timedelta(**kwargs)

@@ -1,12 +1,11 @@
 import pandas as pd
-import numpy as np
 from flask import jsonify, render_template, request, send_file
 from mongoengine import DoesNotExist
 from user_agents import parse
 
 from clashleaders import app, cache
 from clashleaders.clash import api, excel
-from clashleaders.clash.player_calculation import clan_status, augment_with_percentiles, df_to_list
+from clashleaders.clash.player_calculation import clan_status
 from clashleaders.model import Clan, ClanPreCalculated, Status
 from clashleaders.text.clan_description_processor import transform_description
 
@@ -26,7 +25,7 @@ def clan_detail_json(tag):
     try:
         days_ago = request.args.get('daysAgo')
         clan = clan_from_days_ago(days_ago, tag)
-        return jsonify(df_to_list(augment_with_percentiles(clan)))
+        return jsonify(clan.to_player_matrix())
     except api.ClanNotFound:
         return jsonify(dict(error=f"{tag} not found")), 404
     except api.ApiTimeout:
@@ -45,7 +44,7 @@ def clan_refresh_json(tag):
         'elixir_grab': cpc.week_delta.avg_elixir_grab,
         'de_grab': cpc.week_delta.avg_de_grab
     }
-    player_data = df_to_list(augment_with_percentiles(clan))
+    player_data = clan.to_player_matrix()
     players_status = clan_status(cpc)
 
     return jsonify(dict(lootStats=loot, playerData=player_data, playersStatus=players_status))
@@ -70,7 +69,7 @@ def clan_detail_page(slug):
         clan = ClanPreCalculated.find_by_slug(slug)
         update_page_views(clan)
         description = transform_description(clan.description)
-        players = df_to_list(augment_with_percentiles(clan.most_recent))
+        players = clan.most_recent.to_player_matrix()
         start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         if clan:
@@ -132,7 +131,8 @@ def clan_meta(tag):
 def clan_trophies(tag):
     clans = list(Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints', 'members'))
     data = [[c.members, c.clanPoints] for c in clans]
-    df = pd.DataFrame(data, index=pd.to_datetime([s.id.generation_time for s in clans]), columns=['members', 'trophies'])
+    df = pd.DataFrame(data, index=pd.to_datetime([s.id.generation_time for s in clans]),
+                      columns=['members', 'trophies'])
     resampled = df.resample('D').mean().dropna()
     data = dict(
         dates=[i.strftime("%Y-%m-%d") for i in resampled.index],
