@@ -10,7 +10,7 @@ services:
       - STAGE=production
       - WORKER_OFFSET={{.Task.Slot}}
     deploy:
-      replicas: 2
+      replicas: 1
   scheduler:
     volumes:
       - /tmp/mongodb-27017.sock:/tmp/mongodb-27017.sock
