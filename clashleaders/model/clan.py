@@ -87,11 +87,11 @@ class Clan(DynamicDocument):
         except:
             logging.exception("Error while saving averages for loot in clan#fetch_and_save()")
 
-        try:
-            for player in clan.players_data():
-                clashleaders.model.Player.upsert_player(player['tag'], **player)
-        except:
-            logging.exception("Error while updating players clan#fetch_and_save()")
+        # try:
+        #     for player in clan.players_data():
+        #         clashleaders.model.Player.upsert_player(player['tag'], **player)
+        # except:
+        #     logging.exception("Error while updating players clan#fetch_and_save()")
 
         clan.save()
 
