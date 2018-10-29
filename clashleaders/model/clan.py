@@ -1,6 +1,5 @@
 import json
 import logging
-import threading
 from codecs import decode, encode
 from datetime import datetime, timedelta
 
@@ -102,22 +101,7 @@ class Clan(DynamicDocument):
         except:
             logging.exception("Error while saving averages for loot in clan#fetch_and_save()")
 
-        # update_all_players(clan)
-
         return clan
-
-
-def update_all_players(clan, **kwargs):
-    def runner():
-        try:
-            for player in clan.players_data():
-                clashleaders.model.Player.upsert_player(player['tag'], **player)
-        except:
-            logging.exception("Error while updating players in update_all_players()")
-
-    thread = threading.Thread(target=runner, args=())
-    thread.daemon = True
-    thread.start()
 
 
 def prepend_hash(tag):
