@@ -42,8 +42,6 @@ def test_from_now_with_tag(mocker):
     Clan.objects.assert_called_once_with(id__gte=id, tag='#ABCD')
 
 
-@pytest.mark.freeze_time('2018-05-20 12:00:01')
-def tst_find_first_by_tag(mocker):
-    mocker.patch('clashleaders.model.Clan.from_now_with_tag')
-    Clan.from_now_with_tag('EFGH')
-    Clan.from_now_with_tag.assert_called_once_with(tag='#EFGH', hours=13)
+def test_clan_to_player_matrix(clan_with_players, snapshot):
+    data = clan_with_players.to_player_matrix()
+    snapshot.assert_match(data)
