@@ -40,8 +40,3 @@ def test_from_now_with_tag(mocker):
     Clan.from_now_with_tag('ABCD', days=8)
     id = ObjectId.from_datetime(datetime(2018, 5, 12, 12, 0, 1))
     Clan.objects.assert_called_once_with(id__gte=id, tag='#ABCD')
-
-
-def test_clan_to_player_matrix(clan_with_players, snapshot):
-    data = clan_with_players.to_player_matrix()
-    snapshot.assert_match(data)
