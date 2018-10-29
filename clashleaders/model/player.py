@@ -1,6 +1,8 @@
 import json
 from codecs import decode, encode
+
 from mongoengine import DynamicDocument, BinaryField, signals, StringField, DictField
+from pymongo import ReplaceOne
 
 
 class Player(DynamicDocument):
@@ -25,6 +27,31 @@ class Player(DynamicDocument):
             'donations'
         ]
     }
+
+    def as_replace_one(self):
+        return ReplaceOne({'tag': self.tag}, self.compressed_fields(), upsert=True)
+
+    def compressed_fields(self):
+        fields = vars(self).copy()
+        del fields['_cls']
+        del fields['_dynamic_lock']
+        del fields['_fields_ordered']
+
+        fields['tag'] = self.tag
+        fields['lab_levels'] = fields.get('lab_levels', {})
+        for lab in fields.get('heroes', []) + fields.get('troops', []) + fields.get('spells', []):
+            key = f"{lab['village']}_{lab['name'].replace('.', '')}"
+            fields['lab_levels'][key] = lab['level']
+
+        binary_bytes = dict()
+        for f in Player.COMPRESSED_FIELDS:
+            if f in fields:
+                binary_bytes[f] = fields[f]
+                del fields[f]
+
+        fields['binary_bytes'] = encode_data(binary_bytes)
+
+        return fields
 
     @classmethod
     def upsert_player(cls, player_tag, **kwargs):
