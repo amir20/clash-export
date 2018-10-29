@@ -102,7 +102,7 @@ class Clan(DynamicDocument):
         except:
             logging.exception("Error while saving averages for loot in clan#fetch_and_save()")
 
-        update_all_players(clan)
+        # update_all_players(clan)
 
         return clan
 
