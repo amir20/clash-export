@@ -14,7 +14,10 @@ def object_from_json(file, obj):
 
 @pytest.fixture
 def clan_with_players():
-    return object_from_json("clan_with_players.json", Clan)
+    clan = object_from_json("clan_with_players.json", Clan)
+    clan.from_before = lambda days: clan_season_start()
+
+    return clan
 
 
 @pytest.fixture
