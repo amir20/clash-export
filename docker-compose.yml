@@ -3,13 +3,15 @@ services:
   scheduler:
     image: "amir20/clashleaders:${TAG:-latest}"
     hostname: scheduler
-    command: "/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord-scheduler.conf"
-
+    command: "scheduler"
   worker:
     image: "amir20/clashleaders:${TAG:-latest}"
     hostname: worker
-    command: "/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord-worker.conf"
-
+    command: "worker"
+  player_worker:
+    image: "amir20/clashleaders:${TAG:-latest}"
+    hostname: player_worker
+    command: "player_worker"
   web:
     build: .
     image: "amir20/clashleaders:${TAG:-latest}"
