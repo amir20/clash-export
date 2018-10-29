@@ -98,6 +98,7 @@ class Clan(DynamicDocument):
             clan['avg_gold_grab'] = df['Total Gold Grab'].mean()
             clan['avg_elixir_grab'] = df['Total Elixir Grab'].mean()
             clan['avg_de_grab'] = df['Total DE Grab'].mean()
+            clan.save()
         except:
             logging.exception("Error while saving averages for loot in clan#fetch_and_save()")
 
