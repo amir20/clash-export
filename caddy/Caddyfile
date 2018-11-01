@@ -1,7 +1,9 @@
-www.clashleaders.com:443 {
+https://www.clashleaders.com {
     root /app/clashleaders
 
-    tls /etc/certs/www_clashleaders_com.crt /etc/certs/www_clashleaders_com.key
+    tls {
+        dns digitalocean
+    }
 
     proxy / unix:/tmp/gunicorn.sock {
         transparent
@@ -37,7 +39,7 @@ www.clashleaders.com:443 {
 }
 
 
-clashleaders.com:80 {
+http://clashleaders.com {
    redir https://www.clashleaders.com
    tls off
 }
