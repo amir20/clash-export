@@ -30,7 +30,7 @@ RUN pip install pip==18.1 \
 # Copy requirements file
 COPY ./Pipfile* /app/
 
-ARG plugins=http.expires
+ARG plugins=http.expires,tls.dns.digitalocean
 
 # Install caddy and clean up
 RUN apt-get update \
