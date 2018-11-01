@@ -42,7 +42,6 @@ services:
       - DB_HOST=mongodb://%2Ftmp%2Fmongodb-27017.sock
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - STAGE=production
-      - DO_AUTH_TOKEN
     ports:
       - 80:80
       - 443:443
