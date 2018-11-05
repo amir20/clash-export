@@ -9,9 +9,9 @@ import { timeFormat, timeParse } from "d3-time-format";
 import { scaleLinear, scaleTime } from "d3-scale";
 import { line, area, curveMonotoneX } from "d3-shape";
 import { axisBottom, axisLeft, axisRight } from "d3-axis";
+import { timeDay } from "d3-time";
 import debounce from "lodash/debounce";
 
-// https://www.giacomodebidda.com/how-to-import-d3-plugins-with-webpack/
 const d3 = {
   axisBottom,
   axisLeft,
@@ -23,6 +23,7 @@ const d3 = {
   scaleLinear,
   scaleTime,
   line,
+  timeDay,
   area,
   curveMonotoneX
 };
@@ -149,8 +150,8 @@ export default {
       bottomAxis.attr("transform", "translate(0," + height + ")").call(
         d3
           .axisBottom(x)
-          .tickFormat(d3.timeFormat("%x"))
-          .ticks(width > 1000 ? 9 : 6)
+          .tickFormat(d3.timeFormat("%b %d"))
+          .ticks(d3.timeDay.every(width > 1000 ? 2 : 3))
       );
 
       leftAxis.call(d3.axisLeft(yLeft).ticks(4, "s"));
