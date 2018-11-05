@@ -150,7 +150,7 @@ export default {
       bottomAxis.attr("transform", "translate(0," + height + ")").call(
         d3
           .axisBottom(x)
-          .tickFormat(d3.timeFormat("%b %d"))
+          .tickFormat(d3.timeFormat("%b %-d"))
           .ticks(d3.timeDay.every(width > 1000 ? 2 : 3))
       );
 
