@@ -13,11 +13,22 @@
                         </h1>
                         <h4 class="subtitle is-4">{{ player.tag }}</h4>
                     </div>
+                    <div class="column is-narrow">
+                        <div class="level is-marginless">
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <div class="title is-2">{{ (player_score * 100) | round(method='ceil') | int }} / 100
+                                    </div>
+                                    <div class="heading">Player Activity Score</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="section">
+    <section class="section has-text-centered-mobile">
         <div class="container">
             <h2 class="subtitle is-3">Player's Best</h2>
             <nav class="level">
@@ -48,7 +59,7 @@
             </nav>
         </div>
     </section>
-    <section class="section">
+    <section class="section has-text-centered-mobile">
         <div class="container">
             <h2 class="subtitle is-3">Current Stats</h2>
             <nav class="level">
@@ -106,7 +117,7 @@
         </div>
     </section>
 
-    <section class="hero is-light">
+    <section class="hero is-light has-text-centered-mobile">
         <div class="hero-body">
             <div class="container">
                 <section class="section">
