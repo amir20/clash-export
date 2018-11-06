@@ -5,7 +5,9 @@ from mongoengine import DynamicDocument, BinaryField, signals, StringField, Dict
 from pymongo import ReplaceOne
 from slugify import slugify
 
-from clashleaders.clash import api
+from clashleaders.clash import api, player_calculation
+from clashleaders.model import Clan, ClanPreCalculated
+from clashleaders.model.clan import prepend_hash
 
 
 class Player(DynamicDocument):
@@ -36,6 +38,25 @@ class Player(DynamicDocument):
 
     def as_replace_one(self):
         return ReplaceOne({'tag': self.tag}, self.compressed_fields(), upsert=True)
+
+    def most_recent_clan(self):
+        return Clan.find_least_recent_by_tag(self.clan['tag'])
+
+    def pre_calculated_clan(self):
+        return ClanPreCalculated.find_by_tag(self.clan['tag'])
+
+    def player_score(self):
+        return player_calculation.player_percentile(self.pre_calculated_clan(), self.tag)
+
+    def player_series(self):
+        clan_series = self.most_recent_clan().series()
+
+        player_series = []
+        for clan in clan_series:
+            player = next((p for p in clan.players_data() if p['tag'] == self.tag), None)
+            player_series.append(player)
+
+        return player_series
 
     def compressed_fields(self):
         fields = vars(self).copy()
@@ -80,6 +101,11 @@ class Player(DynamicDocument):
     def fetch_and_save(cls, tag):
         data = api.find_player_by_tag(tag)
         return Player.upsert_player(player_tag=data['tag'], **data)
+
+    @classmethod
+    def find_by_tag(cls, tag):
+        tag = prepend_hash(tag)
+        return Player.objects(tag=tag).first()
 
     @classmethod
     def post_init(cls, sender, document, **kwargs):
