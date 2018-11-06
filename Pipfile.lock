@@ -375,11 +375,11 @@
         },
         "mongoengine": {
             "hashes": [
-                "sha256:1823c17d059779deb0c5e1f8a7fb02f797e676dd0af6275cd860dddca607beca",
-                "sha256:2ecc60f50d9f85d4ae7e2e8bd1dc19778af65d2883d5ad6d658d77f1560059d3"
+                "sha256:1c375c8bbae89fc3df672c619a5835a2bd15148f9e8939f214a0b398cf12525f",
+                "sha256:e8ed6d9d7f648205f4adcd773bb25ce626fdc6cd74b2959451e425441fb0e6d3"
             ],
             "index": "pypi",
-            "version": "==0.15.3"
+            "version": "==0.16.0"
         },
         "multidict": {
             "hashes": [
@@ -659,17 +659,17 @@
         },
         "regex": {
             "hashes": [
-                "sha256:005c8d08a0ef58ec84f5a1130e771f364785c9676e1f6888b0f8f5dea82c9f8d",
-                "sha256:17c25f45349ec528266823517b12c938733116539ab9a034bdefc867f055e1eb",
-                "sha256:35cb9c828d4a1c240a06190944e255a6e0418993c9ff5a7143d83fee052810fe",
-                "sha256:4a8a645072ff7acc96b1a92c76863e324089cd3fd00bc3e41add4a7016c06761",
-                "sha256:4feab3a003ac5178bb9a5fe347a93031ebf1441051dacf75424ce0573d66473a",
-                "sha256:56c26497b5f702d1039230eaadf821ef969fdfa05aa6bd8e20dc33733ebc760e",
-                "sha256:9be8da909d94e78dfcaacae998efa64422544d0465085c17b896c38053da3c1b",
-                "sha256:deefc467ce773b219b150fc37c1a809e8314045792d4fe9510b7e0d9be3270a0",
-                "sha256:fdea52683192be51124ace949755b72ed7207594f4d67905bdbfb8536eb51543"
+                "sha256:384c78351ceb08b9f04e28552edea9af837d05ad4fda9a187a7bbd82759f29b6",
+                "sha256:41b70db2608726396de185e7571a70391507ab47a64b564f59861ff13f2c50a5",
+                "sha256:50f4b57696883fdbb0494cf1ff1cf6e04790d5e1848dff0b2cf28a2b97614351",
+                "sha256:81515123132f9ab0cc8128d035ba7db7783206e4616bdabd3faba335b9add185",
+                "sha256:91e965833a9f93b3e6abfef815026ccb8a9abe12c0958c723fc6c0d396384602",
+                "sha256:9cb058e53c2488b6cba85a7e6ce6d659b3f33ebe00f613dc9fda46de788a1298",
+                "sha256:b41a81228c3994789d4785d9fef96770f9a6b564a30c10af671bd5a4078da6f4",
+                "sha256:cf20d6539e00021793df23c2a98d57aff84f9402f81ac5896fffb4f8c8a08897",
+                "sha256:f937fdbcdb1e455c23709f5cf6df91a0ecfe8c23268f601606173232958daa8d"
             ],
-            "version": "==2018.11.3"
+            "version": "==2018.11.6"
         },
         "requests": {
             "extras": [
