@@ -1,3 +1,4 @@
+import pandas as pd
 from flask import render_template, jsonify
 
 from clashleaders import app
@@ -15,5 +16,12 @@ def player_html(tag):
 def player_attacks_json(tag):
     player = Player.find_by_tag(tag)
     series = player.player_series()
-    data = [s['attackWins'] for s in series if s]
+    data = [{'created_on': s['created_on'], 'attackWins': s['attackWins']} for s in series if s]
+    df = pd.DataFrame(data, index=pd.to_datetime([s['created_on'] for s in data]), columns=['attackWins'])
+    resampled = df.resample('D').mean().dropna()
+    data = dict(
+        dates=[i.strftime("%Y-%m-%d") for i in resampled.index],
+        attackWins=resampled['attackWins'].values.tolist()
+    )
+
     return jsonify(data)

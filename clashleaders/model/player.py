@@ -54,6 +54,8 @@ class Player(DynamicDocument):
         player_series = []
         for clan in clan_series:
             player = next((p for p in clan.players_data() if p['tag'] == self.tag), None)
+            if player:
+                player['created_on'] = clan.created_on
             player_series.append(player)
 
         return player_series
