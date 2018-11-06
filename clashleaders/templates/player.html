@@ -1,0 +1,117 @@
+{% extends "layout.html" %}{% block body %}
+<div id="app">
+    <section class="hero is-primary is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns has-text-centered-mobile">
+                    <div class="column is-narrow">
+                        <img src="{{ player.league.iconUrls.medium }}" width="128" alt="{{ player.tag }}">
+                    </div>
+                    <div class="column">
+                        <h1 class="title is-1">
+                            {{ player.name }}
+                        </h1>
+                        <h4 class="subtitle is-4">{{ player.tag }}</h4>
+                    </div>
+                </div>
+                <section class="section">
+                    <h2 class="subtitle is-3">Current Stats</h2>
+                    <nav class="level">
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">XP Level</p>
+                                <p class="title">{{ player.expLevel }}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Trophies</p>
+                                <p class="title">{{ player.trophies }}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Versus Trophies</p>
+                                <p class="title">{{ player.versusTrophies }}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">War Stars</p>
+                                <p class="title">{{ player.warStars }}</p>
+                            </div>
+                        </div>
+                    </nav>
+                    <nav class="level">
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Attack Wins</p>
+                                <p class="title">{{ player.attackWins }}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Defense Wins</p>
+                                <p class="title">{{ player.defenseWins }}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Versus Battle Wins</p>
+                                <p class="title">{{ player.versusBattleWins }}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Donations</p>
+                                <p class="title">{{ player.donations }}</p>
+                            </div>
+                        </div>
+                    </nav>
+                </section>
+                <section class="section">
+                    <h2 class="subtitle is-3">Player's Best</h2>
+                    <nav class="level">
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Best Trophies</p>
+                                <p class="title">{{ player.bestTrophies }}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Best Versus Trophies</p>
+                                <p class="title">{{ player.bestVersusTrophies }}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">Versus Trophies</p>
+                                <p class="title"> -- </p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">War Stars</p>
+                                <p class="title"> -- </p>
+                            </div>
+                        </div>
+                    </nav>
+                </section>
+                <section class="section">
+                    <h2 class="subtitle is-3">Troops</h2>
+                    <troops :player="{{ player.to_json() | forceescape }}"></troops>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %} {% block scripts %}
+<script defer src="{{ manifest_path('player-page.js') }}"></script>
+{% endblock %}{% block title %}{{ player.name }} - {{ player.tag }} Player Profile {% endblock %} {% block meta %}
+<meta name="twitter:card" content="summary">
+<meta name="description" content="{{ player.name }} | {{ player.tag }} Player profile at Clash Leaders">
+<meta name="keywords" content="{{ player.name }}, clash of clans, export, excel, achievements, leaderboard">
+<meta property="og:title" content="{{ player.name }} Player - Clash Leaders">
+<meta property="og:description" content="{{ player.name }} | {{ player.tag }} Player profile at Clash Leaders.">
+{% endblock %} {% block nav_class %}is-light{% endblock %}

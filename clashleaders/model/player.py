@@ -5,6 +5,8 @@ from mongoengine import DynamicDocument, BinaryField, signals, StringField, Dict
 from pymongo import ReplaceOne
 from slugify import slugify
 
+from clashleaders.clash import api
+
 
 class Player(DynamicDocument):
     COMPRESSED_FIELDS = ['achievements', 'clan', 'heroes', 'league', 'legendStatistics', 'spells', 'troops']
@@ -73,6 +75,11 @@ class Player(DynamicDocument):
             player.save()
 
         return player
+
+    @classmethod
+    def fetch_and_save(cls, tag):
+        data = api.find_player_by_tag(tag)
+        return Player.upsert_player(player_tag=data['tag'], **data)
 
     @classmethod
     def post_init(cls, sender, document, **kwargs):
