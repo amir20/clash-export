@@ -9,7 +9,8 @@ from clashleaders.model import Player
 def player_html(slug):
     player = Player.find_by_slug(slug).fetch_and_update()
     score = player.player_score()
-    return render_template('player.html', player=player, player_score=score)
+    clan = player.pre_calculated_clan()
+    return render_template('player.html', player=player, player_score=score, clan=clan)
 
 
 @app.route("/player/<tag>/attacks.json")

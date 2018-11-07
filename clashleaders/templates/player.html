@@ -17,12 +17,17 @@
                         <div class="level is-marginless">
                             <div class="level-item has-text-centered">
                                 <div>
-                                    <div class="title is-2">{{ (player_score * 100) | round(method='ceil') | int }} / 100
+                                    <div class="title is-2">
+                                        {{ (player_score * 100) | round(method='ceil') | int }} / 100
                                     </div>
                                     <div class="heading">Player Activity Score</div>
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <a class="button is-warning" href="/clan/{{ clan.slug }}">
+                            <span>View Player's Clan</span>
+                        </a>
                     </div>
                 </div>
             </div>
