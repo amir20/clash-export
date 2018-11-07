@@ -12,7 +12,7 @@ class Player(DynamicDocument):
     binary_bytes = BinaryField()
     tag = StringField(required=True, unique=True)
     lab_levels = DictField()
-    slug = StringField()
+    slug = StringField(unique=True)
 
     meta = {
         'indexes': [
