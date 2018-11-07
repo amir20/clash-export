@@ -38,7 +38,7 @@ www.clashleaders.com:443 {
 
 
 clashleaders.com:80 {
-   redir https://www.clashleaders.com
+   redir https://www.clashleaders.com{uri}
    tls off
 }
 
