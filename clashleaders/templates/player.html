@@ -33,6 +33,16 @@
             </div>
         </div>
     </section>
+    <section class="hero is-light has-text-centered-mobile">
+        <div class="hero-body">
+            <div class="container">
+                <section class="section">
+                    <h2 class="subtitle is-3">Lab Troops</h2>
+                    <troops :player="{{ player.to_json() | forceescape }}"></troops>
+                </section>
+            </div>
+        </div>
+    </section>
     <section class="section has-text-centered-mobile">
         <div class="container">
             <h2 class="subtitle is-3">Player's Best</h2>
@@ -119,17 +129,6 @@
                     </div>
                 </div>
             </nav>
-        </div>
-    </section>
-
-    <section class="hero is-light has-text-centered-mobile">
-        <div class="hero-body">
-            <div class="container">
-                <section class="section">
-                    <h2 class="subtitle is-3">Troops</h2>
-                    <troops :player="{{ player.to_json() | forceescape }}"></troops>
-                </section>
-            </div>
         </div>
     </section>
 </div>
