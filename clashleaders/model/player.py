@@ -3,6 +3,7 @@ from codecs import decode, encode
 
 from mongoengine import DynamicDocument, BinaryField, signals, StringField, DictField
 from pymongo import ReplaceOne
+from slugify import slugify
 
 
 class Player(DynamicDocument):
@@ -11,6 +12,7 @@ class Player(DynamicDocument):
     binary_bytes = BinaryField()
     tag = StringField(required=True, unique=True)
     lab_levels = DictField()
+    slug = StringField()
 
     meta = {
         'indexes': [
@@ -24,7 +26,8 @@ class Player(DynamicDocument):
             'builderHallLevel',
             'defenseWins',
             'attackWins',
-            'donations'
+            'donations',
+            'slug'
         ]
     }
 
@@ -33,9 +36,10 @@ class Player(DynamicDocument):
 
     def compressed_fields(self):
         fields = vars(self).copy()
-        del fields['_cls']
-        del fields['_dynamic_lock']
-        del fields['_fields_ordered']
+
+        for key in list(fields.keys()):
+            if key.startswith('_'):
+                del fields[key]
 
         fields['tag'] = self.tag
         fields['lab_levels'] = fields.get('lab_levels', {})
@@ -50,6 +54,8 @@ class Player(DynamicDocument):
                 del fields[f]
 
         fields['binary_bytes'] = encode_data(binary_bytes)
+
+        fields['slug'] = slugify(f"{self.name}-{self.tag}", to_lower=True)
 
         return fields
 
@@ -93,6 +99,7 @@ class Player(DynamicDocument):
                 delattr(document, f)
 
         document.binary_bytes = encode_data(data)
+        document.slug = slugify(f"{document.name}-{document.tag}", to_lower=True)
 
 
 signals.post_init.connect(Player.post_init, sender=Player)
