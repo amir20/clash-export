@@ -80,7 +80,7 @@
                                             From 
                                             <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
                                             <a href="{{ url_for('country_clans', code=clan.location.countryCode.lower()) }}">
-                                                <span class="has-text-weight-semibold">{{ clan.location.name }}</bs>
+                                                <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
                                             </a>
                                             with 
                                             {% endif %}
@@ -242,7 +242,7 @@
   }
 }
 </script>
-<script defer src="{{ manifest_path('details-page.js') }}"></script> {% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
+<script defer src="{{ manifest_path('clan-page.js') }}"></script> {% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
 <meta name="twitter:card" content="summary">
 <meta name="description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders">
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard">

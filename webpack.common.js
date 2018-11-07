@@ -6,7 +6,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   context: __dirname + "/assets",
   entry: {
-    "details-page": "./js/details-page.js",
+    "clan-page": "./js/clan-page.js",
+    "player-page": "./js/player-page.js",
     index: "./js/index.js",
     common: "./js/common.js",
     styles: "./css/styles.css"

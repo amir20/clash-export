@@ -39,6 +39,11 @@ class Clan(DynamicDocument):
     def to_data_frame(self):
         return clashleaders.clash.transformer.to_data_frame(self)
 
+    def series(self, columns=None):
+        if columns is None:
+            columns = ['players_bytes']
+        return Clan.from_now_with_tag(self.tag, days=28).no_cache().only(*columns)
+
     def to_player_matrix(self):
         return clashleaders.clash.player_calculation.df_to_matrix(
             clashleaders.clash.player_calculation.augment_with_percentiles(self))

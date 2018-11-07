@@ -7,7 +7,6 @@ import aiohttp
 import requests
 from async_timeout import timeout
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -20,6 +19,10 @@ class ApiException(Exception):
 
 
 class ClanNotFound(ApiException):
+    pass
+
+
+class PlayerNotFound(ApiException):
     pass
 
 
@@ -65,6 +68,29 @@ def find_clan_by_tag(tag):
 
     if code == 404:
         raise ClanNotFound(f"Clan [{tag}] not found.")
+
+    if code == 429:
+        raise TooManyRequests(f"Too many requests when fetching clan [{tag}].")
+
+    if code != 200:
+        raise ApiException(f"API returned non-200 status code: {code}")
+
+    return response
+
+
+def find_player_by_tag(tag):
+    tag = "#" + tag.lstrip("#")
+    logger.info(f"Fetching player from API {tag}.")
+
+    future = __fetch(f'https://api.clashofclans.com/v1/players/{quote(tag)}')
+
+    try:
+        code, response = asyncio.get_event_loop().run_until_complete(future)
+    except asyncio.TimeoutError:
+        raise ApiTimeout(f"API timed while fetching {tag} clan.")
+
+    if code == 404:
+        raise PlayerNotFound(f"Player [{tag}] not found.")
 
     if code == 429:
         raise TooManyRequests(f"Too many requests when fetching clan [{tag}].")
