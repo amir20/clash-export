@@ -20,10 +20,13 @@
           <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
         </div>
       </div>
-    </div>    
-    <section>
-      <troops :player="player"></troops>
-    </section>    
+    </div>
+    <a class="button is-warning is-fullwidth-mobile is-pulled-right" :href="`/player/${player.slug}`" v-if="player">
+      <span class="icon">
+        <i class="fas fa-user"></i>
+      </span>
+      <span>View Player Profile</span>
+    </a>
     <br>
     <section>
       <h4 class="title is-4 is-marginless">Average Loot Grab</h4>
@@ -104,10 +107,7 @@ export default {
     async fetchPlayer() {
       try {
         this.player = await (await fetch(
-          `/clan/${this.tag.replace(
-            "#",
-            ""
-          )}/${this.playerData.tag.value.replace("#", "")}.json`
+          `/player/${this.playerData.tag.value.replace("#", "")}.json`
         )).json();
       } catch (e) {
         console.error(e);
