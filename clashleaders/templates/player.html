@@ -4,9 +4,11 @@
         <div class="hero-body">
             <div class="container is-fluid">
                 <div class="columns has-text-centered-mobile">
+                    {% if player.league %}
                     <div class="column is-narrow">
                         <img src="{{ player.league.iconUrls.medium }}" width="128" alt="{{ player.tag }}">
                     </div>
+                    {% endif %}
                     <div class="column">
                         <h1 class="title is-1">
                             {{ player.name }}
@@ -62,13 +64,15 @@
                 <div class="level-item has-text-centered">
                     <div>
                         <p class="heading">Best Season</p>
-                        <p class="title"> {{ player.legendStatistics.bestSeason.id if player.legendStatistics.bestSeason else '--' }} </p>
+                        <p class="title">
+                            {{ player.legendStatistics.bestSeason.id if player.legendStatistics and player.legendStatistics.bestSeason else '--' }}
+                        </p>
                     </div>
                 </div>
                 <div class="level-item has-text-centered">
                     <div>
                         <p class="heading">Legend Trophies</p>
-                        <p class="title"> {{ player.legendStatistics.legendTrophies }} </p>
+                        <p class="title"> {{ player.legendStatistics.legendTrophies if player.legendStatistics else '--' }} </p>
                     </div>
                 </div>
             </nav>
