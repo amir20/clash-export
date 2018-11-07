@@ -85,6 +85,9 @@ class Player(DynamicDocument):
 
         return fields
 
+    def fetch_and_update(self):
+        return Player.fetch_and_save(self.tag)
+
     @classmethod
     def upsert_player(cls, player_tag, **kwargs):
         player = Player.objects(tag=player_tag).first()
@@ -105,9 +108,18 @@ class Player(DynamicDocument):
         return Player.upsert_player(player_tag=data['tag'], **data)
 
     @classmethod
+    def find_by_slug(cls, slug):
+        return Player.objects(slug=slug).first()
+
+    @classmethod
     def find_by_tag(cls, tag):
         tag = prepend_hash(tag)
-        return Player.objects(tag=tag).first()
+        player = Player.objects(tag=tag).first()
+
+        if player is None:
+            player = Player.fetch_and_save(tag)
+
+        return player
 
     @classmethod
     def post_init(cls, sender, document, **kwargs):

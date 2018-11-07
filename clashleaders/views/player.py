@@ -5,9 +5,9 @@ from clashleaders import app
 from clashleaders.model import Player
 
 
-@app.route("/player/<tag>")
-def player_html(tag):
-    player = Player.fetch_and_save(tag)
+@app.route("/player/<slug>")
+def player_html(slug):
+    player = Player.find_by_slug(slug).fetch_and_update()
     score = player.player_score()
     return render_template('player.html', player=player, player_score=score)
 
@@ -23,5 +23,22 @@ def player_attacks_json(tag):
         dates=[i.strftime("%Y-%m-%d") for i in resampled.index],
         attackWins=resampled['attackWins'].values.tolist()
     )
+
+    return jsonify(data)
+
+
+@app.route("/player/<tag>.json")
+def player_json(tag):
+    player = Player.find_by_tag(tag)
+    score = player.player_score()
+    fields = list(player._fields_ordered)
+    fields.remove("id")
+    fields.remove("binary_bytes")
+
+    data = dict()
+    for field in fields:
+        data[field] = player[field]
+
+    data['percentile'] = score
 
     return jsonify(data)

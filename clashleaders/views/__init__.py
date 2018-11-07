@@ -8,6 +8,5 @@ import clashleaders.views.sitemap
 import clashleaders.views.static
 import clashleaders.views.status
 import clashleaders.views.verified
-import clashleaders.views.clan_player
 import clashleaders.views.search
 import clashleaders.views.player
