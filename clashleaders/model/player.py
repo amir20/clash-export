@@ -15,6 +15,7 @@ class Player(DynamicDocument):
     slug = StringField(unique=True)
 
     meta = {
+        'index_background': True,
         'indexes': [
             'name',
             'tag',
