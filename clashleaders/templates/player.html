@@ -62,7 +62,7 @@
                 <div class="level-item has-text-centered">
                     <div>
                         <p class="heading">Best Season</p>
-                        <p class="title"> {{ player.legendStatistics.bestSeason.id }} </p>
+                        <p class="title"> {{ player.legendStatistics.bestSeason.id if player.legendStatistics.bestSeason else '--' }} </p>
                     </div>
                 </div>
                 <div class="level-item has-text-centered">
