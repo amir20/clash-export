@@ -15,5 +15,4 @@ services:
     build: .
     image: "amir20/clashleaders:${TAG:-latest}"
     depends_on:
-      - db
       - redis
