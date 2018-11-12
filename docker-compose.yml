@@ -1,18 +1,19 @@
 version: "3.4"
 services:
+  redis:
+    image: redis:5-alpine
   scheduler:
     image: "amir20/clashleaders:${TAG:-latest}"
-    hostname: scheduler
     command: "scheduler"
   worker:
     image: "amir20/clashleaders:${TAG:-latest}"
-    hostname: worker
     command: "worker"
   player_worker:
     image: "amir20/clashleaders:${TAG:-latest}"
-    hostname: player_worker
     command: "player_worker"
   web:
     build: .
     image: "amir20/clashleaders:${TAG:-latest}"
-    hostname: web
+    depends_on:
+      - db
+      - redis

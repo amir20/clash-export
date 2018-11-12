@@ -43,6 +43,7 @@ uvloop = "*"
 cairosvg = "*"
 markdown = "*"
 contentful = "*"
+redis = "*"
 
 [dev-packages]
 pytest = "*"

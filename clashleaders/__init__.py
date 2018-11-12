@@ -24,7 +24,8 @@ handle_exceptions(app)
 logging.basicConfig(level=logging.INFO)
 
 # Cache settings
-cache = Cache(app, config={'CACHE_TYPE': 'null' if app.debug else 'filesystem', 'CACHE_DIR': '/tmp'})
+cache_type = 'null' if app.debug else 'redis'
+cache = Cache(app, config={'CACHE_TYPE': cache_type, 'CACHE_REDIS_HOST': 'redis'})
 
 # Set connect to False for pre-forking to work
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
