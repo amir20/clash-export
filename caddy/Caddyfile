@@ -32,7 +32,9 @@ www.clashleaders.com:443 {
     }
 
     gzip
-    log / stdout {combined}
+    log / stdout "[{when}] \"{method} {uri} {proto}\" {status} {size} \"{>User-Agent}\"" {
+        except /static 
+    }
     errors stdout
 }
 
