@@ -32,7 +32,7 @@ www.clashleaders.com:443 {
     }
 
     gzip
-    log / stdout
+    log / stdout {combined}
     errors stdout
 }
 
