@@ -9,7 +9,6 @@ from clashleaders.model import Status, Player, ClanPreCalculated
 
 
 @app.route("/status")
-@cache.cached(timeout=30)
 def status():
     monitor = uptime.monitor()
     uptime_ratio = float(monitor['custom_uptime_ratio'])

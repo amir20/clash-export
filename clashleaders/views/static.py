@@ -34,6 +34,6 @@ def about():
     return render_template('about.html')
 
 
-@cache.cached(timeout=90, key_prefix='changelog')
+@cache.memoize(90)
 def fetch_changelog():
     return list(client.entries({'content_type': 'changelog', 'order': '-fields.publishedOn'}))

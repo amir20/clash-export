@@ -15,7 +15,6 @@ with open(os.path.join(parent, "../data/countries.json")) as f:
 
 
 @app.route("/")
-@cache.cached(timeout=300)
 def index():
     return render_template('index.html',
                            most_donations=leaderboard('week_delta.avg_donations'),
@@ -34,6 +33,7 @@ def index():
                            )
 
 
+@cache.memoize(28800)
 def leaderboard(field):
     return clans_leaderboard(ClanPreCalculated.objects(members__gt=20).order_by(f"-{field}").limit(10), field)
 
