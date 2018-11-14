@@ -1,18 +1,12 @@
 {% macro leaderboard(name, clans, property_format="{:,.0f}") -%}
 <nav class="panel leaderboard">
-    <h3 class="panel-heading">
-        {{ name }}
-    </h3>
+  <h3 class="panel-heading">{{ name }}</h3>
 
-    {% for clan in clans %}
-    <a class="panel-block" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
-    <span class="panel-icon">
-      <img src="{{ clan.badge }}" alt="{{ clan.name }}">
-    </span>
-        {{ clan.name }}
-        <span class="value subtitle is-7">{{ property_format.format(clan.score) }}</span>
-    </a>
-    {% endfor %}
-
+  {% for clan in clans %}
+  <a class="panel-block" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
+    <span class="panel-icon"> <img src="{{ clan.badge }}" alt="{{ clan.name }}" /> </span> {{ clan.name }}
+    <span class="value subtitle is-7">{{ property_format.format(clan.score) }}</span>
+  </a>
+  {% endfor %}
 </nav>
 {%- endmacro %}

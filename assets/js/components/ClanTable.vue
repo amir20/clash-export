@@ -1,43 +1,70 @@
 <template>
-  <div>
-    <section>
-      <b-table
-            ref="table"
-            :data="tableData"
-            striped
-            narrowed
-            hoverable
-            mobile-cards
-            detail-key="id"
-            detailed
-            default-sort="currentTrophies.value"
-            default-sort-direction="desc"
-            :loading="loading"
-            :opened-detailed="openDetails"
-            @details-open="row => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
-            @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
-            @click="onRowclicked">
-            <template slot-scope="props">
-                <b-table-column v-for="column in header"
-                                :label="column.label"
-                                :field="`${column.field}.${sortField}`"
-                                :key="column.field"
-                                :numeric="column.numeric"
-                                sortable>
-                    {{ props.row[column.field].value.toLocaleString() }}
-                    <span v-if="column.field == 'name' && playersStatus[props.row.tag.value]" class="tag is-uppercase" :class="playersStatus[props.row.tag.value]">{{ playersStatus[props.row.tag.value] }}</span>
-                    <b v-if="column.numeric && props.row[column.field].delta != 0" :class="{up: props.row[column.field].delta > 0, down: props.row[column.field].delta < 0}" :key="props.row[column.field].delta">
-                      <span :class="{'fa-caret-up': props.row[column.field].delta > 0 , 'fa-caret-down': props.row[column.field].delta < 0}" class="fa-sm fa"></span>
-                      {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
-                    </b>
-                </b-table-column>
-            </template>
-            <template slot="detail" slot-scope="props">
-              <player-comparison :player-data="props.row"></player-comparison>
-            </template>
-        </b-table>
-    </section>
-  </div>
+  <section>
+    <b-table
+      ref="table"
+      :data="tableData"
+      striped
+      narrowed
+      hoverable
+      mobile-cards
+      detail-key="id"
+      detailed
+      default-sort="currentTrophies.value"
+      default-sort-direction="desc"
+      :loading="loading"
+      :opened-detailed="openDetails"
+      @details-open="
+        row =>
+          gaEvent(
+            'open-player-details',
+            'Click Player Details',
+            'Player Tag',
+            row.tag.value
+          )
+      "
+      @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
+      @click="onRowclicked"
+    >
+      <template slot-scope="props">
+        <b-table-column
+          v-for="column in header"
+          :label="column.label"
+          :field="`${column.field}.${sortField}`"
+          :key="column.field"
+          :numeric="column.numeric"
+          sortable
+        >
+          {{ props.row[column.field].value.toLocaleString() }}
+          <span
+            v-if="column.field == 'name' && playersStatus[props.row.tag.value]"
+            class="tag is-uppercase"
+            :class="playersStatus[props.row.tag.value]"
+            >{{ playersStatus[props.row.tag.value] }}</span
+          >
+          <b
+            v-if="column.numeric && props.row[column.field].delta != 0"
+            :class="{
+              up: props.row[column.field].delta > 0,
+              down: props.row[column.field].delta < 0
+            }"
+            :key="props.row[column.field].delta"
+          >
+            <span
+              :class="{
+                'fa-caret-up': props.row[column.field].delta > 0,
+                'fa-caret-down': props.row[column.field].delta < 0
+              }"
+              class="fa-sm fa"
+            ></span>
+            {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
+          </b>
+        </b-table-column>
+      </template>
+      <template slot="detail" slot-scope="props">
+        <player-comparison :player-data="props.row"></player-comparison>
+      </template>
+    </b-table>
+  </section>
 </template>
 
 <script>

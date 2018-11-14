@@ -46,6 +46,10 @@ header {
       position: sticky;
       left: 0;
     }
+
+    & main > #app .hero-footer {
+      padding: 0 1em;
+    }
   }
 }
 

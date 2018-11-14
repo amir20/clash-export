@@ -1,56 +1,52 @@
 {% extends "layout.html" %} {% block body %}
 
 <main class="container section">
-    <div class="columns is-centered is-vcentered section">
-        <div class="column is-3 is-hidden-mobile">
-            <picture>
-                <source srcset="{{ url_for('static', filename='images/witch.webp') }}" type="image/webp">
-                <source srcset="{{ url_for('static', filename='images/witch.png') }}" type="image/png">
-                <img src="{{ url_for('static', filename='images/witch.png') }}" alt="Hog Rider">
-            </picture>
-        </div>
-        <div class="column">
-            <div class="section">
-                <div class="hero">
-                    <h1 class="title is-1">
-                        Application Status
-                    </h1>
-                </div>
-            </div>
-
-            <div class="tile is-ancestor">
-                <div class="tile is-parent is-vertical">
-                    <div class="tile is-child box">
-                        <p class="heading">Uptime</p>
-                        <p class="title">{{ "{:.2f}".format(uptime_ratio) }}%</p>
-                    </div>
-                    <div class="tile is-child box">
-                        <p class="heading">Total Clans</p>
-                        <p class="title">{{ "{:,}".format(total_clans) }}</p>
-                    </div>
-                </div>
-                <div class="tile is-parent is-vertical">
-                    <div class="tile is-child box">
-                        <p class="heading">Total Players</p>
-                        <p class="title">{{ "{:,}".format(total_players) }}</p>
-                    </div>
-                    <div class="tile is-child box">
-                        <p class="heading">Clans Up to Date</p>
-                        <p class="title">{{ "{:.2f}".format(ratio_indexed) }}%</p>
-                    </div>
-                </div>
-                <div class="tile is-parent is-vertical">
-                    <div class="tile is-child box">
-                        <p class="heading">Total Active Players</p>
-                        <p class="title">{{ "{:,}".format(total_active_players) }}</p>
-                    </div>
-                    <div class="tile is-child box">
-                        <p class="heading">Total Active Clans</p>
-                        <p class="title">{{ "{:,}".format(total_active_clans) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="columns is-centered is-vcentered section">
+    <div class="column is-3 is-hidden-mobile">
+      <picture>
+        <source srcset="{{ url_for('static', filename='images/witch.webp') }}" type="image/webp" />
+        <source srcset="{{ url_for('static', filename='images/witch.png') }}" type="image/png" />
+        <img src="{{ url_for('static', filename='images/witch.png') }}" alt="Hog Rider" />
+      </picture>
     </div>
+    <div class="column">
+      <div class="section">
+        <div class="hero"><h1 class="title is-1">Application Status</h1></div>
+      </div>
+
+      <div class="tile is-ancestor">
+        <div class="tile is-parent is-vertical">
+          <div class="tile is-child box">
+            <p class="heading">Uptime</p>
+            <p class="title">{{ "{:.2f}".format(uptime_ratio) }}%</p>
+          </div>
+          <div class="tile is-child box">
+            <p class="heading">Total Clans</p>
+            <p class="title">{{ "{:,}".format(total_clans) }}</p>
+          </div>
+        </div>
+        <div class="tile is-parent is-vertical">
+          <div class="tile is-child box">
+            <p class="heading">Total Players</p>
+            <p class="title">{{ "{:,}".format(total_players) }}</p>
+          </div>
+          <div class="tile is-child box">
+            <p class="heading">Clans Up to Date</p>
+            <p class="title">{{ "{:.2f}".format(ratio_indexed) }}%</p>
+          </div>
+        </div>
+        <div class="tile is-parent is-vertical">
+          <div class="tile is-child box">
+            <p class="heading">Total Active Players</p>
+            <p class="title">{{ "{:,}".format(total_active_players) }}</p>
+          </div>
+          <div class="tile is-child box">
+            <p class="heading">Total Active Clans</p>
+            <p class="title">{{ "{:,}".format(total_active_clans) }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 {% endblock %} {% block title %}Application Status &amp; Uptime{% endblock %}

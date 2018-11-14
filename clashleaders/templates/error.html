@@ -1,27 +1,23 @@
 {% extends "layout.html" %} {% block body %}
 <main class="container section">
-    <div class="columns is-centered is-vcentered section">
-        <div class="column is-3 is-hidden-mobile">            
-            <picture>
-                <source srcset="{{ url_for('static', filename='images/oops.webp') }}" type="image/webp">
-                <source srcset="{{ url_for('static', filename='images/oops.png') }}" type="image/png">
-                <img src="{{ url_for('static', filename='images/oops.png') }}" alt="Barbarian">
-            </picture>
-        </div>
-        <div class="column">
-            <section class="hero">
-                <div class="hero-body">
-                    <h1 class="title is-1">
-                        Oops!
-                    </h1>
-                    <p>I couldn't find your clan. Are you sure you entered the right tag?</p>
-                    <p>It should be similar to "#UGJPVJR" and make sure to include the hash tag.</p>
-                    <p class="section">
-                        <a href="{{ url_for('index') }}" class="button is-large is-warning">Try again</a>
-                    </p>
-                </div>
-            </section>
-        </div>
+  <div class="columns is-centered is-vcentered section">
+    <div class="column is-3 is-hidden-mobile">
+      <picture>
+        <source srcset="{{ url_for('static', filename='images/oops.webp') }}" type="image/webp" />
+        <source srcset="{{ url_for('static', filename='images/oops.png') }}" type="image/png" />
+        <img src="{{ url_for('static', filename='images/oops.png') }}" alt="Barbarian" />
+      </picture>
     </div>
+    <div class="column">
+      <section class="hero">
+        <div class="hero-body">
+          <h1 class="title is-1">Oops!</h1>
+          <p>I couldn't find your clan. Are you sure you entered the right tag?</p>
+          <p>It should be similar to "#UGJPVJR" and make sure to include the hash tag.</p>
+          <p class="section"><a href="{{ url_for('index') }}" class="button is-large is-warning">Try again</a></p>
+        </div>
+      </section>
+    </div>
+  </div>
 </main>
 {% endblock %}
