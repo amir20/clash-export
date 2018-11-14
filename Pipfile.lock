@@ -52,14 +52,6 @@
             "index": "pypi",
             "version": "==3.4.4"
         },
-        "appnope": {
-            "hashes": [
-                "sha256:5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0",
-                "sha256:8b995ffe925347a2138d7ac0fe77155e4311a0ea6d6da4f5128fe4b3cbe5ed71"
-            ],
-            "markers": "sys_platform == 'darwin'",
-            "version": "==0.1.0"
-        },
         "asn1crypto": {
             "hashes": [
                 "sha256:2f1adbb7546ed199e3c90ef23ec95c5cf3585bac7d11fb7eb562a3fe89c64e87",
@@ -104,6 +96,9 @@
             "version": "==1.4"
         },
         "bugsnag": {
+            "extras": [
+                "flask"
+            ],
             "hashes": [
                 "sha256:5b90bd3493a807645498350cd0a6f1fbb7416d3845345e794ec483bc65cd17a8",
                 "sha256:5d42206e52707c6ea0a87a95ca8c9d840bcde5367099054aa84ecdc3f04cdd60",
@@ -253,6 +248,7 @@
                 "sha256:c980c8c313a5e014ae12e2245e89e7b30427e5a98cbb88afe478ecae85f3abaa",
                 "sha256:e85b410885addaeb31a867eabcefc9ef4a7e904ad45eac9e60a763a54b244626"
             ],
+            "markers": "extra == 'security'",
             "version": "==2.4.1"
         },
         "cssselect2": {
@@ -282,6 +278,7 @@
                 "sha256:a080b744b7e345ccfcbc77954861cb05b3c63786e93f2b3875e0913d44b43f05"
             ],
             "index": "pypi",
+            "markers": "extra == 'flask'",
             "version": "==1.0.2"
         },
         "flask-caching": {
@@ -405,11 +402,11 @@
         },
         "mongoengine": {
             "hashes": [
-                "sha256:1c375c8bbae89fc3df672c619a5835a2bd15148f9e8939f214a0b398cf12525f",
-                "sha256:e8ed6d9d7f648205f4adcd773bb25ce626fdc6cd74b2959451e425441fb0e6d3"
+                "sha256:6b3bf21d0bf6eb65d525a10427d162d564c70ee4fafc08b7d220ed22eeab743c",
+                "sha256:954aeac6a08fb2b4a9bf1e8592d14ae4369c05d50a34dfa05c83ff5a44394678"
             ],
             "index": "pypi",
-            "version": "==0.16.0"
+            "version": "==0.16.1"
         },
         "multidict": {
             "hashes": [
@@ -670,6 +667,7 @@
                 "sha256:26ff56a6b5ecaf3a2a59f132681e2a80afcc76b4f902f612f518f92c2a1bf854",
                 "sha256:6488f1423b00f73b7ad5167885312bb0ce410d3312eb212393795b53c8caa580"
             ],
+            "markers": "extra == 'security'",
             "version": "==18.0.0"
         },
         "python-dateutil": {
@@ -709,6 +707,9 @@
             "version": "==2018.11.7"
         },
         "requests": {
+            "extras": [
+                "security"
+            ],
             "hashes": [
                 "sha256:65b3a120e4329e33c9889db89c80976c5272f56ea92d3e74da8a463992e3ff54",
                 "sha256:ea881206e59f41dbd0bd445437d792e43906703fff75ca8ff43ccdb11f33f263"
