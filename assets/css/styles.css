@@ -48,7 +48,7 @@ header {
     }
 
     & main > #app .hero-footer {
-      padding: 0 1em;
+      padding: 0.85em;
     }
   }
 }
