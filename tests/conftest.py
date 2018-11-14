@@ -13,9 +13,9 @@ def object_from_json(file, obj):
 
 
 @pytest.fixture
-def clan_with_players():
+def clan_with_players(clan_season_start):
     clan = object_from_json("clan_with_players.json", Clan)
-    clan.from_before = lambda days: clan_season_start()
+    clan.from_before = lambda days: clan_season_start
 
     return clan
 
@@ -31,10 +31,10 @@ def first_clan_with_players():
 
 
 @pytest.fixture
-def clan_pre_calculated():
+def clan_pre_calculated(clan_season_start, clan_with_players):
     cpc = object_from_json("clan_pre_calculated.json", ClanPreCalculated)
-    cpc.season_start = clan_season_start()
-    cpc.most_recent = clan_with_players()
+    cpc.season_start = clan_season_start
+    cpc.most_recent = clan_with_players
 
     return cpc
 

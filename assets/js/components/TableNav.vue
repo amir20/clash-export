@@ -1,50 +1,15 @@
 <template>
   <div>
-    <b-dropdown v-model="days" @change="loadDaysAgo" hoverable>
-      <button class="button is-info" type="button" slot="trigger" :key="days">
-        <template v-if="days == 1">
-          <b-icon icon="hourglass" size="is-small" pack="far"></b-icon>
-          <span>Compare to Yesterday</span>
-        </template>
-        <template v-else-if="days == 7">
-          <b-icon icon="calendar-alt" size="is-small" pack="far"></b-icon>
-          <span>Compare to Last Week</span>
-        </template>
-        <template v-else-if="days == 30">
-          <b-icon icon="calendar" size="is-small" pack="far"></b-icon>
-          <span>Compare to Last Month</span>
-        </template>
-        <b-icon icon="chevron-down" size="is-small"></b-icon>
-      </button>
-
-      <b-dropdown-item :value="1" v-if="daysSpan > 0">
-        <div class="media">
-          <b-icon class="media-left" icon="hourglass" pack="far"></b-icon>
-          <div class="media-content">
-            <h3>Yesterday</h3>
-            <small>Compare your data to yesterday</small>
-          </div>
-        </div>
-      </b-dropdown-item>
-      <b-dropdown-item :value="7" v-if="daysSpan > 2">
-        <div class="media">
-          <b-icon class="media-left" icon="calendar-alt" pack="far"></b-icon>
-          <div class="media-content">
-            <h3>Last Week</h3>
-            <small>Compare your data to a week ago</small>
-          </div>
-        </div>
-      </b-dropdown-item>
-      <b-dropdown-item :value="30" v-if="daysSpan > 15">
-        <div class="media">
-          <b-icon class="media-left" icon="calendar" pack="far"></b-icon>
-          <div class="media-content">
-            <h3>Last Month</h3>
-            <small>Compare your data to last month</small>
-          </div>
-        </div>
-      </b-dropdown-item>
-    </b-dropdown>
+    <b-field>
+      <b-radio-button v-model="days" :native-value="1" type="is-danger">
+        <b-icon icon="hourglass" size="is-small" pack="far"></b-icon>
+        <span>Yesterday</span>
+      </b-radio-button>
+      <b-radio-button v-model="days" :native-value="7" type="is-success">
+        <b-icon icon="calendar-alt" size="is-small" pack="far"></b-icon>
+        <span>Last Week</span>
+      </b-radio-button>
+    </b-field>
   </div>
 </template>
 
@@ -64,6 +29,13 @@ export default {
   },
   computed: {
     ...mapState(["daysSpan", "softField"])
+  },
+  watch: {
+    days(newValue) {
+      if (newValue) {
+        this.loadDaysAgo(newValue);
+      }
+    }
   }
 };
 </script>
