@@ -3,7 +3,7 @@
     <div class="media" v-if="player">
       <figure class="media-left">
         <p class="image is-64x64" v-if="player.league">
-          <img :src="player.league.iconUrls.small" :alt="player.tag">
+          <img :src="player.league.iconUrls.small" :alt="player.tag" />
         </p>
       </figure>
       <div class="media-content">
@@ -11,32 +11,46 @@
           <div class="level is-pulled-right is-marginless">
             <div class="level-item has-text-centered">
               <div>
-                <div class="title is-size-4-mobile">{{ Math.ceil(player.percentile * 100) }} / 100</div>
+                <div class="title is-size-4-mobile">
+                  {{ Math.ceil(player.percentile * 100) }} / 100
+                </div>
                 <div class="heading">Player Activity Score</div>
               </div>
             </div>
           </div>
-          <h2 class="title is-marginless is-size-4-mobile">{{ player.name }} <small class="subtitle is-6">{{ player.role | role }}</small></h2>
-          <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
+          <h2 class="title is-marginless is-size-4-mobile">
+            {{ player.name }}
+            <small class="subtitle is-6">{{ player.role | role }}</small>
+          </h2>
+          <small class="subtitle is-5" v-if="player.league">{{
+            player.league.name
+          }}</small>
         </div>
       </div>
     </div>
-    <a class="button is-warning is-fullwidth-mobile is-pulled-right" :href="`/player/${player.slug}`" v-if="player">
-      <span class="icon">
-        <i class="fas fa-user"></i>
-      </span>
+    <a
+      class="button is-warning is-fullwidth-mobile is-pulled-right"
+      :href="`/player/${player.slug}`"
+      v-if="player"
+    >
+      <span class="icon"> <i class="fas fa-user"></i> </span>
       <span>View Player Profile</span>
     </a>
-    <br>
+    <br />
     <section>
       <h4 class="title is-4 is-marginless">Average Loot Grab</h4>
       <div ref="chart" class="player-comparison"></div>
     </section>
     <div class="buttons is-right mobile is-hidden-desktop" v-if="player">
-      <a class="button is-info is-fullwidth-mobile" :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`">
-        <span class="icon">
-          <i class="fas fa-gamepad"></i>
-        </span>
+      <a
+        class="button is-info is-fullwidth-mobile"
+        :href="
+          `clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(
+            player.tag
+          )}`
+        "
+      >
+        <span class="icon"> <i class="fas fa-gamepad"></i> </span>
         <span>View Player in Game</span>
       </a>
     </div>
@@ -128,6 +142,11 @@ export default {
     },
     savedClanStats(newValue) {
       if (newValue && newValue.gold_grab > 0) {
+        this.update();
+      }
+    },
+    playerData(newValue) {
+      if (newValue && newValue.name) {
         this.update();
       }
     }
