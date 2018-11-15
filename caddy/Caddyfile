@@ -14,7 +14,6 @@ https://www.clashleaders.com {
         match /static 1y
         match /clan/.*/short.json$ 1d
         match /clan/.*/trophies.json$ 1d
-        match /clan/.*/similar/avg.json$ 1d
     }
 
     header /static {
