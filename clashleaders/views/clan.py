@@ -5,6 +5,7 @@ from user_agents import parse
 
 from clashleaders import app, cache
 from clashleaders.clash import api, excel
+from clashleaders.clash.clan_calculation import calculate_delta
 from clashleaders.clash.player_calculation import clan_status
 from clashleaders.model import Clan, ClanPreCalculated, Status
 from clashleaders.text.clan_description_processor import transform_description
@@ -89,16 +90,21 @@ def clan_detail_page(slug):
 
 @app.route("/clan/<tag>/stats.json")
 def clan_stats(tag):
-    clan = ClanPreCalculated.find_by_tag(tag)
-    gold = clan.week_delta.avg_gold_grab
-    elixir = clan.week_delta.avg_elixir_grab
-    de = clan.week_delta.avg_de_grab
+    days = int(request.args.get('days', 7))
+
+    cpc = ClanPreCalculated.find_by_tag(tag)
+    start_df = cpc.previous_data(days=days).to_data_frame()
+    now_df = cpc.most_recent.to_data_frame()
+    delta = calculate_delta(now_df, start_df)
+    gold = delta.avg_gold_grab
+    elixir = delta.avg_elixir_grab
+    de = delta.avg_de_grab
 
     data = {
         'gold_grab': gold,
         'elixir_grab': elixir,
         'de_grab': de,
-        'name': clan.name
+        'name': cpc.name
     }
 
     return jsonify(data)

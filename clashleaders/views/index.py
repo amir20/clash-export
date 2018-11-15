@@ -43,7 +43,8 @@ def aggregate_by_country(score_column="week_delta.avg_attack_wins"):
     group = {"$group": {"_id": "$location.countryCode", "score": {"$sum": f"${score_column}"}}}
     sort = {'$sort': {'score': -1}}
     aggregated = list(ClanPreCalculated.objects(location__countryCode__ne=None).aggregate(group, sort))
-    aggregated = [{'code': c['_id'].lower(), 'name': COUNTRIES[c['_id']]['name'], 'score': c['score']} for c in aggregated[:10]]
+    aggregated = [{'code': c['_id'].lower(), 'name': COUNTRIES[c['_id']]['name'], 'score': c['score']} for c in
+                  aggregated[:10]]
     return aggregated
 
 
