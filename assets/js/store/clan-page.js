@@ -71,11 +71,7 @@ async function handleResponse(promise, commit, success, error = "setApiError") {
   } else {
     const e = await response.json();
     e.status = response.status;
-    console.warn(
-      `Error while fetch data from API. Status: ${e.status}, Message: ${
-        e.error
-      }`
-    );
+    console.warn(`Error while fetch data from API. Status: ${e.status}, Message: ${e.error}`);
     if (error) {
       commit(error, e);
     }
@@ -101,15 +97,8 @@ const actions = {
     const savedTag = localStorage.getItem("lastTag");
     if (savedTag && savedTag != tag) {
       console.log(`Found saved tag value [${savedTag}].`);
-      const savedClanStatsPromise = await fetch(
-        `/clan/${savedTag.replace("#", "")}/stats.json`
-      );
-      await handleResponse(
-        savedClanStatsPromise,
-        commit,
-        "setSavedClanStats",
-        false
-      );
+      const savedClanStatsPromise = await fetch(`/clan/${savedTag.replace("#", "")}/stats.json`);
+      await handleResponse(savedClanStatsPromise, commit, "setSavedClanStats", false);
     }
   },
   async loadDaysAgo(
@@ -149,10 +138,7 @@ const getters = {
       return [];
     }
     const data = convertToMap(getters.header, state.clan.slice(1));
-    const previousData = convertToMap(
-      getters.header,
-      state.previousData.slice(1)
-    );
+    const previousData = convertToMap(getters.header, state.previousData.slice(1));
     const previousByTag = keyBy(previousData, "tag");
 
     return data.map(row => {
@@ -160,10 +146,7 @@ const getters = {
       return reduce(
         row,
         (map, value, column) => {
-          const delta =
-            previousRow && !isNonNumericColumns(column)
-              ? value - previousRow[column]
-              : 0;
+          const delta = previousRow && !isNonNumericColumns(column) ? value - previousRow[column] : 0;
           map[column] = { value, delta };
           if (column == "tag") {
             map["id"] = value;

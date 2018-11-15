@@ -29,9 +29,7 @@ new Vue({
     async selectedTag(newValue) {
       if (newValue) {
         event("search-clans", "Search");
-        const clan = await (await fetch(
-          `/clan/${newValue.replace("#", "")}/short.json`
-        )).json();
+        const clan = await (await fetch(`/clan/${newValue.replace("#", "")}/short.json`)).json();
         window.location = `/clan/${clan.slug}`;
       }
     }
@@ -42,11 +40,7 @@ const items = document.querySelectorAll("[data-from-now]");
 [].forEach.call(
   items,
   i =>
-    (i.innerHTML = formatDistance(
-      parse(i.dataset.fromNow, "yyyy-MM-dd HH:mm:ss", new Date()),
-      new Date(),
-      {
-        addSuffix: true
-      }
-    ))
+    (i.innerHTML = formatDistance(parse(i.dataset.fromNow, "yyyy-MM-dd HH:mm:ss", new Date()), new Date(), {
+      addSuffix: true
+    }))
 );

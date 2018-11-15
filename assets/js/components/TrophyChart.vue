@@ -47,9 +47,7 @@ export default {
     };
   },
   async created() {
-    const json = await (await fetch(
-      `/clan/${this.tag.replace("#", "")}/trophies.json`
-    )).json();
+    const json = await (await fetch(`/clan/${this.tag.replace("#", "")}/trophies.json`)).json();
     const parseTime = d3.timeParse("%Y-%m-%d");
     this.data = json.dates.map((key, i) => ({
       date: parseTime(key),
@@ -65,9 +63,7 @@ export default {
       .attr("width", "100%")
       .attr("height", height + margin.top + margin.bottom);
 
-    const root = this.svg
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    const root = this.svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     this.trophyPath = root.append("path").attr("class", "area");
     this.membersPath = root.append("path").attr("class", "members-line");
@@ -108,20 +104,9 @@ export default {
   },
   methods: {
     render: debounce(function() {
-      const {
-        data,
-        svg,
-        membersPath,
-        trophyPath,
-        bottomAxis,
-        leftAxis,
-        rightAxis,
-        rightLabel,
-        leftLabel
-      } = this;
+      const { data, svg, membersPath, trophyPath, bottomAxis, leftAxis, rightAxis, rightLabel, leftLabel } = this;
 
-      const width =
-        svg.node().getBoundingClientRect().width - margin.left - margin.right;
+      const width = svg.node().getBoundingClientRect().width - margin.left - margin.right;
       const x = d3.scaleTime().range([0, width]);
       const yLeft = d3.scaleLinear().range([height, 0]);
       const yRight = d3.scaleLinear().range([height, 0]);
@@ -156,9 +141,7 @@ export default {
 
       leftAxis.call(d3.axisLeft(yLeft).ticks(4, "s"));
 
-      rightAxis
-        .attr("transform", "translate( " + width + ", 0 )")
-        .call(d3.axisRight(yRight).ticks(4));
+      rightAxis.attr("transform", "translate( " + width + ", 0 )").call(d3.axisRight(yRight).ticks(4));
 
       rightLabel.attr("y", 0 - width - margin.right).attr("x", height / 2);
       leftLabel.attr("y", 0 - margin.left).attr("x", -height / 2);
