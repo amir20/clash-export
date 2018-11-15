@@ -1,5 +1,6 @@
-import clashleaders.model.clan
 import numpy as np
+
+import clashleaders.model.clan
 
 
 def find_player_details(cpc, player_tag):
