@@ -39,16 +39,10 @@ def clan_detail_json(tag):
 def clan_refresh_json(tag):
     clan = Clan.fetch_and_save(tag)
     cpc = clan.pre_calculated()
-
-    loot = {
-        'gold_grab': cpc.week_delta.avg_gold_grab,
-        'elixir_grab': cpc.week_delta.avg_elixir_grab,
-        'de_grab': cpc.week_delta.avg_de_grab
-    }
     player_data = clan.to_player_matrix()
     players_status = clan_status(cpc)
 
-    return jsonify(dict(lootStats=loot, playerData=player_data, playersStatus=players_status))
+    return jsonify(dict(playerData=player_data, playersStatus=players_status))
 
 
 @app.route("/clan/<slug>.xlsx")
@@ -90,7 +84,7 @@ def clan_detail_page(slug):
 
 @app.route("/clan/<tag>/stats.json")
 def clan_stats(tag):
-    days = int(request.args.get('days', 7))
+    days = int(request.args.get('daysAgo', 7))
 
     cpc = ClanPreCalculated.find_by_tag(tag)
     start_df = cpc.previous_data(days=days).to_data_frame()
