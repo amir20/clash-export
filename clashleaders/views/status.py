@@ -3,7 +3,7 @@ import os
 
 from flask import render_template, jsonify
 
-from clashleaders import app, cache, SITE_ROOT
+from clashleaders import app, SITE_ROOT
 from clashleaders.clash import uptime
 from clashleaders.model import Status, Player, ClanPreCalculated
 

@@ -1,5 +1,6 @@
-from flask import make_response, render_template, url_for
 from math import ceil
+
+from flask import make_response, render_template, url_for
 
 from clashleaders import app
 from clashleaders.model import ClanPreCalculated
