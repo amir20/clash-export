@@ -2,39 +2,27 @@
   <div class="component">
     <div class="media" v-if="player">
       <figure class="media-left">
-        <p class="image is-64x64" v-if="player.league">
-          <img :src="player.league.iconUrls.small" :alt="player.tag" />
-        </p>
+        <p class="image is-64x64" v-if="player.league"><img :src="player.league.iconUrls.small" :alt="player.tag" /></p>
       </figure>
       <div class="media-content">
         <div class="content">
           <div class="level is-pulled-right is-marginless">
             <div class="level-item has-text-centered">
               <div>
-                <div class="title is-size-4-mobile">
-                  {{ Math.ceil(player.percentile * 100) }} / 100
-                </div>
+                <div class="title is-size-4-mobile">{{ Math.ceil(player.percentile * 100) }} / 100</div>
                 <div class="heading">Player Activity Score</div>
               </div>
             </div>
           </div>
           <h2 class="title is-marginless is-size-4-mobile">
-            {{ player.name }}
-            <small class="subtitle is-6">{{ player.role | role }}</small>
+            {{ player.name }} <small class="subtitle is-6">{{ player.role | role }}</small>
           </h2>
-          <small class="subtitle is-5" v-if="player.league">{{
-            player.league.name
-          }}</small>
+          <small class="subtitle is-5" v-if="player.league">{{ player.league.name }}</small>
         </div>
       </div>
     </div>
-    <a
-      class="button is-warning is-fullwidth-mobile is-pulled-right"
-      :href="`/player/${player.slug}`"
-      v-if="player"
-    >
-      <span class="icon"> <i class="fas fa-user"></i> </span>
-      <span>View Player Profile</span>
+    <a class="button is-warning is-fullwidth-mobile is-pulled-right" :href="`/player/${player.slug}`" v-if="player">
+      <span class="icon"> <i class="fas fa-user"></i> </span> <span>View Player Profile</span>
     </a>
     <br />
     <section>
@@ -44,14 +32,9 @@
     <div class="buttons is-right mobile is-hidden-desktop" v-if="player">
       <a
         class="button is-info is-fullwidth-mobile"
-        :href="
-          `clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(
-            player.tag
-          )}`
-        "
+        :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`"
       >
-        <span class="icon"> <i class="fas fa-gamepad"></i> </span>
-        <span>View Player in Game</span>
+        <span class="icon"> <i class="fas fa-gamepad"></i> </span> <span>View Player in Game</span>
       </a>
     </div>
   </div>
@@ -120,9 +103,7 @@ export default {
     },
     async fetchPlayer() {
       try {
-        this.player = await (await fetch(
-          `/player/${this.playerData.tag.value.replace("#", "")}.json`
-        )).json();
+        this.player = await (await fetch(`/player/${this.playerData.tag.value.replace("#", "")}.json`)).json();
       } catch (e) {
         console.error(e);
         bugsnagClient.notify(e);
@@ -167,32 +148,20 @@ export default {
 
       s.push({
         name: "This clan's average",
-        data: [
-          this.clanStats.de_grab,
-          this.clanStats.elixir_grab,
-          this.clanStats.gold_grab
-        ],
+        data: [this.clanStats.de_grab, this.clanStats.elixir_grab, this.clanStats.gold_grab],
         className: "clan"
       });
 
       s.push({
         name: "Similar clans' average",
-        data: [
-          this.similarClansAvg.de_grab,
-          this.similarClansAvg.elixir_grab,
-          this.similarClansAvg.gold_grab
-        ],
+        data: [this.similarClansAvg.de_grab, this.similarClansAvg.elixir_grab, this.similarClansAvg.gold_grab],
         className: "similar-clans"
       });
 
       if (this.savedClanStats && this.savedClanStats.name) {
         s.push({
           name: this.savedClanStats.name,
-          data: [
-            this.savedClanStats.de_grab,
-            this.savedClanStats.elixir_grab,
-            this.savedClanStats.gold_grab
-          ],
+          data: [this.savedClanStats.de_grab, this.savedClanStats.elixir_grab, this.savedClanStats.gold_grab],
           className: "saved-clan"
         });
       }

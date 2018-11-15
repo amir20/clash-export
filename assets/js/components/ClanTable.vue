@@ -13,15 +13,7 @@
       default-sort-direction="desc"
       :loading="loading"
       :opened-detailed="openDetails"
-      @details-open="
-        row =>
-          gaEvent(
-            'open-player-details',
-            'Click Player Details',
-            'Player Tag',
-            row.tag.value
-          )
-      "
+      @details-open="row => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
       @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
       @click="onRowclicked"
     >
@@ -95,13 +87,7 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      "loading",
-      "sortField",
-      "similarClansAvg",
-      "apiError",
-      "playersStatus"
-    ]),
+    ...mapState(["loading", "sortField", "similarClansAvg", "apiError", "playersStatus"]),
     ...mapGetters(["path", "header", "tableData", "lastUpdated"])
   },
   watch: {
