@@ -74,9 +74,7 @@ export default {
       }
       if (clan) {
         const label = clan.clanPoints - (clan.clanPoints % 500);
-        const bar = this.$refs.chart.querySelector(
-          `line[label='${label}'].ct-bar`
-        );
+        const bar = this.$refs.chart.querySelector(`line[label='${label}'].ct-bar`);
         if (bar) {
           bar.classList.add("highlight");
         }
