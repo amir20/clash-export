@@ -46,11 +46,11 @@ header {
       position: sticky;
       left: 0;
     }
-
-    & main > #app .hero-footer {
-      padding: 0.85em;
-    }
   }
+}
+
+body.clan_detail_page main > #app .hero-footer {
+  padding: 0.85em;
 }
 
 .leaderboard {
