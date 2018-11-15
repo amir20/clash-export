@@ -5,7 +5,6 @@ from clashleaders.model import ClanPreCalculated
 
 
 @app.route("/clan/<tag>/similar/avg.json")
-@cache.cached(timeout=1000)
 def similar_clans_avg(tag):
     ratio = int(request.args.get('daysAgo', 7)) / 7
     cluster_label = ClanPreCalculated.find_by_tag(tag).cluster_label
