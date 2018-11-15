@@ -28,7 +28,7 @@ class Status(Document):
         total_clans = ClanPreCalculated.objects.count()
         total_eligible_clans = ClanPreCalculated.active_clans().count()
         not_indexed_clans = ClanPreCalculated.active_clans(twelve_hour_ago).count()
-        ratio_indexed = 100 * ((total_eligible_clans-not_indexed_clans) / total_eligible_clans)
+        ratio_indexed = 100 * ((total_eligible_clans - not_indexed_clans) / total_eligible_clans)
         Status.objects.update_one(
             set__ratio_indexed=ratio_indexed,
             set__total_clans=total_clans,

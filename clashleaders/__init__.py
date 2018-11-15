@@ -6,8 +6,8 @@ import bugsnag
 from bugsnag.flask import handle_exceptions
 from flask import Flask, json
 from flask_caching import Cache
-from mongoengine import connect
 from markdown import markdown
+from mongoengine import connect
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)

@@ -39,7 +39,8 @@ def predict_clans(*clans):
 
 
 def __save_model(name, model):
-    trained_model = clashleaders.model.TrainedModel.objects(name=name).first() or clashleaders.model.TrainedModel(name=name)
+    trained_model = clashleaders.model.TrainedModel.objects(name=name).first() \
+                    or clashleaders.model.TrainedModel(name=name)
     trained_model.last_updated = datetime.now()
     trained_model.model = model
     trained_model.save()
