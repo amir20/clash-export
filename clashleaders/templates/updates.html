@@ -7,7 +7,11 @@
       <div class="media-content">
         <div class="content">
           <br />
-          <h3 class="title is-4 is-marginless">{{ item.title }}</h3>
+          <h3 class="title is-4 is-marginless">
+            {{ item.title }}
+            <small class="tag {{ {'Feature': 'is-danger'}.get(item.tag, 'is-success') }}">{{ item.tag }}</small>
+          </h3>
+
           <small class="subtitle is-6" data-from-now="{{ item.published_on }}"></small> <br /><br />
           {{ item.text | markdown | safe }} <br />
         </div>
