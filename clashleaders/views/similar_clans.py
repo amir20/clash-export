@@ -1,6 +1,6 @@
 from flask import jsonify, request
 
-from clashleaders import app, cache
+from clashleaders import app
 from clashleaders.model import ClanPreCalculated
 
 
@@ -11,7 +11,6 @@ def similar_clans_avg(tag):
     gold = ClanPreCalculated.objects(cluster_label=cluster_label).average('week_delta.avg_gold_grab')
     elixir = ClanPreCalculated.objects(cluster_label=cluster_label).average('week_delta.avg_elixir_grab')
     de = ClanPreCalculated.objects(cluster_label=cluster_label).average('week_delta.avg_de_grab')
-
 
     data = {
         'gold_grab': gold * ratio,
