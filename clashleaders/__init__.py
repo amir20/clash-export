@@ -35,14 +35,12 @@ import clashleaders.views  # noqa
 MANIFEST_FILE = os.path.join(SITE_ROOT, "static", "manifest.json")
 
 
-@cache.memoize(timeout=86400)
 def manifest_path(file):
     with open(MANIFEST_FILE) as f:
         data = json.load(f)
     return data[file]
 
 
-@cache.memoize(timeout=86400)
 def inline_path(file):
     path = os.path.join(SITE_ROOT, manifest_path(file).lstrip('/'))
     with open(path) as f:
