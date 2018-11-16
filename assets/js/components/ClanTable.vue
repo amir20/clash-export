@@ -61,10 +61,12 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import isEmpty from "lodash/isEmpty";
 import PlayerComparison from "./PlayerComparison";
 import formatDistance from "date-fns/formatDistance";
 import { gaMixin } from "../ga";
 
+let loaded = false;
 export default {
   mixins: [gaMixin],
   props: ["tag", "name", "oldestDays"],
@@ -96,8 +98,9 @@ export default {
       this.$nextTick(() => this.$refs.table.sort(column, true));
     },
     tableData(newValue) {
-      if (newValue && newValue > 0 && !this.openDetails) {
-        this.openDetails = [this.tableData[0].id];
+      if (!isEmpty(newValue) && !loaded) {
+        this.openDetails = [newValue[0].id];
+        loaded = true;
       }
     },
     apiError(newValue, oldValue) {
