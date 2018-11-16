@@ -59,6 +59,7 @@ def update_calculations(clan):
     calculate_data(cpc)
     calculate_season(cpc)
     calculate_week(cpc)
+    calculate_day(cpc)
 
     if cpc.cluster_label == -1:
         [label] = predict_clans(cpc)
@@ -129,6 +130,19 @@ def calculate_week(cpc):
     cpc.week_delta = calculate_delta(now_df, start_df)
 
 
+def calculate_day(cpc):
+    """
+    Calculates last weeks averages
+    :param cpc:
+    :return:
+    """
+    start = cpc.previous_data(days=1)
+    start_df = start.to_data_frame()
+    now_df = cpc.most_recent.to_data_frame()
+
+    cpc.day_delta = calculate_delta(now_df, start_df)
+
+
 def calculate_season(cpc):
     """
     Calculates season averages based on season_start
@@ -150,12 +164,12 @@ def calculate_delta(now_df, start_df):
     avg_de_grab = avg_column('Total DE Grab', now_df, start_df)
     avg_war_stars = avg_column('Total War Stars', now_df, start_df)
 
-    avg_th_level = avg_column('TH Level', now_df, start_df)
-    avg_bh_level = avg_column('BH Level', now_df, start_df)
-    avg_xp_level = avg_column('XP Level', now_df, start_df)
-    avg_best_trophies = avg_column('Best Trophies', now_df, start_df)
-    avg_trophies = avg_column('Current Trophies', now_df, start_df)
-    avg_bh_trophies = avg_column('Builder Hall Trophies', now_df, start_df)
+    # avg_th_level = avg_column('TH Level', now_df, start_df)
+    # avg_bh_level = avg_column('BH Level', now_df, start_df)
+    # avg_xp_level = avg_column('XP Level', now_df, start_df)
+    # avg_best_trophies = avg_column('Best Trophies', now_df, start_df)
+    # avg_trophies = avg_column('Current Trophies', now_df, start_df)
+    # avg_bh_trophies = avg_column('Builder Hall Trophies', now_df, start_df)
 
     avg_attack_wins = avg_column('Attack Wins', now_df, start_df)
     avg_versus_wins = avg_column('Versus Battle Wins', now_df, start_df)
@@ -176,12 +190,12 @@ def calculate_delta(now_df, start_df):
         avg_elixir_grab=avg_elixir_grab,
         avg_de_grab=avg_de_grab,
         avg_war_stars=avg_war_stars,
-        avg_th_level=avg_th_level,
-        avg_bh_level=avg_bh_level,
-        avg_xp_level=avg_xp_level,
-        avg_best_trophies=avg_best_trophies,
-        avg_trophies=avg_trophies,
-        avg_bh_trophies=avg_bh_trophies,
+        # avg_th_level=avg_th_level,
+        # avg_bh_level=avg_bh_level,
+        # avg_xp_level=avg_xp_level,
+        # avg_best_trophies=avg_best_trophies,
+        # avg_trophies=avg_trophies,
+        # avg_bh_trophies=avg_bh_trophies,
         avg_attack_wins=avg_attack_wins,
         avg_versus_wins=avg_versus_wins,
         total_trophies=total_trophies,
