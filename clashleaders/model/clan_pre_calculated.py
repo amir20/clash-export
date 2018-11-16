@@ -17,12 +17,12 @@ class ClanDelta(EmbeddedDocument):
     avg_de_grab = FloatField(required=True)
     avg_war_stars = FloatField(required=True)
 
-    avg_th_level = FloatField(required=True)
-    avg_bh_level = FloatField(required=True)
-    avg_xp_level = FloatField(required=True)
-    avg_best_trophies = FloatField(required=True)
-    avg_trophies = FloatField(required=True)
-    avg_bh_trophies = FloatField(required=True)
+    avg_th_level = FloatField()
+    avg_bh_level = FloatField()
+    avg_xp_level = FloatField()
+    avg_best_trophies = FloatField()
+    avg_trophies = FloatField()
+    avg_bh_trophies = FloatField()
 
     avg_attack_wins = FloatField(required=True)
     avg_versus_wins = FloatField(required=True)
@@ -87,6 +87,7 @@ class ClanPreCalculated(Document):
 
     season_delta = EmbeddedDocumentField(ClanDelta)
     week_delta = EmbeddedDocumentField(ClanDelta)
+    day_delta = EmbeddedDocumentField(ClanDelta)
 
     cluster_label = IntField(required=True, default=-1)
     verified_accounts = ListField(StringField())
