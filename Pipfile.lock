@@ -52,14 +52,6 @@
             "index": "pypi",
             "version": "==3.4.4"
         },
-        "appnope": {
-            "hashes": [
-                "sha256:5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0",
-                "sha256:8b995ffe925347a2138d7ac0fe77155e4311a0ea6d6da4f5128fe4b3cbe5ed71"
-            ],
-            "markers": "sys_platform == 'darwin'",
-            "version": "==0.1.0"
-        },
         "asn1crypto": {
             "hashes": [
                 "sha256:2f1adbb7546ed199e3c90ef23ec95c5cf3585bac7d11fb7eb562a3fe89c64e87",
@@ -104,6 +96,9 @@
             "version": "==1.4"
         },
         "bugsnag": {
+            "extras": [
+                "flask"
+            ],
             "hashes": [
                 "sha256:5b90bd3493a807645498350cd0a6f1fbb7416d3845345e794ec483bc65cd17a8",
                 "sha256:5d42206e52707c6ea0a87a95ca8c9d840bcde5367099054aa84ecdc3f04cdd60",
@@ -709,6 +704,9 @@
             "version": "==2018.11.7"
         },
         "requests": {
+            "extras": [
+                "security"
+            ],
             "hashes": [
                 "sha256:65b3a120e4329e33c9889db89c80976c5272f56ea92d3e74da8a463992e3ff54",
                 "sha256:ea881206e59f41dbd0bd445437d792e43906703fff75ca8ff43ccdb11f33f263"
@@ -1113,11 +1111,10 @@
         },
         "pytest-freezegun": {
             "hashes": [
-                "sha256:101ddc1da1b478f4b75c64a3d82184e5df3061dbc13515eeaf1305efb0d5d8f7",
-                "sha256:212c471cd519dcd74dca8dbd15670ef6d630b2016f5874d4c147b7128ccf9693"
+                "sha256:88bb8c2a0b3a9623dd2a565693786d6a0f87aaf929dfca2b1680b5d84abcde71"
             ],
             "index": "pypi",
-            "version": "==0.2.0"
+            "version": "==0.3.0"
         },
         "pytest-mock": {
             "hashes": [
