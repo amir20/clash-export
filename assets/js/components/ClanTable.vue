@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       selected: null,
-      openDetails: null
+      openDetails: []
     };
   },
   created() {
@@ -96,7 +96,7 @@ export default {
       this.$nextTick(() => this.$refs.table.sort(column, true));
     },
     tableData(newValue) {
-      if (newValue && newValue.length > 0 && this.openDetails == null) {
+      if (newValue && newValue > 0 && !this.openDetails) {
         this.openDetails = [this.tableData[0].id];
       }
     },
