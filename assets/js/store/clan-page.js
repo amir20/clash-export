@@ -82,26 +82,25 @@ async function handleResponse(promise, commit, success, error = "setApiError") {
 
 const actions = {
   async fetchClanData({ commit, dispatch, getters: { path } }) {
+    dispatch("fetchSimilarClansStats");
+    dispatch("fetchSavedClanStats");
     const refreshPromise = fetch(`${path}/refresh.json`);
     const previousPromise = fetch(`${path}.json?daysAgo=${state.days}`);
-    const clanStatsPromise = await fetch(`${path}/stats.json`);
+    const clanStatsPromise = fetch(`${path}/stats.json`);
     commit("stopLoading");
     await handleResponse(previousPromise, commit, "setPreviousData");
     await handleResponse(refreshPromise, commit, "setRefreshData");
     await handleResponse(clanStatsPromise, commit, "setClanStats");
-
-    dispatch("fetchSimilarClansStats");
-    dispatch("fetchSavedClanStats");
   },
-  async fetchSimilarClansStats({ commit, getters: { path } }) {
-    const similarClansPromise = await fetch(`${path}/similar/avg.json`);
+  async fetchSimilarClansStats({ commit, getters: { path }, state: { days } }) {
+    const similarClansPromise = fetch(`${path}/similar/avg.json?daysAgo=${days}`);
     await handleResponse(similarClansPromise, commit, "setSimilarClansAvg");
   },
   async fetchSavedClanStats({ commit, state: { tag, days } }) {
     const savedTag = localStorage.getItem("lastTag");
     if (savedTag && savedTag != tag) {
       console.log(`Found saved tag value [${savedTag}].`);
-      const savedClanStatsPromise = await fetch(`/clan/${savedTag.replace("#", "")}/stats.json?daysAgo=${days}`);
+      const savedClanStatsPromise = fetch(`/clan/${savedTag.replace("#", "")}/stats.json?daysAgo=${days}`);
       await handleResponse(savedClanStatsPromise, commit, "setSavedClanStats", false);
     }
   },
@@ -115,15 +114,14 @@ const actions = {
   ) {
     event("days-ago", "Change Days", "Days", days);
     commit("setDays", days);
+    dispatch("fetchSavedClanStats");
+    dispatch("fetchSimilarClansStats");
     commit("startLoading");
-    const promise = await fetch(`${path}.json?daysAgo=${days}`);
-    const clanStatsPromise = await fetch(`${path}/stats.json?daysAgo=${days}`);
-    const similarClansPromise = await fetch(`${path}/similar/avg.json?daysAgo=${days}`);
-    await handleResponse(similarClansPromise, commit, "setSimilarClansAvg");
+    const promise = fetch(`${path}.json?daysAgo=${days}`);
+    const clanStatsPromise = fetch(`${path}/stats.json?daysAgo=${days}`);
     await handleResponse(promise, commit, "setPreviousData");
     await handleResponse(clanStatsPromise, commit, "setClanStats");
     commit("stopLoading");
-    dispatch("fetchSavedClanStats");
   }
 };
 

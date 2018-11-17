@@ -83,6 +83,7 @@ def clan_detail_page(slug):
 
 
 @app.route("/clan/<tag>/stats.json")
+@cache.cached(timeout=1200, query_string=True)
 def clan_stats(tag):
     days = int(request.args.get('daysAgo', 7))
 
