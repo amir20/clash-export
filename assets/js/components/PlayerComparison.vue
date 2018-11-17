@@ -61,7 +61,6 @@ export default {
   props: ["playerData"],
   data() {
     return {
-      chart: null,
       player: null
     };
   },
@@ -69,26 +68,7 @@ export default {
     this.fetchPlayer();
   },
   mounted() {
-    this.chart = new Chartist.Bar(
-      this.$refs.chart,
-      {
-        labels: ["Recent DE Grab", "Recent Elixer Grab", "Recent Gold Grab"],
-        series: this.series
-      },
-      {
-        seriesBarDistance: -20,
-        horizontalBars: true,
-        width: "100%",
-        height: "400px",
-        plugins: [Chartist.plugins.legend()],
-        axisY: {},
-        axisX: {
-          labelInterpolationFnc(value, index) {
-            return index % 2 === 0 ? value.toLocaleString() : null;
-          }
-        }
-      }
-    );
+    this.update();
   },
   filters: {
     role(value) {
@@ -97,9 +77,26 @@ export default {
   },
   methods: {
     update() {
-      this.chart.update({
-        series: this.series
-      });
+      new Chartist.Bar(
+        this.$refs.chart,
+        {
+          labels: ["Recent DE Grab", "Recent Elixer Grab", "Recent Gold Grab"],
+          series: this.series
+        },
+        {
+          seriesBarDistance: -20,
+          horizontalBars: true,
+          width: "100%",
+          height: "400px",
+          plugins: [Chartist.plugins.legend()],
+          axisY: {},
+          axisX: {
+            labelInterpolationFnc(value, index) {
+              return index % 2 === 0 ? value.toLocaleString() : null;
+            }
+          }
+        }
+      );
     },
     async fetchPlayer() {
       try {
