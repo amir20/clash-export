@@ -54,8 +54,8 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "husky": "^1.1.4",
-    "lint-staged": "^8.0.5",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
     "prettier": "^1.15.2"
   },
   "scripts": {
