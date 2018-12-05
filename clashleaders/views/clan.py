@@ -113,6 +113,8 @@ def clan_meta(tag):
     except DoesNotExist:
         clan = Clan.fetch_and_save(tag).update_calculations()
 
+    players = clan.most_recent.to_data_frame()[['Name', 'TH Level', 'Current Trophies']].reset_index().to_dict('i').values()
+
     data = {
         'tag': clan.tag,
         'slug': clan.slug,
@@ -122,6 +124,7 @@ def clan_meta(tag):
         'clanVersusPoints': clan.clanVersusPoints,
         'members': clan.members,
         'badgeUrls': clan.badgeUrls,
+        'players': list(players)
     }
 
     return jsonify(data)
