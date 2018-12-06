@@ -5,6 +5,7 @@ import Buefy from "buefy";
 import bugsnag from "./bugsnag";
 import SearchBox from "./components/SearchBox";
 import Changelog from "./components/Changelog";
+import User from "./components/User";
 import formatDistance from "date-fns/formatDistance";
 import parse from "date-fns/parse";
 import { event } from "./ga";
@@ -17,7 +18,8 @@ new Vue({
   el: "header",
   components: {
     SearchBox,
-    Changelog
+    Changelog,
+    User
   },
   data() {
     return {
