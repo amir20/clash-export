@@ -3,16 +3,28 @@
     <template v-if="savedTag">
       <section class="hero">
         <div class="hero-body">
-          <h1 class="title is-1">Welcome Back, Chief!</h1>
+          <h1 class="title is-1">Welcome back, {{ savedPlayer ? savedPlayer.name : "chief" }}!</h1>
           <h2 class="subtitle">I found your clan! Let's continue or start over again.</h2>
         </div>
       </section>
       <card :tag="savedTag" @error="onClanError" :found-clan.sync="fetchedClan"></card>
-      <b-modal :active.sync="showModal" has-modal-card v-if="fetchedClan">
-        <div class="modal-card" style="max-width: 700px">
-          <section class="modal-card-body"><player-list :players="fetchedClan.players"></player-list></section>
+      <b-modal :active.sync="showModal" has-modal-card v-if="fetchedClan && savedPlayer == null">
+        <div class="modal-card">
+          <section class="modal-card-body">
+            <div class="columns">
+              <div class="column">
+                <h3 class="subtitle is-4">Chief, tell me who you are!</h3>
+                I found <b>{{ fetchedClan.players.length }}</b> players in <b>{{ fetchedClan.name }}</b
+                >. If you are one of these players, then I can remember next time. I can also make suggestions or
+                compare you against other players. This optional so if you don't me to remember just skip it. You can
+                always manage your profile later.
+              </div>
+              <div class="column is-narrow"><img src="/static/images/builder-show.png" width="200" /></div>
+            </div>
+            <player-list :players="fetchedClan.players" :selectedPlayer.sync="selectedPlayer"></player-list>
+          </section>
           <footer class="modal-card-foot">
-            <button class="button is-warning" type="button" @click="$parent.close()">Close</button>
+            <button class="button is-warning" type="button" @click="showModal = false">Skip</button>
           </footer>
         </div>
       </b-modal>
@@ -59,6 +71,7 @@ export default {
     return {
       selectedTag: String,
       fetchedClan: null,
+      selectedPlayer: null,
       showModal: true
     };
   },
@@ -70,7 +83,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setSavedTag", "clearSavedTag"]),
+    ...mapMutations(["setSavedTag", "clearSavedTag", "setSavedPlayer"]),
     onReset() {
       this.clearSavedTag();
     },
@@ -86,7 +99,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["foundClan", "savedTag"]),
+    ...mapState(["foundClan", "savedTag", "savedPlayer"]),
     url() {
       return this.savedTag ? `/clan/${this.savedTag.replace("#", "")}` : "";
     }
@@ -96,6 +109,12 @@ export default {
       if (newValue) {
         this.setSavedTag(newValue);
       }
+    },
+    selectedPlayer(newValue) {
+      if (newValue) {
+        this.setSavedPlayer(newValue);
+        this.showModal = false;
+      }
     }
   }
 };
@@ -103,5 +122,11 @@ export default {
 <style scoped>
 a[disabled="disabled"] {
   pointer-events: none;
+}
+
+.modal-card {
+  max-width: 900px;
+  width: 100%;
+  max-height: calc(100vh - 200px);
 }
 </style>

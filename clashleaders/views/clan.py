@@ -2,6 +2,7 @@ import pandas as pd
 from flask import jsonify, render_template, request, send_file
 from mongoengine import DoesNotExist
 from user_agents import parse
+from inflection import camelize
 
 from clashleaders import app, cache
 from clashleaders.clash import api, excel
@@ -113,7 +114,8 @@ def clan_meta(tag):
     except DoesNotExist:
         clan = Clan.fetch_and_save(tag).update_calculations()
 
-    players = clan.most_recent.to_data_frame()[['Name', 'TH Level', 'Current Trophies']].reset_index().to_dict('i').values()
+    df = clan.most_recent.to_data_frame()[['Name', 'TH Level', 'Current Trophies']].reset_index()
+    players = df.rename(lambda s: camelize(s.replace(" ", ""), False), axis='columns').to_dict('i').values()
 
     data = {
         'tag': clan.tag,

@@ -38,4 +38,7 @@ def about():
 
 @cache.memoize(90)
 def fetch_changelog():
-    return list(client.entries({'content_type': 'changelog', 'order': '-fields.publishedOn'}))
+    try:
+        return list(client.entries({'content_type': 'changelog', 'order': '-fields.publishedOn'}))
+    except:
+        return list()
