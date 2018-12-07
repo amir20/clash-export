@@ -35,7 +35,7 @@ export default {
     this.items = this.data = window.__UPDATES__;
   },
   mounted() {
-    if (localStorage.getItem(KEY) != this.items[0].id) {
+    if (store.get(KEY) != this.items[0].id) {
       this.hasUpdates = true;
     }
   },
