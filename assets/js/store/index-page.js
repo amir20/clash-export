@@ -7,11 +7,13 @@ Vue.use(Vuex);
 
 const STORAGE_KEY = "lastTag";
 const PLAYER_KEY = "savedPlayer";
+const SKIP_PLAYER_QUESTION = "skipPlayerQuestion";
 
 const state = {
   foundClan: null,
   savedTag: store.get(STORAGE_KEY),
-  savedPlayer: store.get(PLAYER_KEY)
+  savedPlayer: store.get(PLAYER_KEY),
+  skipPlayerQuestion: store.get(SKIP_PLAYER_QUESTION) ? true : false
 };
 
 const mutations = {
@@ -32,7 +34,17 @@ const mutations = {
     event("saved-clan", "Reset Clan");
     state.savedTag = null;
     state.foundClan = null;
+    state.savedPlayer = null;
+    state.skipPlayerQuestion = false;
     store.remove(STORAGE_KEY);
+    store.remove(PLAYER_KEY);
+    store.remove(SKIP_PLAYER_QUESTION);
+  },
+  doNotAskForPlayer(state) {
+    event("skip-player", "Skip Player Saving");
+    state.savedPlayer = player;
+    state.skipPlayerQuestion = true;
+    store.set(SKIP_PLAYER_QUESTION, true);
   }
 };
 

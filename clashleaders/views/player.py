@@ -2,7 +2,7 @@ import pandas as pd
 from flask import render_template, jsonify
 
 from clashleaders import app
-from clashleaders.model import Player
+from clashleaders.model import Player, ClanPreCalculated
 
 
 @app.route("/player/<slug>")
@@ -41,5 +41,8 @@ def player_json(tag):
         data[field] = player[field]
 
     data['percentile'] = score
+
+    if data['clan']:
+        data['clan']['slug'] = ClanPreCalculated.find_or_create_by_tag(data['clan']['tag']).slug
 
     return jsonify(data)
