@@ -3,7 +3,7 @@
     <template v-if="savedTag">
       <section class="hero">
         <div class="hero-body">
-          <h1 class="title is-1">Welcome back, {{ savedPlayer ? savedPlayer.name : "chief" }}!</h1>
+          <h1 class="title is-1">Hey there, {{ savedPlayer ? savedPlayer.name : "chief" }}!</h1>
           <h2 class="subtitle">I found your clan! Let's continue or start over again.</h2>
         </div>
       </section>
@@ -26,7 +26,7 @@
             <player-list :players="fetchedClan.players" @update:selectedPlayer="onPlayerSelected"></player-list>
           </section>
           <footer class="modal-card-foot">
-            <button class="button is-warning" type="button" @click="doNotAskForPlayer">Skip this step</button>
+            <button class="button is-warning" type="button" @click="onSkip">Skip this step</button>
           </footer>
         </div>
       </b-modal>
