@@ -49,6 +49,7 @@ export default {
       bugsnagClient.notify(e);
       this.$emit("error");
     }
+    this.$emit("update:foundClan", this.data);
     this.setFoundClan(this.data);
     this.loading = false;
   },

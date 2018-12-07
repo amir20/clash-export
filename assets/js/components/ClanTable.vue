@@ -89,7 +89,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["loading", "sortField", "similarClansAvg", "apiError", "playersStatus"]),
+    ...mapState(["loading", "sortField", "similarClansAvg", "apiError", "playersStatus", "savedPlayer"]),
     ...mapGetters(["path", "header", "tableData", "lastUpdated"])
   },
   watch: {
@@ -99,7 +99,11 @@ export default {
     },
     tableData(newValue) {
       if (!isEmpty(newValue) && !loaded) {
-        this.openDetails = [newValue[0].id];
+        if (this.savedPlayer) {
+          this.openDetails = [this.savedPlayer.tag];
+        } else {
+          this.openDetails = [newValue[0].id];
+        }
         loaded = true;
       }
     },

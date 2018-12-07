@@ -1,34 +1,28 @@
 <template>
-    <b-autocomplete
-        placeholder="Search by name or tag"
-        field="tag"
-        :size="size"
-        icon="search"
-        keep-first
-        expanded
-        v-model="tag"
-        :data="data"
-        :loading="isLoading"
-        @input="fetchData"
-        @select="option => this.$emit('update:selectedTag', option ? option.tag : null)">
-        <template slot-scope="props">
-            <div class="media">
-                <div class="media-left">
-                    <img width="32" :src="props.option.badge">
-                </div>
-                <div class="media-content">
-                    <strong>{{ props.option.name }}</strong>
-                    <small>
-                        <i class="fa fa-tag"></i> {{ props.option.tag }}
-                    </small>
-                    <br>
-                    <small>
-                        <i class="fa fa-users"></i> {{ props.option.members}} members
-                    </small>
-                </div>
-            </div>
-        </template>
-    </b-autocomplete>
+  <b-autocomplete
+    placeholder="Search by name or tag"
+    field="tag"
+    :size="size"
+    icon="search"
+    keep-first
+    expanded
+    v-model="tag"
+    :data="data"
+    :loading="isLoading"
+    @input="fetchData"
+    @select="option => this.$emit('update:selectedTag', option ? option.tag : null)"
+  >
+    <template slot-scope="props">
+      <div class="media">
+        <div class="media-left"><img width="32" :src="props.option.badge" /></div>
+        <div class="media-content">
+          <strong>{{ props.option.name }}</strong> <small> <i class="fa fa-tag"></i> {{ props.option.tag }} </small>
+          <br />
+          <small> <i class="fa fa-users"></i> {{ props.option.members }} members </small>
+        </div>
+      </div>
+    </template>
+  </b-autocomplete>
 </template>
 
 <script>
