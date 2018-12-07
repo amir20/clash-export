@@ -4,8 +4,11 @@ import camelCase from "lodash/camelCase";
 import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
 import { event } from "../ga";
+import store from "store/dist/store.modern";
 
 Vue.use(Vuex);
+
+const PLAYER_KEY = "savedPlayer";
 
 const state = {
   tag: null,
@@ -20,7 +23,8 @@ const state = {
   clanStats: {},
   daysSpan: 7,
   sortField: "value",
-  apiError: null
+  apiError: null,
+  savedPlayer: store.get(PLAYER_KEY)
 };
 
 const mutations = {
@@ -97,7 +101,7 @@ const actions = {
     await handleResponse(similarClansPromise, commit, "setSimilarClansAvg");
   },
   async fetchSavedClanStats({ commit, state: { tag, days } }) {
-    const savedTag = localStorage.getItem("lastTag");
+    const savedTag = store.get("lastTag");
     if (savedTag && savedTag != tag) {
       console.log(`Found saved tag value [${savedTag}].`);
       const savedClanStatsPromise = fetch(`/clan/${savedTag.replace("#", "")}/stats.json?daysAgo=${days}`);
