@@ -1,24 +1,20 @@
 <template>
-<b-dropdown class="changelog" position="is-bottom-left">
-  <a class="navbar-item" slot="trigger" @click="onMenuClick">
-      <span class="badge is-badge-warning is-badge-small" :data-badge="hasUpdates ? '' : false">
-        Updates
-      </span>
-  </a>
+  <b-dropdown class="changelog" position="is-bottom-left">
+    <a class="navbar-item" slot="trigger" @click="onMenuClick">
+      <span class="badge is-badge-warning is-badge-small" :data-badge="hasUpdates ? '' : false"> Updates </span>
+    </a>
 
-  <b-dropdown-item custom v-for="item in items" :key="item.id">
-      <strong>{{ item.title }}</strong>
-      <span class="has-text-weight-light">{{ item.summary }}</span>
-      <br>
+    <b-dropdown-item custom v-for="item in items" :key="item.id">
+      <strong>{{ item.title }}</strong> <span class="has-text-weight-light">{{ item.summary }}</span> <br />
       <a :href="`/updates#${item.slug}`">Read More</a>
-  </b-dropdown-item>
+    </b-dropdown-item>
 
-  <b-dropdown-item separator></b-dropdown-item>
+    <b-dropdown-item separator></b-dropdown-item>
 
-  <b-dropdown-item custom paddingless>
-    <a href="/updates" class="button is-text is-fullwidth">See all updates</a>
-  </b-dropdown-item>
-</b-dropdown>
+    <b-dropdown-item custom paddingless>
+      <a href="/updates" class="button is-text is-fullwidth">See all updates</a>
+    </b-dropdown-item>
+  </b-dropdown>
 </template>
 
 <style scoped>
@@ -28,6 +24,7 @@
 </style>
 
 <script>
+import store from "store/dist/store.modern";
 const KEY = "changelog";
 
 export default {
@@ -44,9 +41,7 @@ export default {
   },
   methods: {
     onMenuClick() {
-      try {
-        localStorage.setItem(KEY, this.items[0].id);
-      } catch (e) {}
+      store.set(KEY, this.items[0].id);
       this.hasUpdates = false;
     }
   }

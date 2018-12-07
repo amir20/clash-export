@@ -155,6 +155,13 @@ class ClanPreCalculated(Document):
         return cls.objects.get(tag=tag)
 
     @classmethod
+    def find_or_create_by_tag(cls, tag):
+        try:
+            return ClanPreCalculated.find_by_tag(tag)
+        except DoesNotExist:
+            return Clan.fetch_and_save(tag).update_calculations()
+
+    @classmethod
     def active_clans(cls, update_before=None):
         query = Q(members__gte=5) & Q(week_delta__total_attack_wins__ne=0)
         if update_before:
