@@ -71,9 +71,7 @@ export default {
   },
   data() {
     return {
-      selectedTag: String,
       fetchedClan: null,
-      selectedPlayer: null,
       showModal: true
     };
   },
