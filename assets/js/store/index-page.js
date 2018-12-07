@@ -42,7 +42,6 @@ const mutations = {
   },
   doNotAskForPlayer(state) {
     event("skip-player", "Skip Player Saving");
-    state.savedPlayer = player;
     state.skipPlayerQuestion = true;
     store.set(SKIP_PLAYER_QUESTION, true);
   }
