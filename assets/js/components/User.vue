@@ -14,14 +14,6 @@
       <b-dropdown-item has-link> <a @click="removeUser">Forget Me</a> </b-dropdown-item>
     </template>
   </b-dropdown>
-  <b-dropdown position="is-bottom-left" v-else>
-    <a class="navbar-item button is-transparent" slot="trigger">
-      <b-icon pack="fas" icon="user" size="is-small" class="user"></b-icon>
-      <span>Guest</span>
-      <b-icon pack="fas" icon="angle-down" size="is-small"></b-icon>
-    </a>
-    <b-dropdown-item has-link> <a>Find my profile</a> </b-dropdown-item>
-  </b-dropdown>
 </template>
 
 <style scoped>

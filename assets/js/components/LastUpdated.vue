@@ -1,5 +1,5 @@
 <template>
-    <time>Updated {{text}}</time>
+  <time>Updated {{ text }}</time>
 </template>
 
 <script>
