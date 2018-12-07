@@ -10,6 +10,7 @@
       <card :tag="savedTag" @error="onClanError" :found-clan.sync="fetchedClan"></card>
       <b-modal :active.sync="showModal" has-modal-card v-if="!skipPlayerQuestion && fetchedClan && savedPlayer == null">
         <div class="modal-card">
+          <header class="modal-card-head"></header>
           <section class="modal-card-body">
             <div class="columns">
               <div class="column">
@@ -124,6 +125,6 @@ a[disabled="disabled"] {
 .modal-card {
   max-width: 900px;
   width: 100%;
-  max-height: calc(100vh - 200px);
+  max-height: calc(95vh);
 }
 </style>
