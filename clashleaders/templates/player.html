@@ -36,6 +36,10 @@
           <h2 class="subtitle is-3">Lab Troops</h2>
           <troops :player="{{ player.to_json() | forceescape }}"></troops>
         </section>
+        <section class="section is-hidden-mobile">
+          <h2 class="subtitle is-3">Attack Activity</h2>
+          <attacks-distribution player-tag="{{ player.tag }}"></attacks-distribution>
+        </section>
       </div>
     </div>
   </section>
