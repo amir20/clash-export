@@ -1,7 +1,7 @@
 import pandas as pd
 from flask import render_template, jsonify
 
-from clashleaders import app
+from clashleaders import app, cache
 from clashleaders.model import Player, ClanPreCalculated
 
 
@@ -14,12 +14,13 @@ def player_html(slug):
 
 
 @app.route("/player/<tag>/attacks.json")
+@cache.cached(timeout=1200, query_string=True)
 def player_attacks_json(tag):
     player = Player.find_by_tag(tag)
     series = player.player_series()
     data = [{'created_on': s['created_on'], 'attackWins': s['attackWins']} for s in series if s]
     df = pd.DataFrame(data, index=pd.to_datetime([s['created_on'] for s in data]), columns=['attackWins'])
-    resampled = df.resample('D').mean().dropna()
+    resampled = df.resample('D').mean().diff().dropna().clip(lower=0)
     data = dict(
         dates=[i.strftime("%Y-%m-%d") for i in resampled.index],
         attackWins=resampled['attackWins'].values.tolist()
