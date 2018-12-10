@@ -61,6 +61,15 @@ module.exports = {
         }
       },
       {
+        test: /\.png$/,
+        loader: "file-loader",
+        options: {
+          name: "[name]-[hash].[ext]",
+          outputPath: "images/compiled/",
+          publicPath: "/static/images/compiled/"
+        }
+      },
+      {
         test: /\.svg$/,
         exclude: [/flags/],
         use: {
@@ -103,7 +112,8 @@ module.exports = {
     new CleanWebpackPlugin([
       __dirname + "/clashleaders/static/css",
       __dirname + "/clashleaders/static/js",
-      __dirname + "/clashleaders/static/flags"
+      __dirname + "/clashleaders/static/flags",
+      __dirname + "/clashleaders/static/images/compiled"
     ])
   ],
   output: {
