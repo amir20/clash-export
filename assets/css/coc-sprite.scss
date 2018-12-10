@@ -13,11 +13,12 @@ $troops: (
     ("beta-minion", 59, 0) ("bomber", 61, 0) ("baby-dragon", 62, 0)
     ("cannon-cart", 63, 0) ("night-witch", 64, 0) ("drop-ship", 65, 0)
     ("super-p-e-k-k-a", 66, 0) ("wall-wrecker", 75, 0) ("battle-blimp", 76, 0)
+    ("stone-slammer", 77, 0) ("ice-golem", 78, 0)
 );
 
 $heros: (
-  ("barbarian-king", 10, 0) ("archer-queen", 11, 0) ("grand-warden", 12, 0)
-    ("battle-machine", 13, 0)
+  ("barbarian-king", 10, 0, 17) ("archer-queen", 11, 0, 17) ("grand-warden", 12, 0, 17)
+    ("battle-machine", 13, 0, 16)
 );
 
 $spells: (
@@ -26,6 +27,7 @@ $spells: (
     ("skeleton-spell", 23, 0, 34) ("poison-spell", 19, 0, 26)
     ("earthquake-spell", 20, 0, 28) ("haste-spell", 21, 0, 30)
     ("lightning-spell", 14, 0, 16) ("healing-spell", 15, 0, 18)
+    ("bat-spell", 79, 0, 26)
 );
 
 @mixin icon($row, $column, $offset: 27) {
@@ -39,7 +41,7 @@ $spells: (
   background-image: url(#{$sprite-image-url});
   background-repeat: no-repeat;
   border-radius: 4px;
-  background-size: 62px 3107px;
+  background-size: 62px 3228px;
 }
 
 @each $troop in $troops {
@@ -56,9 +58,10 @@ $spells: (
   $name: nth($hero, 1);
   $row: nth($hero, 2);
   $column: nth($hero, 3);
+  $offset: nth($hero, 4);
 
   .#{$class-prefix}#{$name} {
-    @include icon($row, $column, 18);
+    @include icon($row, $column, $offset);
   }
 }
 
