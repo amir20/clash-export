@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import render_template, jsonify, request
+from flask import render_template, jsonify
 
 from clashleaders import app, cache
 from clashleaders.model import Player, ClanPreCalculated
@@ -48,25 +48,3 @@ def player_json(tag):
 
     return jsonify(data)
 
-
-@app.route("/player/<tag>/stats.json")
-@cache.cached(timeout=1200, query_string=True)
-def player_stats(tag):
-    days = int(request.args.get('daysAgo', 7))
-
-    cpc = ClanPreCalculated.find_by_tag(tag)
-    start_df = cpc.previous_data(days=days).to_data_frame()
-    now_df = cpc.most_recent.to_data_frame()
-    delta = calculate_delta(now_df, start_df)
-    gold = delta.avg_gold_grab
-    elixir = delta.avg_elixir_grab
-    de = delta.avg_de_grab
-
-    data = {
-        'gold_grab': gold,
-        'elixir_grab': elixir,
-        'de_grab': de,
-        'name': cpc.name
-    }
-
-    return jsonify(data)
