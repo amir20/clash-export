@@ -101,6 +101,7 @@ node_modules
 **/static/js
 **/static/css
 **/static/flags
+**/static/images/compiled
 
 .bashful
 .vscode
