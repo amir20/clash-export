@@ -71,7 +71,7 @@ export default {
 
 const fakeData = {
   attackWins: times(28, random.bind(0, 10)),
-  dates: fill(Array(28), "███ █")
+  dates: fill(Array(28), "█")
 };
 </script>
 

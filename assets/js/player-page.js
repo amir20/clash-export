@@ -2,6 +2,7 @@ import Vue from "vue";
 import Buefy from "buefy";
 import Troops from "./components/Troops";
 import AttacksDistribution from "./components/AttacksDistribution";
+import PlayerRecommendation from "./components/PlayerRecommendation";
 import bugsnag from "./bugsnag";
 bugsnag(Vue);
 
@@ -11,6 +12,7 @@ new Vue({
   el: "#app",
   components: {
     Troops,
-    AttacksDistribution
+    AttacksDistribution,
+    PlayerRecommendation
   }
 });
