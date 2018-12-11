@@ -21,6 +21,14 @@ class AverageTroop(Document):
         ]
     }
 
+    @property
+    def base(self):
+        return "builderBase" if self.is_builder_base else "home"
+
+    @property
+    def troop_id(self):
+        return f"{self.base}_{self.name}"
+
     @classmethod
     def update_all(cls):
         good_tag = Player._get_collection().find_one({"lab_levels.home_Stone Slammer": {"$exists": True},

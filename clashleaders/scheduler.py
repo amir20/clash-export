@@ -17,7 +17,7 @@ from clashleaders.batch.purge import delete_outdated, reset_stats
 from clashleaders.batch.similar_clan import compute_similar_clans
 from clashleaders.clash import api
 from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
-from clashleaders.model import Clan, ClanPreCalculated, Status
+from clashleaders.model import Clan, ClanPreCalculated, Status, AverageTroop
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -146,6 +146,7 @@ schedule.every().minute.do(update_clan_calculations)
 schedule.every().day.do(reset_stats)
 schedule.every().day.at("12:01").do(delete_outdated)
 schedule.every().monday.do(compute_similar_clans)
+schedule.every().friday.do(AverageTroop.update_all)
 
 schedule.every(6).hours.do(update_leaderboards)
 schedule.every(8).hours.do(index_random_war_clan)
