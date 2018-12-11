@@ -37,7 +37,7 @@
           :href="`/clan/${foundClan ? foundClan.slug : ''}`"
           class="button is-success is-large"
           :disabled="foundClan == null"
-          >Continue &rsaquo;</a
+          >Your Clan &rsaquo;</a
         >
       </p>
     </template>
@@ -78,7 +78,6 @@ export default {
   },
   created() {
     if (this.savedTag) {
-      console.log(`Found saved tag value [${this.savedTag}].`);
       this.prefetch(`${this.url}/refresh.json`);
       this.prefetch(`${this.url}.json?daysAgo=7`);
     }

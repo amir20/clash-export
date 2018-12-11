@@ -2,70 +2,74 @@
   <div class="columns" v-if="player && player.troops">
     <div class="column is-6">
       <h4 class="title is-4 is-marginless">Troops</h4>
-      <div
+      <troop
         v-for="troop in filterTroops(player.troops, 'home')"
         :key="troop.name + 'home'"
-        :class="troop.name | iconClass"
+        :name="troop.name"
         class="is-tooltip-right tooltip"
         :data-tooltip="troop.name"
       >
         <small :class="{ max: troop.maxLevel == troop.level }">{{ troop.level }}</small>
-      </div>
+      </troop>
 
       <h4 class="subtitle is-5 is-marginless">Builder Troops</h4>
-      <div
+      <troop
         v-for="troop in filterTroops(player.troops, 'builderBase')"
         :key="troop.name + 'builder'"
-        :class="troop.name | iconClass"
+        :name="troop.name"
         class="is-tooltip-right tooltip"
         :data-tooltip="troop.name"
       >
         <small :class="{ max: troop.maxLevel == troop.level }">{{ troop.level }}</small>
-      </div>
+      </troop>
     </div>
 
     <div class="column is-3">
       <h4 class="title is-4 is-marginless">Spells</h4>
-      <div
+      <troop
         v-for="spell in this.player.spells"
         :key="spell.name"
-        :class="spell.name | iconClass"
+        :name="spell.name"
         class="is-tooltip-right tooltip"
         :data-tooltip="spell.name"
       >
         <small :class="{ max: spell.maxLevel == spell.level }">{{ spell.level }}</small>
-      </div>
+      </troop>
     </div>
     <div class="column is-3">
       <h4 class="title is-4 is-marginless">Heros</h4>
-      <div
+      <troop
         v-for="hero in filterTroops(player.heroes, 'home')"
         :key="hero.name"
-        :class="hero.name | iconClass"
+        :name="hero.name"
         class="is-tooltip-right tooltip"
         :data-tooltip="hero.name"
       >
         <small :class="{ max: hero.maxLevel == hero.level }">{{ hero.level }}</small>
-      </div>
+      </troop>
       <h4 class="subtitle is-5 is-marginless">Builder Base</h4>
-      <div
+      <troop
         v-for="hero in filterTroops(player.heroes, 'builderBase')"
         :key="hero.name"
-        :class="hero.name | iconClass"
+        :name="hero.name"
         class="is-tooltip-right tooltip"
         :data-tooltip="hero.name"
       >
         <small :class="{ max: hero.maxLevel == hero.level }">{{ hero.level }}</small>
-      </div>
+      </troop>
     </div>
   </div>
 </template>
 
 <script>
 import kebabCase from "lodash/kebabCase";
+import Troop from "./Troop";
 
 export default {
   props: ["player"],
+  components: {
+    Troop
+  },
   data() {
     return {};
   },
