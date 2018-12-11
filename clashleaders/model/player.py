@@ -88,6 +88,9 @@ class Player(DynamicDocument):
     def fetch_and_update(self):
         return Player.fetch_and_save(self.tag)
 
+    def troop_insights(self):
+        return player_calculation.next_troop_recommendation(self.tag)
+
     @classmethod
     def upsert_player(cls, player_tag, **kwargs):
         player = Player.objects(tag=player_tag).first()
