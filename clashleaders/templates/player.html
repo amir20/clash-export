@@ -32,13 +32,16 @@
   <section class="hero is-light has-text-centered-mobile">
     <div class="hero-body">
       <div class="container">
-          <section class="section">
-              <h2 class="subtitle is-3">Insights <span class="tag is-danger">New!</span></h2>
-              <player-recommendation :insights="{{ insights | tojson | forceescape}}" player-tag="{{ player.tag }}"></player-recommendation>
-            </section>
         <section class="section is-hidden-mobile">
           <h2 class="subtitle is-3">Attack Activity</h2>
           <attacks-distribution player-tag="{{ player.tag }}"></attacks-distribution>
+        </section>
+        <section class="section">
+          <h2 class="subtitle is-3">Insights <span class="tag is-danger">New!</span></h2>
+          <player-recommendation
+            :insights="{{ insights | tojson | forceescape }}"
+            player-tag="{{ player.tag }}"
+          ></player-recommendation>
         </section>
         <section class="section">
           <h2 class="subtitle is-3">Lab Troops</h2>

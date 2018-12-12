@@ -2,17 +2,16 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { event } from "../ga";
 import store from "store/dist/store.modern";
+import { saveUser, removeUser } from "../user";
 
 Vue.use(Vuex);
 
 const STORAGE_KEY = "lastTag";
-const PLAYER_KEY = "savedPlayer";
 const SKIP_PLAYER_QUESTION = "skipPlayerQuestion";
 
 const state = {
   foundClan: null,
   savedTag: store.get(STORAGE_KEY),
-  savedPlayer: store.get(PLAYER_KEY),
   skipPlayerQuestion: store.get(SKIP_PLAYER_QUESTION) ? true : false
 };
 
@@ -22,8 +21,7 @@ const mutations = {
   },
   setSavedPlayer(state, player) {
     event("saved-player", "Save Player");
-    state.savedPlayer = player;
-    store.set(PLAYER_KEY, player);
+    saveUser(player);
   },
   setSavedTag(state, tag) {
     event("saved-clan", "Save Clan");
@@ -34,11 +32,10 @@ const mutations = {
     event("saved-clan", "Reset Clan");
     state.savedTag = null;
     state.foundClan = null;
-    state.savedPlayer = null;
     state.skipPlayerQuestion = false;
     store.remove(STORAGE_KEY);
-    store.remove(PLAYER_KEY);
     store.remove(SKIP_PLAYER_QUESTION);
+    removeUser();
   },
   doNotAskForPlayer(state) {
     event("skip-player", "Skip Player Saving");

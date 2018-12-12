@@ -8,7 +8,7 @@
         </div>
       </section>
       <card :tag="savedTag" @error="onClanError" :found-clan.sync="fetchedClan"></card>
-      <b-modal :active.sync="showModal" has-modal-card v-if="!skipPlayerQuestion && fetchedClan && savedPlayer == null">
+      <b-modal :active.sync="showModal" has-modal-card v-if="!skipPlayerQuestion && fetchedClan && !hasUser">
         <div class="modal-card">
           <header class="modal-card-head"></header>
           <section class="modal-card-body">
@@ -32,13 +32,17 @@
         </div>
       </b-modal>
       <p class="buttons">
-        <button type="reset" class="button is-warning is-large">Change Clan</button>
+        <button type="reset" class="button is-warning is-large">Reset</button>
         <a
           :href="`/clan/${foundClan ? foundClan.slug : ''}`"
           class="button is-success is-large"
           :disabled="foundClan == null"
-          >Your Clan &rsaquo;</a
+          >{{ foundClan ? foundClan.name : "Your Clan" }}</a
         >
+        <a :href="`/player/${userSlug}`" class="button is-info is-large" v-if="hasUser">
+          <b-icon pack="fas" icon="user"></b-icon>
+          <span>Your Profile</span>
+        </a>
       </p>
     </template>
     <template v-else>
@@ -62,6 +66,7 @@
 import Card from "./ClanCard";
 import SearchBox from "./SearchBox";
 import PlayerList from "./PlayerList";
+import UserMixin from "../user";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 export default {
@@ -70,6 +75,7 @@ export default {
     SearchBox,
     PlayerList
   },
+  mixins: [UserMixin],
   data() {
     return {
       fetchedClan: null,
@@ -83,7 +89,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setSavedTag", "clearSavedTag", "setSavedPlayer", "doNotAskForPlayer"]),
+    ...mapMutations(["setSavedTag", "clearSavedTag", "doNotAskForPlayer", "setSavedPlayer"]),
     onReset() {
       this.clearSavedTag();
     },
@@ -104,8 +110,6 @@ export default {
     onPlayerSelected(player) {
       this.setSavedPlayer(player);
       this.showModal = false;
-      const event = new Event("user-signin");
-      document.dispatchEvent(event);
     }
   },
   computed: {
