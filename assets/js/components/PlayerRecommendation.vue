@@ -38,7 +38,7 @@
               v-if="builderBaseTroop"
               :name="builderBaseTroop.name"
               class="is-tooltip-right tooltip"
-              :data-tooltip="homeBaseTroop.name"
+              :data-tooltip="builderBaseTroop.name"
             ></troop>
           </div>
         </div>
