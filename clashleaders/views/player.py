@@ -62,7 +62,11 @@ def player_troops_insights(player):
     df = df[df['delta'] > 0]
 
     if df.empty:
-        return jsonify({})
+        return dict(builderBase={},
+                    home={},
+                    th_ratio=th_completed/th_total,
+                    bh_ratio=bh_completed/bh_total,
+                    th_level=player.townHallLevel)
 
     builder_troops = df.xs('builderBase', level='base').to_dict('i')
     for k, v in builder_troops.items():
