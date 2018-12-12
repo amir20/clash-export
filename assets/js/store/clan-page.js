@@ -8,8 +8,6 @@ import store from "store/dist/store.modern";
 
 Vue.use(Vuex);
 
-const PLAYER_KEY = "savedPlayer";
-
 const state = {
   tag: null,
   loading: true,
@@ -23,8 +21,7 @@ const state = {
   clanStats: {},
   daysSpan: 7,
   sortField: "value",
-  apiError: null,
-  savedPlayer: store.get(PLAYER_KEY)
+  apiError: null
 };
 
 const mutations = {

@@ -65,10 +65,11 @@ import isEmpty from "lodash/isEmpty";
 import PlayerComparison from "./PlayerComparison";
 import formatDistance from "date-fns/formatDistance";
 import { gaMixin } from "../ga";
+import UserMixin from "../user";
 
 let loaded = false;
 export default {
-  mixins: [gaMixin],
+  mixins: [gaMixin, UserMixin],
   props: ["tag", "name", "oldestDays"],
   components: {
     PlayerComparison
@@ -89,7 +90,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["loading", "sortField", "similarClansAvg", "apiError", "playersStatus", "savedPlayer"]),
+    ...mapState(["loading", "sortField", "similarClansAvg", "apiError", "playersStatus"]),
     ...mapGetters(["path", "header", "tableData", "lastUpdated"])
   },
   watch: {
@@ -99,8 +100,8 @@ export default {
     },
     tableData(newValue) {
       if (!isEmpty(newValue) && !loaded) {
-        if (this.savedPlayer) {
-          this.openDetails = [this.savedPlayer.tag];
+        if (this.hasUser) {
+          this.openDetails = [this.userTag];
         } else {
           this.openDetails = [newValue[0].id];
         }
