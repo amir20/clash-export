@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-      <div class="column is-narrow is-hidden-mobile"><img src="/static/images/builder-show.png" width="280" /></div>
+      <div class="column is-narrow is-hidden-mobile"><web-p-image name="builder-show" width="280" /></div>
     </div>
   </div>
   <div class="container" v-else>
@@ -52,7 +52,7 @@
         Insights are recommendations that are shown on your own profile. This information is only available to you once
         you signin as yourself and claim your profile.
       </div>
-      <div class="column is-narrow is-hidden-mobile"><img src="/static/images/builder-show.png" width="300" /></div>
+      <div class="column is-narrow is-hidden-mobile"><web-p-image name="builder-show.png" width="300" /></div>
     </div>
     <br />
     <br />
@@ -77,13 +77,15 @@
 import store from "store/dist/store.modern";
 import maxBy from "lodash/maxBy";
 import Troop from "./Troop";
+import WebPImage from "./WebPImage";
 import UserMixin from "../user";
 
 export default {
   props: ["insights", "playerTag"],
   mixins: [UserMixin],
   components: {
-    Troop
+    Troop,
+    WebPImage
   },
   computed: {
     homeBaseTroop() {
