@@ -20,9 +20,7 @@
                 you against other players. This optional so if you don't me to remember just skip it. You can always
                 manage your profile later.
               </div>
-              <div class="column is-narrow is-hidden-mobile">
-                <img src="/static/images/builder-show.png" width="200" />
-              </div>
+              <div class="column is-narrow is-hidden-mobile"><web-p-image name="builder-show" width="200" /></div>
             </div>
             <player-list :players="fetchedClan.players" @update:selectedPlayer="onPlayerSelected"></player-list>
           </section>
@@ -66,6 +64,7 @@
 import Card from "./ClanCard";
 import SearchBox from "./SearchBox";
 import PlayerList from "./PlayerList";
+import WebPImage from "./WebPImage";
 import UserMixin from "../user";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
@@ -73,7 +72,8 @@ export default {
   components: {
     Card,
     SearchBox,
-    PlayerList
+    PlayerList,
+    WebPImage
   },
   mixins: [UserMixin],
   data() {
