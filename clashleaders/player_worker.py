@@ -48,7 +48,7 @@ def fetch_clans_since():
         except BulkWriteError as bwe:
             logger.exception(f"Error thrown while saving [{bulk_operations}] {bwe.details}")
         except:
-            logger.exception("Error while updating players in fetch_clans_since()")
+            logger.exception(f"Error while updating players in fetch_clans_since() with [{bulk_operations}]")
 
 
 def main():
