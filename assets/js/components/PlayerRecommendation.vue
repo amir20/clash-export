@@ -25,7 +25,8 @@
         <h3 class="title is-4 is-marginless">Recommended Upgrades</h3>
         <div class="columns is-vcentered">
           <div class="column is-8">
-            You should upgrade the following items based off similar players that are the same level as you.
+            You should upgrade the following items based on similar players same level as you. This recommendation may
+            change as other players upgrade different troops.
           </div>
           <div class="column">
             <troop
