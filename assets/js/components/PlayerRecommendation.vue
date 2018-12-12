@@ -54,7 +54,7 @@
         Insights are recommendations that are shown on your own profile. This information is only available to you once
         you signin as yourself and claim your profile.
       </div>
-      <div class="column is-narrow is-hidden-mobile"><web-p-image name="builder-show.png" width="300" /></div>
+      <div class="column is-narrow is-hidden-mobile"><web-p-image name="builder-show" width="300" /></div>
     </div>
     <br />
     <br />
