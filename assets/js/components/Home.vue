@@ -91,6 +91,7 @@ export default {
   methods: {
     ...mapMutations(["setSavedTag", "clearSavedTag", "doNotAskForPlayer", "setSavedPlayer"]),
     onReset() {
+      this.showModal = true;
       this.clearSavedTag();
     },
     onSkip() {
