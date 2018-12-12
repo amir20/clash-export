@@ -44,7 +44,8 @@ def fetch_clans_since():
         logger.debug(f"Saving all players for {clan.tag}.")
         try:
             bulk_operations = [Player(**data).as_replace_one() for data in clan.players_data()]
-            Player._get_collection().bulk_write(bulk_operations)
+            if bulk_operations:
+                Player._get_collection().bulk_write(bulk_operations)
         except BulkWriteError as bwe:
             logger.exception(f"Error thrown while saving [{bulk_operations}] {bwe.details}")
         except:
