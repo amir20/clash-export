@@ -3,7 +3,7 @@
     <template v-if="savedTag">
       <section class="hero">
         <div class="hero-body">
-          <h1 class="title is-1">Hey there, {{ savedPlayer ? savedPlayer.name : "chief" }}!</h1>
+          <h1 class="title is-1">Hey there, {{ hasUser ? userName : "chief" }}!</h1>
           <h2 class="subtitle">I found your clan! Let's continue or start over again.</h2>
         </div>
       </section>
