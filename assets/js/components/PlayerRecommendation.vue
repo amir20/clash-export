@@ -41,6 +41,7 @@
               class="is-tooltip-right tooltip"
               :data-tooltip="builderBaseTroop.name"
             ></troop>
+            <b v-if="!homeBaseTroop && !builderBaseTroop">No recommendations right now. Great job!</b>
           </div>
         </div>
       </div>
