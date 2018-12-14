@@ -21,7 +21,7 @@
     "chartist-plugin-legend": "^0.6.2",
     "clean-webpack-plugin": "^1.0.0",
     "compression-webpack-plugin": "^2.0.0",
-    "css-loader": "^2.0.0",
+    "css-loader": "^2.0.1",
     "d3": "^5.7.0",
     "date-fns": "^2.0.0-alpha.25",
     "file-loader": "^2.0.0",
