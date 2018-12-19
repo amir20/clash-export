@@ -47,6 +47,7 @@ def transform_players(players):
         ('Treasurer', 'Total War Collected Gold'),
         ('War Hero', 'Total War Stars'),
         ('Games Champion', 'Clan Games XP'),
+        ('War League Legend', 'CWL Stars'),
         ('Sharing is caring', 'Total Spells Donated'),
         ('donations', 'Donations'),
         ('donationsReceived', 'Donations Received'),
