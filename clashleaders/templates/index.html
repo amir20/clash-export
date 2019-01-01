@@ -51,13 +51,6 @@ extends "layout.html" %} {% block body %}
       </div>
     </div>
 
-    <div class="columns">
-      <div class="column is-4">{{ leaderboard("War Stars Earned", most_war_stars, "{:,.0f} stars/player") }}</div>
-      <div class="column is-4">{{ leaderboard("Trophies Gained", most_trophies, "{:,.0f} trophies/player") }}</div>
-      <div class="column is-4">
-        {{ country_leaderboard("Most Active Countries", most_active_country, "{:,.0f} Attacks", 1) }}
-      </div>
-    </div>
 
     <h1 class="title is-2">Global Leaderboards</h1>
     <div class="columns">
