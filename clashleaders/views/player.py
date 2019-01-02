@@ -49,6 +49,7 @@ def player_json(tag):
     return jsonify(data)
 
 
+@cache.memoize(28800)
 def player_troops_insights(player):
     df = player.troop_insights().dropna()
     th_df = df.xs('home', level='base')
