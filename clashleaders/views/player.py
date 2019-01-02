@@ -49,7 +49,7 @@ def player_json(tag):
     return jsonify(data)
 
 
-@cache.cache(28800)
+@cache.memoize(28800)
 def player_troops_insights(player):
     df = player.troop_insights().dropna()
     th_df = df.xs('home', level='base')
@@ -86,3 +86,6 @@ def player_troops_insights(player):
         bh_ratio=bh_completed/bh_total,
         th_level=player.townHallLevel
     )
+
+
+player_troops_insights.make_cache_key = lambda f, p: p.tag
