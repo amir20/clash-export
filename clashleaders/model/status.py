@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from mongoengine import DateTimeField, DictField, Document, FloatField, IntField, ListField, ReferenceField
 
-from clashleaders.model import ClanPreCalculated
+from clashleaders.model import ClanPreCalculated, Player
 from clashleaders.views.index import aggregate_by_country
 
 
@@ -34,7 +34,7 @@ class Status(Document):
             set__total_clans=total_clans,
             set__total_active_clans=total_eligible_clans,
             set__last_updated=datetime.now(),
-            set__total_members=ClanPreCalculated.objects.sum('members'),
+            set__total_members=Player.objects.count(),
             set__total_active_members=ClanPreCalculated.active_clans().sum('members'),
             set__total_countries=len(ClanPreCalculated.objects.distinct('location.countryCode')),
             set__popular_clans=ClanPreCalculated.objects.order_by('-page_views').limit(10),
