@@ -7,7 +7,7 @@ from clashleaders.model import Player, ClanPreCalculated
 
 @app.route("/player/<slug>")
 def player_html(slug):
-    player = Player.find_by_slug(slug).fetch_and_update()
+    player = Player.find_by_slug(slug)
     score = player_score(player)
     clan = player.pre_calculated_clan()
     return render_template('player.html', player=player, player_score=score, clan=clan, insights=player_troops_insights(player))
