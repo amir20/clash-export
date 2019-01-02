@@ -88,4 +88,4 @@ def player_troops_insights(player):
     )
 
 
-player_troops_insights.make_cache_key = lambda f, p: p.tag
+player_troops_insights.make_cache_key = lambda f, p: f"player_troops_insights_{p.tag}"
