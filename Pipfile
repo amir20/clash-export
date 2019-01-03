@@ -45,6 +45,10 @@ markdown = "*"
 contentful = "*"
 redis = "*"
 inflection = "*"
+sqlalchemy = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+psycopg2 = "*"
 
 [dev-packages]
 pytest = "*"
@@ -58,4 +62,4 @@ xlrd = "*"
 aioresponses = "*"
 
 [requires]
-python_version = "3.6.5"
+python_version = "3.7.2"
