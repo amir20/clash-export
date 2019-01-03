@@ -1,7 +1,7 @@
 # Build assets
 FROM node:10-alpine as builder
 
-RUN apk add --no-cache git openssh python make g++ \ 
+RUN apk add --no-cache git openssh python make g++ \
     && npm install -g npm
 
 WORKDIR /build
@@ -19,7 +19,7 @@ COPY clashleaders/static clashleaders/static
 RUN npm run build
 
 
-FROM python:3.6.5-slim
+FROM python:3.7.2-slim
 
 # Create app directoy
 WORKDIR /app
@@ -53,6 +53,7 @@ COPY ./caddy/Caddyfile /etc/Caddyfile
 COPY ./caddy /etc/caddy
 # Copy all other files
 COPY ./clashleaders /app/clashleaders
+COPY ./migrations /app/migrations
 COPY ./tests /app/tests
 COPY ./Makefile /app/
 COPY ./setup.cfg /app/
