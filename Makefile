@@ -6,6 +6,11 @@ deploy: push
 	eval $$(docker-machine env clashstats --shell bash); docker pull amir20/clashleaders:$(TAG)
 	eval $$(docker-machine env clashstats --shell bash); TAG=$(TAG) docker stack deploy -c docker-compose.yml -c docker-compose.production.yml clashleaders
 
+migrate: TAG=$(shell cat package.json | jq -r .version)
+migrate:
+	eval $$(docker-machine env clashstats --shell bash); docker pull amir20/clashleaders:$(TAG)
+	eval $$(docker-machine env clashstats --shell bash); TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.production.yml run --no-deps --rm web flask db upgrade
+
 .PHONY: build
 build:
 	docker-compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD) web
