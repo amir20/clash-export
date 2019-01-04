@@ -1,0 +1,11 @@
+-i https://pypi.python.org/simple
+py==1.7.0
+pytest-cov==2.6.0
+pytest-freezegun==0.3.0
+pytest-mock==1.10.0
+pytest-runner==4.2
+pytest==4.0.0
+python-dateutil==2.7.5
+six==1.12.0
+snapshottest==0.5.0
+termcolor==1.1.0
