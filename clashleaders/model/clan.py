@@ -10,6 +10,7 @@ import clashleaders.clash.clan_calculation
 import clashleaders.clash.player_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
+from clashleaders import db
 from clashleaders.clash import api
 
 logger = logging.getLogger(__name__)
@@ -107,6 +108,11 @@ class Clan(DynamicDocument):
         except:
             logging.exception("Error while saving averages for loot in clan#fetch_and_save()")
 
+        try:
+            save_from_mongo_to_pg(clan)
+        except:
+            logging.exception("Error while calling save_from_mongo_to_pg()")
+
         return clan
 
 
@@ -127,3 +133,16 @@ def encode_players(players):
 
 def decode_player_bytes(b):
     return json.loads(decode(b, 'zlib'))
+
+
+def save_from_mongo_to_pg(clan):
+    players = [clashleaders.model.PlayerModel(p) for p in clan.players_data()]
+    pg_clan = clashleaders.model.ClanModel(tag=clan.tag,
+                                           name=clan.name,
+                                           description=clan.description,
+                                           points=clan.clanPoints,
+                                           versusPoints=clan.clanVersusPoints,
+                                           players=players)
+
+    db.session.add(pg_clan)
+    db.session.commit()
