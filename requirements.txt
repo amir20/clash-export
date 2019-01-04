@@ -42,7 +42,7 @@ Jinja2==2.10
 Mako==1.0.7
 Markdown==3.0.1
 MarkupSafe==1.1.0
-mongoengine==0.16.1
+mongoengine==0.16.3
 more-itertools==5.0.0
 multidict==4.4.2
 numpy==1.15.4
