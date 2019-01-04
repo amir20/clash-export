@@ -37,7 +37,7 @@
           :disabled="foundClan == null"
           >{{ foundClan ? foundClan.name : "Your Clan" }}</a
         >
-        <a :href="`/player/${userSlug}`" class="button is-info is-large" v-if="hasUser">
+        <a :href="`/player/${userSlug}`" class="button is-info is-large" v-if="hasUser" :disabled="userSlug == null">
           <b-icon pack="fas" icon="user"></b-icon>
           <span>Your Profile</span>
         </a>
