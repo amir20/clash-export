@@ -24,11 +24,10 @@ FROM python:3.7.2-slim
 # Create app directoy
 WORKDIR /app
 
-RUN pip install pip==18.1 \
-    && pip install pipenv==2018.10.9
+RUN pip install pip==18.1
 
 # Copy requirements file
-COPY ./Pipfile* /app/
+COPY ./requirements*.txt /app/
 
 ARG plugins=http.expires,tls.dns.digitalocean
 
@@ -39,7 +38,8 @@ RUN apt-get update \
     && apt-get install gcc -y \
     && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
     && curl https://getcaddy.com | bash -s personal ${plugins} \
-    && pipenv install --system \
+    && pip install -r requirements.txt \
+    && pip install -r requirements-dev.txt \
     && apt-get remove -y gcc \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* \
