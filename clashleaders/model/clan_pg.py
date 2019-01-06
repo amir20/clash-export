@@ -14,7 +14,7 @@ class ClanModel(db.Model):
     versusPoints = db.Column(db.Integer)
     members = db.Column(db.Integer)
     players = db.relationship('PlayerModel', backref='clan', lazy=False)
-    created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, index=True)
 
     def __init__(self, tag, name, description, points, versusPoints, players):
         self.tag = tag
