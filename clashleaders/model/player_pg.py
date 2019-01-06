@@ -1,7 +1,9 @@
+import json
 import logging
+from codecs import decode, encode
 from datetime import datetime
 
-from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy.dialects.postgresql import JSON, BYTEA
 
 from clashleaders import db
 
@@ -17,8 +19,9 @@ class PlayerModel(db.Model):
     tag = db.Column(db.String(12), index=True)
     name = db.Column(db.String())
     clan_id = db.Column(db.Integer, db.ForeignKey('clan.id'), nullable=True)
-    data = db.Column(JSON)
     created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    bytes = db.Column(BYTEA)
+
     achievements = db.Column(JSON)
     heroes = db.Column(JSON)
     league = db.Column(JSON)
@@ -43,13 +46,19 @@ class PlayerModel(db.Model):
     bestTrophies = db.Column(db.Integer)
 
     def __init__(self, json):
-        for key, value in json.items():
-            if key in IGNORED_ATTRIBUTES:
-                continue
-            if hasattr(self, key):
-                setattr(self, key, value)
-            else:
-                logger.warning("Player has no attribute for: %s", key)
+        self.tag = json['tag']
+        self.name = json['name']
+        self.bytes = zip_data(json)
 
-    def __repr__(self):
-        return '<Player {}>'.format(self.tag)
+    @property
+    def data(self):
+        return unzip_data(self.bytes)
+
+
+def zip_data(map):
+    s = json.dumps(map)
+    return encode(s.encode('utf8'), 'zlib')
+
+
+def unzip_data(b):
+    return json.loads(decode(b, 'zlib'))
