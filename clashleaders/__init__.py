@@ -8,15 +8,10 @@ from flask import Flask, json
 from flask_caching import Cache
 from markdown import markdown
 from mongoengine import connect
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('PG_URL')
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 

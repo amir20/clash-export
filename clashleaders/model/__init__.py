@@ -4,5 +4,3 @@ from .player import Player
 from .status import Status
 from .trained_model import TrainedModel
 from .avg_troop import AverageTroop
-from .clan_pg import ClanModel
-from .player_pg import PlayerModel
