@@ -11,7 +11,6 @@ from mongoengine import connect
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
