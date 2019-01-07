@@ -47,12 +47,10 @@ RUN apt-get update \
 # Custom Supervisord config
 COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
 
-# Copy caddy file
 COPY ./caddy/Caddyfile /etc/Caddyfile
 COPY ./caddy /etc/caddy
-# Copy all other files
+
 COPY ./clashleaders /app/clashleaders
-COPY ./migrations /app/migrations
 COPY ./tests /app/tests
 COPY ./Makefile /app/
 COPY ./setup.cfg /app/
