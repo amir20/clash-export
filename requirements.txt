@@ -63,7 +63,7 @@ pymongo==3.7.2
 Pympler==0.6
 pyOpenSSL==18.0.0
 pytest==4.0.2
-pytest-cov==2.6.0
+pytest-cov==2.6.1
 pytest-freezegun==0.3.0
 pytest-mock==1.10.0
 pytest-runner==4.2
