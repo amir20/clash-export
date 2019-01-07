@@ -50,7 +50,7 @@ parso==0.3.1
 pep8==1.7.1
 pexpect==4.6.0
 pickleshare==0.7.5
-Pillow==5.4.0
+Pillow==5.4.1
 pluggy==0.8.0
 prompt-toolkit==2.0.7
 psycopg2-binary==2.7.6.1
@@ -70,7 +70,7 @@ pytest-mock==1.10.0
 pytest-runner==4.2
 python-dateutil==2.7.5
 python-editor==1.0.3
-pytz==2018.7
+pytz==2018.9
 redis==3.0.1
 regex==2018.11.22
 requests==2.21.0
@@ -89,7 +89,7 @@ user-agents==1.1.0
 uvloop==0.11.3
 wcwidth==0.1.7
 webencodings==0.5.1
-WebOb==1.8.4
+WebOb==1.8.5
 Werkzeug==0.14.1
 xlrd==1.2.0
 XlsxWriter==1.1.2
