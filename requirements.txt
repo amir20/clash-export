@@ -7,6 +7,7 @@ asn1crypto==0.24.0
 async-timeout==3.0.1
 atomicwrites==1.2.1
 attrs==18.2.0
+autopep8==1.4.3
 awesome-slugify==1.6.5
 backcall==0.1.0
 blinker==1.4
@@ -27,9 +28,7 @@ decorator==4.3.0
 defusedxml==0.5.0
 Flask==1.0.2
 Flask-Caching==1.4.0
-Flask-Migrate==2.3.1
 flask-shell-ipython==0.4.0
-Flask-SQLAlchemy==2.3.2
 freezegun==0.3.11
 gunicorn==19.9.0
 idna==2.7
@@ -48,6 +47,7 @@ multidict==4.4.2
 numpy==1.15.4
 pandas==0.23.4
 parso==0.3.1
+pep8==1.7.1
 pexpect==4.6.0
 pickleshare==0.7.5
 Pillow==5.4.0
@@ -57,6 +57,7 @@ psycopg2-binary==2.7.6.1
 ptyprocess==0.6.0
 py==1.7.0
 pycares==2.4.0
+pycodestyle==2.4.0
 pycparser==2.19
 Pygments==2.3.1
 pymongo==3.7.2
@@ -78,7 +79,6 @@ scikit-learn==0.20.2
 scipy==1.2.0
 six==1.12.0
 snapshottest==0.5.0
-SQLAlchemy==1.2.15
 termcolor==1.1.0
 tinycss2==0.6.1
 traitlets==4.3.2
