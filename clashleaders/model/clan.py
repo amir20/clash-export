@@ -85,6 +85,7 @@ class Clan(DynamicDocument):
         tag = prepend_hash(tag)
         clan = api.find_clan_by_tag(tag)
         players = api.fetch_all_players(clan)
+        save_historical_clan(clan, players)
         clan['players_bytes'] = encode_players(players)
         del clan['memberList']
 
@@ -127,3 +128,11 @@ def encode_players(players):
 
 def decode_player_bytes(b):
     return json.loads(decode(b, 'zlib'))
+
+
+def save_historical_clan(clan_json, player_json):
+    try:
+        players = [clashleaders.model.HistoricalPlayer(**p).save() for p in player_json]
+        clashleaders.model.HistoricalClan(**clan_json, players=players).save()
+    except:
+        logging.exception("Error while saving save_historical_clan")
