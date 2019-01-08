@@ -1,6 +1,6 @@
 aiodns==1.1.1
 aiohttp==3.5.1
-aioresponses==0.5.0
+aioresponses==0.5.1
 alembic==1.0.5
 appnope==0.1.0
 asn1crypto==0.24.0
