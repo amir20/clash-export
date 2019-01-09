@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 from functools import lru_cache
 
+import pandas as pd
 from inflection import *
 from mongoengine import Document, StringField, DateTimeField, BinaryField
 
@@ -62,6 +63,14 @@ class HistoricalPlayer(Document):
 
             stats = PlayerStats(**player_stats)
             super().__init__(tag=kwargs['tag'], bytes=stats.SerializeToString())
+
+    def to_dict(self):
+        return {f: getattr(self.stats, f) for f in self.stats.DESCRIPTOR.fields_by_name}
+
+    def to_series(self):
+        s = pd.Series(self.to_dict())
+        s.name = self.tag
+        return s
 
 
 @lru_cache(maxsize=256)
