@@ -1,14 +1,15 @@
+from datetime import timedelta, datetime
+
 import pandas as pd
-from flask import jsonify, render_template, request, send_file
+from flask import jsonify, render_template, request
+from inflection import camelize
 from mongoengine import DoesNotExist
 from user_agents import parse
-from inflection import camelize
 
 from clashleaders import app, cache
-from clashleaders.clash import api, excel
 from clashleaders.clash.clan_calculation import calculate_delta
 from clashleaders.clash.player_calculation import clan_status
-from clashleaders.model import Clan, ClanPreCalculated, Status
+from clashleaders.model import Clan, ClanPreCalculated, Status, HistoricalClan
 from clashleaders.text.clan_description_processor import transform_description
 
 
@@ -23,17 +24,7 @@ def inject_most_popular():
 
 
 @app.route("/clan/<tag>.json")
-def clan_detail_json(tag):
-    try:
-        days_ago = request.args.get('daysAgo')
-        clan = clan_from_days_ago(days_ago, tag)
-        return jsonify(clan.to_player_matrix())
-    except api.ClanNotFound:
-        return jsonify(dict(error=f"{tag} not found")), 404
-    except api.ApiTimeout:
-        return jsonify(dict(error=f"API timed out while fetching all players for {tag}")), 504
-    except api.ApiException:
-        return jsonify(dict(error=f"Clash of Clans API is down right now.")), 500
+def clan_detail_json(tag): return jsonify(clan_near_days_ago(request.args.get('daysAgo', 0), tag).to_matrix())
 
 
 @app.route("/clan/<tag>/refresh.json")
@@ -44,18 +35,6 @@ def clan_refresh_json(tag):
     players_status = clan_status(cpc)
 
     return jsonify(dict(playerData=player_data, playersStatus=players_status))
-
-
-@app.route("/clan/<slug>.xlsx")
-def clan_detail_xlsx(slug):
-    try:
-        clan = ClanPreCalculated.find_by_slug(slug)
-    except DoesNotExist:
-        return render_template('error.html'), 404
-    else:
-        days_ago = request.args.get('daysAgo')
-        clan = clan_from_days_ago(days_ago, clan.tag)
-        return send_file(excel.to_stream(clan), attachment_filename=f"{clan.tag}.xlsx", as_attachment=True)
 
 
 @app.route("/clan/<slug>")
@@ -161,16 +140,6 @@ def clan_chart(tag):
              avg_gold=resampled['gold'].values.tolist()))
 
 
-def clan_from_days_ago(days_ago, tag):
-    if days_ago:
-        return Clan.from_now_with_tag(tag, days=int(days_ago)).first() or Clan.fetch_and_save(tag)
-    else:
-        try:
-            return Clan.fetch_and_save(tag)
-        except api.TooManyRequests:
-            return Clan.find_most_recent_by_tag(tag)
-
-
 def update_page_views(clan):
     user_agent = parse(request.user_agent.string)
     if not user_agent.is_bot:
@@ -188,3 +157,8 @@ def find_similar_clans(clan):
                                             clanPoints__gt=clans[0].clanPoints).count() + 1
 
     return start_count, clans
+
+
+def clan_near_days_ago(days_ago, tag):
+    dt = datetime.now() - timedelta(days=int(days_ago))
+    return HistoricalClan.find_by_tag_near_time(tag=tag, dt=dt)

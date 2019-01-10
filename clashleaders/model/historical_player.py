@@ -11,7 +11,7 @@ from clashleaders.proto.player_stats_pb2 import PlayerStats
 logger = logging.getLogger(__name__)
 
 OTHER_STATS = [
-    "attackWins"
+    "attackWins",
     "bestTrophies",
     "bestVersusTrophies",
     "builderHallLevel",
@@ -31,6 +31,7 @@ OTHER_STATS = [
 class HistoricalPlayer(Document):
     created_on = DateTimeField(default=datetime.now)
     tag = StringField(required=True)
+    name = StringField(required=True)
     bytes = BinaryField(required=True)
 
     meta = {
@@ -61,16 +62,17 @@ class HistoricalPlayer(Document):
                     key = to_mapping(k)
                     player_stats[key] = v
 
-            stats = PlayerStats(**player_stats)
-            super().__init__(tag=kwargs['tag'], bytes=stats.SerializeToString())
+            self.stats = PlayerStats(**player_stats)
+            super().__init__(tag=kwargs['tag'], name=kwargs['name'], bytes=self.stats.SerializeToString())
 
     def to_dict(self):
-        return {f: getattr(self.stats, f) for f in self.stats.DESCRIPTOR.fields_by_name}
+        d = {f: getattr(self.stats, f) for f in self.stats.DESCRIPTOR.fields_by_name}
+        d['name'] = self.name
+        d['tag'] = self.tag
+        return d
 
     def to_series(self):
-        s = pd.Series(self.to_dict())
-        s.name = self.tag
-        return s
+        return pd.Series(self.to_dict(), name=self.tag)
 
 
 @lru_cache(maxsize=256)

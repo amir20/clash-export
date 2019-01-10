@@ -1,17 +1,12 @@
 from io import BytesIO
 
-from xlsxwriter import Workbook
-
-from clashleaders.clash.transformer import transform_players
+import pandas as pd
 
 
 def to_stream(clan):
     stream = BytesIO()
-    data = transform_players(clan.players_data())
-    workbook = Workbook(stream)
-    worksheet = workbook.add_worksheet(clan.tag)
-    for row, data in enumerate(data):
-        worksheet.write_row(row, 0, data)
-    workbook.close()
+    writer = pd.ExcelWriter(stream, engine='xlsxwriter')
+    clan.to_df(formatted=True).to_excel(writer, sheet_name=clan.tag)
+    writer.close()
     stream.seek(0)
     return stream
