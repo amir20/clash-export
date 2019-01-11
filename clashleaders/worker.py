@@ -41,14 +41,14 @@ def update_single_clan():
     global tags_indexed
     twelve_hour_ago = datetime.now() - timedelta(hours=12)
     try:
-        query_set = ClanPreCalculated.active_clans(twelve_hour_ago)
+        query_set = ClanPreCalculated.objects.only('tag').no_cache()
         total = query_set.count()
         clan = None
         if total > index:
             clan = query_set[index]
         if clan:
             logger.debug(f"Worker #{WORKER_OFFSET}: Updating clan {clan.tag} with {total} eligible clans.")
-            clan = clan.fetch_and_update_calculations()
+            clan = Clan.fetch_and_update(clan.tag)
             tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:
                 logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
@@ -90,9 +90,13 @@ def try_again_clan(clan):
 
 
 def main():
-    while True:
-        update_single_clan()
-        time.sleep(0.025)
+    # while True:
+    #     update_single_clan()
+    #     time.sleep(0.025)
+
+    for clan in ClanPreCalculated.objects.only('tag').no_cache():
+        logger.debug(f"Clan {clan.tag}.")
+        Clan.fetch_and_update(clan.tag)
 
 
 if __name__ == "__main__":

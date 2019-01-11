@@ -65,6 +65,9 @@ class HistoricalPlayer(Document):
             self.stats = PlayerStats(**player_stats)
             super().__init__(tag=kwargs['tag'], name=kwargs['name'], bytes=self.stats.SerializeToString())
 
+    def __repr__(self):
+        return "<HistoricalPlayer {0}>".format(self.tag)
+
     def to_dict(self):
         d = {f: getattr(self.stats, f) for f in self.stats.DESCRIPTOR.fields_by_name}
         d['name'] = self.name
@@ -72,7 +75,7 @@ class HistoricalPlayer(Document):
         return d
 
     def to_series(self):
-        return pd.Series(self.to_dict(), name=self.tag)
+        return pd.Series(self.to_dict(), name=self.created_on)
 
 
 @lru_cache(maxsize=256)

@@ -8,11 +8,18 @@ services:
   worker:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "worker"
-  player_worker:
-    image: "amir20/clashleaders:${TAG:-latest}"
-    command: "player_worker"
   web:
     build: .
     image: "amir20/clashleaders:${TAG:-latest}"
+    depends_on:
+      - redis
+  player_worker:
+    image: "amir20/clashleaders:${TAG:-latest}"
+    command: "rq_worker player"
+    depends_on:
+      - redis
+  calculation_worker:
+    image: "amir20/clashleaders:${TAG:-latest}"
+    command: "rq_worker calculation"
     depends_on:
       - redis
