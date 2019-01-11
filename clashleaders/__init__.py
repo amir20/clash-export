@@ -3,6 +3,7 @@ import os
 import re
 
 import bugsnag
+import rq_dashboard
 from bugsnag.flask import handle_exceptions
 from flask import Flask, json
 from flask_caching import Cache
@@ -11,7 +12,10 @@ from mongoengine import connect
 from redis import Redis
 
 app = Flask(__name__)
+app.config.from_object(rq_dashboard.default_settings)
+app.config['REDIS_HOST'] = 'redis'
 app.debug = os.getenv('DEBUG', False)
+app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
 
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections import OrderedDict
 from datetime import datetime
 
@@ -5,7 +7,9 @@ import pandas as pd
 from mongoengine import Document, StringField, IntField, DictField, \
     BooleanField, DateTimeField, ReferenceField, ListField
 
+import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity
+from clashleaders.model import ClanDelta
 from clashleaders.model.clan import prepend_hash
 from clashleaders.model.historical_player import HistoricalPlayer
 
@@ -101,6 +105,9 @@ class HistoricalClan(Document):
 
     def activity_score_series(self, days=7):
         return clashleaders.insights.player_activity.player_activity_scores(self, days)
+
+    def clan_delta(self, other: HistoricalClan) -> ClanDelta:
+        return clashleaders.clash.clan_calculation.calculate_delta(self.to_df(), other.to_df())
 
     @classmethod
     def find_by_tag_near_time(cls, tag, dt):

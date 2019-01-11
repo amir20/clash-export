@@ -1,3 +1,4 @@
+from __future__ import annotations
 import json
 import logging
 from codecs import decode, encode
@@ -49,22 +50,30 @@ class Clan(DynamicDocument):
     def historical(self):
         return clashleaders.model.HistoricalClan.objects(tag=self.tag)
 
-    def historical_near_time(self, dt):
+    def historical_near_time(self, dt) -> "clashleaders.model.HistoricalClan":
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
-    def historical_near_now(self):
+    def historical_near_days_ago(self, days) -> "clashleaders.model.HistoricalClan":
+        dt = datetime.now() - timedelta(days=int(days))
+        return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
+
+    def historical_near_now(self) -> "clashleaders.model.HistoricalClan":
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
 
     def __repr__(self):
         return "<Clan {0}>".format(self.tag)
 
     @classmethod
-    def find_by_tag(cls, tag):
-        tag = prepend_hash(tag)
-        return Clan.objects.get(tag=tag)
+    def find_by_tag(cls, tag) -> Clan:
+        clan = Clan.objects(tag=prepend_hash(tag)).first()
+
+        if not clan:
+            clan = Clan.fetch_and_update(tag)
+
+        return clan
 
     @classmethod
-    def find_by_slug(cls, slug):
+    def find_by_slug(cls, slug) -> Clan:
         return Clan.objects.get(slug=slug)
 
     @classmethod
