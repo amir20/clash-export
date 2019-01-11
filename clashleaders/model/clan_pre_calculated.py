@@ -1,40 +1,11 @@
 from datetime import datetime
 
-from mongoengine import BooleanField, DateTimeField, DictField, Document, DoesNotExist, EmbeddedDocument, \
-    EmbeddedDocumentField, \
+from mongoengine import BooleanField, DateTimeField, DictField, Document, DoesNotExist, EmbeddedDocumentField, \
     FloatField, IntField, ListField, ReferenceField, StringField, Q
 
 from clashleaders.clash.api import clan_warlog
 from clashleaders.model.clan import Clan
-
-
-class ClanDelta(EmbeddedDocument):
-    avg_donations = FloatField(required=True)
-    avg_donations_received = FloatField(required=True)
-
-    avg_gold_grab = FloatField(required=True)
-    avg_elixir_grab = FloatField(required=True)
-    avg_de_grab = FloatField(required=True)
-    avg_war_stars = FloatField(required=True)
-
-    avg_th_level = FloatField()
-    avg_bh_level = FloatField()
-    avg_xp_level = FloatField()
-    avg_best_trophies = FloatField()
-    avg_trophies = FloatField()
-    avg_bh_trophies = FloatField()
-
-    avg_attack_wins = FloatField(required=True)
-    avg_versus_wins = FloatField(required=True)
-
-    total_trophies = IntField()
-    total_bh_trophies = IntField()
-    total_gold_grab = IntField()
-    total_elixir_grab = IntField()
-    total_de_grab = IntField()
-    total_donations = IntField()
-    total_attack_wins = IntField()
-    total_versus_wins = IntField()
+from clashleaders.model.clan_delta import ClanDelta
 
 
 class ClanPreCalculated(Document):
@@ -107,12 +78,6 @@ class ClanPreCalculated(Document):
             'verified_accounts',
             'warWinStreak',
             'avg_bh_level',
-            'week_delta.avg_donations',
-            'week_delta.avg_gold_grab',
-            'week_delta.avg_trophies',
-            'week_delta.avg_attack_wins',
-            'week_delta.avg_versus_wins',
-            'week_delta.total_attack_wins',
 
             # Worker indexes
             ['week_delta.total_attack_wins', 'last_updated', 'members'],
@@ -167,4 +132,4 @@ class ClanPreCalculated(Document):
         if update_before:
             query = Q(last_updated__lte=update_before) & query
 
-        return cls.objects(query).no_cache()
+        return cls.objects(query).no_cache().only('tag')

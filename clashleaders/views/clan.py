@@ -7,9 +7,8 @@ from mongoengine import DoesNotExist
 from user_agents import parse
 
 from clashleaders import app, cache
-from clashleaders.clash.clan_calculation import calculate_delta
 from clashleaders.clash.player_calculation import clan_status
-from clashleaders.model import Clan, ClanPreCalculated, Status, HistoricalClan
+from clashleaders.model import Clan, Status, HistoricalClan
 from clashleaders.text.clan_description_processor import transform_description
 
 
@@ -17,9 +16,9 @@ from clashleaders.text.clan_description_processor import transform_description
 def inject_most_popular():
     status = Status.get_instance()
     return dict(status=status,
-                most_popular=status.popular_clans,
-                popular_countries=status.top_countries,
-                reddit_clans=status.reddit_clans
+                most_popular=[],
+                popular_countries=[],
+                reddit_clans=[]
                 )
 
 
@@ -29,11 +28,9 @@ def clan_detail_json(tag): return jsonify(clan_near_days_ago(request.args.get('d
 
 @app.route("/clan/<tag>/refresh.json")
 def clan_refresh_json(tag):
-    clan = Clan.fetch_and_save(tag)
-    cpc = clan.pre_calculated()
-    player_data = clan.to_player_matrix()
-    players_status = clan_status(cpc)
-
+    clan = Clan.fetch_and_update(tag)
+    player_data = clan.historical_near_now().to_matrix()
+    players_status = {}
     return jsonify(dict(playerData=player_data, playersStatus=players_status))
 
 
@@ -41,10 +38,10 @@ def clan_refresh_json(tag):
 def clan_detail_page(slug):
     try:
         clan = None
-        clan = ClanPreCalculated.find_by_slug(slug)
+        clan = Clan.find_by_slug(slug)
         update_page_views(clan)
         description = transform_description(clan.description)
-        players = clan.most_recent.to_player_matrix()
+        players = clan.to_matrix()
         start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         if clan:
@@ -65,24 +62,8 @@ def clan_detail_page(slug):
 @app.route("/clan/<tag>/stats.json")
 @cache.cached(timeout=1200, query_string=True)
 def clan_stats(tag):
-    days = int(request.args.get('daysAgo', 7))
-
-    cpc = ClanPreCalculated.find_by_tag(tag)
-    start_df = cpc.previous_data(days=days).to_data_frame()
-    now_df = cpc.most_recent.to_data_frame()
-    delta = calculate_delta(now_df, start_df)
-    gold = delta.avg_gold_grab
-    elixir = delta.avg_elixir_grab
-    de = delta.avg_de_grab
-
-    data = {
-        'gold_grab': gold,
-        'elixir_grab': elixir,
-        'de_grab': de,
-        'name': cpc.name
-    }
-
-    return jsonify(data)
+    clan = clan_near_days_ago(request.args.get('daysAgo', 0), tag)
+    return jsonify(clan.week_delta)
 
 
 @app.route("/clan/<tag>/short.json")

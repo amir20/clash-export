@@ -11,7 +11,7 @@ setup(
         'console_scripts': [
             'scheduler=clashleaders.scheduler:main',
             'worker=clashleaders.worker:main',
-            'player_worker=clashleaders.player_worker:main',
+            'rq_worker=clashleaders.rq_worker:main',
             'update_all=clashleaders.cli:update_all_calculations'
         ],
     }

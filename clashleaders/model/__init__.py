@@ -1,5 +1,6 @@
 from .clan import Clan
-from .clan_pre_calculated import ClanDelta, ClanPreCalculated
+from .clan_pre_calculated import ClanPreCalculated
+from .clan_delta import ClanDelta
 from .player import Player
 from .status import Status
 from .trained_model import TrainedModel
