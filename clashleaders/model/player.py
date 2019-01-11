@@ -1,12 +1,14 @@
 import json
 from codecs import decode, encode
 
+import pandas as pd
 from mongoengine import DynamicDocument, BinaryField, signals, StringField, DictField
 from pymongo import ReplaceOne
 from slugify import slugify
 
 from clashleaders.clash import api, player_calculation
-from clashleaders.model import Clan, ClanPreCalculated
+from clashleaders.model import Clan
+import clashleaders.model
 from clashleaders.model.clan import prepend_hash
 
 
@@ -40,25 +42,14 @@ class Player(DynamicDocument):
         return ReplaceOne({'tag': self.tag}, self.compressed_fields(), upsert=True)
 
     def most_recent_clan(self):
-        return Clan.find_least_recent_by_tag(self.clan['tag'])
-
-    def pre_calculated_clan(self):
-        return ClanPreCalculated.find_by_tag(self.clan['tag'])
+        return Clan.find_by_tag(self.clan['tag'])
 
     def player_score(self):
-        return player_calculation.player_percentile(self.pre_calculated_clan(), self.tag)
+        return self.most_recent_clan().historical_near_now().activity_score_series()[self.tag]
 
-    def player_series(self):
-        clan_series = self.most_recent_clan().series()
-
-        player_series = []
-        for clan in clan_series:
-            player = next((p for p in clan.players_data() if p['tag'] == self.tag), None)
-            if player:
-                player['created_on'] = clan.created_on
-            player_series.append(player)
-
-        return player_series
+    def to_historical_df(self):
+        series = clashleaders.model.HistoricalPlayer.objects(tag=self.tag)
+        return pd.DataFrame((p.to_series() for p in series))
 
     def compressed_fields(self):
         fields = vars(self).copy()
@@ -90,6 +81,9 @@ class Player(DynamicDocument):
 
     def troop_insights(self):
         return player_calculation.next_troop_recommendation(self.tag)
+
+    def __repr__(self):
+        return "<Player {0}>".format(self.tag)
 
     @classmethod
     def upsert_player(cls, player_tag, **kwargs):

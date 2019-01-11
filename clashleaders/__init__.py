@@ -8,6 +8,7 @@ from flask import Flask, json
 from flask_caching import Cache
 from markdown import markdown
 from mongoengine import connect
+from redis import Redis
 
 app = Flask(__name__)
 app.debug = os.getenv('DEBUG', False)
@@ -30,6 +31,8 @@ cache = Cache(app, config={'CACHE_TYPE': cache_type, 'CACHE_REDIS_HOST': 'redis'
 
 # Set connect to False for pre-forking to work
 connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
+
+redis_connection = Redis('redis')
 
 import clashleaders.views  # noqa
 

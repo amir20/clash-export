@@ -4,111 +4,92 @@ from codecs import decode, encode
 from datetime import datetime, timedelta
 
 from bson.objectid import ObjectId
-from mongoengine import BinaryField, DynamicDocument, DoesNotExist
+from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField
+from slugify import slugify
 
 import clashleaders.clash.clan_calculation
 import clashleaders.clash.player_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
+import clashleaders.queue.calculation
+import clashleaders.queue.player
 from clashleaders.clash import api
+from clashleaders.model.clan_delta import ClanDelta
 
 logger = logging.getLogger(__name__)
 
 
 class Clan(DynamicDocument):
-    players_bytes = BinaryField()
+    updated_on = DateTimeField(default=datetime.now)
+    tag = StringField(required=True, unique=True)
+    slug = StringField(required=True)
+    cluster_label = IntField(default=-1)
+    verified_accounts = ListField(StringField())
+    computed = EmbeddedDocumentField(ClanDelta)
+    week_delta = EmbeddedDocumentField(ClanDelta)
+
     meta = {
         'index_background': True,
         'indexes': [
             'name',
+            'updated_on',
+            'location.countryCode',
+            'cluster_label',
+            'verified_accounts'
+            'clanPoints',
             'tag',
-            ('tag', '_id'),
+            'slug',
             'members'
         ]
     }
 
-    def pre_calculated(self):
-        return clashleaders.model.ClanPreCalculated.find_by_tag(self.tag)
-
     def update_calculations(self):
         return clashleaders.clash.clan_calculation.update_calculations(self)
 
-    def players_data(self):
-        return self.players if 'players' in self else decode_player_bytes(self.players_bytes)
+    def historical(self):
+        return clashleaders.model.HistoricalClan.objects(tag=self.tag)
 
-    def to_data_frame(self):
-        return clashleaders.clash.transformer.to_data_frame(self)
+    def historical_near_time(self, dt):
+        return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
-    def series(self, columns=None):
-        if columns is None:
-            columns = ['players_bytes']
-        return Clan.from_now_with_tag(self.tag, days=28).no_cache().only(*columns)
+    def historical_near_now(self):
+        return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
 
-    def to_player_matrix(self):
-        return clashleaders.clash.player_calculation.df_to_matrix(
-            clashleaders.clash.player_calculation.augment_with_percentiles(self))
-
-    def from_before(self, **kwargs):
-        dt = self.created_on - timedelta(**kwargs)
-        object_id = ObjectId.from_datetime(dt)
-        return Clan.objects(tag=self.tag, id__gte=object_id).order_by('id').first()
-
-    @property
-    def created_on(self):
-        return self.id.generation_time
+    def __repr__(self):
+        return "<Clan {0}>".format(self.tag)
 
     @classmethod
-    def from_now(cls, **kwargs):
-        object_id = object_id_from_now(**kwargs)
-        return cls.objects(id__gte=object_id)
-
-    @classmethod
-    def older_than(cls, **kwargs):
-        object_id = object_id_from_now(**kwargs)
-        return cls.objects(id__lt=object_id)
-
-    @classmethod
-    def from_now_with_tag(cls, tag, **kwargs):
-        object_id = object_id_from_now(**kwargs)
-        return cls.objects(id__gte=object_id, tag=prepend_hash(tag))
-
-    @classmethod
-    def find_most_recent_by_tag(cls, tag):
-        return cls.from_now_with_tag(tag=prepend_hash(tag), hours=13).order_by('-id').first()
-
-    @classmethod
-    def find_least_recent_by_tag(cls, tag):
-        return cls.objects(tag=prepend_hash(tag)).first()
-
-    @classmethod
-    def fetch_and_save(cls, tag):
+    def find_by_tag(cls, tag):
         tag = prepend_hash(tag)
-        clan = api.find_clan_by_tag(tag)
-        players = api.fetch_all_players(clan)
-        save_historical_clan(clan, players)
-        clan['players_bytes'] = encode_players(players)
-        del clan['memberList']
+        return Clan.objects.get(tag=tag)
 
-        clan = Clan(**clan).save()
+    @classmethod
+    def find_by_slug(cls, slug):
+        return Clan.objects.get(slug=slug)
 
-        try:
-            cpc = clan.pre_calculated()
-            cpc.most_recent = clan
-            cpc.save()
-        except DoesNotExist:
-            # don't do anything
-            pass
+    @classmethod
+    def fetch_and_update(cls, tag):
+        tag = prepend_hash(tag)
 
-        try:
-            df = clan.to_data_frame()
-            clan['avg_gold_grab'] = df['Total Gold Grab'].mean()
-            clan['avg_elixir_grab'] = df['Total Elixir Grab'].mean()
-            clan['avg_de_grab'] = df['Total DE Grab'].mean()
-            clan.save()
-        except:
-            logging.exception("Error while saving averages for loot in clan#fetch_and_save()")
+        # Fetch from API
+        clan_response = api.find_clan_by_tag(tag)
+        players_response = api.fetch_all_players(clan_response)
 
-        return clan
+        # Store all players data using historical compressed format
+        save_historical_clan(clan_response, players_response)
+
+        # Enqueue player json to queue
+        clashleaders.queue.player.update_players.delay(players_response)
+
+        clan_response['clan_type'] = clan_response['type']
+        del clan_response['type']
+        clan_response['slug'] = slugify(f"{clan_response['name']}-{tag}", to_lower=True)
+        clan_response['updated_on'] = datetime.now()
+
+        # Update calculations in a queue
+        clashleaders.queue.calculation.update_calculations.delay(tag)
+
+        return Clan.objects(tag=tag).upsert_one(**clan_response)
 
 
 def prepend_hash(tag):

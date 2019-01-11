@@ -88,6 +88,9 @@ class HistoricalClan(Document):
 
         return df
 
+    def __repr__(self):
+        return "<HistoricalClan {0}>".format(self.tag)
+
     def to_matrix(self):
         df = self.to_df(formatted=True, player_activity=True)
         df = df.reset_index()

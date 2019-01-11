@@ -1,4 +1,3 @@
-import pandas as pd
 from flask import render_template, jsonify
 
 from clashleaders import app, cache
@@ -9,8 +8,12 @@ from clashleaders.model import Player, ClanPreCalculated
 def player_html(slug):
     player = Player.find_by_slug(slug)
     score = player_score(player)
-    clan = player.pre_calculated_clan()
-    return render_template('player.html', player=player, player_score=score, clan=clan, insights=player_troops_insights(player))
+    clan = player.most_recent_clan()
+    return render_template('player.html',
+                           player=player,
+                           player_score=score,
+                           clan=clan,
+                           insights=player_troops_insights(player))
 
 
 @cache.memoize(28800)
@@ -24,14 +27,11 @@ player_score.make_cache_key = lambda f, p: f"player_score{p.tag}"
 @app.route("/player/<tag>/attacks.json")
 @cache.cached(timeout=1200, query_string=True)
 def player_attacks_json(tag):
-    player = Player.find_by_tag(tag)
-    series = player.player_series()
-    data = [{'created_on': s['created_on'], 'attackWins': s['attackWins']} for s in series if s]
-    df = pd.DataFrame(data, index=pd.to_datetime([s['created_on'] for s in data]), columns=['attackWins'])
-    resampled = df.resample('D').mean().diff().dropna().clip(lower=0)
+    df = Player.find_by_tag(tag).to_historical_df()
+    resampled = df['attack_wins'].resample('D').mean().diff().dropna().clip(lower=0)
     data = dict(
-        dates=[i.strftime("%Y-%m-%d") for i in resampled.index],
-        attackWins=resampled['attackWins'].values.tolist()
+        dates=resampled.index.strftime("%Y-%m-%d").tolist(),
+        attackWins=resampled['attack_wins'].values.tolist()
     )
 
     return jsonify(data)
@@ -73,8 +73,8 @@ def player_troops_insights(player):
     if df.empty:
         return dict(builderBase={},
                     home={},
-                    th_ratio=th_completed/th_total,
-                    bh_ratio=bh_completed/bh_total,
+                    th_ratio=th_completed / th_total,
+                    bh_ratio=bh_completed / bh_total,
                     th_level=player.townHallLevel)
 
     builder_troops = df.xs('builderBase', level='base').to_dict('i')
@@ -90,8 +90,8 @@ def player_troops_insights(player):
     return dict(
         builderBase=builder_troops,
         home=home_troops,
-        th_ratio=th_completed/th_total,
-        bh_ratio=bh_completed/bh_total,
+        th_ratio=th_completed / th_total,
+        bh_ratio=bh_completed / bh_total,
         th_level=player.townHallLevel
     )
 
