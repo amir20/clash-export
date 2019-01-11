@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from __future__ import annotations
 
 import numpy as np
 
@@ -6,12 +6,12 @@ from clashleaders.model.clan_delta import ClanDelta
 
 
 def update_calculations(clan):
-    last_week = clan.historical_near_time(dt=datetime.now() - timedelta(days=7))
+    last_week = clan.historical_near_days_ago(7)
     most_recent = clan.historical_near_now()
     most_recent_df = most_recent.to_df()
 
     clan.computed = calculate_data(most_recent_df)
-    clan.week_delta = calculate_delta(start_df=last_week.to_df(), now_df=most_recent_df)
+    clan.week_delta = most_recent.clan_delta(last_week)
 
     # if cpc.cluster_label == -1:
     #     [label] = predict_clans(cpc)
@@ -39,7 +39,7 @@ def calculate_data(df):
     )
 
 
-def calculate_delta(now_df, start_df):
+def calculate_delta(now_df, start_df) -> ClanDelta:
     return ClanDelta(
         avg_donations=avg_column('Total Donations', now_df, start_df),
         avg_donations_received=avg_column('Donations Received', now_df, start_df),

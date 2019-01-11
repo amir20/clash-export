@@ -1,5 +1,3 @@
-from datetime import timedelta, datetime
-
 import pandas as pd
 from flask import jsonify, render_template, request
 from inflection import camelize
@@ -7,8 +5,7 @@ from mongoengine import DoesNotExist
 from user_agents import parse
 
 from clashleaders import app, cache
-from clashleaders.clash.player_calculation import clan_status
-from clashleaders.model import Clan, Status, HistoricalClan
+from clashleaders.model import Clan, Status
 from clashleaders.text.clan_description_processor import transform_description
 
 
@@ -23,7 +20,8 @@ def inject_most_popular():
 
 
 @app.route("/clan/<tag>.json")
-def clan_detail_json(tag): return jsonify(clan_near_days_ago(request.args.get('daysAgo', 0), tag).to_matrix())
+def clan_detail_json(tag):
+    return jsonify(Clan.find_by_tag(tag).historical_near_days_ago(request.args.get('daysAgo', 0)).to_matrix())
 
 
 @app.route("/clan/<tag>/refresh.json")
@@ -41,7 +39,7 @@ def clan_detail_page(slug):
         clan = Clan.find_by_slug(slug)
         update_page_views(clan)
         description = transform_description(clan.description)
-        players = clan.to_matrix()
+        players = clan.historical_near_now().to_matrix()
         start_count, similar_clans = find_similar_clans(clan)
     except DoesNotExist:
         if clan:
@@ -62,15 +60,16 @@ def clan_detail_page(slug):
 @app.route("/clan/<tag>/stats.json")
 @cache.cached(timeout=1200, query_string=True)
 def clan_stats(tag):
-    clan = clan_near_days_ago(request.args.get('daysAgo', 0), tag)
-    return jsonify(clan.week_delta)
+    clan = Clan.find_by_tag(tag)
+    previous_clan = clan.historical_near_days_ago(request.args.get('daySpan', 0))
+    return clan.historical_near_now().clan_delta(previous_clan).to_json()
 
 
 @app.route("/clan/<tag>/short.json")
 @cache.cached(timeout=1000)
 def clan_meta(tag):
-    clan = ClanPreCalculated.find_or_create_by_tag(tag)
-    df = clan.most_recent.to_data_frame()[['Name', 'TH Level', 'Current Trophies']].reset_index()
+    clan = Clan.find_by_tag(tag)
+    df = clan.historical_near_now().to_df()[['Name', 'TH Level', 'Current Trophies']].reset_index()
     players = df.rename(lambda s: camelize(s.replace(" ", ""), False), axis='columns').to_dict('i').values()
 
     data = {
@@ -126,20 +125,14 @@ def update_page_views(clan):
     if not user_agent.is_bot:
         clan.update(inc__page_views=1)
 
+# def find_similar_clans(clan):
+#     less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by(
+#         '-clanPoints').limit(4)
+#     more = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clan.clanPoints).order_by(
+#         'clanPoints').limit(2)
+#
+#     clans = sorted([*less, clan, *more], key=lambda c: c.clanPoints, reverse=True)[:5]
+#     start_count = ClanPreCalculated.objects(cluster_label=clan.cluster_label,
+#                                             clanPoints__gt=clans[0].clanPoints).count() + 1
 
-def find_similar_clans(clan):
-    less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by(
-        '-clanPoints').limit(4)
-    more = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clan.clanPoints).order_by(
-        'clanPoints').limit(2)
-
-    clans = sorted([*less, clan, *more], key=lambda c: c.clanPoints, reverse=True)[:5]
-    start_count = ClanPreCalculated.objects(cluster_label=clan.cluster_label,
-                                            clanPoints__gt=clans[0].clanPoints).count() + 1
-
-    return start_count, clans
-
-
-def clan_near_days_ago(days_ago, tag):
-    dt = datetime.now() - timedelta(days=int(days_ago))
-    return HistoricalClan.find_by_tag_near_time(tag=tag, dt=dt)
+# return start_count, clans
