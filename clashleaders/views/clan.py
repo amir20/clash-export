@@ -1,9 +1,9 @@
 from flask import jsonify, render_template, request
 from inflection import camelize
 from mongoengine import DoesNotExist
-from user_agents import parse
 
 from clashleaders import app, cache
+from clashleaders.insights.clan_activity import clan_status
 from clashleaders.model import Clan, Status
 from clashleaders.text.clan_description_processor import transform_description
 
@@ -26,8 +26,9 @@ def clan_detail_json(tag):
 @app.route("/clan/<tag>/refresh.json")
 def clan_refresh_json(tag):
     clan = Clan.fetch_and_update(tag)
+    clan.update(inc__page_views=1)
     player_data = clan.historical_near_now().to_matrix()
-    players_status = {} # Todo
+    players_status = clan_status(clan)
     return jsonify(dict(playerData=player_data, playersStatus=players_status))
 
 
@@ -35,14 +36,14 @@ def clan_refresh_json(tag):
 def clan_detail_page(slug):
     try:
         clan = Clan.find_by_slug(slug)
-        update_page_views(clan)
         description = transform_description(clan.description)
         players = clan.historical_near_now().to_matrix()
         start_count, similar_clans = clan.similar_clans()
     except DoesNotExist:
         return render_template('error.html'), 404
     else:
-        return render_template('clan.html', clan=clan,
+        return render_template('clan.html',
+                               clan=clan,
                                players=players,
                                description=description,
                                oldest_days=clan.days_of_history(),
@@ -85,9 +86,3 @@ def clan_meta(tag):
 def clan_trophies(tag):
     df = Clan.find_by_tag(tag).to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
     return df.to_json(orient='columns', date_format='iso')
-
-
-def update_page_views(clan):
-    user_agent = parse(request.user_agent.string)
-    if not user_agent.is_bot:
-        clan.update(inc__page_views=1)
