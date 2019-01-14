@@ -1,16 +1,14 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timedelta
-from typing import List, Tuple
-
 import pandas as pd
+from datetime import datetime, timedelta
 from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, \
     DictField
 from slugify import slugify
+from typing import List, Tuple
 
 import clashleaders.clash.clan_calculation
-import clashleaders.clash.player_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
 import clashleaders.queue.calculation
