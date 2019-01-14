@@ -1,19 +1,9 @@
+import numpy as np
 import pandas as pd
 from datetime import timedelta
 
-import numpy as np
-
 import clashleaders.model
-
-
-def clan_diff(previous, most_recent):
-    pd_df = previous.to_df()
-    mr_df = most_recent.to_df()
-    columns = ['Total Gold Grab', 'Total Elixir Grab', 'Total DE Grab', 'Total Donations', 'Total Spells Donated',
-               'Total War Collected Gold', 'Clan Games XP']
-    diff = mr_df[columns] - pd_df[columns]
-
-    return diff
+from clashleaders.insights.clan_activity import clan_diff
 
 
 def clan_percentiles(previous, most_recent):
