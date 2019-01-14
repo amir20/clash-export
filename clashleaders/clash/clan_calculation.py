@@ -10,6 +10,9 @@ def update_calculations(clan):
     most_recent = clan.historical_near_now()
     most_recent_df = most_recent.to_df()
 
+    if most_recent_df.empty:
+        return 
+
     clan.computed = calculate_data(most_recent_df)
     clan.week_delta = most_recent.clan_delta(last_week)
 

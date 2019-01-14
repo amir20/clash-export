@@ -68,6 +68,9 @@ class HistoricalPlayer(Document):
     def __repr__(self):
         return "<HistoricalPlayer {0}>".format(self.tag)
 
+    def __str__(self):
+        return "<HistoricalPlayer {0}>".format(self.tag)
+
     def to_dict(self):
         d = {f: getattr(self.stats, f) for f in self.stats.DESCRIPTOR.fields_by_name}
         d['name'] = self.name
