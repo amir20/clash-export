@@ -5,7 +5,7 @@ from flask import render_template, jsonify
 
 from clashleaders import app, SITE_ROOT
 from clashleaders.clash import uptime
-from clashleaders.model import Status, Player, ClanPreCalculated
+from clashleaders.model import Status, Player, Clan
 
 
 @app.route("/status")
@@ -40,7 +40,7 @@ def healthcheck():
     version = data['version']
     commit = os.getenv('SOURCE_COMMIT')
     players = Player.objects.count()
-    clans = ClanPreCalculated.objects.count()
+    clans = Clan.objects.count()
 
     return f"""
 Version: {version}
