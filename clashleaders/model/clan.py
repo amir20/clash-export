@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import logging
-import pandas as pd
 from datetime import datetime, timedelta
-from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, \
-    DictField
-from slugify import slugify
 from typing import List, Tuple
+
+import pandas as pd
+from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, \
+    DictField, Q
+from slugify import slugify
 
 import clashleaders.clash.clan_calculation
 import clashleaders.clash.transformer
@@ -14,6 +15,7 @@ import clashleaders.model
 import clashleaders.queue.calculation
 import clashleaders.queue.player
 from clashleaders.clash import api
+from clashleaders.clash.api import clan_warlog
 from clashleaders.model.clan_delta import ClanDelta
 
 logger = logging.getLogger(__name__)
@@ -51,10 +53,15 @@ class Clan(DynamicDocument):
             'tag',
             'slug',
             'members',
+            'isWarLogPublic',
+            'page_views'
 
             # Aggregated indexes
             'week_delta.avg_attack_wins',
-            'week_delta.avg_versus_wins'
+            'week_delta.avg_versus_wins',
+
+            # Active clans
+            ['week_delta.total_attack_wins', 'updated_on', 'members'],
 
         ]
     }
@@ -99,6 +106,9 @@ class Clan(DynamicDocument):
     def __str__(self):
         return "<Clan {0}>".format(self.tag)
 
+    def warlog(self):
+        return clan_warlog(self.tag)['items']
+
     @classmethod
     def find_by_tag(cls, tag) -> Clan:
         clan = Clan.objects(tag=prepend_hash(tag)).first()
@@ -111,6 +121,14 @@ class Clan(DynamicDocument):
     @classmethod
     def find_by_slug(cls, slug) -> Clan:
         return Clan.objects.get(slug=slug)
+
+    @classmethod
+    def active(cls, update_before=None):
+        query = Q(members__gte=5) & Q(week_delta__total_attack_wins__ne=0)
+        if update_before:
+            query = Q(updated_on__lte=update_before) & query
+
+        return Clan.objects(query).no_cache().only('tag')
 
     @classmethod
     def fetch_and_update(cls, tag) -> Clan:

@@ -1,9 +1,8 @@
 from datetime import datetime
 
-from mongoengine import BooleanField, DateTimeField, DictField, Document, DoesNotExist, EmbeddedDocumentField, \
-    FloatField, IntField, ListField, ReferenceField, StringField, Q
+from mongoengine import BooleanField, DateTimeField, DictField, Document, EmbeddedDocumentField, \
+    FloatField, IntField, ListField, ReferenceField, StringField
 
-from clashleaders.clash.api import clan_warlog
 from clashleaders.model.clan import Clan
 from clashleaders.model.clan_delta import ClanDelta
 
@@ -83,53 +82,3 @@ class ClanPreCalculated(Document):
             ['week_delta.total_attack_wins', 'last_updated', 'members'],
         ]
     }
-
-    def warlog(self):
-        return clan_warlog(self.tag)['items']
-
-    def previous_data(self, **kwargs):
-        return Clan.from_now_with_tag(self.tag, **kwargs).first()
-
-    @property
-    def created_on(self):
-        return self.id.generation_time
-
-    @property
-    def players(self):
-        return self.most_recent.players_data()
-
-    def similar_clan(self):
-        return ClanPreCalculated.objects(cluster_label=self.cluster_label)
-
-    def fetch_and_update_calculations(self):
-        return Clan.fetch_and_save(self.tag).update_calculations()
-
-    def update_without_fetching(self):
-        try:
-            return self.most_recent.update_calculations()
-        except DoesNotExist:
-            return Clan.find_most_recent_by_tag(self.tag).update_calculations()
-
-    @classmethod
-    def find_by_slug(cls, slug):
-        return cls.objects.get(slug=slug)
-
-    @classmethod
-    def find_by_tag(cls, tag):
-        tag = "#" + tag.lstrip("#").upper()
-        return cls.objects.get(tag=tag)
-
-    @classmethod
-    def find_or_create_by_tag(cls, tag):
-        try:
-            return ClanPreCalculated.find_by_tag(tag)
-        except DoesNotExist:
-            return Clan.fetch_and_save(tag).update_calculations()
-
-    @classmethod
-    def active_clans(cls, update_before=None):
-        query = Q(members__gte=5) & Q(week_delta__total_attack_wins__ne=0)
-        if update_before:
-            query = Q(last_updated__lte=update_before) & query
-
-        return cls.objects(query).no_cache().only('tag')

@@ -1,6 +1,5 @@
 import logging
 import os
-import queue
 import time
 from random import randrange
 
@@ -12,7 +11,7 @@ from mongoengine import connect
 from clashleaders.batch.purge import delete_outdated, reset_stats
 from clashleaders.batch.similar_clan import compute_similar_clans
 from clashleaders.clash import api
-from clashleaders.model import ClanPreCalculated, Status, AverageTroop
+from clashleaders.model import Status, AverageTroop, Clan
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -32,8 +31,8 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 
 def index_random_war_clan():
-    count = ClanPreCalculated.objects(isWarLogPublic=True).count()
-    random_clan = ClanPreCalculated.objects(isWarLogPublic=True)[randrange(0, count)]
+    count: Clan = Clan.objects(isWarLogPublic=True).count()
+    random_clan: Clan = Clan.objects(isWarLogPublic=True)[randrange(0, count)]
 
     logger.info(f"Indexing random clan war log ({random_clan.tag}).")
 
@@ -43,8 +42,8 @@ def index_random_war_clan():
         logger.warning(f"Error while fetch war log for {random_clan.tag}.")
     else:
         for tag in tags:
-            if not ClanPreCalculated.objects(tag=tag).first():
-                queue.put(tag)
+            if not Clan.objects(tag=tag).first():
+                Clan.fetch_and_update(tag)
 
 
 def fetch_clan_leaderboards():
@@ -54,12 +53,12 @@ def fetch_clan_leaderboards():
     for player in players:
         tag = player['clanTag']
         if tag:
-            queue.put(tag)
+            Clan.fetch_and_update(tag)
 
     for clan in clans:
         tag = clan['tag']
         if tag:
-            queue.put(tag)
+            Clan.fetch_and_update(tag)
 
 
 schedule.every().minute.do(Status.update_status)
