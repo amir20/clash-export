@@ -3,7 +3,7 @@ import os
 
 from mongoengine import connect
 
-from clashleaders.model import ClanPreCalculated
+from clashleaders.model import Clan
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -13,13 +13,13 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 
 def update_all_calculations():
-    total = ClanPreCalculated.objects.count()
+    total = Clan.objects.count()
 
     i = 0
-    for clan in ClanPreCalculated.objects.no_cache():
+    for clan in Clan.objects.no_cache():
         try:
             i += 1
-            print(f"{i}/{total}")
-            clan.update_without_fetching()
+            print(f"- {i}/{total}: {clan}")
+            clan.update_calculations()
         except Exception:
-            pass
+            logger.exception("error while performing update_calculations")

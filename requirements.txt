@@ -1,7 +1,6 @@
 aiodns==1.1.1
-aiohttp==3.5.2
+aiohttp==3.5.4
 aioresponses==0.5.1
-alembic==1.0.5
 appnope==0.1.0
 arrow==0.13.0
 asn1crypto==0.24.0
@@ -13,6 +12,7 @@ awesome-slugify==1.6.5
 backcall==0.1.0
 blinker==1.4
 bugsnag==3.5.0
+cachetools==3.0.0
 cairocffi==0.9.0
 CairoSVG==2.2.1
 cchardet==2.1.4
