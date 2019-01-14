@@ -54,7 +54,7 @@
             <div class="level-item has-text-centered is-hidden-mobile">
               <div>
                 <p class="heading">Total Donations</p>
-                <p class="title">{{ "{:,}".format(clan.total_donations) }}</p>
+                <p class="title">{{ "{:,}".format(clan.computed.total_donations) }}</p>
                 <p>
                   <span class="tag {{'is-success' if clan.week_delta.total_donations > 0 else 'is-danger'}}">{{
                     "{:+,}".format(clan.week_delta.total_donations)

@@ -1,7 +1,7 @@
 from flask import render_template
 
 from clashleaders import app, cache
-from clashleaders.model import ClanPreCalculated
+from clashleaders.model import Clan
 from clashleaders.text.clan_description_processor import transform_description
 
 
@@ -16,4 +16,4 @@ def verified_clans(tag):
 
 @cache.memoize(300)
 def fetch_clans(tag):
-    return ClanPreCalculated.objects(verified_accounts=tag).order_by('-clanPoints')
+    return Clan.objects(verified_accounts=tag).order_by('-clanPoints')

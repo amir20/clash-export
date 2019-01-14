@@ -1,6 +1,6 @@
 import logging
 
-from clashleaders.model import Clan, ClanPreCalculated
+from clashleaders.model import Clan
 
 logger = logging.getLogger(__name__)
 
@@ -12,4 +12,4 @@ def delete_outdated():
 
 def reset_stats():
     logger.info("Resetting page views...")
-    ClanPreCalculated.objects.update(set__page_views=0)
+    Clan.objects.update(set__page_views=0)
