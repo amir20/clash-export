@@ -21,7 +21,14 @@ export default {
   },
   async created() {
     this.loading = true;
-    this.data = await (await fetch(`/player/${this.playerTag.replace("#", "")}/attacks.json`)).json();
+    const json = await (await fetch(`/player/${this.playerTag.replace("#", "")}/attacks.json`)).json();
+    const dates = [];
+    const attackWins = [];
+    for (const [date, attacks] of Object.entries(json)) {
+      dates.push(date);
+      attackWins.push(attacks);
+    }
+    this.data = { dates, attackWins };
     this.loading = false;
     this.$nextTick(() => {
       this.draw(this.data);

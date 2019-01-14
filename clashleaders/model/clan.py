@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-import json
 import logging
-from codecs import decode, encode
 from datetime import datetime, timedelta
+from typing import List, Tuple
 
-from bson.objectid import ObjectId
-from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField
+import pandas as pd
+from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, \
+    DictField
 from slugify import slugify
 
 import clashleaders.clash.clan_calculation
@@ -23,14 +23,20 @@ logger = logging.getLogger(__name__)
 
 class Clan(DynamicDocument):
     updated_on = DateTimeField(default=datetime.now)
-    tag = StringField(required=True, unique=True)
-    slug = StringField(required=True)
+    tag: str = StringField(required=True, unique=True)
+    slug: str = StringField(required=True)
     cluster_label = IntField(default=-1)
+    members: int = IntField()
+    clanPoints: int = IntField()
+    clanVersusPoints: int = IntField()
+    name: str = StringField()
+    description: str = StringField()
+    badgeUrls = DictField()
+    clanLevel: int = IntField()
     verified_accounts = ListField(StringField())
     computed: ClanDelta = EmbeddedDocumentField(ClanDelta)
     week_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
-    members = IntField()
-    clanLevel = IntField()
+    day_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
 
     meta = {
         'index_background': True,
@@ -39,6 +45,7 @@ class Clan(DynamicDocument):
             'updated_on',
             'location.countryCode',
             'cluster_label',
+            ('cluster_label', 'clanPoints'),
             'verified_accounts'
             'clanPoints',
             'tag',
@@ -50,8 +57,10 @@ class Clan(DynamicDocument):
     def update_calculations(self):
         return clashleaders.clash.clan_calculation.update_calculations(self)
 
-    def historical(self):
-        return clashleaders.model.HistoricalClan.objects(tag=self.tag)
+    def to_historical_df(self):
+        histories = clashleaders.model.HistoricalClan.objects(tag=self.tag)
+        df = pd.DataFrame((h.to_dict() for h in histories))
+        return df.set_index('created_on')
 
     def historical_near_time(self, dt) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
@@ -62,6 +71,22 @@ class Clan(DynamicDocument):
 
     def historical_near_now(self) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
+
+    def similar_clans(self) -> Tuple[int, List[Clan]]:
+        less = Clan.objects(cluster_label=self.cluster_label, clanPoints__lt=self.clanPoints) \
+            .order_by('-clanPoints').limit(4)
+        more = Clan.objects(cluster_label=self.cluster_label, clanPoints__gt=self.clanPoints) \
+            .order_by('clanPoints').limit(2)
+
+        clans = sorted([*less, self, *more], key=lambda c: c.clanPoints, reverse=True)[:5]
+        start_count = Clan.objects(cluster_label=self.cluster_label, clanPoints__gt=clans[0].clanPoints).count() + 1
+
+        return start_count, clans
+
+    def days_of_history(self) -> int:
+        first: clashleaders.model.HistoricalClan = \
+            clashleaders.model.HistoricalClan.objects(tag=self.tag).order_by('created_on').first()
+        return (datetime.now() - first.created_on).days
 
     def __repr__(self):
         return "<Clan {0}>".format(self.tag)
@@ -83,7 +108,7 @@ class Clan(DynamicDocument):
         return Clan.objects.get(slug=slug)
 
     @classmethod
-    def fetch_and_update(cls, tag):
+    def fetch_and_update(cls, tag) -> Clan:
         tag = prepend_hash(tag)
 
         # Fetch from API
@@ -109,21 +134,6 @@ class Clan(DynamicDocument):
 
 def prepend_hash(tag):
     return "#" + tag.lstrip("#").upper()
-
-
-def object_id_from_now(**kwargs):
-    now = datetime.now()
-    dt = now - timedelta(**kwargs)
-    return ObjectId.from_datetime(dt)
-
-
-def encode_players(players):
-    s = json.dumps(players)
-    return encode(s.encode('utf8'), 'zlib')
-
-
-def decode_player_bytes(b):
-    return json.loads(decode(b, 'zlib'))
 
 
 def save_historical_clan(clan_json, player_json):
