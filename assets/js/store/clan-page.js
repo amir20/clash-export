@@ -94,14 +94,14 @@ const actions = {
     await handleResponse(clanStatsPromise, commit, "setClanStats");
   },
   async fetchSimilarClansStats({ commit, getters: { path }, state: { days } }) {
-    const similarClansPromise = fetch(`${path}/similar/avg.json?daysAgo=${days}`);
+    const similarClansPromise = fetch(`${path}/similar/avg.json?daySpan=${days}`);
     await handleResponse(similarClansPromise, commit, "setSimilarClansAvg");
   },
   async fetchSavedClanStats({ commit, state: { tag, days } }) {
     const savedTag = store.get("lastTag");
     if (savedTag && savedTag != tag) {
       console.log(`Found saved tag value [${savedTag}].`);
-      const savedClanStatsPromise = fetch(`/clan/${savedTag.replace("#", "")}/stats.json?daysAgo=${days}`);
+      const savedClanStatsPromise = fetch(`/clan/${savedTag.replace("#", "")}/stats.json?daySpan=${days}`);
       await handleResponse(savedClanStatsPromise, commit, "setSavedClanStats", false);
     }
   },

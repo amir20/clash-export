@@ -7,7 +7,7 @@ from clashleaders.model import Clan
 @app.route("/clan/<tag>/similar/avg.json")
 @cache.cached(timeout=1200, query_string=True)
 def similar_clans_avg(tag):
-    days = int(request.args.get('daysAgo', 7))
+    days = int(request.args.get('daySpan', 7))
     key = {1: 'day_delta', 7: 'week_delta'}[days]
 
     cluster_label = Clan.find_by_tag(tag).cluster_label

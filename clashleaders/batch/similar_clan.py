@@ -3,7 +3,7 @@ import os
 
 from clashleaders.clustering.csv_export import clans_to_csv
 from clashleaders.clustering.kmeans import train_model
-from clashleaders.model import ClanPreCalculated
+from clashleaders.model import Clan
 
 logger = logging.getLogger(__name__)
 
@@ -22,4 +22,4 @@ def compute_similar_clans():
 
     logger.info(f"Updating labels for {len(labels)} clans.")
     for tag, label in labels.items():
-        ClanPreCalculated.objects(tag=tag).update_one(set__cluster_label=label)
+        Clan.objects(tag=tag).update_one(set__cluster_label=label)
