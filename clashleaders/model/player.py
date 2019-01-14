@@ -1,3 +1,4 @@
+from __future__ import annotations
 import json
 from codecs import decode, encode
 
@@ -38,16 +39,16 @@ class Player(DynamicDocument):
         ]
     }
 
-    def as_replace_one(self):
+    def as_replace_one(self) -> ReplaceOne:
         return ReplaceOne({'tag': self.tag}, self.compressed_fields(), upsert=True)
 
-    def most_recent_clan(self):
+    def most_recent_clan(self) -> Clan:
         return Clan.find_by_tag(self.clan['tag'])
 
     def player_score(self):
         return self.most_recent_clan().historical_near_now().activity_score_series()[self.tag]
 
-    def to_historical_df(self):
+    def to_historical_df(self) -> pd.DataFrame:
         series = clashleaders.model.HistoricalPlayer.objects(tag=self.tag)
         return pd.DataFrame((p.to_series() for p in series))
 
@@ -76,7 +77,7 @@ class Player(DynamicDocument):
 
         return fields
 
-    def fetch_and_update(self):
+    def fetch_and_update(self) -> Player:
         return Player.fetch_and_save(self.tag)
 
     def troop_insights(self):

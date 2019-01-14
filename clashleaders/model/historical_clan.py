@@ -78,7 +78,10 @@ class HistoricalClan(Document):
         values = {k: v for k, v in kwargs.items() if k in self._fields_ordered}
         super().__init__(*args, **values)
 
-    def to_df(self, formatted=True, player_activity=False):
+    def to_df(self, formatted=True, player_activity=False) -> pd.DataFrame:
+        if len(self.players) == 0:
+            return pd.DataFrame()
+
         df = pd.DataFrame((p.to_series() for p in self.players))
         df = df.reset_index().drop(columns=['index']).set_index('tag')
 
@@ -93,6 +96,9 @@ class HistoricalClan(Document):
         return df
 
     def __repr__(self):
+        return "<HistoricalClan {0}>".format(self.tag)
+
+    def __str__(self):
         return "<HistoricalClan {0}>".format(self.tag)
 
     def to_matrix(self):
@@ -110,7 +116,7 @@ class HistoricalClan(Document):
         return clashleaders.clash.clan_calculation.calculate_delta(self.to_df(), other.to_df())
 
     @classmethod
-    def find_by_tag_near_time(cls, tag, dt):
+    def find_by_tag_near_time(cls, tag, dt) -> HistoricalClan:
         tag = prepend_hash(tag)
         clan = HistoricalClan.objects(tag=tag, created_on__lte=dt).order_by('-created_on').first()
 

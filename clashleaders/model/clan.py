@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import json
 import logging
 from codecs import decode, encode
@@ -26,8 +27,10 @@ class Clan(DynamicDocument):
     slug = StringField(required=True)
     cluster_label = IntField(default=-1)
     verified_accounts = ListField(StringField())
-    computed = EmbeddedDocumentField(ClanDelta)
-    week_delta = EmbeddedDocumentField(ClanDelta)
+    computed: ClanDelta = EmbeddedDocumentField(ClanDelta)
+    week_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
+    members = IntField()
+    clanLevel = IntField()
 
     meta = {
         'index_background': True,
@@ -50,17 +53,20 @@ class Clan(DynamicDocument):
     def historical(self):
         return clashleaders.model.HistoricalClan.objects(tag=self.tag)
 
-    def historical_near_time(self, dt) -> "clashleaders.model.HistoricalClan":
+    def historical_near_time(self, dt) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
-    def historical_near_days_ago(self, days) -> "clashleaders.model.HistoricalClan":
+    def historical_near_days_ago(self, days) -> clashleaders.model.HistoricalClan:
         dt = datetime.now() - timedelta(days=int(days))
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
-    def historical_near_now(self) -> "clashleaders.model.HistoricalClan":
+    def historical_near_now(self) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
 
     def __repr__(self):
+        return "<Clan {0}>".format(self.tag)
+
+    def __str__(self):
         return "<Clan {0}>".format(self.tag)
 
     @classmethod
