@@ -2,14 +2,14 @@ from mongoengine import EmbeddedDocument, FloatField, IntField
 
 
 class ClanDelta(EmbeddedDocument):
-    avg_donations = FloatField(required=True)
-    avg_donations_received = FloatField(required=True)
-    avg_gold_grab = FloatField(required=True)
-    avg_elixir_grab = FloatField(required=True)
-    avg_de_grab = FloatField(required=True)
-    avg_war_stars = FloatField(required=True)
-    avg_attack_wins = FloatField(required=True)
-    avg_versus_wins = FloatField(required=True)
+    avg_donations = FloatField()
+    avg_donations_received = FloatField()
+    avg_gold_grab = FloatField()
+    avg_elixir_grab = FloatField()
+    avg_de_grab = FloatField()
+    avg_war_stars = FloatField()
+    avg_attack_wins = FloatField()
+    avg_versus_wins = FloatField()
     total_trophies = IntField()
     total_bh_trophies = IntField()
     total_gold_grab = IntField()

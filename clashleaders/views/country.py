@@ -1,7 +1,7 @@
 from flask import render_template
 
 from clashleaders import app, cache
-from clashleaders.model import ClanPreCalculated
+from clashleaders.model import Clan
 from clashleaders.text.clan_description_processor import transform_description
 
 
@@ -20,4 +20,4 @@ def country_clans(code):
 
 @cache.memoize(300)
 def fetch_country(code):
-    return ClanPreCalculated.objects(location__countryCode=code).order_by('-clanPoints').limit(50)
+    return Clan.objects(location__countryCode=code).order_by('-clanPoints').limit(50)

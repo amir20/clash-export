@@ -20,5 +20,5 @@
     <text x="45" y="10" alignment-baseline="hanging" font-size="18">
         {{ clan.name }}
     </text>
-    <text x="45" y="30" alignment-baseline="hanging" font-size="12" xml:space='preserve'>{{ "{:,.1f}".format(clan.clanPoints/1000) }}k trophies  {{ "{:,.1f}".format(clan.total_attack_wins/1000) }}k wins</text>
+    <text x="45" y="30" alignment-baseline="hanging" font-size="12" xml:space='preserve'>{{ "{:,.1f}".format(clan.clanPoints/1000) }}k trophies  {{ "{:,.1f}".format(clan.computed.total_attack_wins/1000) }}k wins</text>
 </svg>

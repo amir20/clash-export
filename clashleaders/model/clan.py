@@ -29,9 +29,11 @@ class Clan(DynamicDocument):
     members: int = IntField()
     clanPoints: int = IntField()
     clanVersusPoints: int = IntField()
+    page_views: int = IntField(default=0)
     name: str = StringField()
     description: str = StringField()
     badgeUrls = DictField()
+    location = DictField()
     clanLevel: int = IntField()
     verified_accounts = ListField(StringField())
     computed: ClanDelta = EmbeddedDocumentField(ClanDelta)
@@ -50,7 +52,12 @@ class Clan(DynamicDocument):
             'clanPoints',
             'tag',
             'slug',
-            'members'
+            'members',
+
+            # Aggregated indexes
+            'week_delta.avg_attack_wins',
+            'week_delta.avg_versus_wins'
+
         ]
     }
 
