@@ -112,7 +112,7 @@ class HistoricalClan(Document):
         df = df[columns]
         return [columns, *df.values.tolist()]
 
-    def activity_score_series(self, days=7):
+    def activity_score_series(self, days=7) -> pd.Series:
         return clashleaders.insights.player_activity.player_activity_scores(self, days)
 
     def clan_delta(self, other: HistoricalClan) -> ClanDelta:

@@ -1,15 +1,16 @@
 from __future__ import annotations
-import json
-from codecs import decode, encode
 
+import json
 import pandas as pd
+from codecs import decode, encode
 from mongoengine import DynamicDocument, BinaryField, signals, StringField, DictField
 from pymongo import ReplaceOne
 from slugify import slugify
 
-from clashleaders.clash import api, player_calculation
-from clashleaders.model import Clan
+import clashleaders.insights.troops
 import clashleaders.model
+from clashleaders.clash import api
+from clashleaders.model import Clan
 from clashleaders.model.clan import prepend_hash
 
 
@@ -81,7 +82,7 @@ class Player(DynamicDocument):
         return Player.fetch_and_save(self.tag)
 
     def troop_insights(self):
-        return player_calculation.next_troop_recommendation(self.tag)
+        return clashleaders.insights.troops.next_troop_recommendation(self.tag)
 
     def __repr__(self):
         return "<Player {0}>".format(self.tag)
