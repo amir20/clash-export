@@ -12,9 +12,9 @@ from clashleaders.text.clan_description_processor import transform_description
 def inject_most_popular():
     status = Status.get_instance()
     return dict(status=status,
-                most_popular=[],
-                popular_countries=[],
-                reddit_clans=[]
+                most_popular=status.popular_clans,
+                popular_countries=status.top_countries,
+                reddit_clans=status.reddit_clans
                 )
 
 
