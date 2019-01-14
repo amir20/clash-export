@@ -7,14 +7,16 @@ from clashleaders.model.clan_delta import ClanDelta
 
 def update_calculations(clan):
     last_week = clan.historical_near_days_ago(7)
+    yesterday = clan.historical_near_days_ago(1)
     most_recent = clan.historical_near_now()
     most_recent_df = most_recent.to_df()
 
     if most_recent_df.empty:
-        return 
+        return
 
     clan.computed = calculate_data(most_recent_df)
     clan.week_delta = most_recent.clan_delta(last_week)
+    clan.day_delta = most_recent.clan_delta(yesterday)
 
     # if cpc.cluster_label == -1:
     #     [label] = predict_clans(cpc)

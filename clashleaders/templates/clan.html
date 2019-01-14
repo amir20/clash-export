@@ -112,11 +112,11 @@
               <!-- Total BH Trophies -->
               {{ insight("Total BH Trophies", clan.clanVersusPoints, clan.week_delta.total_bh_trophies) }}
               <!-- Donations -->
-              {{ insight("Donations", clan.total_donations, clan.week_delta.total_donations) }}
+              {{ insight("Donations", clan.computed.total_donations, clan.week_delta.total_donations) }}
               <!-- Total Wins -->
-              {{ insight("Total Wins", clan.total_attack_wins, clan.week_delta.total_attack_wins) }}
+              {{ insight("Total Wins", clan.computed.total_attack_wins, clan.week_delta.total_attack_wins) }}
               <!-- Total Versus Wins -->
-              {{ insight("Total Versus Wins", clan.total_versus_wins, clan.week_delta.total_versus_wins) }}
+              {{ insight("Total Versus Wins", clan.computed.total_versus_wins, clan.week_delta.total_versus_wins) }}
             </div>
             <div class="is-hidden-mobile"><trophy-chart tag="{{ clan.tag }}"></trophy-chart></div>
           </div>
@@ -158,7 +158,7 @@
 {% endblock %} {% block scripts %}
 <script>
   window.__CLAN__ = {{ players | tojson | safe }};
-  window.__LAST_UPDATED__ = {{ last_updated.timestamp() * 1000 }};
+  window.__LAST_UPDATED__ = {{ clan.updated_on.timestamp() * 1000 }};
 </script>
 <script type="application/ld+json">
   {
@@ -193,8 +193,7 @@
     "@type": "Article",
     "headline": "{{ clan.name }}",
     "description": "{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders",
-    "datePublished": "{{ clan.created_on.isoformat() }}",
-    "dateModified": "{{ clan.last_updated.isoformat() }}",
+    "dateModified": "{{ clan.updated_on.isoformat() }}",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "http://www.clashleaders.com/"
