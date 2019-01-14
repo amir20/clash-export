@@ -10,7 +10,7 @@ from bugsnag.handlers import BugsnagHandler
 from mongoengine import connect
 
 from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
-from clashleaders.model import Clan, ClanPreCalculated
+from clashleaders.model import Clan
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 DEBUG = os.getenv('DEBUG', False)
 WORKER_OFFSET = int(os.getenv('WORKER_OFFSET', 1))
+INDEX = (WORKER_OFFSET - 1) * 10
 
 logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
@@ -34,18 +35,17 @@ connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 tags_indexed = []
-index = (WORKER_OFFSET - 1) * 10
 
 
 def update_single_clan():
     global tags_indexed
     twelve_hour_ago = datetime.now() - timedelta(hours=12)
     try:
-        query_set = ClanPreCalculated.objects.only('tag').no_cache()
+        query_set = Clan.active(twelve_hour_ago)
         total = query_set.count()
         clan = None
-        if total > index:
-            clan = query_set[index]
+        if total > INDEX:
+            clan = query_set[INDEX]
         if clan:
             logger.debug(f"Worker #{WORKER_OFFSET}: Updating clan {clan.tag} with {total} eligible clans.")
             clan = Clan.fetch_and_update(clan.tag)
@@ -75,7 +75,7 @@ def update_single_clan():
         logger.warning(f"TypeError exception thrown for {clan.tag}. Deleting most recent instance.")
         clan.most_recent.delete()
         eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
-        clan.update(set__last_updated=eleven_hour_ago, set__most_recent=Clan.find_most_recent_by_tag(clan.tag))
+        clan.update(set__updated_on=eleven_hour_ago)
         logger.info(f"Sleeping for 10 seconds.")
         time.sleep(10)
     except Exception:
@@ -86,17 +86,13 @@ def update_single_clan():
 def try_again_clan(clan):
     if clan:
         eleven_hour_ago = datetime.now() - timedelta(hours=11)
-        clan.update(set__last_updated=eleven_hour_ago)
+        clan.update(set__updated_on=eleven_hour_ago)
 
 
 def main():
-    # while True:
-    #     update_single_clan()
-    #     time.sleep(0.025)
-
-    for clan in ClanPreCalculated.objects.only('tag').no_cache():
-        logger.debug(f"Clan {clan.tag}.")
-        Clan.fetch_and_update(clan.tag)
+    while True:
+        update_single_clan()
+        time.sleep(0.025)
 
 
 if __name__ == "__main__":
