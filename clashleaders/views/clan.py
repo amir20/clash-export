@@ -1,4 +1,3 @@
-import pandas as pd
 from flask import jsonify, render_template, request
 from inflection import camelize
 from mongoengine import DoesNotExist
@@ -28,31 +27,25 @@ def clan_detail_json(tag):
 def clan_refresh_json(tag):
     clan = Clan.fetch_and_update(tag)
     player_data = clan.historical_near_now().to_matrix()
-    players_status = {}
+    players_status = {} # Todo
     return jsonify(dict(playerData=player_data, playersStatus=players_status))
 
 
 @app.route("/clan/<slug>")
 def clan_detail_page(slug):
     try:
-        clan = None
         clan = Clan.find_by_slug(slug)
         update_page_views(clan)
         description = transform_description(clan.description)
         players = clan.historical_near_now().to_matrix()
-        start_count, similar_clans = find_similar_clans(clan)
+        start_count, similar_clans = clan.similar_clans()
     except DoesNotExist:
-        if clan:
-            clan = Clan.fetch_and_save(clan.tag).update_calculations()
-            return clan_detail_page(clan.slug)
-        else:
-            return render_template('error.html'), 404
+        return render_template('error.html'), 404
     else:
         return render_template('clan.html', clan=clan,
                                players=players,
                                description=description,
-                               last_updated=clan.last_updated,
-                               oldest_days=clan.days_span,  # TODO
+                               oldest_days=clan.days_of_history(),
                                similar_clans=similar_clans,
                                similar_clans_start_count=start_count)
 
@@ -90,49 +83,11 @@ def clan_meta(tag):
 @app.route("/clan/<tag>/trophies.json")
 @cache.cached(timeout=1000)
 def clan_trophies(tag):
-    clans = list(Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints', 'members'))
-    data = [[c.members, c.clanPoints] for c in clans]
-    df = pd.DataFrame(data, index=pd.to_datetime([s.id.generation_time for s in clans]),
-                      columns=['members', 'trophies'])
-    resampled = df.resample('D').mean().dropna()
-    data = dict(
-        dates=[i.strftime("%Y-%m-%d") for i in resampled.index],
-        members=resampled['members'].values.tolist(),
-        trophies=resampled['trophies'].values.tolist()
-    )
-
-    return jsonify(data)
-
-
-@app.route("/clan/<tag>/chart.json")
-@cache.cached(timeout=1000)
-def clan_chart(tag):
-    data = list(Clan.from_now_with_tag(tag, days=28).no_cache().only('clanPoints', 'avg_gold_grab'))
-    dates = [s.id.generation_time for s in data]
-    columns = [dict(points=s.clanPoints, gold=getattr(s, 'avg_gold_grab', 0)) for s in data]
-    df = pd.DataFrame(columns, index=dates)
-    resampled = df.resample('D').mean().dropna()
-    labels = [k.strftime("%Y-%m-%d") for k in resampled.index.tolist()]
-
-    return jsonify(
-        dict(labels=labels,
-             points=resampled['points'].values.tolist(),
-             avg_gold=resampled['gold'].values.tolist()))
+    df = Clan.find_by_tag(tag).to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
+    return df.to_json(orient='columns', date_format='iso')
 
 
 def update_page_views(clan):
     user_agent = parse(request.user_agent.string)
     if not user_agent.is_bot:
         clan.update(inc__page_views=1)
-
-# def find_similar_clans(clan):
-#     less = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__lt=clan.clanPoints).order_by(
-#         '-clanPoints').limit(4)
-#     more = ClanPreCalculated.objects(cluster_label=clan.cluster_label, clanPoints__gt=clan.clanPoints).order_by(
-#         'clanPoints').limit(2)
-#
-#     clans = sorted([*less, clan, *more], key=lambda c: c.clanPoints, reverse=True)[:5]
-#     start_count = ClanPreCalculated.objects(cluster_label=clan.cluster_label,
-#                                             clanPoints__gt=clans[0].clanPoints).count() + 1
-
-# return start_count, clans

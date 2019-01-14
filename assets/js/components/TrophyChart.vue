@@ -48,12 +48,17 @@ export default {
   },
   async created() {
     const json = await (await fetch(`/clan/${this.tag.replace("#", "")}/trophies.json`)).json();
-    const parseTime = d3.timeParse("%Y-%m-%d");
-    this.data = json.dates.map((key, i) => ({
-      date: parseTime(key),
-      trophies: json.trophies[i],
-      members: json.members[i]
-    }));
+    const parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");
+
+    this.data = [];
+    for (const [date, points] of Object.entries(json.clanPoints)) {
+      this.data.push({
+        date: parseTime(date),
+        trophies: json.clanPoints[date],
+        members: json.members[date]
+      });
+    }
+
     this.$nextTick(this.render);
   },
   mounted() {

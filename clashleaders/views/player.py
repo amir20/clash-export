@@ -1,7 +1,7 @@
 from flask import render_template, jsonify
 
 from clashleaders import app, cache
-from clashleaders.model import Player, ClanPreCalculated
+from clashleaders.model import Player, Clan
 
 
 @app.route("/player/<slug>")
@@ -27,14 +27,8 @@ player_score.make_cache_key = lambda f, p: f"player_score{p.tag}"
 @app.route("/player/<tag>/attacks.json")
 @cache.cached(timeout=1200, query_string=True)
 def player_attacks_json(tag):
-    df = Player.find_by_tag(tag).to_historical_df()
-    resampled = df['attack_wins'].resample('D').mean().diff().dropna().clip(lower=0)
-    data = dict(
-        dates=resampled.index.strftime("%Y-%m-%d").tolist(),
-        attackWins=resampled['attack_wins'].values.tolist()
-    )
-
-    return jsonify(data)
+    df = Player.find_by_tag(tag).to_historical_df()['attack_wins']
+    return df.resample('D').mean().diff().dropna().clip(lower=0).to_json(orient='columns', date_format='iso')
 
 
 @app.route("/player/<tag>.json")
@@ -52,7 +46,7 @@ def player_json(tag):
     data['percentile'] = score
 
     if data['clan']:
-        data['clan']['slug'] = ClanPreCalculated.find_or_create_by_tag(data['clan']['tag']).slug
+        data['clan']['slug'] = Clan.find_by_tag(data['clan']['tag']).slug
 
     return jsonify(data)
 

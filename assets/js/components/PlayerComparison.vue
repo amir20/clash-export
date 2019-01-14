@@ -9,7 +9,7 @@
           <div class="level is-pulled-right is-marginless">
             <div class="level-item has-text-centered">
               <div>
-                <div class="title is-size-4-mobile">{{ Math.ceil(player.percentile * 100) }} / 100</div>
+                <div class="title is-size-4-mobile">{{ Math.ceil(player.percentile) }} / 100</div>
                 <div class="heading">Player Activity Score</div>
               </div>
             </div>

@@ -3,7 +3,7 @@ from math import ceil
 from flask import make_response, render_template, url_for
 
 from clashleaders import app
-from clashleaders.model import ClanPreCalculated
+from clashleaders.model import Clan
 
 TOTAL_PER_PAGE = 10000
 
@@ -12,7 +12,7 @@ TOTAL_PER_PAGE = 10000
 def sitemap_index():
     sitemaps = []
 
-    pages = ceil(ClanPreCalculated.objects.count() / TOTAL_PER_PAGE)
+    pages = ceil(Clan.objects.count() / TOTAL_PER_PAGE)
     for i in range(pages):
         sitemaps.append({
             'url': url_for('sitemap', page=i, _external=True),
@@ -32,7 +32,7 @@ def sitemap(page):
 
     pages = []
 
-    for clan in ClanPreCalculated.objects[start:end].only('slug'):
+    for clan in Clan.objects[start:end].only('slug'):
         pages.append({
             'url': url_for('clan_detail_page', slug=clan.slug, _external=True),
         })
