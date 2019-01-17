@@ -11,7 +11,7 @@
     "@fortawesome/fontawesome-free": "^5.6.3",
     "autoprefixer": "^9.4.4",
     "babel-loader": "^8.0.5",
-    "buefy": "^0.7.1",
+    "buefy": "^0.7.2",
     "bugsnag-js": "^4.7.3",
     "bugsnag-vue": "^1.0.1",
     "bulma": "^0.7.2",
