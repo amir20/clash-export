@@ -17,8 +17,6 @@ with open(os.path.join(parent, "../data/countries.json")) as f:
 @app.route("/")
 def index():
     return render_template('index.html',
-                           most_attacks=leaderboard('week_delta.avg_attack_wins'),
-                           most_bh_attacks=leaderboard('week_delta.avg_versus_wins'),
                            most_points=leaderboard('clanPoints'),
                            most_vs_points=leaderboard('clanVersusPoints'),
                            most_trophies_country=aggregate_by_country('clanPoints'),
