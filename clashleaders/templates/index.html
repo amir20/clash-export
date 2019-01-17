@@ -42,16 +42,6 @@ extends "layout.html" %} {% block body %}
 
 <section class="section">
   <div class="container">
-    <h1 class="title is-2">This Week's Trending Clans</h1>
-    <div class="columns">
-      <div class="column is-4">{{ leaderboard("Highest Donations", most_donations, "{:,.0f} donations/player") }}</div>
-      <div class="column is-4">{{ leaderboard("Average Attack Wins", most_attacks, "{:,.0f} wins/player") }}</div>
-      <div class="column is-4">
-        {{ leaderboard("Average Versus Attack Wins", most_bh_attacks, "{:,.0f} wins/player") }}
-      </div>
-    </div>
-
-
     <h1 class="title is-2">Global Leaderboards</h1>
     <div class="columns">
       <div class="column is-4">{{ leaderboard("Highest Trophies", most_points) }}</div>
