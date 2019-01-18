@@ -6,8 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 def delete_outdated():
-    deleted = Clan.older_than(days=31).delete()
-    logger.info(f"Deleted {deleted} clans that are older than 31 days.")
+    pass  # todo
 
 
 def reset_stats():
