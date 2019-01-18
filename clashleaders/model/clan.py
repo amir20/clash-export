@@ -149,10 +149,12 @@ class Clan(DynamicDocument):
         clan_response['slug'] = slugify(f"{clan_response['name']}-{tag}", to_lower=True)
         clan_response['updated_on'] = datetime.now()
 
+        clan = Clan.objects(tag=tag).upsert_one(**clan_response)
+
         # Update calculations in a queue
         clashleaders.queue.calculation.update_calculations.delay(tag)
 
-        return Clan.objects(tag=tag).upsert_one(**clan_response)
+        return clan
 
 
 def prepend_hash(tag):

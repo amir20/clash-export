@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from rq import Connection, Worker
+from rq import Connection, SimpleWorker
 
 from clashleaders import redis_connection
 
@@ -11,7 +11,7 @@ def main():
     logger.setLevel('WARN')
     with Connection(connection=redis_connection):
         qs = sys.argv[1:] or ['default']
-        w = Worker(qs)
+        w = SimpleWorker(qs)
         w.work(logging_level='WARN')
 
 
