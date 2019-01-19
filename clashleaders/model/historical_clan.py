@@ -80,7 +80,7 @@ class HistoricalClan(Document):
 
     def to_df(self, formatted=True, player_activity=False) -> pd.DataFrame:
         if len(self.players) == 0:
-            return pd.DataFrame()
+            return pd.DataFrame(columns=list(COLUMNS.values()))
 
         df = pd.DataFrame((p.to_series() for p in self.players))
         df = df.reset_index().drop(columns=['index']).set_index('tag')
