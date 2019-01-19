@@ -12,7 +12,7 @@ services:
       - .ipython/scheduler:/root/.ipython/profile_default
     depends_on:
       - db
-  player_worker:
+  rq_worker:
     env_file: .env
     volumes:
       - ./clashleaders:/app/clashleaders

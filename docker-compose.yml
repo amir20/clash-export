@@ -13,8 +13,8 @@ services:
     image: "amir20/clashleaders:${TAG:-latest}"
     depends_on:
       - redis
-  player_worker:
+  rq_worker:
     image: "amir20/clashleaders:${TAG:-latest}"
-    command: "rq_worker player"
+    command: "rq_worker player calculation"
     depends_on:
       - redis
