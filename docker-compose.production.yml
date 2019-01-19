@@ -11,7 +11,7 @@ services:
       - WORKER_OFFSET={{.Task.Slot}}
     deploy:
       replicas: 2
-  player_worker:
+  rq_worker:
     volumes:
       - /tmp/mongodb-27017.sock:/tmp/mongodb-27017.sock
     environment:

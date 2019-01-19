@@ -25,7 +25,7 @@ def clan_detail_json(tag):
 
 @app.route("/clan/<tag>/refresh.json")
 def clan_refresh_json(tag):
-    clan = Clan.fetch_and_update(tag)
+    clan = Clan.fetch_and_update(tag, sync_calculation=False)
     clan.update(inc__page_views=1)
     player_data = clan.historical_near_now().to_matrix()
     players_status = clan_status(clan)
