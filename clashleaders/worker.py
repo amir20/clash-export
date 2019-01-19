@@ -41,16 +41,13 @@ def update_single_clan():
     global tags_indexed
     twelve_hour_ago = datetime.now() - timedelta(hours=12)
     try:
-        query_set = Clan.active(twelve_hour_ago)
-        total = query_set.count()
-        clan = None
-        if total > INDEX:
-            clan = query_set[INDEX]
+        clan = Clan.active(twelve_hour_ago).skip(max(INDEX - 1, 0)).limit(1).first()
         if clan:
-            logger.debug(f"Worker #{WORKER_OFFSET}: Updating clan {clan.tag} with {total} eligible clans.")
+            logger.debug(f"Worker #{WORKER_OFFSET}: Updating clan {clan.tag}.")
             clan = Clan.fetch_and_update(clan.tag)
             tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:
+                total = Clan.active(twelve_hour_ago).count()
                 logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                 logger.info(f"Currently {total} eligible clans.")
                 tags_indexed = []
