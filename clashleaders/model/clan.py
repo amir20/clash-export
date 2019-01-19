@@ -109,6 +109,9 @@ class Clan(DynamicDocument):
     def warlog(self):
         return clan_warlog(self.tag)['items']
 
+    def refresh(self):
+        return Clan.fetch_and_update(self.tag)
+
     @classmethod
     def find_by_tag(cls, tag) -> Clan:
         clan = Clan.objects(tag=prepend_hash(tag)).first()
@@ -131,7 +134,7 @@ class Clan(DynamicDocument):
         return Clan.objects(query).no_cache().only('tag')
 
     @classmethod
-    def fetch_and_update(cls, tag) -> Clan:
+    def fetch_and_update(cls, tag, update_calculation=True) -> Clan:
         tag = prepend_hash(tag)
 
         # Fetch from API
@@ -151,8 +154,8 @@ class Clan(DynamicDocument):
 
         clan = Clan.objects(tag=tag).upsert_one(**clan_response)
 
-        # Update calculations in a queue
-        clashleaders.queue.calculation.update_calculations.delay(tag)
+        if update_calculation:
+            clan.update_calculations()
 
         return clan
 
