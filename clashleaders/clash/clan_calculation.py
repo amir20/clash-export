@@ -12,11 +12,13 @@ def update_calculations(clan):
     most_recent_df = most_recent.to_df()
 
     if most_recent_df.empty:
-        return
-
-    clan.computed = calculate_data(most_recent_df)
-    clan.week_delta = most_recent.clan_delta(last_week)
-    clan.day_delta = most_recent.clan_delta(yesterday)
+        clan.computed = ClanDelta()
+        clan.week_delta = ClanDelta()
+        clan.day_delta = ClanDelta()
+    else:
+        clan.computed = calculate_data(most_recent_df)
+        clan.week_delta = most_recent.clan_delta(last_week)
+        clan.day_delta = most_recent.clan_delta(yesterday)
 
     # if cpc.cluster_label == -1:
     #     [label] = predict_clans(cpc)
