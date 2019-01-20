@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 def delete_outdated():
+    logger.info("Deleting outdated historical clans...")
     pass  # todo
 
 
