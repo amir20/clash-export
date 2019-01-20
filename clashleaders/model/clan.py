@@ -48,7 +48,7 @@ class Clan(DynamicDocument):
             'location.countryCode',
             'cluster_label',
             ('cluster_label', 'clanPoints'),
-            'verified_accounts'
+            'verified_accounts',
             'clanPoints',
             'clanVersusPoints',
             'tag',
@@ -57,7 +57,7 @@ class Clan(DynamicDocument):
             ('members', '-clanPoints'),
             ('members', '-clanVersusPoints'),
             'isWarLogPublic',
-            'page_views'
+            'page_views',
 
             # Aggregated indexes
             'week_delta.avg_attack_wins',
