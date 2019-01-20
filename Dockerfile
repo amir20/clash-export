@@ -35,6 +35,7 @@ ARG plugins=http.expires,tls.dns.digitalocean
 RUN apt-get update \
     && apt-get install make supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \
+    && apt-get install cron -y \
     && apt-get install gcc -y \
     && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
     && curl https://getcaddy.com | bash -s personal ${plugins} \
@@ -44,9 +45,15 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cache
 
-# Custom Supervisord config
-COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
+# Install cron jobs
+COPY ./conf/crontab /etc/cron.d/clashleaders
+COPY ./conf/cron.sh /usr/local/bin/cron.sh
+RUN chmod 0644 /etc/cron.d/clashleaders
+RUN crontab /etc/cron.d/clashleaders
+RUN chmod +x /usr/local/bin/cron.sh
 
+
+COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
 COPY ./caddy/Caddyfile /etc/Caddyfile
 COPY ./caddy /etc/caddy
 
