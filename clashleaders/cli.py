@@ -1,15 +1,12 @@
 import logging
-import os
+from random import randrange
 
-from mongoengine import connect
-
+from clashleaders.clash import api
 from clashleaders.model import Clan, ClanPreCalculated
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
-
-connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 
 
 def update_all_calculations():
@@ -35,3 +32,34 @@ def migrate_pre_calculated():
             Clan.find_by_tag(clan.tag)
         except Exception:
             logger.exception("error while performing migrate_pre_calculated()")
+
+
+def index_random_war_clan():
+    count: Clan = Clan.objects(isWarLogPublic=True).count()
+    random_clan: Clan = Clan.objects(isWarLogPublic=True)[randrange(0, count)]
+
+    logger.info(f"Indexing random clan war log ({random_clan.tag}).")
+
+    try:
+        tags = [war['opponent']['tag'] for war in random_clan.warlog()]
+    except Exception:
+        logger.warning(f"Error while fetch war log for {random_clan.tag}.")
+    else:
+        for tag in tags:
+            if not Clan.objects(tag=tag).first():
+                Clan.fetch_and_update(tag)
+
+
+def fetch_clan_leaderboards():
+    logger.info(f"Updating clan leaderboards from CoC website.")
+    players, clans = api.top_players_and_clan()
+
+    for player in players:
+        tag = player['clanTag']
+        if tag:
+            Clan.fetch_and_update(tag)
+
+    for clan in clans:
+        tag = clan['tag']
+        if tag:
+            Clan.fetch_and_update(tag)

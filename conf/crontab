@@ -1,0 +1,22 @@
+# Update status every minute
+* * * * * /bin/bash -l -c 'update_status > /proc/1/fd/1 2>/proc/1/fd/2'
+
+# delete_outdated on every day
+0 1 * * * /bin/bash -l -c 'delete_outdated > /proc/1/fd/1 2>/proc/1/fd/2'
+
+# reset_stats on every day
+0 2 * * * /bin/bash -l -c 'reset_stats > /proc/1/fd/1 2>/proc/1/fd/2'
+
+# compute_similar_clans every monday
+0 0 * * 1 /bin/bash -l -c 'compute_similar_clans > /proc/1/fd/1 2>/proc/1/fd/2'
+
+# index_random_war_clan every 8 hours
+0 */8 * * * /bin/bash -l -c 'index_random_war_clan > /proc/1/fd/1 2>/proc/1/fd/2'
+
+# fetch_clan_leaderboards every hours
+0 */1 * * * /bin/bash -l -c 'fetch_clan_leaderboards > /proc/1/fd/1 2>/proc/1/fd/2'
+
+# update_troops every friday
+0 0 * * 5 /bin/bash -l -c 'update_troops > /proc/1/fd/1 2>/proc/1/fd/2'
+
+# Empty line
