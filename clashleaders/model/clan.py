@@ -43,7 +43,6 @@ class Clan(DynamicDocument):
     meta = {
         'index_background': True,
         'indexes': [
-            'name',
             'updated_on',
             'location.countryCode',
             'cluster_label',
@@ -65,7 +64,6 @@ class Clan(DynamicDocument):
 
             # Active clans
             ['week_delta.total_attack_wins', 'updated_on', 'members'],
-
         ]
     }
 
