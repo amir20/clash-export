@@ -2,9 +2,9 @@ version: "3.4"
 services:
   redis:
     image: redis:5-alpine
-  scheduler:
+  cron:
     image: "amir20/clashleaders:${TAG:-latest}"
-    command: "scheduler"
+    command: "cron.sh"
   worker:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "worker"

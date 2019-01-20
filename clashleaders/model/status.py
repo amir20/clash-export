@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import logging
 from datetime import datetime, timedelta
 
 from mongoengine import DateTimeField, DictField, Document, FloatField, IntField, ListField, ReferenceField
 
 from clashleaders.model import Player, Clan
 from clashleaders.views.index import aggregate_by_country
+
+logger = logging.getLogger(__name__)
 
 
 class Status(Document):
@@ -26,6 +29,7 @@ class Status(Document):
 
     @classmethod
     def update_status(cls):
+        logging.info("Updating status calculations...")
         twelve_hour_ago = datetime.now() - timedelta(hours=12)
         total_clans = Clan.objects.count()
         total_eligible_clans = Clan.active().count()
