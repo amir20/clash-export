@@ -19,7 +19,7 @@ services:
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - DB_HOST=mongodb://%2Ftmp%2Fmongodb-27017.sock
       - STAGE=production
-  scheduler:
+  cron:
     volumes:
       - /tmp/mongodb-27017.sock:/tmp/mongodb-27017.sock
     environment:

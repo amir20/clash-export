@@ -34,8 +34,7 @@ services:
       - ./Makefile:/app/Makefile
       - ./caddy/Caddyfile.local:/etc/Caddyfile
       - .ipython/web:/root/.ipython/profile_default
-
-  scheduler:
+  cron:
     env_file: .env
     volumes:
       - ./clashleaders:/app/clashleaders
