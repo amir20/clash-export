@@ -50,9 +50,12 @@ class Clan(DynamicDocument):
             ('cluster_label', 'clanPoints'),
             'verified_accounts'
             'clanPoints',
+            'clanVersusPoints',
             'tag',
             'slug',
             'members',
+            ('members', '-clanPoints'),
+            ('members', '-clanVersusPoints'),
             'isWarLogPublic',
             'page_views'
 
