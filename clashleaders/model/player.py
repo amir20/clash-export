@@ -47,7 +47,7 @@ class Player(DynamicDocument):
         return Clan.find_by_tag(self.clan['tag'])
 
     def player_score(self):
-        return self.most_recent_clan().historical_near_now().activity_score_series()[self.tag]
+        return self.most_recent_clan().historical_near_now().activity_score_series().get(self.tag)
 
     def to_historical_df(self) -> pd.DataFrame:
         series = clashleaders.model.HistoricalPlayer.objects(tag=self.tag)
