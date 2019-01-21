@@ -96,7 +96,9 @@ class HistoricalClan(Document):
         return df
 
     def to_dict(self):
-        return {name: getattr(self, name) for name in self._fields_ordered}
+        fields = set(self._fields_ordered)
+        fields.remove('players')
+        return {name: getattr(self, name) for name in fields}
 
     def __repr__(self):
         return "<HistoricalClan {0}>".format(self.tag)
