@@ -1,14 +1,20 @@
 from __future__ import annotations
 
+import json
 import logging
+import os
 from datetime import datetime, timedelta
 
 from mongoengine import DateTimeField, DictField, Document, FloatField, IntField, ListField, ReferenceField
 
 from clashleaders.model import Player, Clan
-from clashleaders.views.index import aggregate_by_country
 
 logger = logging.getLogger(__name__)
+
+parent = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(parent, "../data/countries.json")) as f:
+    data = json.load(f)
+    COUNTRIES = {c['countryCode']: c for c in data if c['isCountry']}
 
 
 class Status(Document):
@@ -22,6 +28,8 @@ class Status(Document):
     popular_clans = ListField(ReferenceField(Clan))
     top_countries = ListField(DictField())
     reddit_clans = ListField(ReferenceField(Clan))
+    trophy_distribution = DictField()
+    trophies_by_country = DictField()
 
     @classmethod
     def get_instance(cls) -> Status:
@@ -44,6 +52,28 @@ class Status(Document):
             set__total_active_members=Clan.active().sum('members'),
             set__total_countries=len(Clan.objects.distinct('location.countryCode')),
             set__popular_clans=Clan.objects.order_by('-page_views').limit(10),
-            set__top_countries=aggregate_by_country("week_delta.avg_attack_wins"),
+            set__top_countries=_aggregate_by_country("week_delta.avg_attack_wins"),
             set__reddit_clans=Clan.objects(verified_accounts='reddit').order_by('-clanPoints').limit(10),
+            set__trophy_distribution=_trophy_distribution(),
+            set__trophies_by_country=_aggregate_by_country('clanPoints')
         )
+
+
+def _trophy_distribution():
+    counts = list(Clan.objects.aggregate({
+        '$group': {
+            '_id': {'$subtract': ['$clanPoints', {'$mod': ['$clanPoints', 500]}]},
+            'count': {'$sum': 1}}},
+        {'$sort': {'_id': 1}}
+    ))
+    labels = [c['_id'] for c in counts]
+    values = [c['count'] for c in counts]
+    return dict(labels=labels, values=values)
+
+
+def _aggregate_by_country(score_column):
+    group = {"$group": {"_id": "$location.countryCode", "score": {"$sum": f"${score_column}"}}}
+    sort = {'$sort': {'score': -1}}
+    aggregated = list(Clan.objects(location__countryCode__ne=None).aggregate(group, sort))
+    return [{'code': c['_id'].lower(), 'name': COUNTRIES[c['_id']]['name'], 'score': c['score']} for c in
+            aggregated[:10]]
