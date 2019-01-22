@@ -55,6 +55,7 @@ class Clan(DynamicDocument):
             'members',
             ('members', '-clanPoints'),
             ('members', '-clanVersusPoints'),
+            ('location.countryCode', '-clanPoints'),
             'isWarLogPublic',
             'page_views',
 
