@@ -3,8 +3,8 @@ default: start
 .PHONY: deploy
 deploy: TAG=$(shell cat package.json | jq -r .version)
 deploy: push
-	eval $$(docker-machine env clashstats --shell bash); docker pull amir20/clashleaders:$(TAG)
-	eval $$(docker-machine env clashstats --shell bash); TAG=$(TAG) docker stack deploy -c docker-compose.yml -c docker-compose.production.yml clashleaders
+	eval $$(docker-machine env clashleaders --shell bash); docker pull amir20/clashleaders:$(TAG)
+	eval $$(docker-machine env clashleaders --shell bash); TAG=$(TAG) docker stack deploy -c docker-compose.yml -c docker-compose.production.yml clashleaders
 
 .PHONY: build
 build:
