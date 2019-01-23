@@ -1,7 +1,6 @@
 version: "3.4"
 services:
   mongo:
-    image: mongo:4.1
     volumes:
       - ./:/clashleaders
       - ./mongosnapshot:/docker-entrypoint-initdb.d
