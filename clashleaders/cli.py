@@ -2,7 +2,7 @@ import logging
 from random import randrange
 
 from clashleaders.clash import api
-from clashleaders.model import Clan, ClanPreCalculated
+from clashleaders.model import Clan
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,18 +20,6 @@ def update_all_calculations():
             clan.update_calculations()
         except Exception:
             logger.exception("error while performing update_calculations")
-
-
-def migrate_pre_calculated():
-    total = ClanPreCalculated.objects.count()
-    i = 0
-    for clan in ClanPreCalculated.objects.only('tag').no_cache():
-        try:
-            i += 1
-            print(f"- {i}/{total}: {clan.tag}")
-            Clan.find_by_tag(clan.tag)
-        except Exception:
-            logger.exception("error while performing migrate_pre_calculated()")
 
 
 def index_random_war_clan():
