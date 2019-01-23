@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 import bugsnag
 import uvloop
 from bugsnag.handlers import BugsnagHandler
-from mongoengine import connect
 
 from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
 from clashleaders.model import Clan
@@ -31,7 +30,6 @@ logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
 logger.addHandler(handler)
 
-connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 tags_indexed = []

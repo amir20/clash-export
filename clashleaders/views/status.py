@@ -3,7 +3,7 @@ import os
 
 from flask import render_template, jsonify
 
-from clashleaders import app, SITE_ROOT
+from clashleaders import app, site_root
 from clashleaders.clash import uptime
 from clashleaders.model import Status, Player, Clan
 
@@ -25,7 +25,7 @@ def status():
 
 @app.route("/version.json")
 def version_json():
-    with open(os.path.join(SITE_ROOT, "..", "package.json")) as f:
+    with open(os.path.join(site_root, "..", "package.json")) as f:
         data = json.load(f)
     version = data['version']
     commit = os.getenv('SOURCE_COMMIT')
@@ -35,7 +35,7 @@ def version_json():
 
 @app.route("/healthcheck")
 def healthcheck():
-    with open(os.path.join(SITE_ROOT, "..", "package.json")) as f:
+    with open(os.path.join(site_root, "..", "package.json")) as f:
         data = json.load(f)
     version = data['version']
     commit = os.getenv('SOURCE_COMMIT')
