@@ -4,29 +4,22 @@ import os
 import time
 from datetime import datetime, timedelta
 
-import bugsnag
 import uvloop
 from bugsnag.handlers import BugsnagHandler
 
+from clashleaders import app
 from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
 from clashleaders.model import Clan
 
-bugsnag.configure(
-    api_key=os.getenv('BUGSNAG_API_KEY'),
-    project_root="/app",
-    release_stage=os.getenv('STAGE', 'development'),
-    notify_release_stages=["production"]
-)
 handler = BugsnagHandler()
 handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger(__name__)
 
-DEBUG = os.getenv('DEBUG', False)
 WORKER_OFFSET = int(os.getenv('WORKER_OFFSET', 1))
 INDEX = (WORKER_OFFSET - 1) * 10
 
-logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
+logger.setLevel(logging.DEBUG if app.debug else logging.INFO)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
 logger.addHandler(handler)
 
