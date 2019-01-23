@@ -12,6 +12,7 @@ services:
     command: "worker"
     depends_on:
       - mongo
+      - redis
   web:
     build: .
     image: "amir20/clashleaders:${TAG:-latest}"
