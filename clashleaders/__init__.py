@@ -1,13 +1,12 @@
 import logging
 import os
-import re
+from os.path import dirname, abspath
 
 import bugsnag
 import rq_dashboard
 from bugsnag.flask import handle_exceptions
-from flask import Flask, json
+from flask import Flask
 from flask_caching import Cache
-from markdown import markdown
 from mongoengine import connect
 from redis import Redis
 
@@ -16,8 +15,6 @@ app.config.from_object(rq_dashboard.default_settings)
 app.config['REDIS_HOST'] = 'redis'
 app.debug = os.getenv('DEBUG', False)
 app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
-
-SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 bugsnag.configure(
     api_key=os.getenv('BUGSNAG_API_KEY'),
@@ -34,32 +31,12 @@ cache_type = 'null' if app.debug else 'redis'
 cache = Cache(app, config={'CACHE_TYPE': cache_type, 'CACHE_REDIS_HOST': 'redis'})
 
 # Set connect to False for pre-forking to work
-connect(db='clashstats', host=os.getenv('DB_HOST'), connect=False)
+connect(db='clashstats', host='mongo', connect=False)
 
 redis_connection = Redis('redis')
 
+site_root = dirname(abspath(__file__))
+
 import clashleaders.views  # noqa
 
-MANIFEST_FILE = os.path.join(SITE_ROOT, "static", "manifest.json")
 
-
-def manifest_path(file):
-    with open(MANIFEST_FILE) as f:
-        data = json.load(f)
-    return data[file]
-
-
-def inline_path(file):
-    path = os.path.join(SITE_ROOT, manifest_path(file).lstrip('/'))
-    with open(path) as f:
-        content = f.read()
-        return re.sub(r'^//# sourceMappingURL=.*$', '', content, flags=re.MULTILINE)
-
-
-def first(list, i): return list[:i]
-
-
-app.add_template_global(manifest_path, 'manifest_path')
-app.add_template_global(inline_path, 'inline_path')
-app.add_template_filter(markdown, 'markdown')
-app.add_template_filter(first, 'first')
