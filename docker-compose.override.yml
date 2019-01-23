@@ -1,7 +1,6 @@
 version: "3.4"
 services:
   mongo:
-    image: mongo:4.1
     volumes:
       - ./:/clashleaders
       - ./mongosnapshot:/docker-entrypoint-initdb.d
@@ -10,20 +9,13 @@ services:
     volumes:
       - ./clashleaders:/app/clashleaders
       - .ipython/scheduler:/root/.ipython/profile_default
-    depends_on:
-      - mongo
   rq_worker:
     env_file: .env
     volumes:
       - ./clashleaders:/app/clashleaders
       - .ipython/scheduler:/root/.ipython/profile_default
-    depends_on:
-      - mongo
   web:
     env_file: .env
-    depends_on:
-      - mongo
-      - redis
     ports:
       - "8000:80"
     volumes:
@@ -39,5 +31,3 @@ services:
     volumes:
       - ./clashleaders:/app/clashleaders
       - .ipython/scheduler:/root/.ipython/profile_default
-    depends_on:
-      - mongo
