@@ -1,1 +1,1 @@
-mongorestore --gzip --archive=/docker-entrypoint-initdb.d/clashstats.gz
+mongorestore --gzip --archive=/docker-entrypoint-initdb.d/clashleaders.gz
