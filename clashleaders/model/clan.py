@@ -116,7 +116,7 @@ class Clan(DynamicDocument):
         clan = Clan.objects(tag=prepend_hash(tag)).first()
 
         if not clan:
-            clan = Clan.fetch_and_update(tag, sync_calculation=False)
+            clan = Clan.fetch_and_update(tag, sync_calculation=True)
 
         return clan
 
