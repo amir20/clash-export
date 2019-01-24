@@ -6,7 +6,6 @@ from sklearn.cluster import MiniBatchKMeans
 from sklearn.preprocessing import MinMaxScaler
 
 import clashleaders.model
-from clashleaders.model import Clan
 from .csv_export import extract_features
 
 SCALER = 'SCALER_CLUSTER'
@@ -31,7 +30,7 @@ def train_model(file_or_stream):
     return df['label'].to_dict()
 
 
-def predict_clans(*clans: Clan):
+def predict_clans(*clans: 'clashleaders.model.Clan'):
     scaler = __load_model(SCALER)
     kmeans = __load_model(KMEANS)
     features = [extract_features(clan) for clan in clans]
