@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import clashleaders.clustering.kmeans
 import numpy as np
 
 from clashleaders.model.clan_delta import ClanDelta
@@ -20,9 +21,9 @@ def update_calculations(clan):
         clan.week_delta = most_recent.clan_delta(last_week)
         clan.day_delta = most_recent.clan_delta(yesterday)
 
-    # if cpc.cluster_label == -1:
-    #     [label] = predict_clans(cpc)
-    #     cpc.cluster_label = label
+    if clan.cluster_label == -1:
+        [label] = clashleaders.clustering.kmeans.predict_clans(clan)
+        clan.cluster_label = label
 
     clan.save()
 
