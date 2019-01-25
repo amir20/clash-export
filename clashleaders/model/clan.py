@@ -71,9 +71,9 @@ class Clan(DynamicDocument):
     def update_calculations(self):
         return clashleaders.clash.clan_calculation.update_calculations(self)
 
-    def to_historical_df(self):
+    def to_historical_df(self) -> pd.DataFrame:
         histories = clashleaders.model.HistoricalClan.objects(tag=self.tag)
-        df = pd.DataFrame((h.to_dict() for h in histories))
+        df = pd.DataFrame(h.to_dict() for h in histories)
         return df.set_index('created_on')
 
     def historical_near_time(self, dt) -> clashleaders.model.HistoricalClan:

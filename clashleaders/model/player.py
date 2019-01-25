@@ -51,7 +51,7 @@ class Player(DynamicDocument):
 
     def to_historical_df(self) -> pd.DataFrame:
         series = clashleaders.model.HistoricalPlayer.objects(tag=self.tag)
-        return pd.DataFrame((p.to_series() for p in series))
+        return pd.DataFrame(p.to_series() for p in series)
 
     def compressed_fields(self):
         fields = vars(self).copy()
