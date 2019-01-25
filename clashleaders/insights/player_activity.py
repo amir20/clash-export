@@ -1,6 +1,9 @@
+from __future__ import annotations
+
+from datetime import timedelta
+
 import numpy as np
 import pandas as pd
-from datetime import timedelta
 
 import clashleaders.model
 from clashleaders.insights.clan_activity import clan_diff
@@ -16,7 +19,7 @@ def clan_percentiles(previous, most_recent):
     return ranks.mean(axis=1)
 
 
-def player_activity_scores(clan, days: int = 7) -> pd.Series:
+def player_activity_scores(clan: clashleaders.model.HistoricalClan, days: int = 7) -> pd.Series:
     previous_dt = clan.created_on - timedelta(days=days)
     previous_clan = clashleaders.model.HistoricalClan.find_by_tag_near_time(clan.tag, previous_dt)
     score_series = clan_percentiles(most_recent=clan, previous=previous_clan).to_frame('Activity Score')
