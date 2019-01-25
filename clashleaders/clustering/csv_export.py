@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import csv
 
 import clashleaders.model
@@ -19,7 +21,7 @@ def clans_to_csv(stream):
         writer.writerow([clan.tag, *extract_features(clan)])
 
 
-def extract_features(clan: 'clashleaders.model.Clan'):
+def extract_features(clan: clashleaders.model.Clan):
     return [clan.members,
             clan.clanLevel,
             clan.week_delta.total_trophies,

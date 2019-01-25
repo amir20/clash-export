@@ -1,8 +1,10 @@
-import pytest
+import json
 import os
 
-from clashleaders.model import Clan, ClanPreCalculated
+import pytest
+
 from clashleaders import app
+from clashleaders.model import *
 
 parent = os.path.abspath(os.path.dirname(__file__))
 
@@ -12,37 +14,37 @@ def object_from_json(file, obj):
         return obj.from_json(f.read())
 
 
+def historical_players_from_json(file):
+    with open(os.path.join(parent, "fixtures/" + file)) as f:
+        array = json.load(f)
+        return [HistoricalPlayer.from_json(json.dumps(s)) for s in array]
+
+
 @pytest.fixture
-def clan_with_players(clan_season_start):
-    clan = object_from_json("clan_with_players.json", Clan)
-    clan.from_before = lambda days: clan_season_start
+def clan(mocker, historical_clan_now, historical_clan_before):
+    clan = object_from_json("clan.json", Clan)
+    clan.historical_near_now = lambda: historical_clan_now
+    clan.historical_near_now = lambda: historical_clan_now
+
+    mocker.patch('clashleaders.model.HistoricalClan.find_by_tag_near_time', return_value=historical_clan_before)
 
     return clan
 
 
 @pytest.fixture
-def clan_season_start():
-    return object_from_json("clan_season_start.json", Clan)
+def historical_clan_now():
+    historical = object_from_json("historical_clan_now.json", HistoricalClan)
+    historical.players = historical_players_from_json("players_now.json")
+
+    return historical
 
 
 @pytest.fixture
-def first_clan_with_players():
-    return object_from_json("first_clan_with_players.json", Clan)
+def historical_clan_before():
+    historical = object_from_json("historical_clan_before.json", HistoricalClan)
+    historical.players = historical_players_from_json("players_before.json")
 
-
-@pytest.fixture
-def clan_pre_calculated(clan_season_start, clan_with_players):
-    cpc = object_from_json("clan_pre_calculated.json", ClanPreCalculated)
-    cpc.season_start = clan_season_start
-    cpc.most_recent = clan_with_players
-
-    return cpc
-
-
-@pytest.fixture
-def clan_table_html():
-    with open(os.path.join(parent, "fixtures/clan-table.html")) as f:
-        return f.read()
+    return historical
 
 
 @pytest.fixture

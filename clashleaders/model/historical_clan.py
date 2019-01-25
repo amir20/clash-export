@@ -4,8 +4,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 import pandas as pd
-from mongoengine import Document, StringField, IntField, DictField, \
-    BooleanField, DateTimeField, ReferenceField, ListField
+from mongoengine import Document, StringField, IntField, DateTimeField, ReferenceField, ListField
 
 import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity
@@ -47,9 +46,7 @@ COLUMNS = OrderedDict((
 class HistoricalClan(Document):
     created_on = DateTimeField(default=datetime.now)
     tag = StringField(required=True)
-    name = StringField(required=True)
     clanLevel = IntField()
-    description = StringField()
     clanPoints = IntField()
     clanVersusPoints = IntField()
     members = IntField()
@@ -57,11 +54,6 @@ class HistoricalClan(Document):
     warWins = IntField()
     warTies = IntField()
     warLosses = IntField()
-    isWarLogPublic = BooleanField()
-
-    badgeUrls = DictField()
-    location = DictField()
-
     players = ListField(ReferenceField(HistoricalPlayer))
 
     meta = {
@@ -82,7 +74,7 @@ class HistoricalClan(Document):
         if len(self.players) == 0:
             return pd.DataFrame(columns=list(COLUMNS.values()))
 
-        df = pd.DataFrame((p.to_series() for p in self.players))
+        df = pd.DataFrame(p.to_series() for p in self.players)
         df = df.reset_index().drop(columns=['index']).set_index('tag')
 
         if formatted:
