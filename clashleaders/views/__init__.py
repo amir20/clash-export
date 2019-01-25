@@ -2,7 +2,7 @@ import json
 import re
 from os.path import join
 
-import markdown
+from markdown import markdown
 
 import clashleaders.views.badge
 import clashleaders.views.clan
