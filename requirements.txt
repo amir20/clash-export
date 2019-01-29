@@ -46,7 +46,7 @@ mongoengine==0.16.3
 more-itertools==5.0.0
 multidict==4.4.2
 numpy==1.16.0
-pandas==0.24.0
+pandas==0.23.4
 parso==0.3.1
 pep8==1.7.1
 pexpect==4.6.0
