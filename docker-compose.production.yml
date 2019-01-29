@@ -31,9 +31,6 @@ services:
   web:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
-    deploy:
-      update_config:
-        order: start-first
     volumes:
       - /data/caddy:/root/.caddy
     environment:

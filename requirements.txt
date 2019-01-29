@@ -46,7 +46,7 @@ mongoengine==0.16.3
 more-itertools==5.0.0
 multidict==4.4.2
 numpy==1.16.0
-pandas==0.23.4
+pandas==0.24.0
 parso==0.3.1
 pep8==1.7.1
 pexpect==4.6.0
@@ -72,7 +72,7 @@ pytest-runner==4.2
 python-dateutil==2.7.5
 python-editor==1.0.3
 pytz==2018.9
-redis==3.0.1
+redis==3.1.0
 regex==2018.11.22
 requests==2.21.0
 rq==0.13.0
