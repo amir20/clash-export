@@ -3,6 +3,7 @@ import logging
 import os
 import time
 from datetime import datetime, timedelta
+from timeit import default_timer as timer
 
 import uvloop
 from bugsnag.handlers import BugsnagHandler
@@ -27,9 +28,11 @@ asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 tags_indexed = []
 
+start = timer()
+
 
 def update_single_clan():
-    global tags_indexed
+    global tags_indexed, start
     twelve_hour_ago = datetime.now() - timedelta(hours=12)
     try:
         clan = Clan.active(twelve_hour_ago).skip(max(INDEX - 1, 0)).limit(1).first()
@@ -42,6 +45,11 @@ def update_single_clan():
                 logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                 logger.info(f"Currently {total} eligible clans.")
                 tags_indexed = []
+                end = timer()
+                seconds = end - start
+                start = timer()
+                logger.info(f"Processed {100/seconds} clans per second.")
+
         else:
             time.sleep(10)
     except ClanNotFound:
