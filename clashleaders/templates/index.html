@@ -42,6 +42,16 @@ extends "layout.html" %} {% block body %}
 
 <section class="section">
   <div class="container">
+    <h1 class="title is-2">Weekly Leaderboards</h1>
+    <div class="columns">
+      <div class="column is-4">{{ leaderboard("Trophies Gained", gained_trophies, "{:,.2f}K", 1000)}}</div>
+      <div class="column is-4">{{ leaderboard("Attacks Won", most_attacks, "{:,.2f}K", 1000) }}</div>
+      <div class="column is-4">{{ leaderboard("Loot Grabbed", grabbed_gold, "{:,.0f}M", factor=1000000) }}</div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
     <h1 class="title is-2">Global Leaderboards</h1>
     <div class="columns">
       <div class="column is-4">{{ leaderboard("Highest Trophies", most_points) }}</div>
