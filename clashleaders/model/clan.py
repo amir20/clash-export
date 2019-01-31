@@ -65,6 +65,10 @@ class Clan(DynamicDocument):
 
             # Active clans
             ['week_delta.total_attack_wins', 'updated_on', 'members'],
+
+            # Leaderboards
+            'week_delta.total_trophies',
+            'week_delta.total_gold_grab'
         ]
     }
 
