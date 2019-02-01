@@ -1,10 +1,10 @@
 <template>
   <div class="box" :class="{ 'still-loading': loading }">
-    <article class="media">
-      <div class="media-left">
-        <figure class="image is-64x64"><img :src="this.data.badgeUrls.medium" alt="Image" /></figure>
+    <article class="columns is-vcentered">
+      <div class="column is-narrow has-text-centered-mobile">
+        <img :src="this.data.badgeUrls.medium" width="64" />
       </div>
-      <div class="media-content">
+      <div class="column">
         <div class="content">
           <p>
             <strong>{{ this.data.name }}</strong>
@@ -32,7 +32,7 @@ export default {
       loading: true,
       data: {
         badgeUrls: {
-          medium: "https://placeholdit.co/i/250x250?text=&bg=efefef"
+          medium: "http://placehold.jp/250x250.png?text=%20"
         },
         name: "██████",
         tag: "██████",
