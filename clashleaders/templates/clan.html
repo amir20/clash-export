@@ -1,4 +1,4 @@
-{% extends "layout.html" %}{% macro insight(label, value, delta, tooltip=None) -%}
+{% extends "layout.html" %}{% macro insight(label, value, delta, value_name, delta_name, tooltip=None) -%}
 <div class="level-item has-text-centered">
   <div>
     {% if tooltip %}
@@ -9,8 +9,10 @@
     <p class="heading">{{ label }}</p>
     {% endif %}
     <p class="title">
-      {{ "{:,}".format(value) }} <br />
-      <span class="tag {{'is-success' if delta > 0 else 'is-danger'}}">{{ "{:+,}".format(delta) }}</span>
+      <clan-field :initial-value='{{ "{}".format(value) }}' name="{{ value_name }}"></clan-field> <br />
+      <span class="tag {{'is-success' if delta > 0 else 'is-danger'}}">
+        <clan-field :initial-value='{{ "{}".format(delta) }}' name="{{ delta_name }}"></clan-field>
+      </span>
     </p>
   </div>
 </div>
@@ -104,19 +106,37 @@
                   "Total Trophies",
                   clan.clanPoints,
                   clan.week_delta.total_trophies,
-                  "Delta is calculated based
-              on data between
-              today and last week."
+                  "clanPoints",
+                  "week_delta.total_trophies",
+                  "Delta is calculated based on data between today and last week."
                 )
               }}
               <!-- Total BH Trophies -->
-              {{ insight("Total BH Trophies", clan.clanVersusPoints, clan.week_delta.total_bh_trophies) }}
+              {{ insight("Total BH Trophies",
+                clan.clanVersusPoints,
+                clan.week_delta.total_bh_trophies,
+                "clanVersusPoints",
+                "week_delta.total_bh_trophies"
+              ) }}
               <!-- Donations -->
-              {{ insight("Donations", clan.computed.total_donations, clan.week_delta.total_donations) }}
+              {{ insight("Donations",
+                clan.computed.total_donations,
+                clan.week_delta.total_donations,
+                "computed.total_donations",
+                "week_delta.total_donations") }}
               <!-- Total Wins -->
-              {{ insight("Total Wins", clan.computed.total_attack_wins, clan.week_delta.total_attack_wins) }}
+              {{ insight("Total Wins",
+                clan.computed.total_attack_wins,
+                clan.week_delta.total_attack_wins,
+                "computed.total_attack_wins",
+                "week_delta.total_attack_wins"
+                ) }}
               <!-- Total Versus Wins -->
-              {{ insight("Total Versus Wins", clan.computed.total_versus_wins, clan.week_delta.total_versus_wins) }}
+              {{ insight("Total Versus Wins",
+              clan.computed.total_versus_wins,
+              clan.week_delta.total_versus_wins,
+              "computed.total_versus_wins",
+              "week_delta.total_versus_wins") }}
             </div>
             <div class="is-hidden-mobile"><trophy-chart tag="{{ clan.tag }}"></trophy-chart></div>
           </div>

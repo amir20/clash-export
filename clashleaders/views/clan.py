@@ -29,7 +29,19 @@ def clan_refresh_json(tag):
     clan.update(inc__page_views=1)
     player_data = clan.historical_near_now().to_matrix()
     players_status = clan_status(clan)
-    return jsonify(dict(playerData=player_data, playersStatus=players_status))
+
+    meta = dict(clan.to_mongo())
+    meta['computed'] = dict(meta['computed'])
+    meta['day_delta'] = dict(meta['day_delta'])
+    meta['week_delta'] = dict(meta['week_delta'])
+    del meta['memberList']
+    del meta['_id']
+
+    return jsonify(dict(
+        playerData=player_data,
+        playersStatus=players_status,
+        meta=meta
+    ))
 
 
 @app.route("/clan/<slug>")
