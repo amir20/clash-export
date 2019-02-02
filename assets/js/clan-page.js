@@ -5,6 +5,7 @@ import TableNav from "./components/TableNav";
 import TrophyChart from "./components/TrophyChart";
 import Notification from "./components/Notification";
 import LastUpdated from "./components/LastUpdated";
+import ClanField from "./components/ClanField";
 import bugsnag from "./bugsnag";
 import store from "./store/clan-page";
 bugsnag(Vue);
@@ -19,6 +20,7 @@ new Vue({
     TableNav,
     TrophyChart,
     Notification,
-    LastUpdated
+    LastUpdated,
+    ClanField
   }
 });
