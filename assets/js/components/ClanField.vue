@@ -37,7 +37,7 @@ export default {
         }
       }
       new TWEEN.Tween({ tweeningValue: startValue })
-        .to({ tweeningValue: endValue }, 4500)
+        .to({ tweeningValue: endValue }, 2500)
         .onUpdate(object => {
           this.tweeningValue = Math.ceil(object.tweeningValue);
         })
