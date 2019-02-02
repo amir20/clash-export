@@ -33,7 +33,9 @@ const mutations = {
     state.clan = data.playerData;
     state.playersStatus = data.playersStatus;
     state.lastUpdated = new Date();
-    state.clanMeta = data.meta;
+  },
+  setClanMeta(state, data) {
+    state.clanMeta = data;
   },
   setClanStats(state, data) {
     state.clanStats = data;
@@ -92,8 +94,11 @@ const actions = {
     const clanStatsPromise = fetch(`${path}/stats.json`);
     commit("stopLoading");
     handleResponse(previousPromise, commit, "setPreviousData");
-    handleResponse(refreshPromise, commit, "setRefreshData");
     handleResponse(clanStatsPromise, commit, "setClanStats");
+    await handleResponse(refreshPromise, commit, "setRefreshData");
+    await timeout(2000);
+    const longPromise = fetch(`${path}/long.json`);
+    handleResponse(longPromise, commit, "setClanMeta");
   },
   async fetchSimilarClansStats({ commit, getters: { path }, state: { days } }) {
     const similarClansPromise = fetch(`${path}/similar/avg.json?daySpan=${days}`);
@@ -184,6 +189,10 @@ const convertToMap = (header, matrix) => {
 };
 
 const isNonNumericColumns = key => key == "tag" || key == "name";
+
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export default new Vuex.Store({
   strict: true,

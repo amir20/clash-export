@@ -18,7 +18,6 @@ export default {
   },
   watch: {
     clanMeta(newValue, oldValue) {
-      console.log(this.initialValue, this.newValue);
       this.tween(this.initialValue, this.newValue);
     }
   },
@@ -30,7 +29,6 @@ export default {
   },
   methods: {
     tween(startValue, endValue) {
-      var vm = this;
       function animate() {
         if (TWEEN.update()) {
           requestAnimationFrame(animate);
@@ -38,9 +36,7 @@ export default {
       }
       new TWEEN.Tween({ tweeningValue: startValue })
         .to({ tweeningValue: endValue }, 2500)
-        .onUpdate(object => {
-          this.tweeningValue = Math.ceil(object.tweeningValue);
-        })
+        .onUpdate(object => (this.tweeningValue = Math.ceil(object.tweeningValue)))
         .start();
       animate();
     }
