@@ -30,18 +30,24 @@ def clan_refresh_json(tag):
     player_data = clan.historical_near_now().to_matrix()
     players_status = clan_status(clan)
 
-    meta = dict(clan.to_mongo())
-    meta['computed'] = dict(meta['computed'])
-    meta['day_delta'] = dict(meta['day_delta'])
-    meta['week_delta'] = dict(meta['week_delta'])
-    del meta['memberList']
-    del meta['_id']
-
     return jsonify(dict(
         playerData=player_data,
-        playersStatus=players_status,
-        meta=meta
+        playersStatus=players_status
     ))
+
+
+@app.route("/clan/<tag>/long.json")
+def clan_long_json(tag):
+    clan = Clan.find_by_tag(tag)
+
+    data = dict(clan.to_mongo())
+    data['computed'] = dict(data['computed'])
+    data['day_delta'] = dict(data['day_delta'])
+    data['week_delta'] = dict(data['week_delta'])
+    del data['memberList']
+    del data['_id']
+
+    return jsonify(data)
 
 
 @app.route("/clan/<slug>")
@@ -77,7 +83,7 @@ def clan_stats(tag):
 
 @app.route("/clan/<tag>/short.json")
 @cache.cached(timeout=1000)
-def clan_meta(tag):
+def clan_short_json(tag):
     clan = Clan.find_by_tag(tag)
     df = clan.historical_near_now().to_df()[['Name', 'TH Level', 'Current Trophies']].reset_index()
     players = df.rename(lambda s: camelize(s.replace(" ", ""), False), axis='columns').to_dict('i').values()
