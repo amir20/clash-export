@@ -21,7 +21,8 @@ const state = {
   clanStats: {},
   daysSpan: 7,
   sortField: "value",
-  apiError: null
+  apiError: null,
+  clanMeta: null
 };
 
 const mutations = {
@@ -32,6 +33,7 @@ const mutations = {
     state.clan = data.playerData;
     state.playersStatus = data.playersStatus;
     state.lastUpdated = new Date();
+    state.clanMeta = data.meta;
   },
   setClanStats(state, data) {
     state.clanStats = data;

@@ -8,6 +8,7 @@ from mongoengine import Document, StringField, IntField, DateTimeField, Referenc
 
 import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity
+import clashleaders.model
 from clashleaders.model import ClanDelta
 from clashleaders.model.clan import prepend_hash
 from clashleaders.model.historical_player import HistoricalPlayer
@@ -115,6 +116,10 @@ class HistoricalClan(Document):
     @classmethod
     def find_by_tag_near_time(cls, tag, dt) -> HistoricalClan:
         tag = prepend_hash(tag)
+
+        if HistoricalClan.objects(tag=tag).count() == 0:
+            clashleaders.model.Clan.fetch_and_update(tag)
+
         clan = HistoricalClan.objects(tag=tag, created_on__lte=dt).order_by('-created_on').first()
 
         if clan is None:
