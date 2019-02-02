@@ -96,7 +96,7 @@ const actions = {
     handleResponse(previousPromise, commit, "setPreviousData");
     handleResponse(clanStatsPromise, commit, "setClanStats");
     await handleResponse(refreshPromise, commit, "setRefreshData");
-    await timeout(2000);
+    await timeout(1800);
     const longPromise = fetch(`${path}/long.json`);
     handleResponse(longPromise, commit, "setClanMeta");
   },

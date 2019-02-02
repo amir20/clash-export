@@ -13,7 +13,7 @@ export default {
       tweeningValue: 0
     };
   },
-  mounted: function() {
+  created() {
     this.tweeningValue = this.initialValue;
   },
   watch: {
@@ -29,14 +29,14 @@ export default {
   },
   methods: {
     tween(startValue, endValue) {
-      function animate() {
-        if (TWEEN.update()) {
-          requestAnimationFrame(animate);
-        }
+      function animate(time) {
+        requestAnimationFrame(animate);
+        TWEEN.update(time);
       }
+      requestAnimationFrame(animate);
       new TWEEN.Tween({ tweeningValue: startValue })
         .to({ tweeningValue: endValue }, 2500)
-        .onUpdate(object => (this.tweeningValue = Math.ceil(object.tweeningValue)))
+        .onUpdate(({ tweeningValue }) => (this.tweeningValue = Math.ceil(tweeningValue)))
         .start();
       animate();
     }
