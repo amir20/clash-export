@@ -9,10 +9,11 @@
     <p class="heading">{{ label }}</p>
     {% endif %}
     <p class="title">
-      <clan-field :initial-value='{{ "{}".format(value) }}' name="{{ value_name }}"></clan-field> <br />
-      <span class="tag {{'is-success' if delta > 0 else 'is-danger'}}">
-        <clan-field :initial-value='{{ "{}".format(delta) }}' name="{{ delta_name }}"></clan-field>
-      </span>
+      <clan-field :initial-value="{{value}}" name="{{ value_name }}"></clan-field> <br />
+      <clan-field :initial-value="{{delta}}" name="{{ delta_name }}"
+      show-plus-sign class="tag"
+      positive-class="is-success"
+      negative-class="is-danger"></clan-field>
     </p>
   </div>
 </div>
