@@ -1,5 +1,12 @@
 <template>
-  <span v-if="tweeningValue != null">{{ tweeningValue.toLocaleString() }}</span>
+  <span
+    v-if="tweeningValue != null"
+    :class="{ [positiveClass]: tweeningValue > 0, [negativeClass]: tweeningValue < 0 }"
+  >
+    <template v-if="showPlusSign && tweeningValue > 0"
+      >+</template
+    >{{ tweeningValue.toLocaleString() }}
+  </span>
 </template>
 
 <script>
@@ -7,7 +14,13 @@ import { mapState } from "vuex";
 import TWEEN from "@tweenjs/tween.js";
 
 export default {
-  props: ["initialValue", "name"],
+  props: {
+    initialValue: { type: Number },
+    name: { type: String },
+    showPlusSign: { type: Boolean, default: false },
+    positiveClass: { type: String, default: "" },
+    negativeClass: { type: String, default: "" }
+  },
   data: function() {
     return {
       tweeningValue: 0
