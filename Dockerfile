@@ -1,5 +1,5 @@
 # Build assets
-FROM node:10-alpine as builder
+FROM node:11-alpine as builder
 
 RUN apk add --no-cache git openssh python make g++ \
     && npm install -g npm
