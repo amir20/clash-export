@@ -32,7 +32,7 @@ export default {
       loading: true,
       data: {
         badgeUrls: {
-          medium: "http://placehold.jp/250x250.png?text=%20"
+          medium: "https://placehold.jp/250x250.png?text=%20"
         },
         name: "██████",
         tag: "██████",
