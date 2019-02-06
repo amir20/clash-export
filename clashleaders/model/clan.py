@@ -160,7 +160,7 @@ class Clan(DynamicDocument):
         if sync_calculation:
             clan.update_calculations()
         else:
-            clashleaders.queue.calculation.update_calculations.delay(tag)
+            clan.job = clashleaders.queue.calculation.update_calculations.delay(tag)
 
         return clan
 
