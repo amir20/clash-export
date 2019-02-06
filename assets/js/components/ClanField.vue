@@ -48,7 +48,7 @@ export default {
       }
       requestAnimationFrame(animate);
       new TWEEN.Tween({ tweeningValue: startValue })
-        .to({ tweeningValue: endValue }, 2500)
+        .to({ tweeningValue: endValue }, 1200)
         .onUpdate(({ tweeningValue }) => (this.tweeningValue = Math.ceil(tweeningValue)))
         .start();
       animate();
