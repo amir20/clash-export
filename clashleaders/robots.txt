@@ -1,2 +1,3 @@
 User-agent: *
-Disallow:
+Disallow: /*.xlsx?daysAgo=*$
+Disallow: /*.xlsx$
