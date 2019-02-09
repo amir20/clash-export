@@ -1,8 +1,12 @@
 import time
 
 from flask import request
+from influxdb import InfluxDBClient
 
 from clashleaders import app
+
+client = InfluxDBClient(host='influx', database='clashleaders')
+client.create_database('clashleaders')
 
 
 def start_timer():
@@ -11,7 +15,20 @@ def start_timer():
 
 def stop_timer(response):
     resp_time = (time.time() - request.start_time) * 1000
-    print(resp_time)
+
+    json_body = [
+        {
+            "measurement": "page_load_times",
+            "tags": {
+                "path": request.full_path,
+            },
+            "fields": {
+                "value": resp_time
+            }
+        }
+    ]
+
+    client.write_points(json_body)
 
     return response
 
