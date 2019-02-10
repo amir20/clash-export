@@ -12,7 +12,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2000m          
+          memory: 2000m
   worker:
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjZkMTc1NjM4LTdjYzktNGMyNi04OWFlLTUwZWY4N2M3MDY1NCIsImlhdCI6MTU0ODcxNDYwNiwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjY4LjE4My4xNjQuMjQwIiwiMTA0LjI0OC43OC44MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.RDVq9kFX-xXCd2Bc0f3LK4At81hmYELQfL8G-BGk8VP2ALw2sXQYHUsTKXHqKHYqH789atl2dEai3O-rfUEu-A
@@ -20,7 +20,7 @@ services:
       - STAGE=production
       - WORKER_OFFSET={{.Task.Slot}}
     deploy:
-      replicas: 2
+      mode: global
   rq_worker:
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjI4NmNiZjkxLTkwZWMtNDJmMC04YTY2LWUxZjEzYzUwZDg4MiIsImlhdCI6MTU0ODcxNDcyNCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4yNDguNzguODAiLCI2OC4xODMuMTY0LjI0MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.Iswu6xnxOjgkFkWiyWc9qQwLtZ0sREDylzIJHJRvRjSFb_yGNbX6HeeCrdrwfNnp9dPja1SVPJuhN8-SWXWMbA
