@@ -4,12 +4,6 @@ services:
     image: mongo:4.1
   influx:
     image: influxdb:1.7-alpine
-  chronograf:
-      image: chronograf:1.7-alpine
-      depends_on:
-        - influx
-      ports:
-        - 8888:8888
   grafana:
     image: grafana/grafana
     depends_on:
