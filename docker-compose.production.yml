@@ -21,6 +21,9 @@ services:
       - WORKER_OFFSET={{.Task.Slot}}
     deploy:
       mode: global
+      resources:
+        limits:
+          memory: 200m
   rq_worker:
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjI4NmNiZjkxLTkwZWMtNDJmMC04YTY2LWUxZjEzYzUwZDg4MiIsImlhdCI6MTU0ODcxNDcyNCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4yNDguNzguODAiLCI2OC4xODMuMTY0LjI0MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.Iswu6xnxOjgkFkWiyWc9qQwLtZ0sREDylzIJHJRvRjSFb_yGNbX6HeeCrdrwfNnp9dPja1SVPJuhN8-SWXWMbA
@@ -36,6 +39,10 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
     volumes:
       - /data/caddy:/root/.caddy
+    deploy:
+      resources:
+        limits:
+          memory: 400m
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM0ZjQ0N2YwLTFhMjctNGY1Yy1iZmJmLTAzNmU3ZTUwNGNhMSIsImlhdCI6MTU0ODcxNDgxMiwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4yNDguNzguODAiLCI2OC4xODMuMTY0LjI0MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.sJTwjukALofUQMI5fXISE0pkYK1rVeGrJPEPhr9QJcRLcz8oVMT0svdHkkqg8YiLtRZo7n-Nz4skd-9HIfSfeQ
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
