@@ -3,12 +3,11 @@ import logging
 import os
 import time
 from datetime import datetime, timedelta
-from timeit import default_timer as timer
 
 import uvloop
 from bugsnag.handlers import BugsnagHandler
 
-from clashleaders import app
+from clashleaders import app, influx_client
 from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
 from clashleaders.model import Clan
 
@@ -28,7 +27,7 @@ asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 tags_indexed = []
 
-start = timer()
+start = time.time()
 
 
 def update_single_clan():
@@ -38,17 +37,17 @@ def update_single_clan():
         clan = Clan.active(twelve_hour_ago).skip(max(INDEX - 1, 0)).limit(1).first()
         if clan:
             logger.debug(f"Worker #{WORKER_OFFSET}: Updating clan {clan.tag}.")
-            Clan.fetch_and_update(clan.tag, sync_calculation=True)
+            capture_duration(lambda: Clan.fetch_and_update(clan.tag, sync_calculation=True))
             tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:
                 total = Clan.active(twelve_hour_ago).count()
                 logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                 logger.info(f"Currently {total} eligible clans.")
                 tags_indexed = []
-                end = timer()
+                end = time.time()
                 seconds = end - start
-                start = timer()
-                logger.info(f"Processed {100/seconds} clans per second.")
+                start = time.time()
+                logger.info(f"Processed {100 / seconds} clans per second.")
 
         else:
             time.sleep(10)
@@ -83,6 +82,22 @@ def try_again_clan(clan):
     if clan:
         eleven_hour_ago = datetime.now() - timedelta(hours=11)
         clan.update(set__updated_on=eleven_hour_ago)
+
+
+def capture_duration(func):
+    start_time = time.time()
+    func()
+    duration = (time.time() - start_time) * 1000
+    json_body = [
+        {
+            "measurement": "clan_fetch",
+            "fields": {
+                "value": duration
+            }
+        }
+    ]
+
+    influx_client.write_points(json_body)
 
 
 def main():
