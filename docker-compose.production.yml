@@ -20,7 +20,7 @@ services:
       - STAGE=production
       - WORKER_OFFSET={{.Task.Slot}}
     deploy:
-      mode: global
+      replicas: 2
       resources:
         limits:
           memory: 200m
