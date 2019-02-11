@@ -7,7 +7,6 @@ import rq_dashboard
 from bugsnag.flask import handle_exceptions
 from flask import Flask
 from flask_caching import Cache
-from influxdb import InfluxDBClient
 from mongoengine import connect
 from redis import Redis
 
@@ -35,9 +34,6 @@ cache = Cache(app, config={'CACHE_TYPE': cache_type, 'CACHE_REDIS_HOST': 'redis'
 connect(db='clashstats', host='mongo', connect=False)
 
 redis_connection = Redis('redis')
-
-influx_client = InfluxDBClient(host='influx', database='clashleaders')
-influx_client.create_database('clashleaders')
 
 site_root = dirname(abspath(__file__))
 

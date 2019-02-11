@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 import uvloop
 from bugsnag.handlers import BugsnagHandler
 
-from clashleaders import app, influx_client
+from clashleaders import app
 from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
 from clashleaders.model import Clan
 
@@ -88,16 +88,7 @@ def capture_duration(func):
     start_time = time.time()
     func()
     duration = (time.time() - start_time) * 1000
-    json_body = [
-        {
-            "measurement": "clan_fetch",
-            "fields": {
-                "value": duration
-            }
-        }
-    ]
-
-    influx_client.write_points(json_body)
+    logger.debug(f"Worker #{WORKER_OFFSET}: Fetched clan in  {duration}ms.")
 
 
 def main():
