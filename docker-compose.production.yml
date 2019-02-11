@@ -1,8 +1,5 @@
 version: "3.4"
 services:
-  influx:
-    volumes:
-      - /data/influx:/var/lib/influxdb
   redis:
     volumes:
       - /data/redis:/data

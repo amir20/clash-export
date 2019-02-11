@@ -34,7 +34,6 @@ freezegun==0.3.11
 gunicorn==19.9.0
 idna==2.7
 inflection==0.3.1
-influxdb==5.2.1
 ipython==7.2.0
 ipython-genutils==0.2.0
 itsdangerous==1.1.0
