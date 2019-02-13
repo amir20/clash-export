@@ -31,6 +31,7 @@ OTHER_STATS = [
 class HistoricalPlayer(Document):
     created_on = DateTimeField(default=datetime.now)
     tag = StringField(required=True)
+    clan_tag = StringField()
     name = StringField(required=True)
     bytes = BinaryField(required=True)
 
@@ -38,6 +39,7 @@ class HistoricalPlayer(Document):
         'index_background': True,
         'indexes': [
             'tag',
+            'clan_tag',
             'created_on',
             ('tag', 'created_on'),
         ]
@@ -63,7 +65,12 @@ class HistoricalPlayer(Document):
                     player_stats[key] = v
 
             self.stats = PlayerStats(**player_stats)
-            super().__init__(tag=kwargs['tag'], name=kwargs['name'], bytes=self.stats.SerializeToString())
+            super().__init__(
+                tag=kwargs['tag'],
+                clan_tag=kwargs['clan']['tag'],
+                name=kwargs['name'],
+                bytes=self.stats.SerializeToString()
+            )
 
     def __repr__(self):
         return "<HistoricalPlayer {0}>".format(self.tag)
