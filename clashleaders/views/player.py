@@ -1,7 +1,7 @@
 from flask import render_template, jsonify
 
 from clashleaders import app, cache
-from clashleaders.model import Player, Clan
+from clashleaders.model import Player
 
 
 @app.route("/player/<slug>")
@@ -34,60 +34,12 @@ def player_attacks_json(tag):
 @app.route("/player/<tag>.json")
 def player_json(tag):
     player = Player.find_by_tag(tag)
-    score = player.player_score()
-    fields = list(player._fields_ordered)
-    fields.remove("id")
-    fields.remove("binary_bytes")
-
-    data = dict()
-    for field in fields:
-        data[field] = player[field]
-
-    data['percentile'] = score
-
-    if data['clan']:
-        data['clan']['slug'] = Clan.find_by_tag(data['clan']['tag']).slug
-
-    return jsonify(data)
+    return jsonify(player.to_dict(include_score=True))
 
 
 @cache.memoize(28800)
 def player_troops_insights(player):
-    df = player.troop_insights().dropna()
-    th_df = df.xs('home', level='base')
-    th_total = len(th_df)
-    th_completed = len(th_df[th_df['delta'] <= 0])
-
-    bh_df = df.xs('builderBase', level='base')
-    bh_total = len(bh_df)
-    bh_completed = len(bh_df[bh_df['delta'] <= 0])
-
-    df = df[df['delta'] > 0]
-
-    if df.empty:
-        return dict(builderBase={},
-                    home={},
-                    th_ratio=th_completed / th_total,
-                    bh_ratio=bh_completed / bh_total,
-                    th_level=player.townHallLevel)
-
-    builder_troops = df.xs('builderBase', level='base').to_dict('i')
-    for k, v in builder_troops.items():
-        v['name'] = k
-    builder_troops = list(builder_troops.values())
-
-    home_troops = df.xs('home', level='base').to_dict('i')
-    for k, v in home_troops.items():
-        v['name'] = k
-    home_troops = list(home_troops.values())
-
-    return dict(
-        builderBase=builder_troops,
-        home=home_troops,
-        th_ratio=th_completed / th_total,
-        bh_ratio=bh_completed / bh_total,
-        th_level=player.townHallLevel
-    )
+    return player.troop_insights()
 
 
 player_troops_insights.make_cache_key = lambda f, p: f"player_troops_insights_{p.tag}"
