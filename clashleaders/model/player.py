@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
-import pandas as pd
 from codecs import decode, encode
+from typing import Dict
+
+import pandas as pd
 from mongoengine import DynamicDocument, BinaryField, signals, StringField, DictField
 from pymongo import ReplaceOne
 from slugify import slugify
@@ -82,10 +84,27 @@ class Player(DynamicDocument):
         return Player.fetch_and_save(self.tag)
 
     def troop_insights(self):
-        return clashleaders.insights.troops.next_troop_recommendation(self.tag)
+        return clashleaders.insights.troops.next_troop_recommendation(self)
 
     def __repr__(self):
         return "<Player {0}>".format(self.tag)
+
+    def to_dict(self, include_score=False) -> Dict:
+        fields = list(self._fields_ordered)
+        fields.remove("id")
+        fields.remove("binary_bytes")
+
+        data = dict()
+        for field in fields:
+            data[field] = self[field]
+
+        if include_score:
+            data['percentile'] = self.player_score()
+
+        if data['clan']:
+            data['clan']['slug'] = Clan.find_by_tag(data['clan']['tag']).slug
+
+        return data
 
     @classmethod
     def upsert_player(cls, player_tag, **kwargs):
