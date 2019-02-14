@@ -16,14 +16,6 @@ def player_html(slug):
                            insights=player_troops_insights(player))
 
 
-@cache.memoize(28800)
-def player_score(player):
-    return player.player_score()
-
-
-player_score.make_cache_key = lambda f, p: f"player_score{p.tag}"
-
-
 @app.route("/player/<tag>/attacks.json")
 @cache.cached(timeout=1200, query_string=True)
 def player_attacks_json(tag):
@@ -43,3 +35,11 @@ def player_troops_insights(player):
 
 
 player_troops_insights.make_cache_key = lambda f, p: f"player_troops_insights_{p.tag}"
+
+
+@cache.memoize(28800)
+def player_score(player):
+    return player.player_score()
+
+
+player_score.make_cache_key = lambda f, p: f"player_score{p.tag}"
