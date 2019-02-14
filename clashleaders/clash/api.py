@@ -56,7 +56,7 @@ async def __fetch_all(urls, loop=None):
 
 
 def find_clan_by_tag(tag):
-    tag = "#" + tag.lstrip("#")
+    tag = prepend_hash(tag)
     logger.info(f"Fetching clan from API {tag}.")
 
     future = __fetch(f'https://api.clashofclans.com/v1/clans/{quote(tag)}')
@@ -79,7 +79,7 @@ def find_clan_by_tag(tag):
 
 
 def find_player_by_tag(tag):
-    tag = "#" + tag.lstrip("#")
+    tag = prepend_hash(tag)
     logger.info(f"Fetching player from API {tag}.")
 
     future = __fetch(f'https://api.clashofclans.com/v1/players/{quote(tag)}')
@@ -121,7 +121,7 @@ def top_players_and_clan():
 
 
 def clan_warlog(tag):
-    tag = "#" + tag.lstrip("#")
+    tag = prepend_hash(tag)
     logger.info(f"Fetching clan warlog from API {tag}.")
     future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog")
     code, response = asyncio.get_event_loop().run_until_complete(future)
@@ -138,3 +138,7 @@ def fetch_all_players(clan):
     urls = ['https://api.clashofclans.com/v1/players/' + quote(tag) for tag in tags]
     future = __fetch_all(urls, loop=asyncio.get_event_loop())
     return asyncio.get_event_loop().run_until_complete(future)
+
+
+def prepend_hash(tag):
+    return "#" + tag.lstrip("#").upper()

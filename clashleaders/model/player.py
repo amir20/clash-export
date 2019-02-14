@@ -46,10 +46,14 @@ class Player(DynamicDocument):
         return ReplaceOne({'tag': self.tag}, self.compressed_fields(), upsert=True)
 
     def most_recent_clan(self) -> Clan:
-        return Clan.find_by_tag(self.clan['tag'])
+        return Clan.find_by_tag(self.clan['tag']) if self.clan else None
 
     def player_score(self):
-        return self.most_recent_clan().historical_near_now().activity_score_series().get(self.tag)
+        clan = self.most_recent_clan()
+        if clan:
+            return clan.historical_near_now().activity_score_series().get(self.tag)
+        else:
+            return None
 
     def to_historical_df(self) -> pd.DataFrame:
         series = clashleaders.model.HistoricalPlayer.objects(tag=self.tag)
@@ -116,6 +120,10 @@ class Player(DynamicDocument):
             # This is ugly but update() doesn't trigger pre_save
             for key, value in kwargs.items():
                 setattr(player, key, value)
+
+            if 'clan' not in kwargs:
+                player.clan = None
+
             player.save()
 
         return player
