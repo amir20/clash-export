@@ -24,3 +24,10 @@ def player_activity_scores(clan: clashleaders.model.HistoricalClan, days: int = 
     previous_clan = clashleaders.model.HistoricalClan.find_by_tag_near_time(clan.tag, previous_dt)
     score_series = clan_percentiles(most_recent=clan, previous=previous_clan).to_frame('Activity Score')
     return np.ceil(score_series['Activity Score'] * 100)
+
+
+def clan_history(player: clashleaders.model.Player) -> pd.DataFrame:
+    df = player.to_historical_df()
+    df = df[['clan_tag']].dropna()
+    df['clan_changed'] = df['clan_tag'].ne(df['clan_tag'].shift().bfill())
+    return df[df['clan_changed']]
