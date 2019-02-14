@@ -82,6 +82,7 @@ class HistoricalPlayer(Document):
         d = {f: getattr(self.stats, f) for f in self.stats.DESCRIPTOR.fields_by_name}
         d['name'] = self.name
         d['tag'] = self.tag
+        d['clan_tag'] = self.clan_tag
         return d
 
     def to_series(self):
