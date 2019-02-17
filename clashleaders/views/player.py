@@ -7,11 +7,10 @@ from clashleaders.model import Player
 @app.route("/player/<slug>")
 def player_html(slug):
     player = Player.find_by_slug(slug)
-    score = player_score(player)
     clan = player.most_recent_clan()
     return render_template('player.html',
                            player=player,
-                           player_score=score,
+                           player_score=player.player_score(),
                            clan=clan,
                            insights=player_troops_insights(player))
 
@@ -36,11 +35,3 @@ def player_troops_insights(player):
 
 
 player_troops_insights.make_cache_key = lambda f, p: f"player_troops_insights_{p.tag}"
-
-
-@cache.memoize(28800)
-def player_score(player):
-    return player.player_score()
-
-
-player_score.make_cache_key = lambda f, p: f"player_score{p.tag}"
