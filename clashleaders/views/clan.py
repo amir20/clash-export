@@ -6,6 +6,7 @@ from clashleaders import app, cache
 from clashleaders.insights.clan_activity import clan_status
 from clashleaders.model import Clan, Status
 from clashleaders.text.clan_description_processor import transform_description
+from clashleaders.views.player import player_score
 
 
 @app.context_processor
@@ -29,6 +30,8 @@ def clan_refresh_json(tag):
     clan.update(inc__page_views=1)
     player_data = clan.historical_near_now().to_matrix()
     players_status = clan_status(clan)
+
+    player_score.delete_memoized()  # We should clear the cache so old player score are thrown away
 
     return jsonify(dict(
         playerData=player_data,
