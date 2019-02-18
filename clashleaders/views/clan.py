@@ -39,15 +39,7 @@ def clan_refresh_json(tag):
 @app.route("/clan/<tag>/long.json")
 def clan_long_json(tag):
     clan = Clan.find_by_tag(tag)
-
-    data = dict(clan.to_mongo())
-    data['computed'] = dict(data['computed'])
-    data['day_delta'] = dict(data['day_delta'])
-    data['week_delta'] = dict(data['week_delta'])
-    del data['memberList']
-    del data['_id']
-
-    return jsonify(data)
+    return jsonify(clan.to_dict())
 
 
 @app.route("/clan/<slug>")
@@ -87,18 +79,10 @@ def clan_short_json(tag):
     clan = Clan.find_by_tag(tag)
     df = clan.historical_near_now().to_df()[['Name', 'TH Level', 'Current Trophies']].reset_index()
     players = df.rename(lambda s: camelize(s.replace(" ", ""), False), axis='columns').to_dict('i').values()
-
-    data = {
-        'tag': clan.tag,
-        'slug': clan.slug,
-        'name': clan.name,
-        'description': clan.description,
-        'clanPoints': clan.clanPoints,
-        'clanVersusPoints': clan.clanVersusPoints,
-        'members': clan.members,
-        'badgeUrls': clan.badgeUrls,
-        'players': list(players)
-    }
+    keys = {'tag', 'slug', 'name', 'description', 'clanPoints', 'clanVersusPoints', 'members', 'badgeUrls'}
+    data = clan.to_dict()
+    data = {k: v for k, v in data.items() if k in keys}
+    data['players'] = list(players)
 
     return jsonify(data)
 
