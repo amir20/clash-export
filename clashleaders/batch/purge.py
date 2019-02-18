@@ -8,8 +8,9 @@ logger = logging.getLogger(__name__)
 
 def delete_outdated():
     logger.info("Deleting outdated historical clans...")
-    HistoricalClan.objects(created_on__lt=(datetime.now() - timedelta(days=31))).delete()
-    HistoricalPlayer.objects(created_on__lt=(datetime.now() - timedelta(days=31))).delete()
+    dt = datetime.now() - timedelta(days=31)
+    HistoricalPlayer.objects(created_on__lt=dt).delete()
+    HistoricalClan.objects(created_on__lt=dt).delete()
 
 
 def reset_stats():
