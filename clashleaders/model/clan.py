@@ -89,7 +89,13 @@ class Clan(DynamicDocument):
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
     def historical_near_now(self) -> clashleaders.model.HistoricalClan:
-        return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
+        historical = clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
+
+        if not historical:
+            Clan.fetch_and_update(self.tag, sync_calculation=False)
+            historical = clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
+
+        return historical
 
     def similar_clans(self) -> Tuple[int, List[Clan]]:
         less = Clan.objects(cluster_label=self.cluster_label, clanPoints__lt=self.clanPoints) \
