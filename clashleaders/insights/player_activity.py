@@ -29,5 +29,5 @@ def player_activity_scores(clan: clashleaders.model.HistoricalClan, days: int = 
 def clan_history(player: clashleaders.model.Player) -> pd.DataFrame:
     df = player.to_historical_df()
     df = df[['clan_tag']].dropna()
-    df['clan_changed'] = df['clan_tag'].ne(df['clan_tag'].shift().bfill())
-    return df[df['clan_changed']]
+    df['clan_changed'] = df['clan_tag'].ne(df['clan_tag'].shift().fillna(True))
+    return df[df['clan_changed']]['clan_tag']
