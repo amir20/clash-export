@@ -88,6 +88,10 @@ export default {
     if (this.oldestDays < 3) {
       this.setDaysSpan(1);
     }
+    document.addEventListener("visibilitychange", this.handleVisibilityChange, false);
+  },
+  beforeDestroy() {
+    document.removeEventListener("visibilitychange");
   },
   computed: {
     ...mapState(["loading", "sortField", "similarClansAvg", "apiError", "playersStatus"]),
@@ -131,6 +135,11 @@ export default {
         this.openDetails.push(row.id);
       } else {
         this.openDetails.splice(this.openDetails.indexOf(row.id), 1);
+      }
+    },
+    handleVisibilityChange() {
+      if (!document.hidden) {
+        this.fetchClanData();
       }
     }
   }
