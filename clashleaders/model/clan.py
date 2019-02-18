@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 import pandas as pd
 from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, \
@@ -121,6 +121,16 @@ class Clan(DynamicDocument):
 
     def warlog(self):
         return clan_warlog(self.tag)['items']
+
+    def to_dict(self) -> Dict:
+        data = dict(self.to_mongo())
+        data['computed'] = dict(data['computed'])
+        data['day_delta'] = dict(data['day_delta'])
+        data['week_delta'] = dict(data['week_delta'])
+        del data['memberList']
+        del data['_id']
+
+        return data
 
     @classmethod
     def find_by_tag(cls, tag) -> Clan:

@@ -94,13 +94,9 @@ class Player(DynamicDocument):
         return "<Player {0}>".format(self.tag)
 
     def to_dict(self, include_score=False) -> Dict:
-        fields = list(self._fields_ordered)
-        fields.remove("id")
-        fields.remove("binary_bytes")
-
-        data = dict()
-        for field in fields:
-            data[field] = self[field]
+        data = dict(self.to_mongo())
+        del data['_id']
+        del data['binary_bytes']
 
         if include_score:
             data['percentile'] = self.player_score()
