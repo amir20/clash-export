@@ -75,6 +75,7 @@ async function handleResponse(promise, commit, success, error = "setApiError") {
   if (response.status == 200) {
     const data = await response.json();
     commit(success, data);
+    return data;
   } else {
     const e = await response.json();
     e.status = response.status;
@@ -95,9 +96,8 @@ const actions = {
     commit("stopLoading");
     handleResponse(previousPromise, commit, "setPreviousData");
     handleResponse(clanStatsPromise, commit, "setClanStats");
-    await handleResponse(refreshPromise, commit, "setRefreshData");
-    await timeout(1800);
-    const longPromise = fetch(`${path}/long.json`);
+    const data = await handleResponse(refreshPromise, commit, "setRefreshData");
+    const longPromise = fetch(`${path}/long.json?jobId=${data.jobId}`);
     handleResponse(longPromise, commit, "setClanMeta");
   },
   async fetchSimilarClansStats({ commit, getters: { path }, state: { days } }) {
@@ -189,10 +189,6 @@ const convertToMap = (header, matrix) => {
 };
 
 const isNonNumericColumns = key => key == "tag" || key == "name";
-
-function timeout(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 export default new Vuex.Store({
   strict: true,

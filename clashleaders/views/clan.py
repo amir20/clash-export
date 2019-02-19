@@ -1,8 +1,13 @@
+from datetime import datetime
+from time import sleep
+
 from flask import jsonify, render_template, request
 from inflection import camelize
 from mongoengine import DoesNotExist
+from rq.exceptions import NoSuchJobError
+from rq.job import Job
 
-from clashleaders import app, cache
+from clashleaders import app, cache, redis_connection
 from clashleaders.insights.clan_activity import clan_status
 from clashleaders.model import Clan, Status
 from clashleaders.text.clan_description_processor import transform_description
@@ -32,12 +37,24 @@ def clan_refresh_json(tag):
 
     return jsonify(dict(
         playerData=player_data,
-        playersStatus=players_status
+        playersStatus=players_status,
+        jobId=clan.job.id
     ))
 
 
 @app.route("/clan/<tag>/long.json")
 def clan_long_json(tag):
+    job_id = request.args.get('jobId')
+
+    if job_id:
+        start = datetime.now()
+        while (datetime.now() - start).total_seconds() < 2:
+            sleep(0.2)
+            try:
+                Job.fetch(job_id, connection=redis_connection)
+            except NoSuchJobError:
+                break
+
     clan = Clan.find_by_tag(tag)
     return jsonify(clan.to_dict())
 
