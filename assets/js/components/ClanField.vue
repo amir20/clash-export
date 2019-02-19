@@ -31,7 +31,7 @@ export default {
   },
   watch: {
     clanMeta(newValue, oldValue) {
-      this.tween(this.tweeningValue, newValue);
+      this.tween(this.tweeningValue, this.newValue);
     }
   },
   computed: {
