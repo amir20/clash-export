@@ -47,13 +47,7 @@ def clan_long_json(tag):
     job_id = request.args.get('jobId')
 
     if job_id:
-        start = datetime.now()
-        while (datetime.now() - start).total_seconds() < 2:
-            sleep(0.2)
-            try:
-                Job.fetch(job_id, connection=redis_connection)
-            except NoSuchJobError:
-                break
+        wait_for_job(job_id)
 
     clan = Clan.find_by_tag(tag)
     return jsonify(clan.to_dict())
@@ -109,3 +103,13 @@ def clan_short_json(tag):
 def clan_trophies(tag):
     df = Clan.find_by_tag(tag).to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
     return df.to_json(orient='columns', date_format='iso')
+
+
+def wait_for_job(job_id, wait_time=2):
+    start = datetime.now()
+    while (datetime.now() - start).total_seconds() < wait_time:
+        sleep(0.2)
+        try:
+            Job.fetch(job_id, connection=redis_connection)
+        except NoSuchJobError:
+            break
