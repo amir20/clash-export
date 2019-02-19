@@ -11,7 +11,7 @@ def delete_outdated():
     dt = datetime.now() - timedelta(days=31)
     HistoricalClan.objects(created_on__lt=dt).delete()
     HistoricalPlayer.objects(created_on__lt=dt).delete()
-    
+
 
 def reset_stats():
     logger.info("Resetting page views...")
