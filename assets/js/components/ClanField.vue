@@ -1,8 +1,5 @@
 <template>
-  <span
-    v-if="tweeningValue != null"
-    :class="{ [positiveClass]: tweeningValue > 0, [negativeClass]: tweeningValue < 0 }"
-  >
+  <span v-if="tweeningValue != null" :class="{ [positiveClass]: tweeningValue > 0, [negativeClass]: tweeningValue < 0 }">
     <template v-if="showPlusSign && tweeningValue > 0"
       >+</template
     >{{ tweeningValue.toLocaleString() }}
