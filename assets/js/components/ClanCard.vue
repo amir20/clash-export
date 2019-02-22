@@ -23,7 +23,7 @@
 
 <script>
 import { bugsnagClient } from "../bugsnag";
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
   props: ["tag", "foundClan"],

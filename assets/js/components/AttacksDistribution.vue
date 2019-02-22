@@ -10,46 +10,44 @@ import format from "date-fns/format";
 import fill from "lodash/fill";
 import times from "lodash/times";
 import random from "lodash/random";
-import UserMixin from "../user";
+import { mapState } from "vuex";
 
 export default {
-  props: ["playerTag"],
-  mixins: [UserMixin],
   data() {
-    return { savedPlayerData: {}, data: null, chart: null, loading: false, compareUser: false };
-  },
-  async created() {
-    this.loading = true;
-
-    if (this.hasUser && this.playerTag !== this.userTag) {
-      this.compareUser = true;
-      this.savedPlayerData = await (await fetch(`/player/${this.userTag.replace("#", "")}/attacks.json`)).json();
-    }
-    const json = await (await fetch(`/player/${this.playerTag.replace("#", "")}/attacks.json`)).json();
-    const dates = [];
-    const attackWins = [];
-    const playerWins = [];
-    for (const [date, attacks] of Object.entries(json)) {
-      dates.push(date);
-      attackWins.push(attacks);
-      if (this.savedPlayerData[date]) {
-        playerWins.push(this.savedPlayerData[date]);
-      } else {
-        playerWins.push(0);
-      }
-    }
-    this.data = { dates, series: this.compareUser ? [attackWins, playerWins] : [attackWins] };
-    this.loading = false;
-    this.$nextTick(() => {
-      this.draw(this.data);
-    });
+    return { chart: null };
   },
   mounted() {
     this.draw(fakeData);
   },
+  computed: {
+    ...mapState(["loggedUserActivity", "playerActivity", "hasLoggedUser", "loading"]),
+    data() {
+      const dates = [];
+      const attackWins = [];
+      const playerWins = [];
+      for (const [date, attacks] of Object.entries(this.playerActivity)) {
+        dates.push(date);
+        attackWins.push(attacks);
+        if (this.loggedUserActivity[date]) {
+          playerWins.push(this.loggedUserActivity[date]);
+        } else {
+          playerWins.push(0);
+        }
+      }
+      return { dates, series: this.hasLoggedUser ? [attackWins, playerWins] : [attackWins] };
+    }
+  },
+  watch: {
+    data(newValue) {
+      this.draw(newValue);
+    }
+  },
   methods: {
+    redraw() {
+      this.chart.update();
+    },
     draw(data) {
-      new Chartist.Line(
+      this.chart = new Chartist.Line(
         this.$refs.chart,
         {
           labels: data.dates,
