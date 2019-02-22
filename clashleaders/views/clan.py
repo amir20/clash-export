@@ -81,7 +81,8 @@ def clan_stats(tag):
 
     return jsonify(dict(gold_grab=delta.avg_gold_grab,
                         elixir_grab=delta.avg_elixir_grab,
-                        de_grab=delta.avg_de_grab))
+                        de_grab=delta.avg_de_grab,
+                        name=clan.name))
 
 
 @app.route("/clan/<tag>/short.json")
