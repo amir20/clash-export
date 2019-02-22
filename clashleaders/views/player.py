@@ -18,7 +18,7 @@ def player_html(slug):
 @app.route("/player/<tag>/attacks.json")
 @cache.cached(timeout=1200, query_string=True)
 def player_attacks_json(tag):
-    Player.fetch_and_save(tag)
+    Player.fetch_and_save(tag)  # TODO fix this
     df = Player.find_by_tag(tag).to_historical_df()['attack_wins']
     return df.resample('D').mean().diff().dropna().clip(lower=0).to_json(orient='columns', date_format='iso')
 

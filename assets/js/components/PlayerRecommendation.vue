@@ -86,7 +86,7 @@ export default {
       return maxBy(this.insights.builderBase, i => i.delta);
     },
     showInsights() {
-      return this.playerTag == this.userTag;
+      return this.playerTag === this.userTag;
     }
   }
 };

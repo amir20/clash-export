@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   props: ["players"],

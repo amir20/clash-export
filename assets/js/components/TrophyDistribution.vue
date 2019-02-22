@@ -5,7 +5,7 @@
 <script>
 import Chartist from "chartist";
 import debounce from "lodash/debounce";
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   data() {
