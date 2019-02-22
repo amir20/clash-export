@@ -30,8 +30,14 @@ export default {
   methods: {
     async fetchUser() {
       if (this.savedUser) {
-        this.userData = await (await fetch(`/player/${this.savedUser.tag.replace("#", "")}.json`)).json();
+        if (!window.userPromise) {
+          window.userPromise = this.userPromise();
+        }
+        this.userData = await window.userPromise;
       }
+    },
+    async userPromise() {
+      return await (await fetch(`/player/${this.savedUser.tag.replace("#", "")}.json`)).json();
     },
     removeUser() {
       removeUser();
