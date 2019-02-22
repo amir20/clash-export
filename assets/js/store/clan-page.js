@@ -106,7 +106,7 @@ const actions = {
   },
   async fetchSavedClanStats({ commit, state: { tag, days } }) {
     const savedTag = store.get("lastTag");
-    if (savedTag && savedTag != tag) {
+    if (savedTag && savedTag !== tag) {
       console.log(`Found saved tag value [${savedTag}].`);
       const savedClanStatsPromise = fetch(`/clan/${savedTag.replace("#", "")}/stats.json?daySpan=${days}`);
       handleResponse(savedClanStatsPromise, commit, "setSavedClanStats", false);
@@ -133,7 +133,6 @@ const actions = {
   }
 };
 
-// getters are functions
 const getters = {
   header({ clan }) {
     if (clan.length > 0) {

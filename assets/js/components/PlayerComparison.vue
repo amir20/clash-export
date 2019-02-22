@@ -42,7 +42,7 @@ import Chartist from "chartist";
 import "chartist-plugin-legend";
 import { bugsnagClient } from "../bugsnag";
 import Troops from "./Troops";
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 
 const role = {
   coLeader: "Co-leader",

@@ -62,7 +62,7 @@ import SearchBox from "./SearchBox";
 import PlayerList from "./PlayerList";
 import WebPImage from "./WebPImage";
 import UserMixin from "../user";
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   components: {
