@@ -30,10 +30,7 @@
       <div ref="chart" class="player-comparison"></div>
     </section>
     <div class="buttons is-right mobile is-hidden-desktop" v-if="player">
-      <a
-        class="button is-info is-fullwidth-mobile"
-        :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`"
-      >
+      <a class="button is-info is-fullwidth-mobile" :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`">
         <span class="icon"> <i class="fas fa-gamepad"></i> </span> <span>View Player in Game</span>
       </a>
     </div>
@@ -135,11 +132,7 @@ export default {
       const s = [];
       s.push({
         name: this.playerData.name.value,
-        data: [
-          this.playerData.totalDeGrab.delta,
-          this.playerData.totalElixirGrab.delta,
-          this.playerData.totalGoldGrab.delta
-        ],
+        data: [this.playerData.totalDeGrab.delta, this.playerData.totalElixirGrab.delta, this.playerData.totalGoldGrab.delta],
         className: "player"
       });
 
@@ -169,7 +162,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @media screen and (max-width: 768px) {
   .is-fullwidth-mobile {
     display: -webkit-box;

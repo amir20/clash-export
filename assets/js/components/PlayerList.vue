@@ -2,9 +2,7 @@
   <ol class="columns is-multiline is-gapless">
     <li v-for="player in players" :key="player.tag" class="column is-4">
       <a href="#" @click="pickPlayer(player)">
-        <span class="trophies is-pulled-right">
-          <i class="fa fa-trophy" aria-hidden="true"></i> {{ player.currentTrophies.toLocaleString() }}
-        </span>
+        <span class="trophies is-pulled-right"> <i class="fa fa-trophy" aria-hidden="true"></i> {{ player.currentTrophies.toLocaleString() }} </span>
         <span class="name has-text-weight-semibold">{{ player.name }}</span> <br />
         <small class="player-tag is-size-7 has-text-weight-light">{{ player.tag }}</small>
       </a>
@@ -33,7 +31,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 a {
   border: 1px solid #eee;
   display: block;

@@ -155,7 +155,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .trophy-chart {
   margin-top: 3.5em;
 

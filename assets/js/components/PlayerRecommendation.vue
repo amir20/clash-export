@@ -25,22 +25,12 @@
         <h3 class="title is-4 is-marginless">Recommended Upgrades</h3>
         <div class="columns is-vcentered">
           <div class="column is-8">
-            You should upgrade the following items based on similar players same level as you. This recommendation may
-            change as other players upgrade different troops.
+            You should upgrade the following items based on similar players same level as you. This recommendation may change as other players upgrade different
+            troops.
           </div>
           <div class="column">
-            <troop
-              v-if="homeBaseTroop"
-              :name="homeBaseTroop.name"
-              class="is-tooltip-right tooltip"
-              :data-tooltip="homeBaseTroop.name"
-            ></troop>
-            <troop
-              v-if="builderBaseTroop"
-              :name="builderBaseTroop.name"
-              class="is-tooltip-right tooltip"
-              :data-tooltip="builderBaseTroop.name"
-            ></troop>
+            <troop v-if="homeBaseTroop" :name="homeBaseTroop.name" class="is-tooltip-right tooltip" :data-tooltip="homeBaseTroop.name"></troop>
+            <troop v-if="builderBaseTroop" :name="builderBaseTroop.name" class="is-tooltip-right tooltip" :data-tooltip="builderBaseTroop.name"></troop>
             <b v-if="!homeBaseTroop && !builderBaseTroop">No recommendations right now. Great job!</b>
           </div>
         </div>
@@ -51,8 +41,8 @@
   <div class="container" v-else>
     <div class="columns">
       <div class="column">
-        Insights are recommendations that are shown on your own profile. This information is only available to you once
-        you signin as yourself and claim your profile.
+        Insights are recommendations that are shown on your own profile. This information is only available to you once you signin as yourself and claim your
+        profile.
       </div>
       <div class="column is-narrow is-hidden-mobile"><web-p-image name="builder-show" width="300" /></div>
     </div>
@@ -76,7 +66,6 @@
 </template>
 
 <script>
-import store from "store/dist/store.modern";
 import maxBy from "lodash/maxBy";
 import Troop from "./Troop";
 import WebPImage from "./WebPImage";
@@ -103,7 +92,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .is-secret {
   filter: grayscale(100%) blur(5px);
 }
