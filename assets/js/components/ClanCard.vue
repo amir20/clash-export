@@ -9,8 +9,8 @@
           <p>
             <strong>{{ this.data.name }}</strong>
             <small>
-              <i class="fa fa-tag fa-lg" aria-hidden="true"></i> {{ this.data.tag }}
-              <i class="fa fa-trophy fa-lg" aria-hidden="true"></i> {{ this.data.clanPoints.toLocaleString() }}
+              <i class="fa fa-tag fa-lg" aria-hidden="true"></i> {{ this.data.tag }} <i class="fa fa-trophy fa-lg" aria-hidden="true"></i>
+              {{ this.data.clanPoints.toLocaleString() }}
             </small>
             <br />
             {{ this.data.description }}
@@ -58,7 +58,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .still-loading * {
   color: #efefef !important;
 }

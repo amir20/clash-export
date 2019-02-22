@@ -72,7 +72,7 @@ const mutations = {
 
 async function handleResponse(promise, commit, success, error = "setApiError") {
   const response = await promise;
-  if (response.status == 200) {
+  if (response.status === 200) {
     const data = await response.json();
     commit(success, data);
     return data;
@@ -164,7 +164,7 @@ const getters = {
         (map, value, column) => {
           const delta = previousRow && !isNonNumericColumns(column) ? value - previousRow[column] : 0;
           map[column] = { value, delta };
-          if (column == "tag") {
+          if (column === "tag") {
             map["id"] = value;
           }
           return map;

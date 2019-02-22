@@ -17,7 +17,7 @@
   </b-dropdown>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .changelog /deep/ .dropdown-menu {
   min-width: 20em;
 }

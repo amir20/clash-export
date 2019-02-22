@@ -26,25 +26,13 @@
 
     <div class="column is-3">
       <h4 class="title is-4 is-marginless">Spells</h4>
-      <troop
-        v-for="spell in this.player.spells"
-        :key="spell.name"
-        :name="spell.name"
-        class="is-tooltip-right tooltip"
-        :data-tooltip="spell.name"
-      >
+      <troop v-for="spell in this.player.spells" :key="spell.name" :name="spell.name" class="is-tooltip-right tooltip" :data-tooltip="spell.name">
         <small :class="{ max: spell.maxLevel == spell.level }">{{ spell.level }}</small>
       </troop>
     </div>
     <div class="column is-3">
       <h4 class="title is-4 is-marginless">Heros</h4>
-      <troop
-        v-for="hero in filterTroops(player.heroes, 'home')"
-        :key="hero.name"
-        :name="hero.name"
-        class="is-tooltip-right tooltip"
-        :data-tooltip="hero.name"
-      >
+      <troop v-for="hero in filterTroops(player.heroes, 'home')" :key="hero.name" :name="hero.name" class="is-tooltip-right tooltip" :data-tooltip="hero.name">
         <small :class="{ max: hero.maxLevel == hero.level }">{{ hero.level }}</small>
       </troop>
       <h4 class="subtitle is-5 is-marginless">Builder Base</h4>
@@ -86,7 +74,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 [class*="coc-sprite--"] {
   margin: 1px;
   position: relative;

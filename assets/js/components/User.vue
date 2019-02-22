@@ -23,7 +23,6 @@
 }
 </style>
 <script>
-import store from "store/dist/store.modern";
 import UserMixin from "../user";
 
 export default {

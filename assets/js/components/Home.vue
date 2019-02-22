@@ -16,9 +16,8 @@
               <div class="column">
                 <h3 class="subtitle is-3">Chief, tell me who you are!</h3>
                 I found <b>{{ fetchedClan.players.length }}</b> players in <b>{{ fetchedClan.name }}</b
-                >. If you are one of these players, then I can remember next time. I will make suggestions or compare
-                you against other players. This optional so if you don't me to remember just skip it. You can always
-                manage your profile later.
+                >. If you are one of these players, then I can remember next time. I will make suggestions or compare you against other players. This optional
+                so if you don't me to remember just skip it. You can always manage your profile later.
               </div>
               <div class="column is-narrow is-hidden-mobile"><web-p-image name="builder-show" width="200" /></div>
             </div>
@@ -31,12 +30,9 @@
       </b-modal>
       <p class="buttons">
         <button type="reset" class="button is-warning is-large">Reset</button>
-        <a
-          :href="`/clan/${foundClan ? foundClan.slug : ''}`"
-          class="button is-success is-large"
-          :disabled="foundClan == null"
-          >{{ foundClan ? foundClan.name : "Your Clan" }}</a
-        >
+        <a :href="`/clan/${foundClan ? foundClan.slug : ''}`" class="button is-success is-large" :disabled="foundClan == null">{{
+          foundClan ? foundClan.name : "Your Clan"
+        }}</a>
         <a :href="`/player/${userSlug}`" class="button is-info is-large" v-if="hasUser" :disabled="userSlug == null">
           <b-icon pack="fas" icon="user"></b-icon>
           <span>Your Profile</span>
@@ -48,8 +44,8 @@
         <div class="hero-body">
           <h1 class="title is-1">Hey, Chief!</h1>
           <h2 class="subtitle">
-            Welcome to Clash Leaders. This website shows trending clans in Clash of Clans game. Clan achievements can be
-            exported to a spreadsheet or compared to historical data over time. Let's start by finding your clan first.
+            Welcome to Clash Leaders. This website shows trending clans in Clash of Clans game. Clan achievements can be exported to a spreadsheet or compared
+            to historical data over time. Let's start by finding your clan first.
           </h2>
         </div>
       </section>
@@ -121,7 +117,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 a[disabled="disabled"] {
   pointer-events: none;
 }
