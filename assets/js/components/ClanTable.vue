@@ -27,12 +27,9 @@
           sortable
         >
           {{ props.row[column.field].value.toLocaleString() }}
-          <span
-            v-if="column.field == 'name' && playersStatus[props.row.tag.value]"
-            class="tag is-uppercase"
-            :class="playersStatus[props.row.tag.value]"
-            >{{ playersStatus[props.row.tag.value] }}</span
-          >
+          <span v-if="column.field == 'name' && playersStatus[props.row.tag.value]" class="tag is-uppercase" :class="playersStatus[props.row.tag.value]">{{
+            playersStatus[props.row.tag.value]
+          }}</span>
           <b
             v-if="column.numeric && props.row[column.field].delta != 0"
             :class="{
@@ -146,7 +143,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .b-table {
   & /deep/ thead th {
     position: sticky;

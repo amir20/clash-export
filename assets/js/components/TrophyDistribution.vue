@@ -92,7 +92,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .trophy-distribution {
   width: 960px;
   margin: 0 auto;

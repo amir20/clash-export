@@ -28,12 +28,12 @@ export default {
   },
   watch: {
     clanMeta(newValue, oldValue) {
-      this.tween(this.tweeningValue, this.newValue);
+      this.tween(this.tweeningValue, this.targetValue);
     }
   },
   computed: {
     ...mapState(["clanMeta"]),
-    newValue() {
+    targetValue() {
       return this.name.split(".").reduce((prev, curr) => (prev ? prev[curr] : null), this.clanMeta);
     }
   },
