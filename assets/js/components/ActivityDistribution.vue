@@ -83,7 +83,7 @@ export default {
         },
         [
           [
-            "screen and (max-width: 640px)",
+            "screen and (max-width: 860px)",
             {
               axisX: {
                 labelInterpolationFnc: (value, index) => {
