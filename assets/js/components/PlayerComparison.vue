@@ -86,7 +86,6 @@ export default {
           width: "100%",
           height: "400px",
           plugins: [Chartist.plugins.legend()],
-          axisY: {},
           axisX: {
             labelInterpolationFnc(value, index) {
               return index % 2 === 0 ? value.toLocaleString() : null;
