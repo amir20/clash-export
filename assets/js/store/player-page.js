@@ -32,10 +32,10 @@ const actions = {
   async fetchPlayer({ commit, dispatch }, playerTag) {
     commit("setPlayerTag", playerTag);
     if (hasUser() && userTag() !== playerTag) {
-      const data = await (await fetch(`/player/${userTag().replace("#", "")}/attacks.json`)).json();
+      const data = await (await fetch(`/player/${userTag().replace("#", "")}/activity.json`)).json();
       commit("setLoggedUserActivity", data);
     }
-    const data = await (await fetch(`/player/${playerTag.replace("#", "")}/attacks.json`)).json();
+    const data = await (await fetch(`/player/${playerTag.replace("#", "")}/activity.json`)).json();
     commit("setPlayerActivity", data);
     commit("setLoading", false);
   }
