@@ -15,12 +15,18 @@ def player_html(slug):
                            insights=player_troops_insights(player))
 
 
-@app.route("/player/<tag>/attacks.json")
+@app.route("/player/<tag>/activity.json")
 @cache.cached(timeout=1200, query_string=True)
 def player_attacks_json(tag):
-    Player.fetch_and_save(tag)  # TODO fix this
-    df = Player.find_by_tag(tag).to_historical_df()['attack_wins']
-    return df.resample('D').mean().diff().dropna().clip(lower=0).to_json(orient='columns', date_format='iso')
+    player = Player.find_by_tag(tag)
+    df = player.to_historical_df()[
+        ['attack_wins', 'donations', 'gold_grab', 'elixir_escapade', 'heroic_heist', 'trophies']
+    ]
+    resampled = df.resample('D').mean()
+    diffed = resampled.diff().dropna().clip(lower=0)
+    diffed.rename(columns={'elixir_escapade': 'elixir_grab', 'heroic_heist': 'de_grab'}, inplace=True)
+    diffed['trophies'] = resampled['trophies']  # Undo trophies
+    return diffed.to_json(orient='columns', date_format='iso')
 
 
 @app.route("/player/<tag>.json")
