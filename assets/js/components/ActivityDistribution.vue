@@ -80,7 +80,23 @@ export default {
           showLine: true,
           showPoint: false,
           distributeSeries: true
-        }
+        },
+        [
+          [
+            "screen and (max-width: 640px)",
+            {
+              axisX: {
+                labelInterpolationFnc: (value, index) => {
+                  if (index % 10 === 0) {
+                    return this.loading ? value : format(new Date(value), "MMM do");
+                  } else {
+                    return null;
+                  }
+                }
+              }
+            }
+          ]
+        ]
       );
     }
   }
@@ -96,7 +112,6 @@ const fakeData = {
 .activity-distribution {
   width: 100%;
   margin-bottom: -41px;
-  min-width: 960px;
 
   &.is-loading {
     opacity: 0.25;
