@@ -124,5 +124,9 @@ const fakeData = {
     stroke-width: 2px;
     stroke-dasharray: 4, 2;
   }
+
+  & /deep/ .ct-chart-line .ct-label {
+    white-space: nowrap;
+  }
 }
 </style>
