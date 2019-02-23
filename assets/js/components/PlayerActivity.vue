@@ -2,30 +2,30 @@
   <div class="container">
     <b-tabs size="is-medium" @change="onChange">
       <b-tab-item label="Attacks">
-        <attacks-distribution ref="attacks"></attacks-distribution>
+        <activity-distribution ref="attacks" name="attack_wins"></activity-distribution>
       </b-tab-item>
 
       <b-tab-item label="Donations">
-        <attacks-distribution ref="donations"></attacks-distribution>
+        <activity-distribution ref="donations" name="donations"></activity-distribution>
       </b-tab-item>
 
       <b-tab-item label="Trophies">
-        <attacks-distribution ref="trophies"></attacks-distribution>
+        <activity-distribution ref="trophies" name="trophies"></activity-distribution>
       </b-tab-item>
-      <b-tab-item label="Loot">
-        <attacks-distribution ref="loot"></attacks-distribution>
+      <b-tab-item label="DE Grab">
+        <activity-distribution ref="loot" name="de_grab"></activity-distribution>
       </b-tab-item>
     </b-tabs>
   </div>
 </template>
 
 <script>
-import AttacksDistribution from "./AttacksDistribution";
+import ActivityDistribution from "./ActivityDistribution";
 import { mapActions, mapState } from "vuex";
 
 export default {
   components: {
-    AttacksDistribution
+    ActivityDistribution
   },
   props: ["playerTag"],
   created() {

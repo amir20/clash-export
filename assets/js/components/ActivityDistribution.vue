@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div ref="chart" class="attacks-distribution has-loader" :class="{ 'is-loading': loading }"></div>
+    <div ref="chart" class="activity-distribution has-loader" :class="{ 'is-loading': loading }"></div>
   </div>
 </template>
 
@@ -13,6 +13,9 @@ import random from "lodash/random";
 import { mapState } from "vuex";
 
 export default {
+  props: {
+    name: { type: String }
+  },
   data() {
     return { chart: null };
   },
@@ -23,18 +26,20 @@ export default {
     ...mapState(["loggedUserActivity", "playerActivity", "hasLoggedUser", "loading"]),
     data() {
       const dates = [];
-      const attackWins = [];
-      const playerWins = [];
-      for (const [date, attacks] of Object.entries(this.playerActivity)) {
-        dates.push(date);
-        attackWins.push(attacks);
-        if (this.loggedUserActivity[date]) {
-          playerWins.push(this.loggedUserActivity[date]);
-        } else {
-          playerWins.push(0);
+      const thisUser = [];
+      const loggedInUser = [];
+      if (this.playerActivity[this.name]) {
+        for (const [date, value] of Object.entries(this.playerActivity[this.name])) {
+          dates.push(date);
+          thisUser.push(value);
+          if (this.loggedUserActivity[this.name] && this.loggedUserActivity[this.name][date]) {
+            loggedInUser.push(this.loggedUserActivity[this.name][date]);
+          } else if (this.hasLoggedUser) {
+            loggedInUser.push(0);
+          }
         }
       }
-      return { dates, series: this.hasLoggedUser ? [attackWins, playerWins] : [attackWins] };
+      return { dates, series: this.hasLoggedUser ? [thisUser, loggedInUser] : [thisUser] };
     }
   },
   watch: {
@@ -88,7 +93,7 @@ const fakeData = {
 </script>
 
 <style lang="scss" scoped>
-.attacks-distribution {
+.activity-distribution {
   width: 100%;
   margin-bottom: -41px;
   min-width: 960px;
