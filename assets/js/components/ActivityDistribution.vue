@@ -159,6 +159,7 @@ const fakeData = {
     li {
       display: inline;
       padding-right: 5px;
+      white-space: nowrap;
 
       &.player-activity:before,
       &.ct-series-0:before {
