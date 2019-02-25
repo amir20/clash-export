@@ -5,6 +5,7 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
 
 module.exports = merge(common, {
   mode: "production",
@@ -32,7 +33,8 @@ module.exports = merge(common, {
     }),
     new CompressionPlugin({
       test: /\.js$|\.css$|\.map$|\.svg$/
-    })
+    }),
+    new SWPrecacheWebpackPlugin()
   ],
   output: {
     filename: "js/[name].[chunkhash].js"
