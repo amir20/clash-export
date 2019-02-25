@@ -110,7 +110,7 @@ export default {
 };
 
 const fakeData = {
-  series: [{ data: [times(28, random.bind(0, 10))], name: "" }],
+  series: [{ data: times(28, random.bind(0, 10)), name: "This player" }],
   dates: fill(Array(28), "█")
 };
 </script>
