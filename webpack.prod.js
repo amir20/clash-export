@@ -34,7 +34,7 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({ filename: "css/[name].[chunkhash].css" }),
     new CompressionPlugin({ test: /\.js$|\.css$|\.map$|\.svg$/ }),
     new SWPrecacheWebpackPlugin({
-      staticFileGlobsIgnorePatterns: [/\.map$/, /\.svg$/],
+      staticFileGlobsIgnorePatterns: [/\.map$/, /\.svg$/, /\.svg.gz$/, /\.map.gz$/],
       stripPrefix: assetsPath
     })
   ],
