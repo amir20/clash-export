@@ -102,6 +102,7 @@ node_modules
 **/static/css
 **/static/flags
 **/static/images/compiled
+**/static/service-worker.js
 
 .bashful
 .vscode

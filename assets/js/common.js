@@ -45,3 +45,9 @@ const items = document.querySelectorAll("[data-from-now]");
       addSuffix: true
     }))
 );
+
+(function() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/static/service-worker.js");
+  }
+})();
