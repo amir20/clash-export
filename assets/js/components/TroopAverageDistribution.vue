@@ -23,7 +23,7 @@ export default {
           showLabel: true,
           showGrid: true
         },
-        width: "800px",
+        width: "100%",
         height: "300px",
         stackBars: true
       }
@@ -53,10 +53,10 @@ export default {
   }
 
   & /deep/ .ct-series-a .ct-bar {
-    stroke: hsl(141, 71%, 48%);
+    stroke: hsl(348, 100%, 61%);
   }
   & /deep/ .ct-series-b .ct-bar {
-    stroke: hsl(48, 100%, 67%);
+    stroke: hsl(0, 0%, 85%);
   }
 }
 </style>
