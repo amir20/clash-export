@@ -12,6 +12,7 @@ class AverageTroop(Document):
     name = StringField(required=True)
     is_builder_base = BooleanField(required=True)
     avg = FloatField(required=True)
+    max = FloatField()
 
     meta = {
         'indexes': [
@@ -39,6 +40,7 @@ class AverageTroop(Document):
         group = {"$group": {"_id": "$townHallLevel"}}
         for key in good_player.lab_levels.keys():
             group['$group'][f"avg_{key}"] = {"$avg": f"$lab_levels.{key}"}
+            group['$group'][f"max_{key}"] = {"$max": f"$lab_levels.{key}"}
 
         aggregated = list(Player.objects.aggregate(group))
 
@@ -54,6 +56,7 @@ class AverageTroop(Document):
                         set__is_builder_base=is_builder_base,
                         set__name=name,
                         set__avg=value,
+                        set__max=th_avg[key.replace('avg_', 'max_', 1)],
                         set__last_updated=datetime.now(),
                         upsert=True
                     )

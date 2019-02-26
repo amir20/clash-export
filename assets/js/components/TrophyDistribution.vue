@@ -45,7 +45,7 @@ export default {
     });
 
     chart.on("draw", data => {
-      if (data.type == "bar") {
+      if (data.type === "bar") {
         this.animationStarted();
         if (!this.started) {
           data.element.animate({

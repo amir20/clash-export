@@ -16,6 +16,7 @@ import clashleaders.views.similar_clans
 import clashleaders.views.sitemap
 import clashleaders.views.static
 import clashleaders.views.status
+import clashleaders.views.troop
 import clashleaders.views.verified
 from clashleaders import app, site_root
 
