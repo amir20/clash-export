@@ -8,9 +8,10 @@ module.exports = {
   entry: {
     "clan-page": "./js/clan-page.js",
     "player-page": "./js/player-page.js",
+    "troop-page": "./js/troop-page.js",
     index: "./js/index.js",
     common: "./js/common.js",
-    styles: "./css/styles.css"
+    styles: "./css/styles.scss"
   },
   optimization: {
     // concatenateModules: true,
@@ -24,10 +25,7 @@ module.exports = {
         },
         "styles-compiled": {
           name: "styles-compiled",
-          test: module =>
-            module.nameForCondition &&
-            /\.(s?css|vue)$/.test(module.nameForCondition()) &&
-            !/^javascript/.test(module.type),
+          test: module => module.nameForCondition && /\.(s?css|vue)$/.test(module.nameForCondition()) && !/^javascript/.test(module.type),
           chunks: "all",
           enforce: true
         }
