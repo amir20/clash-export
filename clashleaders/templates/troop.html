@@ -1,6 +1,7 @@
 {% extends "layout.html" %} {% block body %}
-<div class="section">
-  <section class="container">
+<div id="app">
+  <section class="section">
+  <div class="container">
     <div class="columns reverse-order">
       <div class="column is-4">
         <figure class="image">
@@ -16,14 +17,15 @@
           </div>
           {{ troop.description | markdown | safe }}
         </div>
+
+        <section>
+          <h2 class="is-4 subtitle">Troop Level vs. Town Hall Level</h2>
+          <troop-average-distribution :averages="{{ averages | tojson | forceescape }}"></troop-average-distribution>
+        </section>
       </div>
     </div>
-  </section>
-</div>
-<div class="section" id="app">
-  <div class="container">
-    <troop-average-distribution :averages="{{ averages | tojson | forceescape }}"></troop-average-distribution>
   </div>
+</section>
 </div>
 {% endblock %}{% block title %}{{ troop.name }}{% endblock %}
 {% block scripts %}
