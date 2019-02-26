@@ -32,9 +32,14 @@ class AverageTroop(Document):
 
     @classmethod
     def update_all(cls):
-        good_tag = Player._get_collection().find_one({"lab_levels.home_Stone Slammer": {"$exists": True},
-                                                      "lab_levels.home_Bat Spell": {"$exists": True}}
-                                                     )['tag']
+        good_tag = Player._get_collection().find_one(
+            {
+                "lab_levels.home_Stone Slammer": {"$exists": True},
+                "lab_levels.home_Bat Spell": {"$exists": True},
+                "lab_levels.builderBase_Battle Machine": {"$exists": True},
+                "lab_levels.builderBase_Super PEKKA": {"$exists": True},
+            }
+        )['tag']
         good_player = Player.find_by_tag(good_tag)
 
         group = {"$group": {"_id": "$townHallLevel"}}
@@ -60,4 +65,3 @@ class AverageTroop(Document):
                         set__last_updated=datetime.now(),
                         upsert=True
                     )
-
