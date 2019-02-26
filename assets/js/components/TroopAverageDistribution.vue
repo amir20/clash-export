@@ -51,5 +51,12 @@ export default {
   & /deep/ .ct-bar {
     stroke-width: 50px;
   }
+
+  & /deep/ .ct-series-a .ct-bar {
+    stroke: hsl(141, 71%, 48%);
+  }
+  & /deep/ .ct-series-b .ct-bar {
+    stroke: hsl(48, 100%, 67%);
+  }
 }
 </style>
