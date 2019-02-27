@@ -91,9 +91,7 @@ def clan_short_json(tag):
     clan = Clan.find_by_tag(tag)
     df = clan.historical_near_now().to_df()[['Name', 'TH Level', 'Current Trophies']].reset_index()
     players = df.rename(lambda s: camelize(s.replace(" ", ""), False), axis='columns').to_dict('i').values()
-    keys = {'tag', 'slug', 'name', 'description', 'clanPoints', 'clanVersusPoints', 'members', 'badgeUrls'}
-    data = clan.to_dict()
-    data = {k: v for k, v in data.items() if k in keys}
+    data = clan.to_dict(short=True)
     data['players'] = list(players)
 
     return jsonify(data)

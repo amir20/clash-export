@@ -8,8 +8,7 @@ const state = {
   playerTag: null,
   loggedUserActivity: {},
   playerActivity: {},
-  hasLoggedUser: false,
-  loading: true
+  hasLoggedUser: false
 };
 
 const mutations = {
@@ -22,9 +21,6 @@ const mutations = {
   },
   setPlayerActivity(state, data) {
     state.playerActivity = data;
-  },
-  setLoading(state, data) {
-    state.loading = data;
   }
 };
 
@@ -37,7 +33,6 @@ const actions = {
     }
     const data = await (await fetch(`/player/${playerTag.replace("#", "")}/activity.json`)).json();
     commit("setPlayerActivity", data);
-    commit("setLoading", false);
   }
 };
 

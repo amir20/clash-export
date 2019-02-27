@@ -24,7 +24,7 @@ export default {
     this.draw(fakeData);
   },
   computed: {
-    ...mapState(["loggedUserActivity", "playerActivity", "hasLoggedUser", "loading"]),
+    ...mapState(["loggedUserActivity", "playerActivity", "hasLoggedUser"]),
     data() {
       const dates = [];
       const thisUser = { name: "This player", data: [], className: "player-activity" };
@@ -41,6 +41,9 @@ export default {
         }
       }
       return { dates, series: this.hasLoggedUser ? [thisUser, loggedInUser] : [thisUser] };
+    },
+    loading() {
+      return Object.keys(this.playerActivity).length === 0;
     }
   },
   watch: {
