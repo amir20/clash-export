@@ -122,13 +122,17 @@ class Clan(DynamicDocument):
     def warlog(self):
         return clan_warlog(self.tag)['items']
 
-    def to_dict(self) -> Dict:
+    def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
         data['computed'] = dict(data['computed'])
         data['day_delta'] = dict(data['day_delta'])
         data['week_delta'] = dict(data['week_delta'])
         del data['memberList']
         del data['_id']
+
+        if short:
+            keys = {'tag', 'slug', 'name', 'description', 'clanPoints', 'clanVersusPoints', 'members', 'badgeUrls'}
+            data = {k: data[k] for k in keys}
 
         return data
 

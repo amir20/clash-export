@@ -35,6 +35,13 @@ def player_json(tag):
     return jsonify(player.to_dict(include_score=True))
 
 
+@app.route("/player/<tag>/history.json")
+def player_history_json(tag):
+    history = Player.find_by_tag(tag).clan_history()
+    history = {k.isoformat(): v.to_dict(short=True) for k, v in history.items()}
+    return jsonify(history)
+
+
 @cache.memoize(28800)
 def player_troops_insights(player):
     return player.troop_insights()
