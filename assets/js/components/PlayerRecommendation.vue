@@ -41,26 +41,10 @@
   <div class="container" v-else>
     <div class="columns">
       <div class="column">
-        Insights are recommendations that are shown on your own profile. This information is only available to you once you signin as yourself and claim your
-        profile.
+        Insights are recommendations that are shown on your own profile. This information is only available to you after you signin and claim your profile. Go
+        to home page and select your player profile after you have found your clan.
       </div>
       <div class="column is-narrow is-hidden-mobile"><web-p-image name="builder-show" width="300" /></div>
-    </div>
-    <br />
-    <br />
-
-    <div class="is-secret">
-      <h3 class="title is-4 is-marginless">Troops progress for town hall {{ insights.th_level }}</h3>
-      <div class="columns is-vcentered">
-        <div class="column"><progress class="progress is-success is-large" :value="88" max="100">--%</progress></div>
-        <div class="column is-narrow is-size-2">--%</div>
-      </div>
-
-      <h3 class="title is-4 is-marginless">Troops progress for builder hall {{ insights.bh_level }}</h3>
-      <div class="columns is-vcentered">
-        <div class="column"><progress class="progress is-warning is-large" :value="55" max="100"></progress></div>
-        <div class="column is-narrow is-size-2">--%</div>
-      </div>
     </div>
   </div>
 </template>
@@ -92,8 +76,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.is-secret {
-  filter: grayscale(100%) blur(5px);
-}
-</style>
+<style lang="scss" scoped></style>
