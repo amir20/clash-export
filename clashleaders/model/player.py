@@ -12,6 +12,7 @@ from slugify import slugify
 import clashleaders.insights.troops
 import clashleaders.model
 from clashleaders.clash import api
+from clashleaders.insights.player_activity import clan_history
 from clashleaders.model import Clan
 from clashleaders.model.clan import prepend_hash
 
@@ -89,6 +90,14 @@ class Player(DynamicDocument):
 
     def troop_insights(self):
         return clashleaders.insights.troops.next_troop_recommendation(self)
+
+    def clan_history(self):
+        history = clan_history(self).to_dict()
+        clans = {c.tag: c for c in Clan.objects(tag__in=list(history.values()))}
+        history = {k: clans[v] for k, v in history.items()}
+
+        return history
+
 
     def __repr__(self):
         return "<Player {0}>".format(self.tag)
