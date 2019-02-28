@@ -47,7 +47,7 @@ class Player(DynamicDocument):
         return ReplaceOne({'tag': self.tag}, self.compressed_fields(), upsert=True)
 
     def most_recent_clan(self) -> Clan:
-        return Clan.find_by_tag(self.clan['tag']) if self.clan else None
+        return Clan.find_by_tag(self.clan['tag']) if 'clan' in self else None
 
     def player_score(self):
         clan = self.most_recent_clan()
