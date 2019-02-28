@@ -163,7 +163,8 @@ class Clan(DynamicDocument):
 
         # Fetch from API
         clan_response = api.find_clan_by_tag(tag)
-        players_response = api.fetch_all_players(clan_response)
+        tags = [member['tag'] for member in clan_response['memberList']]
+        players_response = api.fetch_all_players(tags)
 
         # Store all players data using historical compressed format
         save_historical_clan(clan_response, players_response)

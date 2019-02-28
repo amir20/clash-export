@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import asyncio
 import logging
 import os
+from typing import List
 from urllib.parse import quote
 
 import aiohttp
@@ -132,9 +135,7 @@ def clan_warlog(tag):
     return response
 
 
-def fetch_all_players(clan):
-    logger.info(f"Fetching all player stats for {clan['tag']}.")
-    tags = [member['tag'] for member in clan['memberList']]
+def fetch_all_players(tags: List):
     urls = ['https://api.clashofclans.com/v1/players/' + quote(tag) for tag in tags]
     future = __fetch_all(urls, loop=asyncio.get_event_loop())
     return asyncio.get_event_loop().run_until_complete(future)

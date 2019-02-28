@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import clashleaders.clustering.kmeans
 import numpy as np
 
+import clashleaders.clustering.kmeans
 from clashleaders.model.clan_delta import ClanDelta
+from clashleaders.queue.player import fetch_players
 
 
 def update_calculations(clan):
@@ -24,6 +25,10 @@ def update_calculations(clan):
     if clan.cluster_label == -1:
         [label] = clashleaders.clustering.kmeans.predict_clans(clan)
         clan.cluster_label = label
+
+    old_players = list(set(yesterday.to_df().index) - set(most_recent_df.index))
+    if old_players:
+        fetch_players.delay(old_players)
 
     clan.save()
 

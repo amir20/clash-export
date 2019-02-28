@@ -2,11 +2,13 @@ from flask import render_template, jsonify
 
 from clashleaders import app, cache
 from clashleaders.model import Player
+from clashleaders.queue.player import fetch_players
 
 
 @app.route("/player/<slug>")
 def player_html(slug):
     player = Player.find_by_slug(slug)
+    fetch_players.delay([player.tag])
     clan = player.most_recent_clan()
     return render_template('player.html',
                            player=player,
