@@ -7,6 +7,8 @@ import rq_dashboard
 from bugsnag.flask import handle_exceptions
 from flask import Flask
 from flask_caching import Cache
+from flask_graphql import GraphQLView
+from graphene import Schema
 from mongoengine import connect
 from redis import Redis
 
@@ -38,3 +40,7 @@ redis_connection = Redis('redis')
 site_root = dirname(abspath(__file__))
 
 import clashleaders.views  # noqa
+import clashleaders.graphql.schema
+
+view_func = GraphQLView.as_view('graphql', schema=Schema(query=clashleaders.graphql.schema.Query), graphiql=True)
+app.add_url_rule('/graphql', view_func=view_func)
