@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import isEmpty from "lodash/isEmpty";
 import PlayerComparison from "./PlayerComparison";
 import formatDistance from "date-fns/formatDistance";
@@ -91,8 +91,8 @@ export default {
     document.removeEventListener("visibilitychange");
   },
   computed: {
-    ...mapState(["loading", "sortField", "similarClansAvg", "apiError", "playersStatus"]),
-    ...mapGetters(["path", "header", "tableData", "lastUpdated"])
+    ...mapState(["loading", "sortField", "apiError", "playersStatus"]),
+    ...mapGetters(["header", "tableData", "lastUpdated"])
   },
   watch: {
     sortField(newValue) {
@@ -177,9 +177,11 @@ export default {
     line-height: 1;
     margin-top: 5px;
     font-size: 95%;
+
     &.up {
       color: #23d160;
     }
+
     &.down {
       color: #ff3860;
     }

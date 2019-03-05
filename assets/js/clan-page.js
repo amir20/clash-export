@@ -8,6 +8,7 @@ import LastUpdated from "./components/LastUpdated";
 import ClanField from "./components/ClanField";
 import bugsnag from "./bugsnag";
 import store from "./store/clan-page";
+
 bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
