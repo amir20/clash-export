@@ -1,10 +1,10 @@
 import graphene
 from graphene.types.generic import GenericScalar
 
-from clashleaders.model import Clan, Player
+import clashleaders.model as model
 
 
-class PlayerActivityType(graphene.ObjectType):
+class PlayerActivity(graphene.ObjectType):
     labels = graphene.List(graphene.String)
     attack_wins = graphene.List(graphene.Float)
     donations = graphene.List(graphene.Float)
@@ -14,7 +14,7 @@ class PlayerActivityType(graphene.ObjectType):
     trophies = graphene.List(graphene.Float)
 
 
-class PlayerType(graphene.ObjectType):
+class Player(graphene.ObjectType):
     role = graphene.String()
     name = graphene.String()
     tag = graphene.String()
@@ -26,7 +26,7 @@ class PlayerType(graphene.ObjectType):
     defenseWins = graphene.Int()
     attackWins = graphene.Int()
     donations = graphene.Int()
-    activity = graphene.Field(PlayerActivityType)
+    activity = graphene.Field(PlayerActivity)
 
     def resolve_activity(self, info):
         df = self.to_historical_df()[
@@ -37,7 +37,7 @@ class PlayerType(graphene.ObjectType):
         diffed.rename(columns={'elixir_escapade': 'elixir_grab', 'heroic_heist': 'de_grab'}, inplace=True)
         diffed['trophies'] = resampled['trophies']  # Undo trophies
 
-        return PlayerActivityType(labels=diffed.index.strftime('%Y-%m-%dT%H:%M:%S+00:00Z').tolist(),
+        return PlayerActivity(labels=diffed.index.strftime('%Y-%m-%dT%H:%M:%S+00:00Z').tolist(),
                                   attack_wins=diffed['attack_wins'].tolist(),
                                   donations=diffed['donations'].tolist(),
                                   gold_grab=diffed['gold_grab'].tolist(),
@@ -46,7 +46,7 @@ class PlayerType(graphene.ObjectType):
                                   trophies=diffed['trophies'].tolist())
 
 
-class ClanDeltaType(graphene.ObjectType):
+class ClanDelta(graphene.ObjectType):
     avg_attack_wins = graphene.Float()
     avg_de_grab = graphene.Float()
     avg_donations = graphene.Float()
@@ -65,13 +65,13 @@ class ClanDeltaType(graphene.ObjectType):
     total_versus_wins = graphene.Float()
 
 
-class ClanActivityType(graphene.ObjectType):
+class ClanActivity(graphene.ObjectType):
     labels = graphene.List(graphene.String)
     trophies = graphene.List(graphene.Float)
     members = graphene.List(graphene.Float)
 
 
-class ClanType(graphene.ObjectType):
+class Clan(graphene.ObjectType):
     name = graphene.String()
     slug = graphene.String()
     tag = graphene.String()
@@ -79,12 +79,12 @@ class ClanType(graphene.ObjectType):
     clanPoints = graphene.Int()
     clanVersusPoints = graphene.Int()
     members = graphene.Int()
-    week_delta = graphene.Field(ClanDeltaType)
-    day_delta = graphene.Field(ClanDeltaType)
-    delta = graphene.Field(ClanDeltaType, days=graphene.Int(required=True))
+    week_delta = graphene.Field(ClanDelta)
+    day_delta = graphene.Field(ClanDelta)
+    delta = graphene.Field(ClanDelta, days=graphene.Int(required=True))
     player_matrix = GenericScalar(days=graphene.Int(required=False))
-    players = graphene.List(PlayerType)
-    activity = graphene.Field(ClanActivityType)
+    players = graphene.List(Player)
+    activity = graphene.Field(ClanActivity)
 
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)
@@ -114,29 +114,29 @@ class ClanType(graphene.ObjectType):
                 'attack_wins': 'attackWins'
             }
         )
-        return [PlayerType(**p) for p in df.to_dict('i').values()]
+        return [Player(**p) for p in df.to_dict('i').values()]
 
     def resolve_activity(self, info):
         df = self.to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
         df.index.name = 'labels'
         df = df.reset_index().rename(columns={'clanPoints': 'trophies'})
         df['labels'] = df['labels'].dt.strftime('%Y-%m-%dT%H:%M:%S+00:00Z')
-        return ClanActivityType(**df.to_dict('l'))
+        return ClanActivity(**df.to_dict('l'))
 
 
 class Query(graphene.ObjectType):
-    player = graphene.Field(PlayerType, tag=graphene.String(required=True))
-    clan = graphene.Field(ClanType, tag=graphene.String(required=True), refresh=graphene.Boolean(required=False))
-    players = graphene.List(PlayerType, tags=graphene.List(graphene.String, required=False))
+    player = graphene.Field(Player, tag=graphene.String(required=True))
+    clan = graphene.Field(Clan, tag=graphene.String(required=True), refresh=graphene.Boolean(required=False))
+    players = graphene.List(Player, tags=graphene.List(graphene.String, required=False))
 
     def resolve_clan(self, info, tag, refresh=False):
         if refresh:
-            return Clan.fetch_and_update(tag, sync_calculation=False)
+            return model.Clan.fetch_and_update(tag, sync_calculation=False)
         else:
-            return Clan.find_by_tag(tag)
+            return model.Clan.find_by_tag(tag)
 
     def resolve_player(self, info, tag):
-        return Player.find_by_tag(tag)
+        return model.Player.find_by_tag(tag)
 
     def resolve_players(self, info, tags=[]):
-        return list(Player.objects(tag__in=tags))
+        return list(model.Player.objects(tag__in=tags))

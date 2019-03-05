@@ -2,9 +2,10 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
 
 module.exports = {
-  context: __dirname + "/assets",
+  context: path.resolve(process.cwd(), "assets"),
   entry: {
     "clan-page": "./js/clan-page.js",
     "player-page": "./js/player-page.js",
@@ -14,8 +15,6 @@ module.exports = {
     styles: "./css/styles.scss"
   },
   optimization: {
-    // concatenateModules: true,
-    // runtimeChunk: true,
     splitChunks: {
       cacheGroups: {
         commons: {
