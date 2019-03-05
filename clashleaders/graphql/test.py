@@ -2,6 +2,7 @@ import json
 from collections import namedtuple
 
 import graphene
+from graphene.types.generic import GenericScalar
 
 Row = namedtuple('Row', 'status value')
 
@@ -14,14 +15,14 @@ database = [
 class Something(graphene.ObjectType):
     status = graphene.String()
     value = graphene.Int()
-    foo = graphene.String()
-
-    def resolve_foo(self, info):
-        return "hi there!" + self.status
 
 
 class Query(graphene.ObjectType):
     things = graphene.List(Something)
+    bar = graphene.List(graphene.List(GenericScalar))
+
+    def resolve_bar(self, info):
+        return [[1, "test", True], [1234, "test", True], [1, "test222", False]]
 
     @staticmethod
     def resolve_things(executor, info):
@@ -30,5 +31,5 @@ class Query(graphene.ObjectType):
 
 if __name__ == '__main__':
     schema = graphene.Schema(query=Query)
-    result = schema.execute('{ things { status value foo } }')
-    print(json.dumps(result.data))  # {"things": [{"status": "LIVE", "value": 12345}, {"status": "X", "value": 12345}]}
+    result = schema.execute('{ bar }')
+    print(json.dumps(result.data))
