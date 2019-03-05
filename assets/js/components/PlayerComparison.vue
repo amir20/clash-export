@@ -126,7 +126,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["similarClansAvg", "clanStats", "savedClanStats", "tag"]),
+    ...mapState(["similarClansAvg", "clan", "savedClanStats"]),
     series() {
       const s = [];
       s.push({
@@ -137,7 +137,7 @@ export default {
 
       s.push({
         name: "This clan's average",
-        data: [this.clanStats.de_grab, this.clanStats.elixir_grab, this.clanStats.gold_grab],
+        data: [this.clan.delta.avgDeGrab, this.clan.delta.avgElixirGrab, this.clan.delta.avgGoldGrab],
         className: "clan"
       });
 

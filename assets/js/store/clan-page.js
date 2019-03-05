@@ -6,42 +6,32 @@ import keyBy from "lodash/keyBy";
 import { event } from "../ga";
 import store from "store/dist/store.modern";
 
+import { apolloClient } from "../client";
+import { gql } from "apollo-boost";
+
 Vue.use(Vuex);
 
 const state = {
   tag: null,
   loading: true,
-  clan: window.__CLAN__ || [],
-  previousData: window.__CLAN__ || [],
+  clan: { recentData: window.__CLAN__, historicData: [] },
   lastUpdated: new Date(window.__LAST_UPDATED__) || null,
   playersStatus: {},
   days: 7,
   similarClansAvg: {},
   savedClanStats: {},
-  clanStats: {},
   daysSpan: 7,
   sortField: "value",
-  apiError: null,
-  clanMeta: null
+  apiError: null
 };
 
 const mutations = {
   setTag(state, tag) {
     state.tag = tag;
   },
-  setRefreshData(state, data) {
-    state.clan = data.playerData;
-    state.playersStatus = data.playersStatus;
+  setData(state, data) {
+    state.clan = data.clan;
     state.lastUpdated = new Date();
-  },
-  setClanMeta(state, data) {
-    state.clanMeta = data;
-  },
-  setClanStats(state, data) {
-    state.clanStats = data;
-  },
-  setPreviousData(state, previousData) {
-    state.previousData = previousData;
   },
   setDays(state, days) {
     state.days = days;
@@ -87,18 +77,33 @@ async function handleResponse(promise, commit, success, error = "setApiError") {
 }
 
 const actions = {
-  async fetchClanData({ commit, dispatch, getters: { path } }) {
+  async fetchClanData({ commit, dispatch, state: { tag, daysSpan } }) {
     dispatch("fetchSimilarClansStats");
     dispatch("fetchSavedClanStats");
-    const refreshPromise = fetch(`${path}/refresh.json`);
-    const previousPromise = fetch(`${path}.json?daysAgo=${state.days}`);
-    const clanStatsPromise = fetch(`${path}/stats.json`);
+    const { data } = await apolloClient.query({
+      query: gql`
+        query GetClan($tag: String!, $daysSpan: Int!, $refresh: Boolean = false) {
+          clan(tag: $tag, refresh: $refresh) {
+            name
+            clanPoints
+            members
+            recentData: playerMatrix
+            historicData: playerMatrix(days: $daysSpan)
+            delta(days: $daysSpan) {
+              avgDeGrab
+              avgElixirGrab
+              avgGoldGrab
+            }
+          }
+        }
+      `,
+      variables: {
+        tag,
+        daysSpan
+      }
+    });
     commit("stopLoading");
-    handleResponse(previousPromise, commit, "setPreviousData");
-    handleResponse(clanStatsPromise, commit, "setClanStats");
-    const data = await handleResponse(refreshPromise, commit, "setRefreshData");
-    const longPromise = fetch(`${path}/long.json?jobId=${data.jobId}`);
-    handleResponse(longPromise, commit, "setClanMeta");
+    commit("setData", data);
   },
   async fetchSimilarClansStats({ commit, getters: { path }, state: { days } }) {
     const similarClansPromise = fetch(`${path}/similar/avg.json?daySpan=${days}`);
@@ -135,8 +140,8 @@ const actions = {
 
 const getters = {
   header({ clan }) {
-    if (clan.length > 0) {
-      return clan[0].map(column => ({
+    if (clan.recentData) {
+      return clan.recentData[0].map(column => ({
         label: column,
         field: camelCase(column),
         numeric: !isNonNumericColumns(camelCase(column))
@@ -148,12 +153,12 @@ const getters = {
   path({ tag }) {
     return `/clan/${tag.replace("#", "")}`;
   },
-  tableData(state, getters) {
-    if (state.clan.length === 0) {
+  tableData({ clan }, getters) {
+    if (!clan.recentData) {
       return [];
     }
-    const data = convertToMap(getters.header, state.clan.slice(1));
-    const previousData = convertToMap(getters.header, state.previousData.slice(1));
+    const data = convertToMap(getters.header, clan.recentData.slice(1));
+    const previousData = convertToMap(getters.header, clan.historicData.slice(1));
     const previousByTag = keyBy(previousData, "tag");
 
     return data.map(row => {
