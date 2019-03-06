@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 import isEmpty from "lodash/isEmpty";
 import PlayerComparison from "./PlayerComparison";
 import { gaMixin } from "../ga";
@@ -112,7 +112,6 @@ export default {
   },
   methods: {
     ...mapMutations(["setTag", "setDaysSpan"]),
-    ...mapActions(["fetchClanData", "loadDaysAgo"]),
     onRowclicked(row) {
       this.gaEvent("click-row", "Click Player Row", "Row Tag", row.tag.value);
       if (this.openDetails.indexOf(row.id) === -1) {
