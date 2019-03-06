@@ -1,4 +1,4 @@
-from flask import render_template, jsonify
+from flask import render_template
 from mongoengine import DoesNotExist
 
 from clashleaders import app, cache
@@ -20,33 +20,6 @@ def player_html(slug):
                                player_score=player.player_score(),
                                clan=clan,
                                insights=player_troops_insights(player))
-
-
-@app.route("/player/<tag>/activity.json")
-@cache.cached(timeout=1200, query_string=True)
-def player_attacks_json(tag):
-    player = Player.find_by_tag(tag)
-    df = player.to_historical_df()[
-        ['attack_wins', 'donations', 'gold_grab', 'elixir_escapade', 'heroic_heist', 'trophies']
-    ]
-    resampled = df.resample('D').mean()
-    diffed = resampled.diff().dropna().clip(lower=0)
-    diffed.rename(columns={'elixir_escapade': 'elixir_grab', 'heroic_heist': 'de_grab'}, inplace=True)
-    diffed['trophies'] = resampled['trophies']  # Undo trophies
-    return diffed.to_json(orient='columns', date_format='iso')
-
-
-@app.route("/player/<tag>.json")
-def player_json(tag):
-    player = Player.find_by_tag(tag)
-    return jsonify(player.to_dict(include_score=True))
-
-
-@app.route("/player/<tag>/history.json")
-def player_history_json(tag):
-    history = Player.find_by_tag(tag).clan_history()
-    history = {k.isoformat(): v.to_dict(short=True) for k, v in history.items()}
-    return jsonify(history)
 
 
 @cache.memoize(28800)

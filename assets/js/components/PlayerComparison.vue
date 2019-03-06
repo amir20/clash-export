@@ -43,6 +43,8 @@ import "chartist-plugin-legend";
 import { bugsnagClient } from "../bugsnag";
 import Troops from "./Troops";
 import { mapState } from "vuex";
+import { apolloClient } from "../client";
+import { gql } from "apollo-boost";
 
 const role = {
   coLeader: "Co-leader",
@@ -96,7 +98,28 @@ export default {
     },
     async fetchPlayer() {
       try {
-        this.player = await (await fetch(`/player/${this.playerData.tag.value.replace("#", "")}.json`)).json();
+        const { data } = await apolloClient.query({
+          query: gql`
+            query GetPlayerDetails($tag: String!) {
+              player(tag: $tag) {
+                name
+                tag
+                percentile
+                slug
+                league {
+                  name
+                  iconUrls {
+                    small
+                  }
+                }
+              }
+            }
+          `,
+          variables: {
+            tag: this.playerData.tag.value
+          }
+        });
+        this.player = data.player;
       } catch (e) {
         console.error(e);
         bugsnagClient.notify(e);
