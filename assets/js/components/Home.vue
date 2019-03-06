@@ -78,12 +78,6 @@ export default {
       showModal: true
     };
   },
-  created() {
-    if (this.savedTag) {
-      this.prefetch(`${this.url}/refresh.json`);
-      this.prefetch(`${this.url}.json?daysAgo=7`);
-    }
-  },
   methods: {
     ...mapMutations(["setSavedTag", "clearSavedTag", "doNotAskForPlayer", "setSavedPlayer"]),
     onReset() {
@@ -96,13 +90,6 @@ export default {
     },
     onClanError() {
       this.clearSavedTag();
-    },
-    prefetch(url) {
-      const link = document.createElement("link");
-      link.href = url;
-      link.rel = "prefetch";
-      link.as = "fetch";
-      document.head.appendChild(link);
     },
     onPlayerSelected(player) {
       this.setSavedPlayer(player);
