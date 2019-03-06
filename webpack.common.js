@@ -106,12 +106,9 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new ManifestPlugin(),
-    new CleanWebpackPlugin([
-      __dirname + "/clashleaders/static/css",
-      __dirname + "/clashleaders/static/js",
-      __dirname + "/clashleaders/static/flags",
-      __dirname + "/clashleaders/static/images/compiled"
-    ])
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["**/*", "!web-manifest*", "!**images", "!**images/*"]
+    })
   ],
   output: {
     path: __dirname + "/clashleaders/static/",
