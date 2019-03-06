@@ -11,61 +11,49 @@ import format from "date-fns/format";
 import fill from "lodash/fill";
 import times from "lodash/times";
 import random from "lodash/random";
-import { mapState } from "vuex";
+
+const dom = { chart: null };
 
 export default {
   props: {
-    name: { type: String }
-  },
-  data() {
-    return { chart: null };
+    labels: { type: Array },
+    userSeries: { type: Array },
+    playerSeries: { type: Array },
+    showUser: { type: Boolean },
+    loading: { type: Boolean, default: true }
   },
   mounted() {
-    this.draw(fakeData);
+    this.draw();
   },
   computed: {
-    ...mapState(["loggedUserActivity", "playerActivity", "hasLoggedUser"]),
     data() {
-      const dates = [];
-      const thisUser = { name: "This player", data: [], className: "player-activity" };
-      const loggedInUser = { name: "You", data: [], className: "logged-activity" };
-      if (this.playerActivity[this.name]) {
-        for (const [date, value] of Object.entries(this.playerActivity[this.name])) {
-          dates.push(date);
-          thisUser.data.push(value);
-          if (this.loggedUserActivity[this.name] && this.loggedUserActivity[this.name][date]) {
-            loggedInUser.data.push(this.loggedUserActivity[this.name][date]);
-          } else if (this.hasLoggedUser) {
-            loggedInUser.data.push(0);
-          }
-        }
-      }
-      return { dates, series: this.hasLoggedUser ? [thisUser, loggedInUser] : [thisUser] };
-    },
-    loading() {
-      return Object.keys(this.playerActivity).length === 0;
+      const { labels, playerSeries, userSeries } = this;
+      const player = { name: "This player", data: playerSeries, className: "player-activity" };
+      const user = { name: "You", data: userSeries, className: "user-activity" };
+      return { labels, series: this.showUser ? [player, user] : [player] };
     }
   },
   watch: {
-    data(newValue) {
-      this.draw(newValue);
+    loading() {
+      this.draw();
     }
   },
   methods: {
     redraw() {
-      this.chart.update();
+      this.draw();
     },
-    draw(data) {
-      this.chart = new Chartist.Line(
+    draw() {
+      const data = this.loading ? fakeData : this.data;
+      dom.chart = new Chartist.Line(
         this.$refs.chart,
         {
-          labels: data.dates,
+          labels: data.labels,
           series: data.series
         },
         {
           plugins: [
             Chartist.plugins.legend({
-              classNames: ["player-activity", "logged-activity"]
+              classNames: ["player-activity", "user-activity"]
             })
           ],
           axisX: {
@@ -114,7 +102,7 @@ export default {
 
 const fakeData = {
   series: [{ data: times(28, random.bind(0, 10)), name: "This player" }],
-  dates: fill(Array(28), "█")
+  labels: fill(Array(28), "█")
 };
 </script>
 
@@ -140,11 +128,11 @@ const fakeData = {
     stroke: none;
   }
 
-  & /deep/ .logged-activity .ct-area {
+  & /deep/ .user-activity .ct-area {
     fill: none;
   }
 
-  & /deep/ .logged-activity .ct-line {
+  & /deep/ .user-activity .ct-line {
     stroke: hsl(348, 100%, 61%);
     stroke-width: 2px;
     stroke-dasharray: 4, 2;
@@ -163,18 +151,19 @@ const fakeData = {
       display: inline;
       padding-right: 5px;
       white-space: nowrap;
+      &:before {
+        left: 6px;
+      }
 
       &.player-activity:before,
       &.ct-series-0:before {
         background-color: #00d1b2;
         border-color: #00d1b2;
-        left: 6px;
       }
 
-      &.logged-activity:before {
+      &.user-activity:before {
         background-color: hsl(348, 100%, 61%);
         border-color: hsl(348, 100%, 61%);
-        left: 6px;
       }
     }
   }

@@ -39,7 +39,7 @@ class Player(graphene.ObjectType):
         diffed.rename(columns={'elixir_escapade': 'elixir_grab', 'heroic_heist': 'de_grab'}, inplace=True)
         diffed['trophies'] = resampled['trophies']  # Undo trophies
 
-        return PlayerActivity(labels=diffed.index.strftime('%Y-%m-%dT%H:%M:%S+00:00Z').tolist(),
+        return PlayerActivity(labels=diffed.index.strftime('%Y-%m-%d %H:%M:%S').tolist(),
                               attack_wins=diffed['attack_wins'].tolist(),
                               donations=diffed['donations'].tolist(),
                               gold_grab=diffed['gold_grab'].tolist(),
