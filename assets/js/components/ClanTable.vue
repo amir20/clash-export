@@ -27,9 +27,12 @@
           sortable
         >
           {{ props.row[column.field].value.toLocaleString() }}
-          <span v-if="column.field == 'name' && playersStatus[props.row.tag.value]" class="tag is-uppercase" :class="playersStatus[props.row.tag.value]">{{
-            playersStatus[props.row.tag.value]
-          }}</span>
+          <span
+            v-if="column.field == 'name' && clan.playerStatus[props.row.tag.value]"
+            class="tag is-uppercase"
+            :class="clan.playerStatus[props.row.tag.value]"
+            >{{ clan.playerStatus[props.row.tag.value] }}</span
+          >
           <b
             v-if="column.numeric && props.row[column.field].delta != 0"
             :class="{
@@ -60,7 +63,6 @@
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import isEmpty from "lodash/isEmpty";
 import PlayerComparison from "./PlayerComparison";
-import formatDistance from "date-fns/formatDistance";
 import { gaMixin } from "../ga";
 import UserMixin from "../user";
 
@@ -78,9 +80,7 @@ export default {
     };
   },
   created() {
-    this.setTag(this.tag);
     this.setDaysSpan(this.oldestDays);
-    this.fetchClanData();
 
     if (this.oldestDays < 3) {
       this.setDaysSpan(1);
@@ -91,8 +91,8 @@ export default {
     document.removeEventListener("visibilitychange");
   },
   computed: {
-    ...mapState(["loading", "sortField", "apiError", "playersStatus"]),
-    ...mapGetters(["header", "tableData", "lastUpdated"])
+    ...mapState(["loading", "sortField", "clan"]),
+    ...mapGetters(["header", "tableData"])
   },
   watch: {
     sortField(newValue) {
@@ -107,19 +107,6 @@ export default {
           this.openDetails = [newValue[0].id];
         }
         loaded = true;
-      }
-    },
-    apiError(newValue, oldValue) {
-      if (newValue && !oldValue && newValue.status >= 500) {
-        const last = formatDistance(this.lastUpdatedAgo, new Date(), {
-          addSuffix: true
-        });
-        this.$snackbar.open({
-          message: `Well Chief, this is embarrassing. It seems Clash of Clans' API is not responding right now. This clan was last updated ${last}. I'll keep checking for updates even after you leave.`,
-          type: "is-warning",
-          position: "is-top",
-          duration: 20000
-        });
       }
     }
   },

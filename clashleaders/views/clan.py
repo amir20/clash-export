@@ -23,11 +23,39 @@ def inject_most_popular():
                 )
 
 
+@app.route("/clan/<slug>")
+def clan_detail_page(slug):
+    try:
+        clan = Clan.find_by_slug(slug)
+        description = transform_description(clan.description)
+        start_count, similar_clans = clan.similar_clans()
+        initial_state = dict(
+            name=clan.name,
+            tag=clan.tag,
+            updatedOn=clan.updated_on,
+            historicData=clan.historical_near_days_ago(7).to_matrix(),
+            recentData=clan.historical_near_now().to_matrix(),
+            playerStatus={}
+        )
+    except DoesNotExist:
+        return render_template('error.html'), 404
+    else:
+        return render_template('clan.html',
+                               clan=clan,
+                               initial_state=initial_state,
+                               description=description,
+                               oldest_days=clan.days_of_history(),
+                               similar_clans=similar_clans,
+                               similar_clans_start_count=start_count)
+
+
+# TODO REMOVE
 @app.route("/clan/<tag>.json")
 def clan_detail_json(tag):
     return jsonify(Clan.find_by_tag(tag).historical_near_days_ago(request.args.get('daysAgo', 0)).to_matrix())
 
 
+# TODO REMOVE
 @app.route("/clan/<tag>/refresh.json")
 def clan_refresh_json(tag):
     clan = Clan.fetch_and_update(tag, sync_calculation=False)
@@ -42,6 +70,7 @@ def clan_refresh_json(tag):
     ))
 
 
+# TODO REMOVE
 @app.route("/clan/<tag>/long.json")
 def clan_long_json(tag):
     job_id = request.args.get('jobId')
@@ -53,25 +82,7 @@ def clan_long_json(tag):
     return jsonify(clan.to_dict())
 
 
-@app.route("/clan/<slug>")
-def clan_detail_page(slug):
-    try:
-        clan = Clan.find_by_slug(slug)
-        description = transform_description(clan.description)
-        players = clan.historical_near_now().to_matrix()
-        start_count, similar_clans = clan.similar_clans()
-    except DoesNotExist:
-        return render_template('error.html'), 404
-    else:
-        return render_template('clan.html',
-                               clan=clan,
-                               players=players,
-                               description=description,
-                               oldest_days=clan.days_of_history(),
-                               similar_clans=similar_clans,
-                               similar_clans_start_count=start_count)
-
-
+# TODO REMOVE
 @app.route("/clan/<tag>/stats.json")
 @cache.cached(timeout=1200, query_string=True)
 def clan_stats(tag):
@@ -85,6 +96,7 @@ def clan_stats(tag):
                         name=clan.name))
 
 
+# TODO REMOVE
 @app.route("/clan/<tag>/short.json")
 @cache.cached(timeout=1000)
 def clan_short_json(tag):
@@ -97,6 +109,7 @@ def clan_short_json(tag):
     return jsonify(data)
 
 
+# TODO REMOVE
 @app.route("/clan/<tag>/trophies.json")
 @cache.cached(timeout=1000)
 def clan_trophies(tag):

@@ -2,6 +2,7 @@ import graphene
 from graphene.types.generic import GenericScalar
 
 import clashleaders.model as model
+from clashleaders.insights.clan_activity import clan_status
 
 
 class PlayerActivity(graphene.ObjectType):
@@ -38,12 +39,12 @@ class Player(graphene.ObjectType):
         diffed['trophies'] = resampled['trophies']  # Undo trophies
 
         return PlayerActivity(labels=diffed.index.strftime('%Y-%m-%dT%H:%M:%S+00:00Z').tolist(),
-                                  attack_wins=diffed['attack_wins'].tolist(),
-                                  donations=diffed['donations'].tolist(),
-                                  gold_grab=diffed['gold_grab'].tolist(),
-                                  elixir_grab=diffed['elixir_grab'].tolist(),
-                                  de_grab=diffed['de_grab'].tolist(),
-                                  trophies=diffed['trophies'].tolist())
+                              attack_wins=diffed['attack_wins'].tolist(),
+                              donations=diffed['donations'].tolist(),
+                              gold_grab=diffed['gold_grab'].tolist(),
+                              elixir_grab=diffed['elixir_grab'].tolist(),
+                              de_grab=diffed['de_grab'].tolist(),
+                              trophies=diffed['trophies'].tolist())
 
 
 class ClanDelta(graphene.ObjectType):
@@ -65,6 +66,12 @@ class ClanDelta(graphene.ObjectType):
     total_versus_wins = graphene.Float()
 
 
+class SimilarClanDelta(graphene.ObjectType):
+    avg_de_grab = graphene.Float()
+    avg_elixir_grab = graphene.Float()
+    avg_gold_grab = graphene.Float()
+
+
 class ClanActivity(graphene.ObjectType):
     labels = graphene.List(graphene.String)
     trophies = graphene.List(graphene.Float)
@@ -79,12 +86,15 @@ class Clan(graphene.ObjectType):
     clanPoints = graphene.Int()
     clanVersusPoints = graphene.Int()
     members = graphene.Int()
+    updated_on = graphene.DateTime()
     week_delta = graphene.Field(ClanDelta)
     day_delta = graphene.Field(ClanDelta)
     delta = graphene.Field(ClanDelta, days=graphene.Int(required=True))
     player_matrix = GenericScalar(days=graphene.Int(required=False))
     players = graphene.List(Player)
     activity = graphene.Field(ClanActivity)
+    similar = graphene.Field(SimilarClanDelta, days=graphene.Int(required=True))
+    player_status = GenericScalar()
 
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)
@@ -116,12 +126,23 @@ class Clan(graphene.ObjectType):
         )
         return [Player(**p) for p in df.to_dict('i').values()]
 
+    def resolve_similar(self, info, days):
+        key = {1: 'day_delta', 7: 'week_delta'}[days]
+        cluster_label = self.cluster_label
+        gold = model.Clan.objects(cluster_label=cluster_label).average(f"{key}.avg_gold_grab")
+        elixir = model.Clan.objects(cluster_label=cluster_label).average(f"{key}.avg_elixir_grab")
+        de = model.Clan.objects(cluster_label=cluster_label).average(f"{key}.avg_de_grab")
+        return SimilarClanDelta(avg_de_grab=de, avg_gold_grab=elixir, avg_elixir_grab=gold)
+
     def resolve_activity(self, info):
         df = self.to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
         df.index.name = 'labels'
         df = df.reset_index().rename(columns={'clanPoints': 'trophies'})
         df['labels'] = df['labels'].dt.strftime('%Y-%m-%dT%H:%M:%S+00:00Z')
         return ClanActivity(**df.to_dict('l'))
+
+    def resolve_player_status(self, info):
+        return clan_status(self)
 
 
 class Query(graphene.ObjectType):
