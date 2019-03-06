@@ -21,7 +21,10 @@ export default {
     clearInterval(this.interval);
   },
   computed: {
-    ...mapState(["lastUpdated"])
+    ...mapState(["clan"]),
+    lastUpdated() {
+      return new Date(this.clan.updatedOn);
+    }
   },
   methods: {
     updateFromNow() {

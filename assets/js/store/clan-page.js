@@ -5,39 +5,26 @@ import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
 import { event } from "../ga";
 import store from "store/dist/store.modern";
-
 import { apolloClient } from "../client";
 import { gql } from "apollo-boost";
 
 Vue.use(Vuex);
 
 const state = {
-  tag: null,
   loading: true,
-  clan: { recentData: window.__CLAN__, historicData: [] },
-  lastUpdated: new Date(window.__LAST_UPDATED__) || null,
-  playersStatus: {},
+  clan: window.__INITIAL_STATE__,
   days: 7,
-  similarClansAvg: {},
-  savedClanStats: {},
+  savedClan: {},
   daysSpan: 7,
-  sortField: "value",
-  apiError: null
+  sortField: "value"
 };
 
 const mutations = {
-  setTag(state, tag) {
-    state.tag = tag;
-  },
-  setData(state, data) {
-    state.clan = data.clan;
-    state.lastUpdated = new Date();
+  setData(state, { clan }) {
+    state.clan = clan;
   },
   setDays(state, days) {
     state.days = days;
-  },
-  setSimilarClansAvg(state, similarClansAvg) {
-    state.similarClansAvg = similarClansAvg;
   },
   startLoading(state) {
     state.loading = true;
@@ -52,11 +39,8 @@ const mutations = {
     event("sort-field", "Change Sort Field");
     state.sortField = field;
   },
-  setApiError(state, field) {
-    state.apiError = field;
-  },
-  setSavedClanStats(state, field) {
-    state.savedClanStats = field;
+  setSavedClan(state, { clan }) {
+    state.savedClan = clan;
   }
 };
 
@@ -77,19 +61,25 @@ async function handleResponse(promise, commit, success, error = "setApiError") {
 }
 
 const actions = {
-  async fetchClanData({ commit, dispatch, state: { tag, daysSpan } }) {
-    dispatch("fetchSimilarClansStats");
+  async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }) {
     dispatch("fetchSavedClanStats");
     const { data } = await apolloClient.query({
       query: gql`
-        query GetClan($tag: String!, $daysSpan: Int!, $refresh: Boolean = false) {
+        query GetClan($tag: String!, $days: Int!, $refresh: Boolean = false) {
           clan(tag: $tag, refresh: $refresh) {
             name
             clanPoints
             members
+            updatedOn
+            playerStatus
             recentData: playerMatrix
-            historicData: playerMatrix(days: $daysSpan)
-            delta(days: $daysSpan) {
+            historicData: playerMatrix(days: $days)
+            delta(days: $days) {
+              avgDeGrab
+              avgElixirGrab
+              avgGoldGrab
+            }
+            similar(days: $days) {
               avgDeGrab
               avgElixirGrab
               avgGoldGrab
@@ -98,23 +88,36 @@ const actions = {
         }
       `,
       variables: {
-        tag,
-        daysSpan
+        tag: clan.tag,
+        days
       }
     });
     commit("stopLoading");
     commit("setData", data);
   },
-  async fetchSimilarClansStats({ commit, getters: { path }, state: { days } }) {
-    const similarClansPromise = fetch(`${path}/similar/avg.json?daySpan=${days}`);
-    handleResponse(similarClansPromise, commit, "setSimilarClansAvg");
-  },
   async fetchSavedClanStats({ commit, state: { tag, days } }) {
     const savedTag = store.get("lastTag");
     if (savedTag && savedTag !== tag) {
       console.log(`Found saved tag value [${savedTag}].`);
-      const savedClanStatsPromise = fetch(`/clan/${savedTag.replace("#", "")}/stats.json?daySpan=${days}`);
-      handleResponse(savedClanStatsPromise, commit, "setSavedClanStats", false);
+      const { data } = await apolloClient.query({
+        query: gql`
+          query GetSavedClan($tag: String!, $days: Int!) {
+            clan(tag: $tag) {
+              name
+              delta(days: $days) {
+                avgDeGrab
+                avgElixirGrab
+                avgGoldGrab
+              }
+            }
+          }
+        `,
+        variables: {
+          tag: savedTag,
+          days
+        }
+      });
+      commit("setSavedClan", data);
     }
   },
   async loadDaysAgo(
@@ -149,9 +152,6 @@ const getters = {
     } else {
       return [];
     }
-  },
-  path({ tag }) {
-    return `/clan/${tag.replace("#", "")}`;
   },
   tableData({ clan }, getters) {
     if (!clan.recentData) {

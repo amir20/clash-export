@@ -25,3 +25,5 @@ new Vue({
     ClanField
   }
 });
+
+store.dispatch("FETCH_CLAN_DATA");
