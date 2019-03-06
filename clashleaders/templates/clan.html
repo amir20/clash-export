@@ -180,8 +180,7 @@
 </div>
 {% endblock %} {% block scripts %}
 <script>
-  window.__CLAN__ = {{ players | tojson | safe }};
-  window.__LAST_UPDATED__ = {{ clan.updated_on.timestamp() * 1000 }};
+  window.__INITIAL_STATE__ = {{ initial_state | tojson | safe }};
 </script>
 <script type="application/ld+json">
   {
