@@ -8,7 +8,6 @@ from rq.exceptions import NoSuchJobError
 from rq.job import Job
 
 from clashleaders import app, cache, redis_connection
-from clashleaders.insights.clan_activity import clan_status
 from clashleaders.model import Clan, Status
 from clashleaders.text.clan_description_processor import transform_description
 
@@ -53,47 +52,6 @@ def clan_detail_page(slug):
 @app.route("/clan/<tag>.json")
 def clan_detail_json(tag):
     return jsonify(Clan.find_by_tag(tag).historical_near_days_ago(request.args.get('daysAgo', 0)).to_matrix())
-
-
-# TODO REMOVE
-@app.route("/clan/<tag>/refresh.json")
-def clan_refresh_json(tag):
-    clan = Clan.fetch_and_update(tag, sync_calculation=False)
-    clan.update(inc__page_views=1)
-    player_data = clan.historical_near_now().to_matrix()
-    players_status = clan_status(clan)
-
-    return jsonify(dict(
-        playerData=player_data,
-        playersStatus=players_status,
-        jobId=clan.job.id
-    ))
-
-
-# TODO REMOVE
-@app.route("/clan/<tag>/long.json")
-def clan_long_json(tag):
-    job_id = request.args.get('jobId')
-
-    if job_id:
-        wait_for_job(job_id)
-
-    clan = Clan.find_by_tag(tag)
-    return jsonify(clan.to_dict())
-
-
-# TODO REMOVE
-@app.route("/clan/<tag>/stats.json")
-@cache.cached(timeout=1200, query_string=True)
-def clan_stats(tag):
-    clan = Clan.find_by_tag(tag)
-    previous_clan = clan.historical_near_days_ago(request.args.get('daySpan', 7))
-    delta = clan.historical_near_now().clan_delta(previous_clan)
-
-    return jsonify(dict(gold_grab=delta.avg_gold_grab,
-                        elixir_grab=delta.avg_elixir_grab,
-                        de_grab=delta.avg_de_grab,
-                        name=clan.name))
 
 
 # TODO REMOVE
