@@ -52,6 +52,7 @@ export default {
               name
               clanPoints
               tag
+              slug
               description
               players {
                 name
