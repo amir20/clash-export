@@ -1,13 +1,12 @@
 from datetime import datetime
 from time import sleep
 
-from flask import jsonify, render_template, request
-from inflection import camelize
+from flask import render_template
 from mongoengine import DoesNotExist
 from rq.exceptions import NoSuchJobError
 from rq.job import Job
 
-from clashleaders import app, cache, redis_connection
+from clashleaders import app, redis_connection, cache
 from clashleaders.model import Clan, Status
 from clashleaders.text.clan_description_processor import transform_description
 
@@ -41,6 +40,7 @@ def clan_detail_page(slug):
     else:
         return render_template('clan.html',
                                clan=clan,
+                               trophy_distribution=clan_trophies(clan),
                                initial_state=initial_state,
                                description=description,
                                oldest_days=clan.days_of_history(),
@@ -48,31 +48,12 @@ def clan_detail_page(slug):
                                similar_clans_start_count=start_count)
 
 
-# TODO REMOVE
-@app.route("/clan/<tag>.json")
-def clan_detail_json(tag):
-    return jsonify(Clan.find_by_tag(tag).historical_near_days_ago(request.args.get('daysAgo', 0)).to_matrix())
-
-
-# TODO REMOVE
-@app.route("/clan/<tag>/short.json")
-@cache.cached(timeout=1000)
-def clan_short_json(tag):
-    clan = Clan.find_by_tag(tag)
-    df = clan.historical_near_now().to_df()[['Name', 'TH Level', 'Current Trophies']].reset_index()
-    players = df.rename(lambda s: camelize(s.replace(" ", ""), False), axis='columns').to_dict('i').values()
-    data = clan.to_dict(short=True)
-    data['players'] = list(players)
-
-    return jsonify(data)
-
-
-# TODO REMOVE
-@app.route("/clan/<tag>/trophies.json")
-@cache.cached(timeout=1000)
-def clan_trophies(tag):
-    df = Clan.find_by_tag(tag).to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
-    return df.to_json(orient='columns', date_format='iso')
+@cache.memoize(600)
+def clan_trophies(clan):
+    df = clan.to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
+    df = df.reset_index().rename(columns={'created_on': 'labels'})
+    df['labels'] = df['labels'].dt.strftime('%Y-%m-%dT%H:%M:%S+00:00Z')
+    return df.to_dict('l')
 
 
 def wait_for_job(job_id, wait_time=2):

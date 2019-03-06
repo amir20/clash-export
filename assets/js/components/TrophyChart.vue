@@ -7,10 +7,11 @@ import { select } from "d3-selection";
 import { extent } from "d3-array";
 import { timeFormat, timeParse } from "d3-time-format";
 import { scaleLinear, scaleTime } from "d3-scale";
-import { line, area, curveMonotoneX } from "d3-shape";
+import { area, curveMonotoneX, line } from "d3-shape";
 import { axisBottom, axisLeft, axisRight } from "d3-axis";
 import { timeDay } from "d3-time";
 import debounce from "lodash/debounce";
+import zip from "lodash/zip";
 
 const d3 = {
   axisBottom,
@@ -30,52 +31,52 @@ const d3 = {
 
 const margin = { top: 10, right: 50, bottom: 40, left: 70 };
 const height = 190 - margin.top - margin.bottom;
-
+const dom = {
+  svg: null,
+  trophyPath: null,
+  membersPath: null,
+  bottomAxis: null,
+  leftAxis: null,
+  rightAxis: null,
+  rightLabel: null,
+  leftLabel: null
+};
 export default {
-  props: ["tag"],
+  props: ["distributionData"],
   data() {
     return {
-      data: [],
-      svg: null,
-      trophyPath: null,
-      membersPath: null,
-      bottomAxis: null,
-      leftAxis: null,
-      rightAxis: null,
-      rightLabel: null,
-      leftLabel: null
+      data: []
     };
   },
   async created() {
-    const json = await (await fetch(`/clan/${this.tag.replace("#", "")}/trophies.json`)).json();
-    const parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");
-
+    const parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S+00:00Z");
     this.data = [];
-    for (const [date, points] of Object.entries(json.clanPoints)) {
+    const { labels, clanPoints, members } = this.distributionData;
+    for (const [date, trophy, member] of zip(labels, clanPoints, members)) {
       this.data.push({
         date: parseTime(date),
-        trophies: json.clanPoints[date],
-        members: json.members[date]
+        trophies: trophy,
+        members: member
       });
     }
 
     this.$nextTick(this.render);
   },
   mounted() {
-    this.svg = d3
+    dom.svg = d3
       .select(this.$refs.chart)
       .append("svg")
       .attr("width", "100%")
       .attr("height", height + margin.top + margin.bottom);
 
-    const root = this.svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    const root = dom.svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    this.trophyPath = root.append("path").attr("class", "area");
-    this.membersPath = root.append("path").attr("class", "members-line");
-    this.bottomAxis = root.append("g").attr("class", "axis x");
-    this.leftAxis = root.append("g").attr("class", "axis y");
-    this.rightAxis = root.append("g").attr("class", "axis y");
-    this.rightLabel = root
+    dom.trophyPath = root.append("path").attr("class", "area");
+    dom.membersPath = root.append("path").attr("class", "members-line");
+    dom.bottomAxis = root.append("g").attr("class", "axis x");
+    dom.leftAxis = root.append("g").attr("class", "axis y");
+    dom.rightAxis = root.append("g").attr("class", "axis y");
+    dom.rightLabel = root
       .append("text")
       .attr("transform", "rotate(90)")
       .attr("dy", "1em")
@@ -83,24 +84,24 @@ export default {
       .attr("y", 1000)
       .attr("x", 1000);
 
-    this.rightLabel
+    dom.rightLabel
       .append("tspan")
       .attr("class", "members-legend")
       .text("◼ ");
-    this.rightLabel.append("tspan").text("Members");
+    dom.rightLabel.append("tspan").text("Members");
 
-    this.leftLabel = root
+    dom.leftLabel = root
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .attr("y", 1000)
       .attr("x", 1000);
-    this.leftLabel
+    dom.leftLabel
       .append("tspan")
       .attr("class", "trophy-legend")
       .text("◼ ");
-    this.leftLabel.append("tspan").text("Trophy Points");
+    dom.leftLabel.append("tspan").text("Trophy Points");
 
     window.addEventListener("resize", this.render);
   },
@@ -109,7 +110,8 @@ export default {
   },
   methods: {
     render: debounce(function() {
-      const { data, svg, membersPath, trophyPath, bottomAxis, leftAxis, rightAxis, rightLabel, leftLabel } = this;
+      const { svg, membersPath, trophyPath, bottomAxis, leftAxis, rightAxis, rightLabel, leftLabel } = dom;
+      const { data } = this;
 
       const width = svg.node().getBoundingClientRect().width - margin.left - margin.right;
       const x = d3.scaleTime().range([0, width]);
@@ -189,6 +191,7 @@ export default {
   /deep/ .axis.x .domain {
     stroke: rgba(0, 0, 0, 0.25);
   }
+
   /deep/ .axis.y .domain {
     stroke: none;
   }

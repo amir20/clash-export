@@ -141,7 +141,7 @@
               "computed.total_versus_wins",
               "week_delta.total_versus_wins") }}
             </div>
-            <div class="is-hidden-mobile"><trophy-chart tag="{{ clan.tag }}"></trophy-chart></div>
+            <div class="is-hidden-mobile"><trophy-chart :distribution-data="{{ trophy_distribution | tojson | forceescape }}"></trophy-chart></div>
           </div>
         </div>
       </div>

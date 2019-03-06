@@ -1,4 +1,5 @@
 from flask import render_template, jsonify
+from mongoengine import DoesNotExist
 
 from clashleaders import app, cache
 from clashleaders.model import Player
@@ -7,14 +8,18 @@ from clashleaders.queue.player import fetch_players
 
 @app.route("/player/<slug>")
 def player_html(slug):
-    player = Player.find_by_slug(slug)
-    fetch_players.delay([player.tag])
-    clan = player.most_recent_clan()
-    return render_template('player.html',
-                           player=player,
-                           player_score=player.player_score(),
-                           clan=clan,
-                           insights=player_troops_insights(player))
+    try:
+        player = Player.find_by_slug(slug)
+        fetch_players.delay([player.tag])
+        clan = player.most_recent_clan()
+    except DoesNotExist:
+        return render_template('error.html'), 404
+    else:
+        return render_template('player.html',
+                               player=player,
+                               player_score=player.player_score(),
+                               clan=clan,
+                               insights=player_troops_insights(player))
 
 
 @app.route("/player/<tag>/activity.json")
