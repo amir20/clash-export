@@ -20,16 +20,16 @@ const state = {
 };
 
 const mutations = {
-  setData(state, { clan }) {
-    state.clan = clan;
+  SET_CLAN_DATA(state, { clan }) {
+    state.clan = { ...state.clan, ...clan };
   },
   setDays(state, days) {
     state.days = days;
   },
-  startLoading(state) {
+  START_LOADING(state) {
     state.loading = true;
   },
-  stopLoading(state) {
+  STOP_LOADING(state) {
     state.loading = false;
   },
   setDaysSpan(state, daysSpan) {
@@ -39,30 +39,14 @@ const mutations = {
     event("sort-field", "Change Sort Field");
     state.sortField = field;
   },
-  setSavedClan(state, { clan }) {
+  SET_SAVED_CLAN(state, { clan }) {
     state.savedClan = clan;
   }
 };
 
-async function handleResponse(promise, commit, success, error = "setApiError") {
-  const response = await promise;
-  if (response.status === 200) {
-    const data = await response.json();
-    commit(success, data);
-    return data;
-  } else {
-    const e = await response.json();
-    e.status = response.status;
-    console.warn(`Error while fetch data from API. Status: ${e.status}, Message: ${e.error}`);
-    if (error) {
-      commit(error, e);
-    }
-  }
-}
-
 const actions = {
   async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }) {
-    dispatch("fetchSavedClanStats");
+    dispatch("FETCH_SAVED_CLAN");
     const { data } = await apolloClient.query({
       query: gql`
         query GetClan($tag: String!, $days: Int!, $refresh: Boolean = false) {
@@ -92,12 +76,12 @@ const actions = {
         days
       }
     });
-    commit("stopLoading");
-    commit("setData", data);
+    commit("STOP_LOADING");
+    commit("SET_CLAN_DATA", data);
   },
-  async fetchSavedClanStats({ commit, state: { tag, days } }) {
+  async FETCH_SAVED_CLAN({ commit, state: { clan, days } }) {
     const savedTag = store.get("lastTag");
-    if (savedTag && savedTag !== tag) {
+    if (savedTag !== clan.tag) {
       console.log(`Found saved tag value [${savedTag}].`);
       const { data } = await apolloClient.query({
         query: gql`
@@ -117,27 +101,47 @@ const actions = {
           days
         }
       });
-      commit("setSavedClan", data);
+      commit("SET_SAVED_CLAN", data);
     }
   },
   async loadDaysAgo(
     {
       commit,
       dispatch,
-      getters: { path }
+      state: { clan }
     },
     days
   ) {
     event("days-ago", "Change Days", "Days", days);
     commit("setDays", days);
-    dispatch("fetchSavedClanStats");
-    dispatch("fetchSimilarClansStats");
-    commit("startLoading");
-    const promise = fetch(`${path}.json?daysAgo=${days}`);
-    const clanStatsPromise = fetch(`${path}/stats.json?daysAgo=${days}`);
-    await handleResponse(promise, commit, "setPreviousData");
-    await handleResponse(clanStatsPromise, commit, "setClanStats");
-    commit("stopLoading");
+    dispatch("FETCH_SAVED_CLAN");
+
+    commit("START_LOADING");
+    const { data } = await apolloClient.query({
+      query: gql`
+        query ChangeClanHistoric($tag: String!, $days: Int!) {
+          clan(tag: $tag) {
+            historicData: playerMatrix(days: $days)
+            delta(days: $days) {
+              avgDeGrab
+              avgElixirGrab
+              avgGoldGrab
+            }
+            similar(days: $days) {
+              avgDeGrab
+              avgElixirGrab
+              avgGoldGrab
+            }
+          }
+        }
+      `,
+      variables: {
+        tag: clan.tag,
+        days
+      }
+    });
+    commit("STOP_LOADING");
+    commit("SET_CLAN_DATA", data);
   }
 };
 
