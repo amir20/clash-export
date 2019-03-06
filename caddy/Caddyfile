@@ -12,8 +12,6 @@ https://www.clashleaders.com {
 
     expires {
         match /static 1y
-        match /clan/.*/short.json$ 1d
-        match /clan/.*/trophies.json$ 1d
     }
 
     header /static {

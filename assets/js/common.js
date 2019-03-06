@@ -8,6 +8,8 @@ import User from "./components/User";
 import formatDistance from "date-fns/formatDistance";
 import parse from "date-fns/parse";
 import { event } from "./ga";
+import { apolloClient } from "./client";
+import { gql } from "apollo-boost";
 
 bugsnag(Vue);
 
@@ -30,8 +32,19 @@ new Vue({
     async selectedTag(newValue) {
       if (newValue) {
         event("search-clans", "Search");
-        const clan = await (await fetch(`/clan/${newValue.replace("#", "")}/short.json`)).json();
-        window.location = `/clan/${clan.slug}`;
+        const { data } = await apolloClient.query({
+          query: gql`
+            query GetClan($tag: String!) {
+              clan(tag: $tag) {
+                slug
+              }
+            }
+          `,
+          variables: {
+            tag: newValue
+          }
+        });
+        window.location = `/clan/${data.clan.slug}`;
       }
     }
   }

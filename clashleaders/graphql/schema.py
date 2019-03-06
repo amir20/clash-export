@@ -78,11 +78,24 @@ class ClanActivity(graphene.ObjectType):
     members = graphene.List(graphene.Float)
 
 
+class ClanActivity(graphene.ObjectType):
+    labels = graphene.List(graphene.String)
+    trophies = graphene.List(graphene.Float)
+    members = graphene.List(graphene.Float)
+
+
+class ClanBadgeUrls(graphene.ObjectType):
+    large = graphene.String()
+    medium = graphene.String()
+    small = graphene.String()
+
+
 class Clan(graphene.ObjectType):
     name = graphene.String()
     slug = graphene.String()
     tag = graphene.String()
     description = graphene.String()
+    badge_urls = graphene.Field(ClanBadgeUrls)
     clanPoints = graphene.Int()
     clanVersusPoints = graphene.Int()
     members = graphene.Int()
@@ -99,6 +112,9 @@ class Clan(graphene.ObjectType):
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)
         return self.historical_near_now().clan_delta(previous_clan)
+
+    def resolve_badge_urls(self, info):
+        return ClanBadgeUrls(**self.badgeUrls)
 
     def resolve_player_matrix(self, info, days=0):
         return self.historical_near_days_ago(days).to_matrix()

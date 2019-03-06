@@ -97,10 +97,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["foundClan", "savedTag", "savedPlayer", "skipPlayerQuestion"]),
-    url() {
-      return this.savedTag ? `/clan/${this.savedTag.replace("#", "")}` : "";
-    }
+    ...mapState(["foundClan", "savedTag", "savedPlayer", "skipPlayerQuestion"])
   }
 };
 </script>
