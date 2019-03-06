@@ -2,6 +2,7 @@ import graphene
 from graphene.types.generic import GenericScalar
 
 import clashleaders.model as model
+from clashleaders.clash.api import prepend_hash
 from clashleaders.insights.clan_activity import clan_status
 
 
@@ -70,12 +71,6 @@ class SimilarClanDelta(graphene.ObjectType):
     avg_de_grab = graphene.Float()
     avg_elixir_grab = graphene.Float()
     avg_gold_grab = graphene.Float()
-
-
-class ClanActivity(graphene.ObjectType):
-    labels = graphene.List(graphene.String)
-    trophies = graphene.List(graphene.Float)
-    members = graphene.List(graphene.Float)
 
 
 class ClanActivity(graphene.ObjectType):
@@ -176,4 +171,5 @@ class Query(graphene.ObjectType):
         return model.Player.find_by_tag(tag)
 
     def resolve_players(self, info, tags=[]):
+        tags = [prepend_hash(tag) for tag in tags]
         return list(model.Player.objects(tag__in=tags))
