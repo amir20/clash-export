@@ -2,7 +2,6 @@ import graphene
 from graphene.types.generic import GenericScalar
 
 import clashleaders.model as model
-from clashleaders.clash.api import prepend_hash
 from clashleaders.insights.clan_activity import clan_status
 
 
@@ -16,11 +15,28 @@ class PlayerActivity(graphene.ObjectType):
     trophies = graphene.List(graphene.Float)
 
 
+class BadgeUrls(graphene.ObjectType):
+    large = graphene.String()
+    medium = graphene.String()
+    small = graphene.String()
+    tiny = graphene.String()
+
+
+class PlayerLeague(graphene.ObjectType):
+    name = graphene.String()
+    id = graphene.Int()
+    iconUrls = graphene.Field(BadgeUrls)
+
+    def resolve_iconUrls(self, info):
+        return BadgeUrls(**self.iconUrls)
+
+
 class Player(graphene.ObjectType):
     role = graphene.String()
     name = graphene.String()
     tag = graphene.String()
     slug = graphene.String()
+    role = graphene.String()
     townHallLevel = graphene.Int()
     trophies = graphene.Int()
     builderHallLevel = graphene.Int()
@@ -28,7 +44,12 @@ class Player(graphene.ObjectType):
     defenseWins = graphene.Int()
     attackWins = graphene.Int()
     donations = graphene.Int()
+    percentile = graphene.Int()
     activity = graphene.Field(PlayerActivity)
+    league = graphene.Field(PlayerLeague)
+
+    def resolve_percentile(self, info):
+        return self.player_score()
 
     def resolve_activity(self, info):
         df = self.to_historical_df()[
@@ -46,6 +67,9 @@ class Player(graphene.ObjectType):
                               elixir_grab=diffed['elixir_grab'].tolist(),
                               de_grab=diffed['de_grab'].tolist(),
                               trophies=diffed['trophies'].tolist())
+
+    def resolve_league(self, info):
+        return PlayerLeague(**self.league)
 
 
 class ClanDelta(graphene.ObjectType):
@@ -79,18 +103,12 @@ class ClanActivity(graphene.ObjectType):
     members = graphene.List(graphene.Float)
 
 
-class ClanBadgeUrls(graphene.ObjectType):
-    large = graphene.String()
-    medium = graphene.String()
-    small = graphene.String()
-
-
 class Clan(graphene.ObjectType):
     name = graphene.String()
     slug = graphene.String()
     tag = graphene.String()
     description = graphene.String()
-    badge_urls = graphene.Field(ClanBadgeUrls)
+    badge_urls = graphene.Field(BadgeUrls)
     clanPoints = graphene.Int()
     clanVersusPoints = graphene.Int()
     members = graphene.Int()
@@ -109,7 +127,7 @@ class Clan(graphene.ObjectType):
         return self.historical_near_now().clan_delta(previous_clan)
 
     def resolve_badge_urls(self, info):
-        return ClanBadgeUrls(**self.badgeUrls)
+        return BadgeUrls(**self.badgeUrls)
 
     def resolve_player_matrix(self, info, days=0):
         return self.historical_near_days_ago(days).to_matrix()
@@ -159,7 +177,6 @@ class Clan(graphene.ObjectType):
 class Query(graphene.ObjectType):
     player = graphene.Field(Player, tag=graphene.String(required=True))
     clan = graphene.Field(Clan, tag=graphene.String(required=True), refresh=graphene.Boolean(required=False))
-    players = graphene.List(Player, tags=graphene.List(graphene.String, required=False))
 
     def resolve_clan(self, info, tag, refresh=False):
         if refresh:
@@ -169,7 +186,3 @@ class Query(graphene.ObjectType):
 
     def resolve_player(self, info, tag):
         return model.Player.find_by_tag(tag)
-
-    def resolve_players(self, info, tags=[]):
-        tags = [prepend_hash(tag) for tag in tags]
-        return list(model.Player.objects(tag__in=tags))
