@@ -27,14 +27,14 @@ export default {
     this.tweeningValue = this.initialValue;
   },
   watch: {
-    clanMeta(newValue, oldValue) {
+    targetValue(newValue, oldValue) {
       this.tween(this.tweeningValue, this.targetValue);
     }
   },
   computed: {
-    ...mapState(["clanMeta"]),
+    ...mapState(["clan"]),
     targetValue() {
-      return this.name.split(".").reduce((prev, curr) => (prev ? prev[curr] : null), this.clanMeta);
+      return this.name.split(".").reduce((prev, curr) => (prev ? prev[curr] : null), this.clan);
     }
   },
   methods: {
