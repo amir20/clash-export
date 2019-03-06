@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -24,11 +24,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["loadDaysAgo"]),
-    ...mapMutations(["setSortField"])
-  },
-  computed: {
-    ...mapState(["daysSpan", "softField"])
+    ...mapActions({ loadDaysAgo: "SHOW_DIFFERENT_DAYS" })
   },
   watch: {
     days(newValue) {

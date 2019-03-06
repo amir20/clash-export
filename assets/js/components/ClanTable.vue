@@ -80,11 +80,6 @@ export default {
     };
   },
   created() {
-    this.setDaysSpan(this.oldestDays);
-
-    if (this.oldestDays < 3) {
-      this.setDaysSpan(1);
-    }
     document.addEventListener("visibilitychange", this.handleVisibilityChange, false);
   },
   beforeDestroy() {
@@ -111,7 +106,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setTag", "setDaysSpan"]),
     onRowclicked(row) {
       this.gaEvent("click-row", "Click Player Row", "Row Tag", row.tag.value);
       if (this.openDetails.indexOf(row.id) === -1) {
