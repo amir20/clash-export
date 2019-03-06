@@ -81,7 +81,7 @@ const actions = {
   },
   async FETCH_SAVED_CLAN({ commit, state: { clan, days } }) {
     const savedTag = store.get("lastTag");
-    if (savedTag !== clan.tag) {
+    if (savedTag && savedTag !== clan.tag) {
       console.log(`Found saved tag value [${savedTag}].`);
       const { data } = await apolloClient.query({
         query: gql`
