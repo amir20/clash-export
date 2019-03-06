@@ -15,7 +15,6 @@ const state = {
   clan: window.__INITIAL_STATE__,
   days: 7,
   savedClan: {},
-  daysSpan: 7,
   sortField: "value"
 };
 
@@ -23,7 +22,7 @@ const mutations = {
   SET_CLAN_DATA(state, { clan }) {
     state.clan = { ...state.clan, ...clan };
   },
-  setDays(state, days) {
+  SET_DAYS(state, days) {
     state.days = days;
   },
   START_LOADING(state) {
@@ -31,13 +30,6 @@ const mutations = {
   },
   STOP_LOADING(state) {
     state.loading = false;
-  },
-  setDaysSpan(state, daysSpan) {
-    state.daysSpan = daysSpan;
-  },
-  setSortField(state, field) {
-    event("sort-field", "Change Sort Field");
-    state.sortField = field;
   },
   SET_SAVED_CLAN(state, { clan }) {
     state.savedClan = clan;
@@ -104,7 +96,7 @@ const actions = {
       commit("SET_SAVED_CLAN", data);
     }
   },
-  async loadDaysAgo(
+  async SHOW_DIFFERENT_DAYS(
     {
       commit,
       dispatch,
@@ -113,7 +105,7 @@ const actions = {
     days
   ) {
     event("days-ago", "Change Days", "Days", days);
-    commit("setDays", days);
+    commit("SET_DAYS", days);
     dispatch("FETCH_SAVED_CLAN");
 
     commit("START_LOADING");

@@ -33,7 +33,8 @@ def clan_detail_page(slug):
             updatedOn=clan.updated_on,
             historicData=clan.historical_near_days_ago(7).to_matrix(),
             recentData=clan.historical_near_now().to_matrix(),
-            playerStatus={}
+            playerStatus={},
+            oldestDays=clan.days_of_history()
         )
     except DoesNotExist:
         return render_template('error.html'), 404
@@ -43,7 +44,6 @@ def clan_detail_page(slug):
                                trophy_distribution=clan_trophies(clan),
                                initial_state=initial_state,
                                description=description,
-                               oldest_days=clan.days_of_history(),
                                similar_clans=similar_clans,
                                similar_clans_start_count=start_count)
 
