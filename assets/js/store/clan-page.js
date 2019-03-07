@@ -81,7 +81,8 @@ const actions = {
         tag: clan.tag,
         days,
         refresh: true
-      }
+      },
+      fetchPolicy: "network-only"
     });
 
     commit("SET_CLAN_DATA", data);

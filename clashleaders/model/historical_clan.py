@@ -117,7 +117,12 @@ class HistoricalClan(Document):
     def find_by_tag_near_time(cls, tag, dt) -> HistoricalClan:
         tag = prepend_hash(tag)
         clan = HistoricalClan.objects(tag=tag, created_on__lte=dt).order_by('-created_on').first()
+
         if clan is None:
             clan = HistoricalClan.objects(tag=tag).order_by('created_on').first()
+
+        if clan is None:
+            clashleaders.model.Clan.fetch_and_update(tag, sync_calculation=False)
+            clan = HistoricalClan.objects(tag=tag).first()
 
         return clan
