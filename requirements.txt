@@ -1,7 +1,8 @@
 aiodns==2.0.0
 aiohttp==3.5.4
 aioresponses==0.6.0
-aniso8601==3.0.2
+aniso8601==5.1.0
+ansimarkup==1.4.0
 appnope==0.1.0
 arrow==0.13.1
 asn1crypto==0.24.0
@@ -11,6 +12,7 @@ attrs==19.1.0
 autopep8==1.4.3
 awesome-slugify==1.6.5
 backcall==0.1.0
+better-exceptions-fork==0.2.1.post6
 blinker==1.4
 bugsnag==3.5.1
 cachetools==3.1.0
@@ -21,15 +23,16 @@ certifi==2018.11.29
 cffi==1.12.2
 chardet==3.0.4
 Click==7.0
+colorama==0.4.1
 contentful==1.11.4
 contextlib2==0.5.5
 coverage==4.5.2
-cryptography==2.5
+cryptography==2.6.1
 cssselect2==0.2.1
 decorator==4.3.2
 defusedxml==0.5.0
 Flask==1.0.2
-Flask-Caching==1.5.0
+Flask-Caching==1.6.0
 Flask-GraphQL==2.0.0
 flask-shell-ipython==0.4.0
 freezegun==0.3.11
@@ -45,6 +48,7 @@ ipython-genutils==0.2.0
 itsdangerous==1.1.0
 jedi==0.13.3
 Jinja2==2.10
+loguru==0.2.5
 Mako==1.0.7
 Markdown==3.0.1
 MarkupSafe==1.1.1
@@ -91,7 +95,7 @@ scipy==1.2.0
 six==1.12.0
 snapshottest==0.5.0
 termcolor==1.1.0
-tinycss2==1.0.0
+tinycss2==1.0.1
 traitlets==4.3.2
 typing==3.6.6
 ua-parser==0.8.0
