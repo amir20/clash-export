@@ -80,7 +80,7 @@ class Player(graphene.ObjectType):
                               trophies=diffed['trophies'].tolist())
 
     def resolve_league(self, info):
-        return PlayerLeague(**self.league)
+        return PlayerLeague(**self.league) if hasattr(self, 'league') else None
 
     def resolve_clan(self, info):
         return self.most_recent_clan()
