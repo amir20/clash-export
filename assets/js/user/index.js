@@ -1,4 +1,6 @@
 import store from "store/dist/store.modern";
+import { apolloClient } from "../client";
+import { gql } from "apollo-boost";
 
 const PLAYER_KEY = "savedPlayer";
 
@@ -49,7 +51,26 @@ export default {
       }
     },
     async userPromise() {
-      return await (await fetch(`/player/${this.savedUser.tag.replace("#", "")}.json`)).json();
+      const { data } = await apolloClient.query({
+        query: gql`
+          query GetPlayerDetails($tag: String!) {
+            player(tag: $tag) {
+              name
+              tag
+              slug
+              clan {
+                slug
+                tag
+                name
+              }
+            }
+          }
+        `,
+        variables: {
+          tag: this.savedUser.tag
+        }
+      });
+      return data.player;
     },
     removeUser() {
       removeUser();

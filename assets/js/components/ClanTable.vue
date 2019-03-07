@@ -15,7 +15,7 @@
       :opened-detailed="openDetails"
       @details-open="row => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
       @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
-      @click="onRowclicked"
+      @click="onRowClicked"
     >
       <template slot-scope="props">
         <b-table-column
@@ -106,7 +106,7 @@ export default {
     }
   },
   methods: {
-    onRowclicked(row) {
+    onRowClicked(row) {
       this.gaEvent("click-row", "Click Player Row", "Row Tag", row.tag.value);
       if (this.openDetails.indexOf(row.id) === -1) {
         this.openDetails.push(row.id);
