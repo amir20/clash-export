@@ -8,6 +8,7 @@
 import Chartist from "chartist";
 import "chartist-plugin-legend";
 import format from "date-fns/format";
+import parse from "date-fns/parse";
 import fill from "lodash/fill";
 import times from "lodash/times";
 import random from "lodash/random";
@@ -61,7 +62,7 @@ export default {
             showGrid: false,
             labelInterpolationFnc: (value, index) => {
               if (index % 2 === 0) {
-                return this.loading ? value : format(new Date(value), "MMM do");
+                return this.loading ? value : format(parse(value, "yyyy-MM-dd HH:mm:ss", new Date()), "MMM do");
               } else {
                 return null;
               }
@@ -86,7 +87,7 @@ export default {
               axisX: {
                 labelInterpolationFnc: (value, index) => {
                   if (index % 10 === 0) {
-                    return this.loading ? value : format(new Date(value), "MMM do");
+                    return this.loading ? value : format(parse(value, "yyyy-MM-dd HH:mm:ss", new Date()), "MMM do");
                   } else {
                     return null;
                   }
