@@ -84,7 +84,7 @@ scipy==1.2.0
 six==1.12.0
 snapshottest==0.5.0
 termcolor==1.1.0
-tinycss2==1.0.0
+tinycss2==1.0.1
 traitlets==4.3.2
 typing==3.6.6
 ua-parser==0.8.0
