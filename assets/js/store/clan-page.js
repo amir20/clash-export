@@ -39,17 +39,31 @@ const mutations = {
 const actions = {
   async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }) {
     dispatch("FETCH_SAVED_CLAN");
+    commit("STOP_LOADING");
     const { data } = await apolloClient.query({
       query: gql`
-        query GetClan($tag: String!, $days: Int!, $refresh: Boolean = false) {
+        query GetClan($tag: String!, $days: Int!, $refresh: Boolean!) {
           clan(tag: $tag, refresh: $refresh) {
             name
             clanPoints
+            clanVersusPoints
             members
             updatedOn
             playerStatus
             recentData: playerMatrix
             historicData: playerMatrix(days: $days)
+            computed {
+              totalDonations
+              totalAttackWins
+              totalVersusWins
+            }
+            weekDelta {
+              totalTrophies
+              totalVersusWins
+              totalDonations
+              totalAttackWins
+              totalVersusWins
+            }
             delta(days: $days) {
               avgDeGrab
               avgElixirGrab
@@ -65,10 +79,11 @@ const actions = {
       `,
       variables: {
         tag: clan.tag,
-        days
+        days,
+        refresh: true
       }
     });
-    commit("STOP_LOADING");
+
     commit("SET_CLAN_DATA", data);
   },
   async FETCH_SAVED_CLAN({ commit, state: { clan, days } }) {
@@ -139,20 +154,13 @@ const actions = {
 
 const getters = {
   header({ clan }) {
-    if (clan.recentData) {
-      return clan.recentData[0].map(column => ({
-        label: column,
-        field: camelCase(column),
-        numeric: !isNonNumericColumns(camelCase(column))
-      }));
-    } else {
-      return [];
-    }
+    return clan.recentData[0].map(column => ({
+      label: column,
+      field: camelCase(column),
+      numeric: !isNonNumericColumns(camelCase(column))
+    }));
   },
   tableData({ clan }, getters) {
-    if (!clan.recentData) {
-      return [];
-    }
     const data = convertToMap(getters.header, clan.recentData.slice(1));
     const previousData = convertToMap(getters.header, clan.historicData.slice(1));
     const previousByTag = keyBy(previousData, "tag");
@@ -175,7 +183,7 @@ const getters = {
   }
 };
 
-const convertToMap = (header, matrix) => {
+function convertToMap(header, matrix) {
   return matrix.map(row => {
     return reduce(
       row,
@@ -186,7 +194,7 @@ const convertToMap = (header, matrix) => {
       {}
     );
   });
-};
+}
 
 const isNonNumericColumns = key => key == "tag" || key == "name";
 

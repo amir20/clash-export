@@ -110,7 +110,7 @@
                   clan.clanPoints,
                   clan.week_delta.total_trophies,
                   "clanPoints",
-                  "week_delta.total_trophies",
+                  "weekDelta.totalTrophies",
                   "Delta is calculated based on data between today and last week."
                 )
               }}
@@ -119,27 +119,27 @@
                 clan.clanVersusPoints,
                 clan.week_delta.total_bh_trophies,
                 "clanVersusPoints",
-                "week_delta.total_bh_trophies"
+                "weekDelta.totalVersusWins"
               ) }}
               <!-- Donations -->
               {{ insight("Donations",
                 clan.computed.total_donations,
                 clan.week_delta.total_donations,
-                "computed.total_donations",
-                "week_delta.total_donations") }}
+                "computed.totalDonations",
+                "weekDelta.totalDonations") }}
               <!-- Total Wins -->
               {{ insight("Total Wins",
                 clan.computed.total_attack_wins,
                 clan.week_delta.total_attack_wins,
-                "computed.total_attack_wins",
-                "week_delta.total_attack_wins"
+                "computed.totalAttackWins",
+                "weekDelta.totalAttackWins"
                 ) }}
               <!-- Total Versus Wins -->
               {{ insight("Total Versus Wins",
               clan.computed.total_versus_wins,
               clan.week_delta.total_versus_wins,
-              "computed.total_versus_wins",
-              "week_delta.total_versus_wins") }}
+              "computed.totalVersusWins",
+              "weekDelta.totalVersusWins") }}
             </div>
             <div class="is-hidden-mobile"><trophy-chart :distribution-data="{{ trophy_distribution | tojson | forceescape }}"></trophy-chart></div>
           </div>
