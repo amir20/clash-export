@@ -1,5 +1,9 @@
+from datetime import datetime
+from time import sleep
+
 import graphene
 from graphene.types.generic import GenericScalar
+from rq.exceptions import NoSuchJobError
 
 import clashleaders.model as model
 from clashleaders.insights.clan_activity import clan_status
@@ -31,6 +35,12 @@ class PlayerLeague(graphene.ObjectType):
         return BadgeUrls(**self.iconUrls)
 
 
+class ShortClan(graphene.ObjectType):
+    name = graphene.String()
+    tag = graphene.String()
+    slug = graphene.String()
+
+
 class Player(graphene.ObjectType):
     role = graphene.String()
     name = graphene.String()
@@ -47,6 +57,7 @@ class Player(graphene.ObjectType):
     percentile = graphene.Int()
     activity = graphene.Field(PlayerActivity)
     league = graphene.Field(PlayerLeague)
+    clan = graphene.Field(ShortClan)
 
     def resolve_percentile(self, info):
         return self.player_score()
@@ -70,6 +81,9 @@ class Player(graphene.ObjectType):
 
     def resolve_league(self, info):
         return PlayerLeague(**self.league)
+
+    def resolve_clan(self, info):
+        return self.most_recent_clan()
 
 
 class ClanDelta(graphene.ObjectType):
@@ -112,9 +126,10 @@ class Clan(graphene.ObjectType):
     clanPoints = graphene.Int()
     clanVersusPoints = graphene.Int()
     members = graphene.Int()
-    updated_on = graphene.DateTime()
+    updated_on = graphene.Float()
     week_delta = graphene.Field(ClanDelta)
     day_delta = graphene.Field(ClanDelta)
+    computed = graphene.Field(ClanDelta)
     delta = graphene.Field(ClanDelta, days=graphene.Int(required=True))
     player_matrix = GenericScalar(days=graphene.Int(required=False))
     players = graphene.List(Player)
@@ -128,6 +143,9 @@ class Clan(graphene.ObjectType):
 
     def resolve_badge_urls(self, info):
         return BadgeUrls(**self.badgeUrls)
+
+    def resolve_updated_on(self, info):
+        return self.updated_on.timestamp() * 1000
 
     def resolve_player_matrix(self, info, days=0):
         return self.historical_near_days_ago(days).to_matrix()
@@ -180,9 +198,20 @@ class Query(graphene.ObjectType):
 
     def resolve_clan(self, info, tag, refresh=False):
         if refresh:
-            return model.Clan.fetch_and_update(tag, sync_calculation=False)
-        else:
-            return model.Clan.find_by_tag(tag)
+            clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
+            wait_for_job(clan.job)
+
+        return model.Clan.find_by_tag(tag)
 
     def resolve_player(self, info, tag):
         return model.Player.find_by_tag(tag)
+
+
+def wait_for_job(job, wait_time=3):
+    start = datetime.now()
+    while (datetime.now() - start).total_seconds() < wait_time:
+        sleep(0.2)
+        try:
+            job.refresh()
+        except NoSuchJobError:
+            break
