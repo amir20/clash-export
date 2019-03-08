@@ -42,7 +42,6 @@ class ShortClan(graphene.ObjectType):
 
 
 class Player(graphene.ObjectType):
-    role = graphene.String()
     name = graphene.String()
     tag = graphene.String()
     slug = graphene.String()
@@ -66,7 +65,7 @@ class Player(graphene.ObjectType):
         df = self.to_historical_df()[
             ['attack_wins', 'donations', 'gold_grab', 'elixir_escapade', 'heroic_heist', 'trophies']
         ]
-        resampled = df.resample('D').mean()
+        resampled = df.resample('D').mean().dropna()
         diffed = resampled.diff().dropna().clip(lower=0)
         diffed.rename(columns={'elixir_escapade': 'elixir_grab', 'heroic_heist': 'de_grab'}, inplace=True)
         diffed['trophies'] = resampled['trophies']  # Undo trophies
