@@ -98,7 +98,6 @@ class Player(DynamicDocument):
 
         return history
 
-
     def __repr__(self):
         return "<Player {0}>".format(self.tag)
 
@@ -140,7 +139,7 @@ class Player(DynamicDocument):
 
     @classmethod
     def find_by_slug(cls, slug):
-        return Player.objects(slug=slug).first()
+        return Player.objects.get(slug=slug)
 
     @classmethod
     def find_by_tag(cls, tag):
