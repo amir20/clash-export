@@ -32,7 +32,7 @@ def clan_detail_page(slug):
             oldestDays=clan.days_of_history()
         )
     except DoesNotExist:
-        return render_template('error.html'), 404
+        return render_template('404.html'), 404
     else:
         return render_template('clan.html',
                                clan=clan,
