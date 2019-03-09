@@ -1,33 +1,32 @@
 {% extends "layout.html" %} {% block body %}
 <div id="app">
   <section class="section">
-  <div class="container">
-    <div class="columns reverse-order">
-      <div class="column is-4">
-        <figure class="image">
-          <img src="{{ troop.image.url() }}">
-        </figure>
-      </div>
-      <div class="column">
-        <div class="content">
-          <h1 class="title">{{ troop.name }}</h1>
-          <div class="tags has-addons">
-            <span class="tag is-dark">Base</span>
-            <span class="tag is-primary">{{ troop.base }}</span>
-          </div>
-          {{ troop.description | markdown | safe }}
+    <div class="container">
+      <div class="columns reverse-order">
+        <div class="column is-4">
+          <figure class="image">
+            <img src="{{ troop.image.url() }}" />
+          </figure>
         </div>
+        <div class="column">
+          <div class="content">
+            <h1 class="title">{{ troop.name }}</h1>
+            <div class="tags has-addons">
+              <span class="tag is-dark">Base</span>
+              <span class="tag is-primary">{{ troop.base }}</span>
+            </div>
+            {{ troop.description | markdown | safe }}
+          </div>
 
-        <section>
-          <h2 class="is-4 subtitle">Troop Level vs. Town Hall Level</h2>
-          <troop-average-distribution :averages="{{ averages | tojson | forceescape }}"></troop-average-distribution>
-        </section>
+          <section>
+            <h2 class="is-4 subtitle">Troop Level vs. Town Hall Level</h2>
+            <troop-average-distribution :averages="{{ averages | tojson | forceescape }}"></troop-average-distribution>
+          </section>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 </div>
-{% endblock %}{% block title %}{{ troop.name }}{% endblock %}
-{% block scripts %}
+{% endblock %}{% block title %}{{ troop.name }}{% endblock %} {% block scripts %}
 <script defer src="{{ manifest_path('troop-page.js') }}"></script>
 {% endblock %}

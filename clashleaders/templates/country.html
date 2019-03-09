@@ -16,9 +16,8 @@
                 <a href="{{ url_for('clan_detail_page', slug=clan.slug) }}">{{ clan.name }}</a>
               </strong>
               <small
-                >from {% if clan.location.countryCode %}
-                <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span> {% endif %}
-                {{ clan.location.name }}
+                >from {% if clan.location.countryCode %} <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span> {% endif %} {{
+                clan.location.name }}
               </small>
               <small>with {{ clan.members }} members</small> <br />
               {{ clan.description | safe }}
@@ -32,9 +31,9 @@
                 <p class="heading">Total Trophies</p>
                 <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
                 <p>
-                  <span class="tag {{'is-success' if clan.week_delta.total_trophies > 0 else 'is-danger'}}">{{
-                    "{:+,}".format(clan.week_delta.total_trophies)
-                  }}</span>
+                  <span class="tag {{'is-success' if clan.week_delta.total_trophies > 0 else 'is-danger'}}"
+                    >{{ "{:+,}".format(clan.week_delta.total_trophies) }}</span
+                  >
                 </p>
               </div>
             </div>
@@ -44,9 +43,9 @@
                 <p class="heading">Total BH Trophies</p>
                 <p class="title">{{ "{:,}".format(clan.clanVersusPoints) }}</p>
                 <p>
-                  <span class="tag {{'is-success' if clan.week_delta.total_bh_trophies > 0 else 'is-danger'}}">{{
-                    "{:+,}".format(clan.week_delta.total_bh_trophies)
-                  }}</span>
+                  <span class="tag {{'is-success' if clan.week_delta.total_bh_trophies > 0 else 'is-danger'}}"
+                    >{{ "{:+,}".format(clan.week_delta.total_bh_trophies) }}</span
+                  >
                 </p>
               </div>
             </div>
@@ -56,9 +55,9 @@
                 <p class="heading">Total Donations</p>
                 <p class="title">{{ "{:,}".format(clan.computed.total_donations) }}</p>
                 <p>
-                  <span class="tag {{'is-success' if clan.week_delta.total_donations > 0 else 'is-danger'}}">{{
-                    "{:+,}".format(clan.week_delta.total_donations)
-                  }}</span>
+                  <span class="tag {{'is-success' if clan.week_delta.total_donations > 0 else 'is-danger'}}"
+                    >{{ "{:+,}".format(clan.week_delta.total_donations) }}</span
+                  >
                 </p>
               </div>
             </div>
@@ -70,7 +69,7 @@
   </ol>
 </main>
 {% endblock %} {% block title %}Top {{ name }} Clans{% endblock %}{% block meta %}
-<meta  name="description" content="Top {{ name }} Clans by trophies - Clash Leaders"/>
+<meta name="description" content="Top {{ name }} Clans by trophies - Clash Leaders" />
 <meta name="keywords" content="{{ name }}, clash of clans, achievements, leaderboard" />
 <meta property="og:title" content="Top {{ name }} Clans - Clash Leaders" />
 {% endblock %}
