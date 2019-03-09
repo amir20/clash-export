@@ -2,18 +2,20 @@
 <div class="level-item has-text-centered">
   <div>
     {% if tooltip %}
-    <p class="heading is-tooltip-right tooltip is-tooltip-multiline" data-tooltip="{{ tooltip }}">
-      {{ label }} <i class="fas fa-info-circle"></i>
-    </p>
+    <p class="heading is-tooltip-right tooltip is-tooltip-multiline" data-tooltip="{{ tooltip }}">{{ label }} <i class="fas fa-info-circle"></i></p>
     {% else %}
     <p class="heading">{{ label }}</p>
     {% endif %}
     <p class="title">
       <clan-field :initial-value="{{value}}" name="{{ value_name }}"></clan-field> <br />
-      <clan-field :initial-value="{{delta}}" name="{{ delta_name }}"
-      show-plus-sign class="tag"
-      positive-class="is-success"
-      negative-class="is-danger"></clan-field>
+      <clan-field
+        :initial-value="{{delta}}"
+        name="{{ delta_name }}"
+        show-plus-sign
+        class="tag"
+        positive-class="is-success"
+        negative-class="is-danger"
+      ></clan-field>
     </p>
   </div>
 </div>
@@ -33,14 +35,11 @@
             <ol start="{{ similar_clans_start_count }}" class="leaderboard">
               {% for similar in similar_clans %}
               <li class="{{ 'active' if similar==clan else ''}}">
-                <a
-                  href="{{ url_for('clan_detail_page', slug=similar.slug) }}"
-                  data-position="{{ similar_clans_start_count + loop.index0}}"
-                >
+                <a href="{{ url_for('clan_detail_page', slug=similar.slug) }}" data-position="{{ similar_clans_start_count + loop.index0}}">
                   <div class="media">
                     <div class="media-left">
                       <span class="icon is-large">
-                        <img src="{{ similar.badgeUrls.small }}" alt="{{ similar.name }}" width="48">
+                        <img src="{{ similar.badgeUrls.small }}" alt="{{ similar.name }}" width="48" />
                       </span>
                     </div>
                     <div class="media-content">
@@ -82,9 +81,8 @@
                       <a href="{{ url_for('country_clans', code=clan.location.countryCode.lower()) }}">
                         <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
                       </a>
-                      with {% endif %} <span class="has-text-weight-semibold">
-                          <clan-field :initial-value="{{ clan.members }}" name="members"></clan-field> members
-                      </span>
+                      with {% endif %}
+                      <span class="has-text-weight-semibold"> <clan-field :initial-value="{{ clan.members }}" name="members"></clan-field> members </span>
                     </h2>
                   </div>
                   <div class="column is-narrow has-text-right has-text-centered-mobile">
@@ -104,41 +102,17 @@
             </div>
             <div class="level">
               <!-- Total Trophies -->
-              {{
-                insight(
-                  "Total Trophies",
-                  clan.clanPoints,
-                  clan.week_delta.total_trophies,
-                  "clanPoints",
-                  "weekDelta.totalTrophies",
-                  "Delta is calculated based on data between today and last week."
-                )
-              }}
+              {{ insight( "Total Trophies", clan.clanPoints, clan.week_delta.total_trophies, "clanPoints", "weekDelta.totalTrophies", "Delta is calculated based
+              on data between today and last week." ) }}
               <!-- Total BH Trophies -->
-              {{ insight("Total BH Trophies",
-                clan.clanVersusPoints,
-                clan.week_delta.total_bh_trophies,
-                "clanVersusPoints",
-                "weekDelta.totalVersusWins"
-              ) }}
+              {{ insight("Total BH Trophies", clan.clanVersusPoints, clan.week_delta.total_bh_trophies, "clanVersusPoints", "weekDelta.totalVersusWins" ) }}
               <!-- Donations -->
-              {{ insight("Donations",
-                clan.computed.total_donations,
-                clan.week_delta.total_donations,
-                "computed.totalDonations",
-                "weekDelta.totalDonations") }}
+              {{ insight("Donations", clan.computed.total_donations, clan.week_delta.total_donations, "computed.totalDonations", "weekDelta.totalDonations") }}
               <!-- Total Wins -->
-              {{ insight("Total Wins",
-                clan.computed.total_attack_wins,
-                clan.week_delta.total_attack_wins,
-                "computed.totalAttackWins",
-                "weekDelta.totalAttackWins"
-                ) }}
+              {{ insight("Total Wins", clan.computed.total_attack_wins, clan.week_delta.total_attack_wins, "computed.totalAttackWins",
+              "weekDelta.totalAttackWins" ) }}
               <!-- Total Versus Wins -->
-              {{ insight("Total Versus Wins",
-              clan.computed.total_versus_wins,
-              clan.week_delta.total_versus_wins,
-              "computed.totalVersusWins",
+              {{ insight("Total Versus Wins", clan.computed.total_versus_wins, clan.week_delta.total_versus_wins, "computed.totalVersusWins",
               "weekDelta.totalVersusWins") }}
             </div>
             <div class="is-hidden-mobile"><trophy-chart :distribution-data="{{ trophy_distribution | tojson | forceescape }}"></trophy-chart></div>
@@ -184,29 +158,26 @@
 </script>
 <script type="application/ld+json">
   {
-   "@context": "http://schema.org",
-   "@type": "BreadcrumbList",
-   "itemListElement":
-   [
-    {
-     "@type": "ListItem",
-     "position": 1,
-     "item":
-     {
-      "@id": "{{ url_for('index', _external=True) }}",
-      "name": "Clash Leaders"
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "{{ url_for('index', _external=True) }}",
+          "name": "Clash Leaders"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@id": "{{ url_for('clan_detail_page', slug=clan.slug, _external=True) }}",
+          "name": "{{ clan.name }}"
+        }
       }
-    },
-    {
-     "@type": "ListItem",
-    "position": 2,
-    "item":
-     {
-       "@id": "{{ url_for('clan_detail_page', slug=clan.slug, _external=True) }}",
-       "name": "{{ clan.name }}"
-     }
-    }
-   ]
+    ]
   }
 </script>
 <script type="application/ld+json">
@@ -220,19 +191,17 @@
       "@type": "WebPage",
       "@id": "http://www.clashleaders.com/"
     },
-    "image": [
-      "{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}"
-     ],
-     "publisher": {
+    "image": ["{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}"],
+    "publisher": {
       "@type": "Organization",
       "name": "Clash Leaders",
       "url": "http://www.clashleaders.com/",
       "logo": {
-          "@type": "ImageObject",
-          "name": "clashLeaderLogo",
-          "width": "200",
-          "height": "200",
-          "url": "{{ url_for('static', filename='images/logo.png', _external=True) }}"
+        "@type": "ImageObject",
+        "name": "clashLeaderLogo",
+        "width": "200",
+        "height": "200",
+        "url": "{{ url_for('static', filename='images/logo.png', _external=True) }}"
       }
     },
     "author": {
@@ -245,19 +214,10 @@
 <script defer src="{{ manifest_path('clan-page.js') }}"></script>
 {% endblock %}{% block title %}{{ clan.name }} - {{ clan.tag }}{% endblock %} {% block meta %}
 <meta name="twitter:card" content="summary" />
-<meta
-  name="description"
-  content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders"
-/>
+<meta name="description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders" />
 <meta name="keywords" content="{{ clan.name }}, clash of clans, export, excel, achievements, leaderboard" />
 <meta property="og:title" content="{{ clan.name }} - Clash Leaders" />
-<meta
-  property="og:image"
-  content="{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}"
-/>
-<meta
-  property="og:description"
-  content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders."
-/>
+<meta property="og:image" content="{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}" />
+<meta property="og:description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders." />
 <link rel="canonical" href="{{ url_for('clan_detail_page', slug=clan.slug, _external=True) }}" />
 {% endblock %} {% block nav_class %}is-light{% endblock %}
