@@ -29,7 +29,10 @@ def clan_detail_page(slug):
             historicData=clan.historical_near_days_ago(7).to_matrix(),
             recentData=clan.historical_near_now().to_matrix(),
             playerStatus={},
-            oldestDays=clan.days_of_history()
+            delta=clan.week_delta.to_dict(),
+            computed=clan.computed.to_dict(),
+            similar=clan.computed.to_dict(),
+            oldestDays=clan.days_of_history(),
         )
     except DoesNotExist:
         return render_template('404.html'), 404
