@@ -8,12 +8,7 @@ class TrainedModel(Document):
     name = StringField(required=True, unique=True)
     last_updated = DateTimeField(default=datetime.now)
     model_bytes = BinaryField(required=True)
-    meta = {
-        'index_background': True,
-        'indexes': [
-            'name',
-        ]
-    }
+    meta = {"index_background": True, "indexes": ["name"]}
 
     @property
     def model(self):

@@ -25,7 +25,8 @@ OTHER_STATS = [
     "defenseWins",
     "donations",
     "donationsReceived",
-    "expLevel"]
+    "expLevel",
+]
 
 
 class HistoricalPlayer(Document):
@@ -35,29 +36,21 @@ class HistoricalPlayer(Document):
     name = StringField(required=True)
     bytes = BinaryField(required=True)
 
-    meta = {
-        'index_background': True,
-        'indexes': [
-            'tag',
-            'clan_tag',
-            'created_on',
-            ('tag', 'created_on'),
-        ]
-    }
+    meta = {"index_background": True, "indexes": ["tag", "clan_tag", "created_on", ("tag", "created_on")]}
 
     def __init__(self, *args, **kwargs):
-        if 'bytes' in kwargs:
+        if "bytes" in kwargs:
             super().__init__(*args, **kwargs)
             self.stats = PlayerStats().FromString(self.bytes)
         else:
             player_stats = dict()
-            for lab in kwargs['heroes'] + kwargs['troops'] + kwargs['spells']:
+            for lab in kwargs["heroes"] + kwargs["troops"] + kwargs["spells"]:
                 key = to_mapping(f"{lab['village']}/{lab['name'].replace('.', '')}")
-                player_stats[key] = lab['level']
+                player_stats[key] = lab["level"]
 
-            for a in kwargs['achievements']:
-                key = to_mapping(a['name'])
-                player_stats[key] = a['value']
+            for a in kwargs["achievements"]:
+                key = to_mapping(a["name"])
+                player_stats[key] = a["value"]
 
             for k, v in kwargs.items():
                 if k in OTHER_STATS:
@@ -65,12 +58,7 @@ class HistoricalPlayer(Document):
                     player_stats[key] = v
 
             self.stats = PlayerStats(**player_stats)
-            super().__init__(
-                tag=kwargs['tag'],
-                clan_tag=kwargs['clan']['tag'],
-                name=kwargs['name'],
-                bytes=self.stats.SerializeToString()
-            )
+            super().__init__(tag=kwargs["tag"], clan_tag=kwargs["clan"]["tag"], name=kwargs["name"], bytes=self.stats.SerializeToString())
 
     def __repr__(self):
         return "<HistoricalPlayer {0}>".format(self.tag)
@@ -80,9 +68,9 @@ class HistoricalPlayer(Document):
 
     def to_dict(self):
         d = {f: getattr(self.stats, f) for f in self.stats.DESCRIPTOR.fields_by_name}
-        d['name'] = self.name
-        d['tag'] = self.tag
-        d['clan_tag'] = self.clan_tag
+        d["name"] = self.name
+        d["tag"] = self.tag
+        d["clan_tag"] = self.clan_tag
         return d
 
     def to_series(self):

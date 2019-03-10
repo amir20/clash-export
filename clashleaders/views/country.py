@@ -13,11 +13,11 @@ def country_clans(code):
         c.description = transform_description(c.description)
 
     if clans:
-        return render_template('country.html', clans=clans, name=clans[0].location['name'])
+        return render_template("country.html", clans=clans, name=clans[0].location["name"])
     else:
-        return render_template('404.html'), 404
+        return render_template("404.html"), 404
 
 
 @cache.memoize(300)
 def fetch_country(code):
-    return Clan.objects(location__countryCode=code).order_by('-clanPoints').limit(50)
+    return Clan.objects(location__countryCode=code).order_by("-clanPoints").limit(50)

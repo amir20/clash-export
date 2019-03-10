@@ -62,24 +62,24 @@ class Player(graphene.ObjectType):
         return self.player_score()
 
     def resolve_activity(self, info):
-        df = self.to_historical_df()[
-            ['attack_wins', 'donations', 'gold_grab', 'elixir_escapade', 'heroic_heist', 'trophies']
-        ]
-        resampled = df.resample('D').mean().dropna()
+        df = self.to_historical_df()[["attack_wins", "donations", "gold_grab", "elixir_escapade", "heroic_heist", "trophies"]]
+        resampled = df.resample("D").mean().dropna()
         diffed = resampled.diff().dropna().clip(lower=0)
-        diffed.rename(columns={'elixir_escapade': 'elixir_grab', 'heroic_heist': 'de_grab'}, inplace=True)
-        diffed['trophies'] = resampled['trophies']  # Undo trophies
+        diffed.rename(columns={"elixir_escapade": "elixir_grab", "heroic_heist": "de_grab"}, inplace=True)
+        diffed["trophies"] = resampled["trophies"]  # Undo trophies
 
-        return PlayerActivity(labels=diffed.index.strftime('%Y-%m-%d %H:%M:%S').tolist(),
-                              attack_wins=diffed['attack_wins'].tolist(),
-                              donations=diffed['donations'].tolist(),
-                              gold_grab=diffed['gold_grab'].tolist(),
-                              elixir_grab=diffed['elixir_grab'].tolist(),
-                              de_grab=diffed['de_grab'].tolist(),
-                              trophies=diffed['trophies'].tolist())
+        return PlayerActivity(
+            labels=diffed.index.strftime("%Y-%m-%d %H:%M:%S").tolist(),
+            attack_wins=diffed["attack_wins"].tolist(),
+            donations=diffed["donations"].tolist(),
+            gold_grab=diffed["gold_grab"].tolist(),
+            elixir_grab=diffed["elixir_grab"].tolist(),
+            de_grab=diffed["de_grab"].tolist(),
+            trophies=diffed["trophies"].tolist(),
+        )
 
     def resolve_league(self, info):
-        return PlayerLeague(**self.league) if hasattr(self, 'league') else None
+        return PlayerLeague(**self.league) if hasattr(self, "league") else None
 
     def resolve_clan(self, info):
         return self.most_recent_clan()
@@ -151,29 +151,19 @@ class Clan(graphene.ObjectType):
 
     def resolve_players(self, info):
         df = self.historical_near_now().to_df(formatted=False).reset_index()
-        df = df[
-            ['name',
-             'tag',
-             'town_hall_level',
-             'exp_level',
-             'trophies',
-             'builder_hall_level',
-             'defense_wins',
-             'attack_wins',
-             'donations']
-        ].rename(
+        df = df[["name", "tag", "town_hall_level", "exp_level", "trophies", "builder_hall_level", "defense_wins", "attack_wins", "donations"]].rename(
             columns={
-                'town_hall_level': 'townHallLevel',
-                'exp_level': 'expLevel',
-                'builder_hall_level': 'builderHallLevel',
-                'defense_wins': 'defenseWins',
-                'attack_wins': 'attackWins'
+                "town_hall_level": "townHallLevel",
+                "exp_level": "expLevel",
+                "builder_hall_level": "builderHallLevel",
+                "defense_wins": "defenseWins",
+                "attack_wins": "attackWins",
             }
         )
-        return [Player(**p) for p in df.to_dict('i').values()]
+        return [Player(**p) for p in df.to_dict("i").values()]
 
     def resolve_similar(self, info, days):
-        key = {1: 'day_delta', 7: 'week_delta'}[days]
+        key = {1: "day_delta", 7: "week_delta"}[days]
         cluster_label = self.cluster_label
         gold = model.Clan.objects(cluster_label=cluster_label).average(f"{key}.avg_gold_grab")
         elixir = model.Clan.objects(cluster_label=cluster_label).average(f"{key}.avg_elixir_grab")
@@ -181,11 +171,11 @@ class Clan(graphene.ObjectType):
         return SimilarClanDelta(avg_de_grab=de, avg_gold_grab=elixir, avg_elixir_grab=gold)
 
     def resolve_activity(self, info):
-        df = self.to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
-        df.index.name = 'labels'
-        df = df.reset_index().rename(columns={'clanPoints': 'trophies'})
-        df['labels'] = df['labels'].dt.strftime('%Y-%m-%dT%H:%M:%S+00:00Z')
-        return ClanActivity(**df.to_dict('l'))
+        df = self.to_historical_df()[["members", "clanPoints"]].resample("D").mean().dropna()
+        df.index.name = "labels"
+        df = df.reset_index().rename(columns={"clanPoints": "trophies"})
+        df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
+        return ClanActivity(**df.to_dict("l"))
 
     def resolve_player_status(self, info):
         return clan_status(self)

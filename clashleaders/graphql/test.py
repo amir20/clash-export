@@ -3,12 +3,9 @@ from collections import namedtuple
 
 import graphene
 
-Row = namedtuple('Row', 'status value')
+Row = namedtuple("Row", "status value")
 
-database = [
-    Row(status='LIVE', value=1),  # value should be ignored and replaced with 12345
-    Row(status='X', value=2),  # value should be preserved
-]
+database = [Row(status="LIVE", value=1), Row(status="X", value=2)]  # value should be ignored and replaced with 12345  # value should be preserved
 
 
 class Something(graphene.ObjectType):
@@ -24,7 +21,7 @@ class Query(graphene.ObjectType):
         return database
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     schema = graphene.Schema(query=Query)
-    result = schema.execute('{ things { status value  } }')
+    result = schema.execute("{ things { status value  } }")
     print(json.dumps(result.data))

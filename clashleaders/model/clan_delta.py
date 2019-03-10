@@ -25,4 +25,3 @@ class ClanDelta(EmbeddedDocument):
     def to_dict(self) -> Dict:
         data = dict(self.to_mongo())
         return data
-

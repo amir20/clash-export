@@ -13,7 +13,7 @@ from clashleaders.clash import api
 logger = logging.getLogger(__name__)
 
 
-@job('player', connection=redis_connection, result_ttl=0)
+@job("player", connection=redis_connection, result_ttl=0)
 def update_players(json_list: List):
     try:
         bulk_operations = [clashleaders.model.Player(**data).as_replace_one() for data in json_list]
@@ -25,7 +25,7 @@ def update_players(json_list: List):
         logger.exception(f"Error while updating players in fetch_clans_since() with [{bulk_operations}]")
 
 
-@job('player_request', connection=redis_connection, result_ttl=0)
+@job("player_request", connection=redis_connection, result_ttl=0)
 def fetch_players(tags: List):
     response = api.fetch_all_players(tags)
     update_players(response)
