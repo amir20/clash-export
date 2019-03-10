@@ -14,11 +14,9 @@ def sitemap_index():
 
     pages = ceil(Clan.objects.count() / TOTAL_PER_PAGE)
     for i in range(pages):
-        sitemaps.append({
-            'url': url_for('sitemap', page=i, _external=True),
-        })
+        sitemaps.append({"url": url_for("sitemap", page=i, _external=True)})
 
-    sitemap_xml = render_template('sitemap_index.xml', sitemaps=sitemaps)
+    sitemap_xml = render_template("sitemap_index.xml", sitemaps=sitemaps)
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
 
@@ -32,12 +30,10 @@ def sitemap(page):
 
     pages = []
 
-    for clan in Clan.objects[start:end].only('slug'):
-        pages.append({
-            'url': url_for('clan_detail_page', slug=clan.slug, _external=True),
-        })
+    for clan in Clan.objects[start:end].only("slug"):
+        pages.append({"url": url_for("clan_detail_page", slug=clan.slug, _external=True)})
 
-    sitemap_xml = render_template('sitemap.xml', pages=pages)
+    sitemap_xml = render_template("sitemap.xml", pages=pages)
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
 

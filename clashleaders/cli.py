@@ -29,7 +29,7 @@ def index_random_war_clan():
     logger.info(f"Indexing random clan war log ({random_clan.tag}).")
 
     try:
-        tags = [war['opponent']['tag'] for war in random_clan.warlog()]
+        tags = [war["opponent"]["tag"] for war in random_clan.warlog()]
     except Exception:
         logger.warning(f"Error while fetch war log for {random_clan.tag}.")
     else:
@@ -43,11 +43,11 @@ def fetch_clan_leaderboards():
     players, clans = api.top_players_and_clan()
 
     for player in players:
-        tag = player['clanTag']
+        tag = player["clanTag"]
         if tag:
             Clan.fetch_and_update(tag)
 
     for clan in clans:
-        tag = clan['tag']
+        tag = clan["tag"]
         if tag:
             Clan.fetch_and_update(tag)

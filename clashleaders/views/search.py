@@ -8,7 +8,7 @@ from clashleaders.model import Clan
 
 @app.route("/search.json")
 def search():
-    query = request.args.get('q')
+    query = request.args.get("q")
     try:
         clan = api.find_clan_by_tag(query)
         results = [Clan(**clan)]

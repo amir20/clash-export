@@ -11,9 +11,9 @@ def verified_clans(tag):
     for c in clans:
         c.description = transform_description(c.description)
 
-    return render_template('verified.html', clans=clans)
+    return render_template("verified.html", clans=clans)
 
 
 @cache.memoize(300)
 def fetch_clans(tag):
-    return Clan.objects(verified_accounts=tag).order_by('-clanPoints')
+    return Clan.objects(verified_accounts=tag).order_by("-clanPoints")

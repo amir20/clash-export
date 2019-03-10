@@ -13,13 +13,9 @@ def player_html(slug):
         fetch_players.delay([player.tag])
         clan = player.most_recent_clan()
     except DoesNotExist:
-        return render_template('404.html'), 404
+        return render_template("404.html"), 404
     else:
-        return render_template('player.html',
-                               player=player,
-                               player_score=player.player_score(),
-                               clan=clan,
-                               insights=player_troops_insights(player))
+        return render_template("player.html", player=player, player_score=player.player_score(), clan=clan, insights=player_troops_insights(player))
 
 
 @cache.memoize(28800)

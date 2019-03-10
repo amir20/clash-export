@@ -3,8 +3,8 @@ import re
 from flask import escape
 
 URL_LINK_REGEX = re.compile(
-    r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|ga|gl|ly|co|me|gd|xyz)[/\w-]*)",
-    flags=re.IGNORECASE)
+    r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|ga|gl|ly|co|me|gd|xyz)[/\w-]*)", flags=re.IGNORECASE
+)
 
 REDDIT_LINK_REGEX = re.compile(r"((reddit.com)?(/r/\w+))", flags=re.IGNORECASE)
 
@@ -40,7 +40,7 @@ def regular_link(token):
 
 
 def regular_link_repl(match):
-    if match.group(0).startswith('http'):
-        return f"<a href=\"{match.group(0)}\" target=\"_blank\">{match.group(0)}</a>"
+    if match.group(0).startswith("http"):
+        return f'<a href="{match.group(0)}" target="_blank">{match.group(0)}</a>'
     else:
-        return f"<a href=\"http://{match.group(0)}\" target=\"_blank\">{match.group(0)}</a>"
+        return f'<a href="http://{match.group(0)}" target="_blank">{match.group(0)}</a>'

@@ -16,7 +16,7 @@ handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger(__name__)
 
-WORKER_OFFSET = int(os.getenv('WORKER_OFFSET', 1))
+WORKER_OFFSET = int(os.getenv("WORKER_OFFSET", 1))
 INDEX = (WORKER_OFFSET - 1) * 10
 
 logger.setLevel(logging.DEBUG if app.debug else logging.INFO)
