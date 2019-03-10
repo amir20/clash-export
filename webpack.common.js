@@ -12,6 +12,7 @@ module.exports = {
     "troop-page": "./js/troop-page.js",
     index: "./js/index.js",
     common: "./js/common.js",
+    polyfill: "./js/polyfill.js",
     styles: "./css/styles.scss"
   },
   optimization: {
