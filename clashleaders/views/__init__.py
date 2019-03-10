@@ -29,16 +29,17 @@ def manifest_path(file):
 
 
 def inline_path(file):
-    path = join(site_root, manifest_path(file).lstrip('/'))
+    path = join(site_root, manifest_path(file).lstrip("/"))
     with open(path) as f:
         content = f.read()
-        return re.sub(r'^//# sourceMappingURL=.*$', '', content, flags=re.MULTILINE)
+        return re.sub(r"^//# sourceMappingURL=.*$", "", content, flags=re.MULTILINE)
 
 
-def first(l, i): return l[:i]
+def first(l, i):
+    return l[:i]
 
 
-app.add_template_global(manifest_path, 'manifest_path')
-app.add_template_global(inline_path, 'inline_path')
-app.add_template_filter(markdown, 'markdown')
-app.add_template_filter(first, 'first')
+app.add_template_global(manifest_path, "manifest_path")
+app.add_template_global(inline_path, "inline_path")
+app.add_template_filter(markdown, "markdown")
+app.add_template_filter(first, "first")

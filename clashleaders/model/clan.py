@@ -5,8 +5,7 @@ from datetime import datetime, timedelta
 from typing import List, Tuple, Dict
 
 import pandas as pd
-from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, \
-    DictField, Q
+from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
 from slugify import slugify
 
 import clashleaders.clash.clan_calculation
@@ -41,36 +40,33 @@ class Clan(DynamicDocument):
     day_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
 
     meta = {
-        'index_background': True,
-        'indexes': [
-            'updated_on',
-            'location.countryCode',
-            'cluster_label',
-            ('cluster_label', 'clanPoints'),
-            'verified_accounts',
-            'clanPoints',
-            'clanVersusPoints',
-            'tag',
-            'slug',
-            'members',
-            ('members', '-clanPoints'),
-            ('members', '-clanVersusPoints'),
-            ('location.countryCode', '-clanPoints'),
-            'isWarLogPublic',
-            'page_views',
-
+        "index_background": True,
+        "indexes": [
+            "updated_on",
+            "location.countryCode",
+            "cluster_label",
+            ("cluster_label", "clanPoints"),
+            "verified_accounts",
+            "clanPoints",
+            "clanVersusPoints",
+            "tag",
+            "slug",
+            "members",
+            ("members", "-clanPoints"),
+            ("members", "-clanVersusPoints"),
+            ("location.countryCode", "-clanPoints"),
+            "isWarLogPublic",
+            "page_views",
             # Aggregated indexes
-            'week_delta.avg_attack_wins',
-            'week_delta.avg_versus_wins',
-
+            "week_delta.avg_attack_wins",
+            "week_delta.avg_versus_wins",
             # Active clans
-            ['week_delta.total_attack_wins', 'updated_on', 'members'],
-            'computed.total_attack_wins',
-
+            ["week_delta.total_attack_wins", "updated_on", "members"],
+            "computed.total_attack_wins",
             # Leaderboards
-            'week_delta.total_trophies',
-            'week_delta.total_gold_grab'
-        ]
+            "week_delta.total_trophies",
+            "week_delta.total_gold_grab",
+        ],
     }
 
     def update_calculations(self):
@@ -79,7 +75,7 @@ class Clan(DynamicDocument):
     def to_historical_df(self) -> pd.DataFrame:
         histories = clashleaders.model.HistoricalClan.objects(tag=self.tag)
         df = pd.DataFrame(h.to_dict() for h in histories)
-        return df.set_index('created_on')
+        return df.set_index("created_on")
 
     def historical_near_time(self, dt) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
@@ -92,10 +88,8 @@ class Clan(DynamicDocument):
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
 
     def similar_clans(self) -> Tuple[int, List[Clan]]:
-        less = Clan.objects(cluster_label=self.cluster_label, clanPoints__lt=self.clanPoints) \
-            .order_by('-clanPoints').limit(4)
-        more = Clan.objects(cluster_label=self.cluster_label, clanPoints__gt=self.clanPoints) \
-            .order_by('clanPoints').limit(2)
+        less = Clan.objects(cluster_label=self.cluster_label, clanPoints__lt=self.clanPoints).order_by("-clanPoints").limit(4)
+        more = Clan.objects(cluster_label=self.cluster_label, clanPoints__gt=self.clanPoints).order_by("clanPoints").limit(2)
 
         clans = sorted([*less, self, *more], key=lambda c: c.clanPoints, reverse=True)[:5]
         start_count = Clan.objects(cluster_label=self.cluster_label, clanPoints__gt=clans[0].clanPoints).count() + 1
@@ -103,8 +97,7 @@ class Clan(DynamicDocument):
         return start_count, clans
 
     def days_of_history(self) -> int:
-        first: clashleaders.model.HistoricalClan = \
-            clashleaders.model.HistoricalClan.objects(tag=self.tag).order_by('created_on').first()
+        first: clashleaders.model.HistoricalClan = clashleaders.model.HistoricalClan.objects(tag=self.tag).order_by("created_on").first()
         return (datetime.now() - first.created_on).days
 
     def __repr__(self):
@@ -114,18 +107,18 @@ class Clan(DynamicDocument):
         return "<Clan {0}>".format(self.tag)
 
     def warlog(self):
-        return clan_warlog(self.tag)['items']
+        return clan_warlog(self.tag)["items"]
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
-        data['computed'] = dict(data['computed'])
-        data['day_delta'] = dict(data['day_delta'])
-        data['week_delta'] = dict(data['week_delta'])
-        del data['memberList']
-        del data['_id']
+        data["computed"] = dict(data["computed"])
+        data["day_delta"] = dict(data["day_delta"])
+        data["week_delta"] = dict(data["week_delta"])
+        del data["memberList"]
+        del data["_id"]
 
         if short:
-            keys = {'tag', 'slug', 'name', 'description', 'clanPoints', 'clanVersusPoints', 'members', 'badgeUrls'}
+            keys = {"tag", "slug", "name", "description", "clanPoints", "clanVersusPoints", "members", "badgeUrls"}
             data = {k: data[k] for k in keys}
 
         return data
@@ -149,7 +142,7 @@ class Clan(DynamicDocument):
         if update_before:
             query = Q(updated_on__lte=update_before) & query
 
-        return Clan.objects(query).no_cache().only('tag')
+        return Clan.objects(query).no_cache().only("tag")
 
     @classmethod
     def fetch_and_update(cls, tag, sync_calculation=True) -> Clan:
@@ -157,7 +150,7 @@ class Clan(DynamicDocument):
 
         # Fetch from API
         clan_response = api.find_clan_by_tag(tag)
-        tags = [member['tag'] for member in clan_response['memberList']]
+        tags = [member["tag"] for member in clan_response["memberList"]]
         players_response = api.fetch_all_players(tags)
 
         # Store all players data using historical compressed format
@@ -166,10 +159,10 @@ class Clan(DynamicDocument):
         # Enqueue player json to queue
         clashleaders.queue.player.update_players.delay(players_response)
 
-        clan_response['clan_type'] = clan_response['type']
-        del clan_response['type']
-        clan_response['slug'] = slugify(f"{clan_response['name']}-{tag}", to_lower=True)
-        clan_response['updated_on'] = datetime.now()
+        clan_response["clan_type"] = clan_response["type"]
+        del clan_response["type"]
+        clan_response["slug"] = slugify(f"{clan_response['name']}-{tag}", to_lower=True)
+        clan_response["updated_on"] = datetime.now()
 
         clan = Clan.objects(tag=tag).upsert_one(**clan_response)
 

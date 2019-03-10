@@ -14,13 +14,7 @@ class AverageTroop(Document):
     avg = FloatField(required=True)
     max = FloatField()
 
-    meta = {
-        'indexes': [
-            'last_updated',
-            'th_level',
-            'name',
-        ]
-    }
+    meta = {"indexes": ["last_updated", "th_level", "name"]}
 
     @property
     def base(self):
@@ -39,21 +33,21 @@ class AverageTroop(Document):
                 "lab_levels.builderBase_Battle Machine": {"$exists": True},
                 "lab_levels.builderBase_Super PEKKA": {"$exists": True},
             }
-        )['tag']
+        )["tag"]
         good_player = Player.find_by_tag(good_tag)
 
         group = {"$group": {"_id": "$townHallLevel"}}
         for key in good_player.lab_levels.keys():
-            group['$group'][f"avg_{key}"] = {"$avg": f"$lab_levels.{key}"}
-            group['$group'][f"max_{key}"] = {"$max": f"$lab_levels.{key}"}
+            group["$group"][f"avg_{key}"] = {"$avg": f"$lab_levels.{key}"}
+            group["$group"][f"max_{key}"] = {"$max": f"$lab_levels.{key}"}
 
         aggregated = list(Player.objects.aggregate(group))
 
         for th_avg in aggregated:
-            th_level = th_avg['_id']
+            th_level = th_avg["_id"]
             for key, value in th_avg.items():
-                if key.startswith('avg_'):
-                    splits = re.split(r'_(builderBase|home)_', key)
+                if key.startswith("avg_"):
+                    splits = re.split(r"_(builderBase|home)_", key)
                     is_builder_base = "builderBase" == splits[1]
                     name = splits[2]
                     AverageTroop.objects(th_level=th_level, is_builder_base=is_builder_base, name=name).update_one(
@@ -61,7 +55,7 @@ class AverageTroop(Document):
                         set__is_builder_base=is_builder_base,
                         set__name=name,
                         set__avg=value,
-                        set__max=th_avg[key.replace('avg_', 'max_', 1)],
+                        set__max=th_avg[key.replace("avg_", "max_", 1)],
                         set__last_updated=datetime.now(),
-                        upsert=True
+                        upsert=True,
                     )

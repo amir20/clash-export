@@ -8,15 +8,16 @@ from clashleaders.model import Clan, Status
 @app.route("/")
 def index():
     latest_status = Status.get_instance()
-    return render_template('index.html',
-                           most_points=leaderboard('clanPoints'),
-                           most_vs_points=leaderboard('clanVersusPoints'),
-                           most_attacks=leaderboard('week_delta.total_attack_wins'),
-                           gained_trophies=leaderboard('week_delta.total_trophies'),
-                           grabbed_gold=leaderboard('week_delta.total_gold_grab'),
-                           most_trophies_country=latest_status.trophies_by_country,
-                           trophy_distribution=latest_status.trophy_distribution
-                           )
+    return render_template(
+        "index.html",
+        most_points=leaderboard("clanPoints"),
+        most_vs_points=leaderboard("clanVersusPoints"),
+        most_attacks=leaderboard("week_delta.total_attack_wins"),
+        gained_trophies=leaderboard("week_delta.total_trophies"),
+        grabbed_gold=leaderboard("week_delta.total_gold_grab"),
+        most_trophies_country=latest_status.trophies_by_country,
+        trophy_distribution=latest_status.trophy_distribution,
+    )
 
 
 @cache.memoize(28800)

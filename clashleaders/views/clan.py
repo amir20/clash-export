@@ -9,11 +9,7 @@ from clashleaders.text.clan_description_processor import transform_description
 @app.context_processor
 def inject_most_popular():
     status = Status.get_instance()
-    return dict(status=status,
-                most_popular=status.popular_clans,
-                popular_countries=status.top_countries,
-                reddit_clans=status.reddit_clans
-                )
+    return dict(status=status, most_popular=status.popular_clans, popular_countries=status.top_countries, reddit_clans=status.reddit_clans)
 
 
 @app.route("/clan/<slug>")
@@ -35,20 +31,22 @@ def clan_detail_page(slug):
             oldestDays=clan.days_of_history(),
         )
     except DoesNotExist:
-        return render_template('404.html'), 404
+        return render_template("404.html"), 404
     else:
-        return render_template('clan.html',
-                               clan=clan,
-                               trophy_distribution=clan_trophies(clan),
-                               initial_state=initial_state,
-                               description=description,
-                               similar_clans=similar_clans,
-                               similar_clans_start_count=start_count)
+        return render_template(
+            "clan.html",
+            clan=clan,
+            trophy_distribution=clan_trophies(clan),
+            initial_state=initial_state,
+            description=description,
+            similar_clans=similar_clans,
+            similar_clans_start_count=start_count,
+        )
 
 
 @cache.memoize(600)
 def clan_trophies(clan):
-    df = clan.to_historical_df()[['members', 'clanPoints']].resample('D').mean().dropna()
-    df = df.reset_index().rename(columns={'created_on': 'labels'})
-    df['labels'] = df['labels'].dt.strftime('%Y-%m-%dT%H:%M:%S+00:00Z')
-    return df.to_dict('l')
+    df = clan.to_historical_df()[["members", "clanPoints"]].resample("D").mean().dropna()
+    df = df.reset_index().rename(columns={"created_on": "labels"})
+    df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
+    return df.to_dict("l")

@@ -18,7 +18,7 @@ from clashleaders.model.clan import prepend_hash
 
 
 class Player(DynamicDocument):
-    COMPRESSED_FIELDS = ['achievements', 'clan', 'heroes', 'league', 'legendStatistics', 'spells', 'troops']
+    COMPRESSED_FIELDS = ["achievements", "clan", "heroes", "league", "legendStatistics", "spells", "troops"]
 
     binary_bytes = BinaryField()
     tag = StringField(required=True, unique=True)
@@ -26,28 +26,28 @@ class Player(DynamicDocument):
     slug = StringField(unique=True)
 
     meta = {
-        'index_background': True,
-        'indexes': [
-            'name',
-            'tag',
-            'townHallWeaponLevel',
-            'townHallLevel',
-            'trophies',
-            'warStars',
-            'expLevel',
-            'builderHallLevel',
-            'defenseWins',
-            'attackWins',
-            'donations',
-            'slug'
-        ]
+        "index_background": True,
+        "indexes": [
+            "name",
+            "tag",
+            "townHallWeaponLevel",
+            "townHallLevel",
+            "trophies",
+            "warStars",
+            "expLevel",
+            "builderHallLevel",
+            "defenseWins",
+            "attackWins",
+            "donations",
+            "slug",
+        ],
     }
 
     def as_replace_one(self) -> ReplaceOne:
-        return ReplaceOne({'tag': self.tag}, self.compressed_fields(), upsert=True)
+        return ReplaceOne({"tag": self.tag}, self.compressed_fields(), upsert=True)
 
     def most_recent_clan(self) -> Clan:
-        return Clan.find_by_tag(self.clan['tag']) if 'clan' in self else None
+        return Clan.find_by_tag(self.clan["tag"]) if "clan" in self else None
 
     def player_score(self):
         clan = self.most_recent_clan()
@@ -64,14 +64,14 @@ class Player(DynamicDocument):
         fields = vars(self).copy()
 
         for key in list(fields.keys()):
-            if key.startswith('_'):
+            if key.startswith("_"):
                 del fields[key]
 
-        fields['tag'] = self.tag
-        fields['lab_levels'] = fields.get('lab_levels', {})
-        for lab in fields.get('heroes', []) + fields.get('troops', []) + fields.get('spells', []):
+        fields["tag"] = self.tag
+        fields["lab_levels"] = fields.get("lab_levels", {})
+        for lab in fields.get("heroes", []) + fields.get("troops", []) + fields.get("spells", []):
             key = f"{lab['village']}_{lab['name'].replace('.', '')}"
-            fields['lab_levels'][key] = lab['level']
+            fields["lab_levels"][key] = lab["level"]
 
         binary_bytes = dict()
         for f in Player.COMPRESSED_FIELDS:
@@ -79,9 +79,9 @@ class Player(DynamicDocument):
                 binary_bytes[f] = fields[f]
                 del fields[f]
 
-        fields['binary_bytes'] = encode_data(binary_bytes)
+        fields["binary_bytes"] = encode_data(binary_bytes)
 
-        fields['slug'] = slugify(f"{self.name}-{self.tag}", to_lower=True)
+        fields["slug"] = slugify(f"{self.name}-{self.tag}", to_lower=True)
 
         return fields
 
@@ -103,14 +103,14 @@ class Player(DynamicDocument):
 
     def to_dict(self, include_score=False) -> Dict:
         data = dict(self.to_mongo())
-        del data['_id']
-        del data['binary_bytes']
+        del data["_id"]
+        del data["binary_bytes"]
 
         if include_score:
-            data['percentile'] = self.player_score()
+            data["percentile"] = self.player_score()
 
-        if data['clan']:
-            data['clan']['slug'] = Clan.find_by_tag(data['clan']['tag']).slug
+        if data["clan"]:
+            data["clan"]["slug"] = Clan.find_by_tag(data["clan"]["tag"]).slug
 
         return data
 
@@ -125,7 +125,7 @@ class Player(DynamicDocument):
             for key, value in kwargs.items():
                 setattr(player, key, value)
 
-            if 'clan' not in kwargs:
+            if "clan" not in kwargs:
                 player.clan = None
 
             player.save()
@@ -135,7 +135,7 @@ class Player(DynamicDocument):
     @classmethod
     def fetch_and_save(cls, tag):
         data = api.find_player_by_tag(tag)
-        return Player.upsert_player(player_tag=data['tag'], **data)
+        return Player.upsert_player(player_tag=data["tag"], **data)
 
     @classmethod
     def find_by_slug(cls, slug):
@@ -168,7 +168,7 @@ class Player(DynamicDocument):
 
         for lab in document.heroes + document.troops + document.spells:
             key = f"{lab['village']}_{lab['name'].replace('.', '')}"
-            document.lab_levels[key] = lab['level']
+            document.lab_levels[key] = lab["level"]
 
         data = dict()
         for f in cls.COMPRESSED_FIELDS:
@@ -187,8 +187,8 @@ signals.post_save.connect(Player.post_init, sender=Player)
 
 def encode_data(map):
     s = json.dumps(map)
-    return encode(s.encode('utf8'), 'zlib')
+    return encode(s.encode("utf8"), "zlib")
 
 
 def decode_data(b):
-    return json.loads(decode(b, 'zlib'))
+    return json.loads(decode(b, "zlib"))

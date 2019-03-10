@@ -62,7 +62,7 @@ def find_clan_by_tag(tag):
     tag = prepend_hash(tag)
     logger.info(f"Fetching clan from API {tag}.")
 
-    future = __fetch(f'https://api.clashofclans.com/v1/clans/{quote(tag)}')
+    future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}")
 
     try:
         code, response = asyncio.get_event_loop().run_until_complete(future)
@@ -85,7 +85,7 @@ def find_player_by_tag(tag):
     tag = prepend_hash(tag)
     logger.info(f"Fetching player from API {tag}.")
 
-    future = __fetch(f'https://api.clashofclans.com/v1/players/{quote(tag)}')
+    future = __fetch(f"https://api.clashofclans.com/v1/players/{quote(tag)}")
 
     try:
         code, response = asyncio.get_event_loop().run_until_complete(future)
@@ -106,20 +106,20 @@ def find_player_by_tag(tag):
 
 def search_by_name(name, limit=10):
     logger.info(f"Searching for clan name '{name}'.")
-    future = __fetch('https://api.clashofclans.com/v1/clans', params={'name': name, 'limit': limit})
+    future = __fetch("https://api.clashofclans.com/v1/clans", params={"name": name, "limit": limit})
     code, response = asyncio.get_event_loop().run_until_complete(future)
 
     if code != 200:
         return []
     else:
-        return response['items']
+        return response["items"]
 
 
 def top_players_and_clan():
-    data = requests.get('https://clashofclans.com/api/leaderboards.json').json()
-    leaderboards = data['hallOfFame']['leaderboards']
-    players = leaderboards['topPlayers']['players']
-    clans = leaderboards['topClans']['clans']
+    data = requests.get("https://clashofclans.com/api/leaderboards.json").json()
+    leaderboards = data["hallOfFame"]["leaderboards"]
+    players = leaderboards["topPlayers"]["players"]
+    clans = leaderboards["topClans"]["clans"]
     return players, clans
 
 
@@ -136,7 +136,7 @@ def clan_warlog(tag):
 
 
 def fetch_all_players(tags: List):
-    urls = ['https://api.clashofclans.com/v1/players/' + quote(tag) for tag in tags]
+    urls = ["https://api.clashofclans.com/v1/players/" + quote(tag) for tag in tags]
     future = __fetch_all(urls, loop=asyncio.get_event_loop())
     return asyncio.get_event_loop().run_until_complete(future)
 
