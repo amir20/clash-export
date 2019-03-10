@@ -73,7 +73,7 @@
       "prettier --write",
       "git add"
     ],
-    "*.{py}": [
+    "*.py": [
       "black -l 160",
       "git add"
     ]
