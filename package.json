@@ -69,8 +69,12 @@
     "start": "concurrently 'docker-compose up web' 'npm run watch'"
   },
   "lint-staged": {
-    "*.{js,vue,json,css,md}": [
+    "*.{js,vue,json,css,md,html}": [
       "prettier --write",
+      "git add"
+    ],
+    "*.{py}": [
+      "black -l 160",
       "git add"
     ]
   },
