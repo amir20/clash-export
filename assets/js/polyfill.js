@@ -1,4 +1,5 @@
 import "promise-polyfill/src/polyfill";
+import "es6-map/implement";
 import "whatwg-fetch";
 
 if (!Array.prototype.forEach) {
