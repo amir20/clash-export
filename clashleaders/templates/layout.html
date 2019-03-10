@@ -40,11 +40,7 @@
     <script defer src="{{ manifest_path('polyfill.js') }}"></script>
     <script defer src="{{ manifest_path('common.js') }}"></script>
     <script>
-      {
-        {
-          inline_path("styles-compiled.js") | safe;
-        }
-      }
+      {{ inline_path("styles-compiled.js") | safe }}
     </script>
     {% block scripts %} {% endblock %}
     <script>
