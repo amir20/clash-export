@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from mongoengine import EmbeddedDocument, FloatField, IntField
+from typing import Dict
 
 
 class ClanDelta(EmbeddedDocument):
@@ -18,3 +21,8 @@ class ClanDelta(EmbeddedDocument):
     total_donations = IntField(default=0)
     total_attack_wins = IntField(default=0)
     total_versus_wins = IntField(default=0)
+
+    def to_dict(self) -> Dict:
+        data = dict(self.to_mongo())
+        return data
+
