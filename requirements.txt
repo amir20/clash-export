@@ -87,7 +87,7 @@ python-editor==1.0.4
 pytz==2018.9
 redis==3.2.0
 regex==2019.2.21
-relativetimebuilder==0.2.0
+relativetimebuilder==1.0.0
 requests==2.21.0
 rq==0.13.0
 rq-dashboard==0.4.0
