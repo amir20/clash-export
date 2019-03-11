@@ -7,7 +7,9 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['test_excel_to_stream 1'] = ''',Name,Tag,TH Level,BH Level,XP Level,Best Trophies,Best Versus Trophies,Current Trophies,Builder Hall Trophies,Attack Wins,Versus Battle Wins,Defense Wins,Total Gold Grab,Total Elixir Grab,Total DE Grab,Total Donations,Total War Collected Gold,Total War Stars,Clan Games XP,Total Spells Donated,Donations,Donations Received,Barbarian King,Archer Queen,Grand Warden,Battle Machine
+snapshots[
+    "test_excel_to_stream 1"
+] = """,Name,Tag,TH Level,BH Level,XP Level,Best Trophies,Best Versus Trophies,Current Trophies,Builder Hall Trophies,Attack Wins,Versus Battle Wins,Defense Wins,Total Gold Grab,Total Elixir Grab,Total DE Grab,Total Donations,Total War Collected Gold,Total War Stars,Clan Games XP,Total Spells Donated,Donations,Donations Received,Barbarian King,Archer Queen,Grand Warden,Battle Machine
 0,amir20,#LJUQLLUR,11,7,172,5385,4913,4927,4913,144,1347,8,1592992872,1552953729,11180335,118050,597837678,1094,0,510,3097,6125,45,50,20,18
 1,brnxbombers,#J88V9220,11,7,156,4903,3606,4903,3336,116,559,12,776089584,732192643,2850600,66153,452233246,999,0,713,5162,6284,40,45,20,5
 2,diggler,#LJVYVUQR,11,7,176,5353,4501,4783,4402,168,1738,72,1549090622,1524747396,10265708,141484,510731363,1013,0,3336,7878,8194,47,48,20,13
@@ -58,4 +60,4 @@ snapshots['test_excel_to_stream 1'] = ''',Name,Tag,TH Level,BH Level,XP Level,Be
 47,inigo montoya,#9PJ9JP992,9,4,73,1514,945,1396,945,32,32,12,30159745,33093594,50602,1657,14183645,114,0,18,478,650,6,1,0,0
 48,Bonk,#P0QJPLR9Q,8,7,92,1582,2679,1324,2488,66,594,14,88218227,82699126,170091,554,57422391,90,0,1,420,52,10,0,0,8
 49,JLM,#8J9YJPGV,9,3,61,1329,539,1270,539,20,23,19,8443965,7092964,8413,1412,4794299,14,0,0,492,696,2,0,0,0
-'''
+"""

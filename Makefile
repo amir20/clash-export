@@ -17,10 +17,6 @@ push: build
 	docker push amir20/clashleaders:$(TAG)
 	docker push amir20/clashleaders:latest
 
-.PHONY: init
-init:
-	pip install .[test]
-
 .PHONY: test
 test:
 	python setup.py test
