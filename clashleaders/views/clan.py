@@ -22,13 +22,13 @@ def clan_detail_page(slug):
             name=clan.name,
             tag=clan.tag,
             updatedOn=clan.updated_on.timestamp() * 1000,
-            historicData=clan.historical_near_days_ago(7).to_matrix(),
-            recentData=clan.historical_near_now().to_matrix(),
+            historicData=historical_players_week(clan),
+            recentData=historical_players_now(clan),
             playerStatus={},
             delta=clan.week_delta.to_dict(),
             computed=clan.computed.to_dict(),
             similar=clan.computed.to_dict(),
-            oldestDays=clan.days_of_history(),
+            oldestDays=days_of_history(clan),
         )
     except DoesNotExist:
         return render_template("404.html"), 404
@@ -50,3 +50,18 @@ def clan_trophies(clan):
     df = df.reset_index().rename(columns={"created_on": "labels"})
     df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
     return df.to_dict("l")
+
+
+@cache.memoize(1000)
+def historical_players_week(clan):
+    return clan.historical_near_days_ago(7).to_matrix()
+
+
+@cache.memoize(120)
+def historical_players_now(clan):
+    return clan.historical_near_now().to_matrix()
+
+
+@cache.memoize(1000)
+def days_of_history(clan):
+    return clan.days_of_history()
