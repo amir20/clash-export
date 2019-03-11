@@ -94,6 +94,20 @@ export default {
     onPlayerSelected(player) {
       this.setSavedPlayer(player);
       this.showModal = false;
+    },
+    prefetch(url) {
+      const link = document.createElement("link");
+      link.href = url;
+      link.rel = "prefetch";
+      link.as = "fetch";
+      document.head.appendChild(link);
+    }
+  },
+  watch: {
+    foundClan(newValue) {
+      if (newValue) {
+        this.prefetch(`/clan/${newValue.slug}`);
+      }
     }
   },
   computed: {
