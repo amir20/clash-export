@@ -86,7 +86,7 @@ python-dateutil==2.8.0
 python-editor==1.0.4
 pytz==2018.9
 redis==3.2.0
-regex==2019.2.21
+regex==2019.03.12
 relativetimebuilder==0.2.0
 requests==2.21.0
 rq==0.13.0
