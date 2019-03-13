@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="loading || hasData">
     <b-tabs size="is-medium" @change="onChange">
       <b-tab-item label="Attacks">
         <activity-distribution
@@ -48,6 +48,14 @@
         </activity-distribution>
       </b-tab-item>
     </b-tabs>
+  </div>
+  <div class="container" v-else>
+    <div v-if="isSameUser">
+      Chief! Come back tomorrow. I am still collecting data to be able to show your activity.
+    </div>
+    <div v-else>
+      This player doesn't have any activity yet. Try again tomorrow after I've had a chance to collect some data.
+    </div>
   </div>
 </template>
 
@@ -141,6 +149,12 @@ export default {
   computed: {
     hasDifferentUser() {
       return this.hasUser && this.userTag !== this.playerTag;
+    },
+    isSameUser() {
+      return this.hasUser && this.userTag === this.playerTag;
+    },
+    hasData() {
+      return this.player.labels.length > 0;
     }
   }
 };
