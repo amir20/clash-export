@@ -55,7 +55,7 @@ Mako==1.0.8
 Markdown==3.0.1
 MarkupSafe==1.1.1
 mongoengine==0.17.0
-more-itertools==6.0.0
+more-itertools==7.0.0
 multidict==4.5.2
 numpy==1.16.2
 pandas==0.23.4
