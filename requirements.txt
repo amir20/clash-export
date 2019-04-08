@@ -49,7 +49,7 @@ ipython==7.4.0
 ipython-genutils==0.2.0
 itsdangerous==1.1.0
 jedi==0.13.3
-Jinja2==2.10
+Jinja2==2.10.1
 loguru==0.2.5
 Mako==1.0.8
 Markdown==3.1
