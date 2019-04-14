@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-field>
+  <div class="columns is-gapless is-vcentered">
+    <b-field class="column is-narrow">
       <b-radio-button v-model="days" :native-value="1" type="is-danger">
         <b-icon icon="hourglass" size="is-small" pack="far"></b-icon>
         <span>Yesterday</span>
@@ -10,11 +10,16 @@
         <span>Last Week</span>
       </b-radio-button>
     </b-field>
+    <b-field class="column sort">
+      <b-switch v-model="sort" true-value="delta" false-value="value">
+        Sort by difference
+      </b-switch>
+    </b-field>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -24,14 +29,25 @@ export default {
     };
   },
   methods: {
-    ...mapActions({ loadDaysAgo: "SHOW_DIFFERENT_DAYS" })
+    ...mapActions({ loadDaysAgo: "SHOW_DIFFERENT_DAYS" }),
+    ...mapMutations({ changeSort: "CHANGE_SORT_FIELD" })
   },
   watch: {
     days(newValue) {
       if (newValue) {
         this.loadDaysAgo(newValue);
       }
+    },
+    sort(newValue) {
+      if (newValue) {
+        this.changeSort(newValue);
+      }
     }
   }
 };
 </script>
+<style lang="scss" scoped>
+/deep/ .switch {
+  margin-left: 2em;
+}
+</style>
