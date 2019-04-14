@@ -76,13 +76,14 @@
                   <div class="column">
                     <h1 class="title">{{ clan.name }}</h1>
                     <h2 class="subtitle is-6 has-text-weight-light">
-                      {% if clan.location.countryCode %} From
-                      <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
-                      <a href="{{ url_for('country_clans', code=clan.location.countryCode.lower()) }}">
-                        <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
-                      </a>
-                      with {% endif %}
-                      <span class="has-text-weight-semibold"> <clan-field :initial-value="{{ clan.members }}" name="members"></clan-field> members </span>
+                    <span class="has-text-weight-semibold"> <clan-field :initial-value="{{ clan.members }}" name="members"></clan-field> members </span>
+                    {% if clan.location.countryCode %} from
+                    <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
+                    <a href="{{ url_for('country_clans', code=clan.location.countryCode.lower()) }}">
+                      <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
+                    </a>
+                    {% endif %}
+
                     </h2>
                   </div>
                   <div class="column is-narrow has-text-right has-text-centered-mobile">
@@ -97,9 +98,9 @@
                     </div>
                   </div>
                 </div>
-                <p class="subtitle clan-description">{{ description | safe }}</p>
               </div>
             </div>
+            <p class="subtitle clan-description">{{ description | safe }}</p>
             <div class="level">
               <!-- Total Trophies -->
               {{ insight( "Total Trophies", clan.clanPoints, clan.week_delta.total_trophies, "clanPoints", "weekDelta.totalTrophies", "Delta is calculated based

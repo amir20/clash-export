@@ -66,6 +66,8 @@ class Clan(DynamicDocument):
             # Leaderboards
             "week_delta.total_trophies",
             "week_delta.total_gold_grab",
+            # Explore
+            "week_delta.avg_gold_grab",
         ],
     }
 
