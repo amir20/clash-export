@@ -33,6 +33,9 @@ const mutations = {
   },
   SET_SAVED_CLAN(state, { clan }) {
     state.savedClan = clan;
+  },
+  CHANGE_SORT_FIELD(state, field) {
+    state.sortField = field;
   }
 };
 
