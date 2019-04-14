@@ -17,6 +17,7 @@ import clashleaders.views.static
 import clashleaders.views.status
 import clashleaders.views.troop
 import clashleaders.views.verified
+import clashleaders.views.explore
 from clashleaders import app, site_root
 
 MANIFEST_FILE = join(site_root, "static", "manifest.json")
