@@ -10,7 +10,7 @@
         <span>Last Week</span>
       </b-radio-button>
     </b-field>
-    <b-field class="column sort">
+    <b-field class="column is-hidden-mobile">
       <b-switch v-model="sort" true-value="delta" false-value="value">
         Sort by difference
       </b-switch>
