@@ -2,19 +2,19 @@
 
 <main class="container section">
   <div class="tabs">
-  <ul>
-    <li class="is-active"><a>Popular Today</a></li>
-    <li><a>Most Attacks</a></li>
-    <li><a>Most Versus Attacks</a></li>
-    <li><a>Most Donations</a></li>
-    <li><a>Most War Stars</a></li>
-  </ul>
-</div>
+    <ul>
+      <li class="is-active"><a>Popular Today</a></li>
+      <li><a>Most Attacks</a></li>
+      <li><a>Most Versus Attacks</a></li>
+      <li><a>Most Donations</a></li>
+      <li><a>Most War Stars</a></li>
+    </ul>
+  </div>
   <ol>
     {% for clan in clans %}
     <li class="media">
       <figure class="media-left">
-        <p class="image is-64x64"><img src="{{ clan.badgeUrls.medium }}" alt="{{ clan.name }} badge"></p>
+        <p class="image is-64x64"><img src="{{ clan.badgeUrls.medium }}" alt="{{ clan.name }} badge" /></p>
       </figure>
       <div class="media-content columns">
         <div class="column">
