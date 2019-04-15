@@ -68,6 +68,8 @@ class Clan(DynamicDocument):
             "week_delta.total_gold_grab",
             # Explore
             "week_delta.avg_gold_grab",
+            "week_delta.avg_donations",
+            "week.avg_war_stars",
         ],
     }
 
