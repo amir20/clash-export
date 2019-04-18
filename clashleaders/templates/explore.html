@@ -3,11 +3,11 @@
 <main class="container section">
   <div class="tabs">
     <ul>
-      <li class="is-active"><a>Popular Today</a></li>
-      <li><a>Most Attacks</a></li>
-      <li><a>Most Versus Attacks</a></li>
-      <li><a>Most Donations</a></li>
-      <li><a>Most War Stars</a></li>
+      <li {% if sort == 'most-popular' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-popular') }}">Popular Today</a></li>
+      <li {% if sort == 'most-attacks' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-attacks') }}">Most Attacks</a></li>
+      <li {% if sort == 'most-versus-trophies' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-versus-trophies') }}">Most Versus Attacks</a></li>
+      <li {% if sort == 'most-donations' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-donations') }}">Most Donations</a></li>
+      <li {% if sort == 'most-war-clans' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-war-stars') }}">Most War Stars</a></li>
     </ul>
   </div>
   <ol>
