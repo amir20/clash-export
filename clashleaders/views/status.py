@@ -12,7 +12,7 @@ from clashleaders.model import Status, Player, Clan
 def status():
     monitor = uptime.monitor()
     uptime_ratio = float(monitor["custom_uptime_ratio"])
-    stats = Status.get_instance()
+    stats = Status.instance()
 
     return render_template(
         "status.html",

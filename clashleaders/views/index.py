@@ -7,7 +7,7 @@ from clashleaders.model import Clan, Status
 
 @app.route("/")
 def index():
-    latest_status = Status.get_instance()
+    latest_status = Status.instance()
     return render_template(
         "index.html",
         most_points=leaderboard("clanPoints"),

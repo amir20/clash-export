@@ -32,7 +32,7 @@ class Status(Document):
     trophies_by_country = DictField()
 
     @classmethod
-    def get_instance(cls) -> Status:
+    def instance(cls) -> Status:
         return Status.objects.first()
 
     @classmethod

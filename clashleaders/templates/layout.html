@@ -114,25 +114,26 @@
           <div class="navbar-start">
             {% block nav_header %}
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link"> Popular Clans </a>
+              <a class="navbar-link" href="{{  url_for('explore_clans', sort='most-popular') }}">
+                Explore Clans &nbsp;
+                <b class="has-text-danger is-size-7 has-text-weight-semibold is-uppercase">New!</b>
+              </a>
               <div class="navbar-dropdown">
-                {% for clan in most_popular %}
-                <a class="navbar-item" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
-                  <div class="media">
-                    <div class="media-left">
-                      <span class="icon is-large">
-                        <img src="{{ clan.badgeUrls.small }}" alt="{{ clan.name }}" />
-                      </span>
-                    </div>
-                    <div class="media-content">
-                      <p>
-                        <strong>{{ clan.name }}</strong> <br />
-                        <small> <i class="fas fa-map-pin" aria-hidden="true"></i> {{ clan.location.name }} </small>
-                      </p>
-                    </div>
-                  </div>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='most-popular') }}">
+                  Popular Today
                 </a>
-                {% endfor %}
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='most-attacks') }}">
+                  Most Attacks
+                </a>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='most-versus-trophies') }}">
+                  Most Versus Attacks
+                </a>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='most-donations') }}">
+                  Most Donations
+                </a>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='most-war-stars') }}">
+                  Most War Stars
+                </a>
               </div>
             </div>
             <div class="navbar-item has-dropdown is-hoverable">
