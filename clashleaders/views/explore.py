@@ -8,7 +8,7 @@ ORDER_MAPPING = {
     "most-attacks": "-week_delta.avg_attack_wins",
     "most-versus-attacks": "-week_delta.avg_versus_wins",
     "most-donations": "-week_delta.avg_donations",
-    "most-war-stars": "-week.avg_war_stars",
+    "most-war-stars": "-week_delta.avg_war_stars",
 }
 
 TITLE_MAPPING = {

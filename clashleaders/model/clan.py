@@ -69,7 +69,7 @@ class Clan(DynamicDocument):
             # Explore
             "week_delta.avg_gold_grab",
             "week_delta.avg_donations",
-            "week.avg_war_stars",
+            "week_delta.avg_war_stars",
         ],
     }
 
