@@ -192,6 +192,7 @@ class Query(graphene.ObjectType):
     def resolve_clan(self, info, tag, refresh=False):
         if refresh:
             clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
+            clan.update(inc__page_views=1)
             wait_for_job(clan.job)
 
         return model.Clan.find_by_tag(tag)
