@@ -160,4 +160,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@media screen and (max-width: 769px) {
+  /deep/ .b-tabs .tab-content {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: -1em;
+    margin-right: -1em;
+  }
+}
+</style>
