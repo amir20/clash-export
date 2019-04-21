@@ -52,6 +52,7 @@ const actions = {
             clanVersusPoints
             members
             updatedOn
+            clanLevel
             playerStatus
             recentData: playerMatrix
             historicData: playerMatrix(days: $days)

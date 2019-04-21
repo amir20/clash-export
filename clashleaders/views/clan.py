@@ -29,6 +29,7 @@ def clan_detail_page(slug):
             computed=clan.computed.to_dict(),
             similar=clan.computed.to_dict(),
             oldestDays=days_of_history(clan),
+            clanLevel=clan.clanLevel,
         )
     except DoesNotExist:
         return render_template("404.html"), 404
