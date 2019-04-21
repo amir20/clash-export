@@ -45,7 +45,8 @@ export default {
       }
       requestAnimationFrame(animate);
       new TWEEN.Tween({ tweeningValue: startValue })
-        .to({ tweeningValue: endValue }, 800)
+        .to({ tweeningValue: endValue }, 1200)
+        .delay(Math.random() * 800)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(({ tweeningValue }) => (this.tweeningValue = Math.ceil(tweeningValue)))
         .start();
