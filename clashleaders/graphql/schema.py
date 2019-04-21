@@ -127,6 +127,7 @@ class Clan(graphene.ObjectType):
     description = graphene.String()
     badge_urls = graphene.Field(BadgeUrls)
     clanPoints = graphene.Int()
+    clanLevel = graphene.Int()
     clanVersusPoints = graphene.Int()
     members = graphene.Int()
     updated_on = graphene.Float()
