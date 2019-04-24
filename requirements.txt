@@ -75,7 +75,7 @@ pycodestyle==2.5.0
 pycparser==2.19
 Pygments==2.3.1
 pymongo==3.7.2
-Pympler==0.6
+Pympler==0.7
 pyOpenSSL==19.0.0
 pytest==4.4.0
 pytest-cov==2.6.1
