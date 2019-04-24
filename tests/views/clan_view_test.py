@@ -25,7 +25,7 @@ def test_detail_page_status(client, mocker, clan):
 
 def patch_all(mocker, clan):
     mocker.patch("clashleaders.model.Clan.find_by_slug", return_value=clan)
-    mocker.patch("clashleaders.model.Status.get_instance", return_value=Status())
+    mocker.patch("clashleaders.model.Status.instance", return_value=Status())
     mocker.patch("clashleaders.views.static.fetch_changelog", return_value=[])
     mocker.patch("clashleaders.views.clan.clan_trophies", return_value={})
     mocker.patch("clashleaders.views.clan.render_template")
