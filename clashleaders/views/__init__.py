@@ -23,12 +23,18 @@ from clashleaders import app, site_root
 MANIFEST_FILE = join(site_root, "static", "manifest.json")
 
 
-def manifest_path(file):
+# This is needed for mocking
+def manifest_map():
     with open(MANIFEST_FILE) as f:
-        data = json.load(f)
-    return data[file]
+        return json.load(f)
 
 
+@app.template_global()
+def manifest_path(file):
+    return manifest_map()[file]
+
+
+@app.template_global()
 def inline_path(file):
     path = join(site_root, manifest_path(file).lstrip("/"))
     with open(path) as f:
@@ -36,11 +42,9 @@ def inline_path(file):
         return re.sub(r"^//# sourceMappingURL=.*$", "", content, flags=re.MULTILINE)
 
 
+@app.template_filter()
 def first(l, i):
     return l[:i]
 
 
-app.add_template_global(manifest_path, "manifest_path")
-app.add_template_global(inline_path, "inline_path")
 app.add_template_filter(markdown, "markdown")
-app.add_template_filter(first, "first")
