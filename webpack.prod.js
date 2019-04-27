@@ -5,6 +5,7 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const BrotliPlugin = require("brotli-webpack-plugin");
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
 const path = require("path");
 
@@ -32,7 +33,8 @@ module.exports = merge(common, {
       "process.env.NODE_ENV": JSON.stringify("production")
     }),
     new MiniCssExtractPlugin({ filename: "css/[name].[chunkhash].css" }),
-    new CompressionPlugin({ test: /\.js$|\.css$|\.map$|\.svg$/ }),
+    new CompressionPlugin({ test: /\.(js|css|map|svg)$/ }),
+    new BrotliPlugin({ test: /\.(js|css|map|svg)$/ }),
     new SWPrecacheWebpackPlugin({
       staticFileGlobsIgnorePatterns: [/\.map$/, /\.svg$/, /\.svg.gz$/, /\.map.gz$/],
       stripPrefix: assetsPath
