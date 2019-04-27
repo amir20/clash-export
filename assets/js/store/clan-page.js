@@ -41,6 +41,7 @@ const mutations = {
 
 const actions = {
   async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }) {
+    commit("START_LOADING");
     dispatch("FETCH_SAVED_CLAN");
     const { data } = await apolloClient.query({
       query: gql`
