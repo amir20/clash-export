@@ -30,7 +30,6 @@ RUN pip install pip==19.1
 COPY ./requirements*.txt /app/
 
 ARG plugins=http.expires,tls.dns.digitalocean
-ENV CADDY_TELEMETRY=on
 
 # Install caddy and clean up
 RUN apt-get update \
