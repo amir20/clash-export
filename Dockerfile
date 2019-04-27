@@ -30,6 +30,7 @@ RUN pip install pip==19.1
 COPY ./requirements*.txt /app/
 
 ARG plugins=http.expires,tls.dns.digitalocean
+ENV CADDY_TELEMETRY=on
 
 # Install caddy and clean up
 RUN apt-get update \
@@ -38,7 +39,7 @@ RUN apt-get update \
     && apt-get install cron -y \
     && apt-get install gcc -y \
     && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
-    && CADDY_TELEMETRY=on curl https://getcaddy.com | bash -s personal ${plugins} \
+    && curl https://getcaddy.com | bash -s personal ${plugins} \
     && pip install -r requirements.txt \
     && apt-get remove -y gcc \
     && apt-get autoremove -y \
