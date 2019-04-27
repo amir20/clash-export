@@ -1,5 +1,6 @@
 <template>
-  <time>Updated {{ text }}</time>
+  <span v-if="loading">Updating...</span>
+  <time v-else>Updated {{ text }}</time>
 </template>
 
 <script>
@@ -21,7 +22,7 @@ export default {
     clearInterval(this.interval);
   },
   computed: {
-    ...mapState(["clan"]),
+    ...mapState(["clan", "loading"]),
     lastUpdated() {
       return new Date(this.clan.updatedOn);
     }
@@ -34,7 +35,7 @@ export default {
     }
   },
   watch: {
-    lastUpdated(newValue) {
+    lastUpdated() {
       this.updateFromNow();
     }
   }

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from inflection import camelize
 from mongoengine import EmbeddedDocument, FloatField, IntField
 from typing import Dict
 
@@ -22,6 +23,10 @@ class ClanDelta(EmbeddedDocument):
     total_attack_wins = IntField(default=0)
     total_versus_wins = IntField(default=0)
 
-    def to_dict(self) -> Dict:
-        data = dict(self.to_mongo())
+    def to_dict(self, camel_case=False) -> Dict:
+        data: Dict = dict(self.to_mongo())
+
+        if camel_case:
+            data = {camelize(k, False): v for k, v in data.items()}
+
         return data

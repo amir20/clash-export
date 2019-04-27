@@ -11,7 +11,6 @@
       detailed
       default-sort="currentTrophies.value"
       default-sort-direction="desc"
-      :loading="loading"
       :opened-detailed="openDetails"
       @details-open="row => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
       @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
@@ -60,13 +59,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
-import isEmpty from "lodash/isEmpty";
+import { mapActions, mapGetters, mapState } from "vuex";
 import PlayerComparison from "./PlayerComparison";
 import { gaMixin } from "../ga";
 import UserMixin from "../user";
 
-let loaded = false;
 export default {
   mixins: [gaMixin, UserMixin],
   props: ["tag", "name", "oldestDays"],
@@ -82,27 +79,24 @@ export default {
   created() {
     document.addEventListener("visibilitychange", this.handleVisibilityChange, false);
   },
+  mounted() {
+    if (this.hasUser) {
+      this.openDetails = [this.userTag];
+    } else {
+      this.openDetails = [this.tableData[0].id];
+    }
+  },
   beforeDestroy() {
     document.removeEventListener("visibilitychange");
   },
   computed: {
-    ...mapState(["loading", "sortField", "clan"]),
+    ...mapState(["sortField", "clan"]),
     ...mapGetters(["header", "tableData"])
   },
   watch: {
     sortField(newValue) {
       const column = this.$refs.table.currentSortColumn;
       this.$nextTick(() => this.$refs.table.sort(column, true));
-    },
-    tableData(newValue) {
-      if (!isEmpty(newValue) && !loaded) {
-        if (this.hasUser) {
-          this.openDetails = [this.userTag];
-        } else {
-          this.openDetails = [newValue[0].id];
-        }
-        loaded = true;
-      }
     }
   },
   methods: {
