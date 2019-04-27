@@ -9,7 +9,7 @@
           <div class="level is-pulled-right is-marginless">
             <div class="level-item has-text-centered">
               <div>
-                <div class="title is-size-4-mobile">{{ Math.ceil(player.percentile) }} / 100</div>
+                <div class="title is-size-4-mobile">{{ Math.ceil(this.playerData.activityScore.value) }} / 100</div>
                 <div class="heading">Player Activity Score</div>
               </div>
             </div>
@@ -79,7 +79,7 @@ export default {
       new Chartist.Bar(
         this.$refs.chart,
         {
-          labels: ["Recent DE Grab", "Recent Elixer Grab", "Recent Gold Grab"],
+          labels: ["Recent DE Grab", "Recent Elixir Grab", "Recent Gold Grab"],
           series: this.series
         },
         {
@@ -104,7 +104,6 @@ export default {
               player(tag: $tag) {
                 name
                 tag
-                percentile
                 slug
                 league {
                   name
