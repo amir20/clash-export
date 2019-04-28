@@ -58,6 +58,7 @@ body.clan_detail_page main > #app .hero-footer {
     font-size: 20px;
     margin-right: 0.45em;
   }
+
   & .value {
     margin-left: auto;
   }
@@ -108,6 +109,7 @@ body.clan_detail_page main > #app .hero-footer {
     position: relative;
     pointer-events: none;
     opacity: 0.5;
+
     &:after {
       @include loader;
       position: absolute;
@@ -122,4 +124,12 @@ body.clan_detail_page main > #app .hero-footer {
 
 .reverse-order {
   flex-direction: row-reverse;
+}
+
+
+.is-touch-only {
+  display: none;
+  @media (hover: none) and (pointer: coarse) {
+    display: block;
+  }
 }
