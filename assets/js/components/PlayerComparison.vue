@@ -21,17 +21,16 @@
         </div>
       </div>
     </div>
-    <a class="button is-warning is-fullwidth-mobile is-pulled-right" :href="`/player/${player.slug}`" v-if="player">
+    <a class="button is-warning is-pulled-right" :href="`/player/${player.slug}`" v-if="player">
       <span class="icon"> <i class="fas fa-user"></i> </span> <span>View Player Profile</span>
     </a>
-    <br />
     <section>
-      <h4 class="title is-4 is-marginless">Average Loot Grab</h4>
+      <h4 class="title is-4 is-marginless">Loot Activity</h4>
       <div ref="chart" class="player-comparison"></div>
     </section>
-    <div class="buttons is-right mobile is-hidden-desktop" v-if="player">
-      <a class="button is-info is-fullwidth-mobile" :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(player.tag)}`">
-        <span class="icon"> <i class="fas fa-gamepad"></i> </span> <span>View Player in Game</span>
+    <div class="is-touch-only">
+      <a class="button is-info is-fullwidth-mobile" :href="`clashofclans://action=OpenPlayerProfile&amp;tag=${encodeURIComponent(this.playerData.tag.value)}`">
+        <span class="icon"> <i class="fas fa-external-link-alt"></i></span> <span>Open Player in Game</span>
       </a>
     </div>
   </div>

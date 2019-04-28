@@ -119,7 +119,15 @@
               {{ insight("Total Versus Wins", clan.computed.total_versus_wins, clan.week_delta.total_versus_wins, "computed.totalVersusWins",
               "weekDelta.totalVersusWins") }}
             </div>
-            <div class="is-hidden-mobile"><trophy-chart :distribution-data="{{ trophy_distribution | tojson | forceescape }}"></trophy-chart></div>
+            <div class="has-text-centered is-touch-only">
+              <a class="button is-info"
+                 href="clashofclans://action=OpenClanProfile&tag={{ clan.tag }}">
+                <span class="icon"> <i class="fas fa-external-link-alt"></i></span> <span>Open Clan in Game</span>
+              </a>
+            </div>
+            <div class="is-hidden-mobile">
+              <trophy-chart :distribution-data="{{ trophy_distribution | tojson | forceescape }}"></trophy-chart>
+            </div>
           </div>
         </div>
       </div>
