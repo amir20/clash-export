@@ -11,6 +11,9 @@ def delete_outdated():
     dt = datetime.now() - timedelta(days=31)
     HistoricalClan.objects(created_on__lt=dt).delete()
     HistoricalPlayer.objects(created_on__lt=dt).delete()
+    logger.info("Deleting 0 member clans...")
+    Clan.objects(members=0).delete()
+    HistoricalClan.objects(members=0).delete()
 
 
 def reset_stats():
