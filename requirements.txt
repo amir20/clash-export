@@ -103,7 +103,7 @@ traitlets==4.3.2
 typing==3.6.6
 ua-parser==0.8.0
 Unidecode==1.0.23
-urllib3==1.25.1
+urllib3==1.25.2
 user-agents==2.0
 uvloop==0.12.2
 wcwidth==0.1.7
