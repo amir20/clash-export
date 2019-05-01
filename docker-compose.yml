@@ -29,6 +29,7 @@ services:
       - IMGPROXY_USE_ETAG=true
       - IMGPROXY_MAX_CLIENTS=100
       - IMGPROXY_DOWNLOAD_TIMEOUT=10
+      - IMGPROXY_TTL=2628000
   rq_worker:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "rq_worker player calculation player_request"
