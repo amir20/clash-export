@@ -29,7 +29,7 @@ RUN pip install pip==19.1
 # Copy requirements file
 COPY ./requirements*.txt /app/
 
-ARG plugins=http.expires,tls.dns.digitalocean
+ARG plugins=http.expires,tls.dns.digitalocean,http.cache
 
 # Install caddy and clean up
 RUN apt-get update \

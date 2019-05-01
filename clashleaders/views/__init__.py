@@ -1,5 +1,10 @@
+import base64
+import hashlib
+import hmac
 import json
+import os
 import re
+import textwrap
 from os.path import join
 
 from markdown import markdown
@@ -8,6 +13,7 @@ import clashleaders.views.badge
 import clashleaders.views.clan
 import clashleaders.views.country
 import clashleaders.views.error
+import clashleaders.views.explore
 import clashleaders.views.export
 import clashleaders.views.index
 import clashleaders.views.player
@@ -17,10 +23,12 @@ import clashleaders.views.static
 import clashleaders.views.status
 import clashleaders.views.troop
 import clashleaders.views.verified
-import clashleaders.views.explore
 from clashleaders import app, site_root
 
 MANIFEST_FILE = join(site_root, "static", "manifest.json")
+IMGPROXY_KEY = bytes.fromhex(os.getenv("IMGPROXY_KEY"))
+IMGPROXY_SALT = bytes.fromhex(os.getenv("IMGPROXY_SALT"))
+IMGPROXY_BASE = os.getenv("IMGPROXY_BASE")
 
 
 # This is needed for mocking
@@ -40,6 +48,16 @@ def inline_path(file):
     with open(path) as f:
         content = f.read()
         return re.sub(r"^//# sourceMappingURL=.*$", "", content, flags=re.MULTILINE)
+
+
+@app.template_global()
+def imgproxy_url(url):
+    encoded_url = base64.urlsafe_b64encode(url.encode()).rstrip(b"=").decode()
+    encoded_url = "/".join(textwrap.wrap(encoded_url, 16))
+    path = "/{encoded_url}".format(encoded_url=encoded_url).encode()
+    digest = hmac.new(IMGPROXY_KEY, msg=IMGPROXY_SALT + path, digestmod=hashlib.sha256).digest()
+    protection = base64.urlsafe_b64encode(digest).rstrip(b"=")
+    return (b"%s%s%s" % (IMGPROXY_BASE.encode(), protection, path)).decode()
 
 
 @app.template_filter()
