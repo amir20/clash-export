@@ -27,6 +27,8 @@ services:
       - IMGPROXY_SALT=95490c60f0bba290a0ae56e897ad5a9a7845ca375ca9922d07bbfacb62453c05165048c75fb3488018f34115c98ec2fb7a1c7e1a4508cd20233ad9b2190986e5
       - IMGPROXY_ENFORCE_WEBP=true
       - IMGPROXY_USE_ETAG=true
+      - IMGPROXY_MAX_CLIENTS=100
+      - IMGPROXY_DOWNLOAD_TIMEOUT=10
   rq_worker:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "rq_worker player calculation player_request"
