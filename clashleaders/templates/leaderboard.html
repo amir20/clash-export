@@ -4,7 +4,7 @@
 
   {% for clan in clans %}
   <a class="panel-block" href="{{ url_for('clan_detail_page', slug=clan.slug) }}">
-    <span class="panel-icon"> <img src="{{ clan.badge }}" alt="{{ clan.name }}" /> </span> {{ clan.name }}
+    <span class="panel-icon"> <img src="{{ imgproxy_url(clan.badge) }}" alt="{{ clan.name }}" /> </span> {{ clan.name }}
     <span class="value subtitle is-7">{{ property_format.format(clan.score / factor) }}</span>
   </a>
   {% endfor %}
