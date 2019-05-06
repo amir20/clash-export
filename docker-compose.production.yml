@@ -46,6 +46,12 @@ services:
         - traefik.frontend.rule=Host:i.clashleaders.com
         - traefik.enable=true
         - traefik.port=2015
+        - traefik.frontend.headers.browserXSSFilter=true
+        - traefik.frontend.headers.contentTypeNosniff=true
+        - traefik.frontend.headers.forceSTSHeader=true
+        - traefik.frontend.headers.STSSeconds=315360000
+        - traefik.frontend.headers.SSLRedirect=true
+        -
     networks:
       - web
       - default
