@@ -1,21 +1,21 @@
 default: start
 
+TAG := $(shell cat package.json | jq -r .version)
+
 .PHONY: deploy
-deploy: TAG=$(shell cat package.json | jq -r .version)
-deploy: push
+deploy: 
 	eval $$(docker-machine env clashleaders --shell bash); docker pull amir20/clashleaders:$(TAG)
+	eval $$(docker-machine env clashleaders --shell bash); docker pull amir20/imgproxy-cache:$(TAG)
 	eval $$(docker-machine env clashleaders --shell bash); TAG=$(TAG) docker stack deploy -c docker-compose.yml -c docker-compose.production.yml clashleaders
 
 .PHONY: build
 build:
-	docker-compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD) web
+	TAG=$(TAG) docker-compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD)
 
 .PHONY: push
-push: TAG=$(shell cat package.json | jq -r .version)
 push: build
-	docker tag amir20/clashleaders amir20/clashleaders:$(TAG)
 	docker push amir20/clashleaders:$(TAG)
-	docker push amir20/clashleaders:latest
+	docker push amir20/imgproxy-cache:$(TAG)
 
 .PHONY: test
 test:
@@ -32,5 +32,4 @@ release_patch:
 .PHONY: release_minor
 release_minor:
 	@npm version minor
-
 
