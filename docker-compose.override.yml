@@ -27,6 +27,9 @@ services:
       - ./Makefile:/app/Makefile
       - ./caddy/Caddyfile.local:/etc/Caddyfile
       - .ipython/web:/root/.ipython/profile_default
+  imgproxy-cache:
+    ports:
+      - "8888:2015"
   cron:
     env_file: .env
     volumes:

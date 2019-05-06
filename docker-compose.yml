@@ -19,7 +19,7 @@ services:
     depends_on:
       - redis
       - mongo
-      - imgproxy
+      - imgproxy-cache
   imgproxy:
     image: darthsim/imgproxy:v2.2.12
     environment:
@@ -30,6 +30,13 @@ services:
       - IMGPROXY_MAX_CLIENTS=100
       - IMGPROXY_DOWNLOAD_TIMEOUT=10
       - IMGPROXY_TTL=2628000
+  imgproxy-cache:
+    image: "amir20/imgproxy-cache:${TAG:-latest}"
+    build:
+      context: .
+      dockerfile: Dockerfile.imgproxy
+    depends_on:
+      - imgproxy
   rq_worker:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "rq_worker player calculation player_request"
