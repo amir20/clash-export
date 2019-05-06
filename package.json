@@ -22,7 +22,7 @@
     "bulma-tooltip": "^2.0.2",
     "chartist": "^0.11.0",
     "chartist-plugin-legend": "^0.6.2",
-    "clean-webpack-plugin": "^2.0.1",
+    "clean-webpack-plugin": "^2.0.2",
     "compression-webpack-plugin": "^2.0.0",
     "core-js": "^3.0.1",
     "css-loader": "^2.1.1",
@@ -56,15 +56,15 @@
     "vue-template-compiler": "^2.6.10",
     "vuex": "^3.1.0",
     "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.1",
+    "webpack-cli": "^3.3.2",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-merge": "^4.2.1",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "husky": "^2.1.0",
-    "lint-staged": "^8.1.5",
+    "husky": "^2.2.0",
+    "lint-staged": "^8.1.6",
     "prettier": "^1.17.0"
   },
   "scripts": {
