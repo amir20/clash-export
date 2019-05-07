@@ -21,11 +21,6 @@
     errors stdout
 }
 
-http://clashleaders.com {
-   redir https://www.clashleaders.com{uri}
-   tls off
-}
-
 localhost:8000 {
    proxy / unix:/tmp/gunicorn.sock {
         transparent
