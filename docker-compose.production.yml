@@ -51,7 +51,6 @@ services:
         - traefik.frontend.headers.forceSTSHeader=true
         - traefik.frontend.headers.STSSeconds=315360000
         - traefik.frontend.headers.SSLRedirect=true
-        -
     networks:
       - web
       - default
