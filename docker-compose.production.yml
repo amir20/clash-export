@@ -55,18 +55,6 @@ services:
       - web
       - default
   web:
-    deploy:
-      labels:
-        - traefik.frontend.rule=Host:www.clashleaders.com
-        - traefik.enable=true
-        - traefik.port=2015
-        - traefik.frontend.headers.browserXSSFilter=true
-        - traefik.frontend.headers.contentTypeNosniff=true
-        - traefik.frontend.headers.forceSTSHeader=true
-        - traefik.frontend.headers.STSSeconds=315360000
-        - traefik.frontend.headers.SSLRedirect=true
-        - traefik.frontend.headers.SSLForceHost=true
-        - traefik.frontend.headers.SSLHost=www.clashleaders.com
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
     volumes:
@@ -83,9 +71,21 @@ services:
       - IMGPROXY_KEY=15c1f2542afea936263aaf8a5244e0f2edf7bfb54dec26fb19b12133ad02869b254d71587227d3a58e43fb6885f1290cb158ab31e62d4f6361c50f21e089883a
       - IMGPROXY_SALT=95490c60f0bba290a0ae56e897ad5a9a7845ca375ca9922d07bbfacb62453c05165048c75fb3488018f34115c98ec2fb7a1c7e1a4508cd20233ad9b2190986e5
       - IMGPROXY_BASE=https://i.clashleaders.com/
-    ports:
-      - 80:80
-      - 443:443
+    deploy:
+      labels:
+        - traefik.frontend.rule=Host:www.clashleaders.com
+        - traefik.enable=true
+        - traefik.port=2015
+        - traefik.frontend.headers.browserXSSFilter=true
+        - traefik.frontend.headers.contentTypeNosniff=true
+        - traefik.frontend.headers.forceSTSHeader=true
+        - traefik.frontend.headers.STSSeconds=315360000
+        - traefik.frontend.headers.SSLRedirect=true
+        - traefik.frontend.headers.SSLForceHost=true
+        - traefik.frontend.headers.SSLHost=www.clashleaders.com
+    networks:
+      - web
+      - default
 
 networks:
   web:
