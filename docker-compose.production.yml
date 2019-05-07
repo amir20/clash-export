@@ -55,6 +55,18 @@ services:
       - web
       - default
   web:
+    deploy:
+      labels:
+        - traefik.frontend.rule=Host:www.clashleaders.com
+        - traefik.enable=true
+        - traefik.port=2015
+        - traefik.frontend.headers.browserXSSFilter=true
+        - traefik.frontend.headers.contentTypeNosniff=true
+        - traefik.frontend.headers.forceSTSHeader=true
+        - traefik.frontend.headers.STSSeconds=315360000
+        - traefik.frontend.headers.SSLRedirect=true
+        - traefik.frontend.headers.SSLForceHost=true
+        - traefik.frontend.headers.SSLHost=www.clashleaders.com
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
     volumes:

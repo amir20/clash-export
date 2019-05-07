@@ -1,9 +1,5 @@
-https://www.clashleaders.com {
+0.0.0.0 {
     root /app/clashleaders
-
-    tls {
-        dns digitalocean
-    }
 
     proxy / unix:/tmp/gunicorn.sock {
         transparent
@@ -18,39 +14,10 @@ https://www.clashleaders.com {
         Cache-Control "public, max-age=31536000"
     }
 
-    header / {
-        # Enable HTTP Strict Transport Security (HSTS) to force clients to always
-        # connect via HTTPS (do not use if only testing)
-        Strict-Transport-Security "max-age=31536000;"
-        # Enable cross-site filter (XSS) and tell browser to block detected attacks
-        X-XSS-Protection "1; mode=block"
-        # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
-        X-Content-Type-Options "nosniff"
-        # Disallow the site to be rendered within a frame (clickjacking protection)
-        X-Frame-Options "DENY"
-    }
-
     gzip
     log / stdout "[{when}] \"{method} {uri} {proto}\" {status} {size} \"{>User-Agent}\"" {
         except /static
     }
-    errors stdout
-}
-
-https://i.clashleaders.com {
-    tls {
-        dns digitalocean
-    }
-
-    cache {
-        default_max_age 1h
-    }
-
-    proxy / imgproxy:8080 {
-        transparent
-    }
-
-    log / stdout "[{when}] \"{method} {uri} {proto}\" {status} {size} \"{>User-Agent}\""
     errors stdout
 }
 
