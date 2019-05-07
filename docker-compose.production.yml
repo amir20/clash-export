@@ -49,6 +49,7 @@ services:
         - traefik.frontend.headers.browserXSSFilter=true
         - traefik.frontend.headers.contentTypeNosniff=true
         - traefik.frontend.headers.forceSTSHeader=true
+        - traefik.frontend.headers.frameDeny=true
         - traefik.frontend.headers.STSSeconds=315360000
         - traefik.frontend.headers.SSLRedirect=true
     networks:
@@ -77,11 +78,12 @@ services:
         - traefik.port=2015
         - traefik.frontend.headers.browserXSSFilter=true
         - traefik.frontend.headers.contentTypeNosniff=true
+        - traefik.frontend.headers.frameDeny=true
         - traefik.frontend.headers.forceSTSHeader=true
         - traefik.frontend.headers.STSSeconds=315360000
         - traefik.frontend.headers.SSLRedirect=true
-        - traefik.frontend.headers.SSLForceHost=true
-        - traefik.frontend.headers.SSLHost=www.clashleaders.com
+        - traefik.frontend.headers.STSPreload=true
+        - traefik.frontend.headers.STSIncludeSubdomains=true
     networks:
       - web
       - default
