@@ -76,7 +76,7 @@ Pygments==2.3.1
 pymongo==3.8.0
 Pympler==0.7
 pyOpenSSL==19.0.0
-pytest==4.4.1
+pytest==4.4.2
 pytest-cov==2.6.1
 pytest-freezegun==0.3.0.post1
 pytest-mock==1.10.4
