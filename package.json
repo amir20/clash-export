@@ -55,7 +55,7 @@
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.10",
     "vuex": "^3.1.0",
-    "webpack": "^4.30.0",
+    "webpack": "^4.31.0",
     "webpack-cli": "^3.3.2",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-merge": "^4.2.1",
