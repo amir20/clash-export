@@ -17,16 +17,3 @@ localhost:80 {
     }
     errors stdout
 }
-
-http://localhost:9090 {
-    cache {
-        default_max_age 1h
-    }
-
-    proxy / imgproxy:8080 {
-        transparent
-    }
-
-    log / stdout "[{when}] \"{method} {uri} {proto}\" {status} {size} \"{>User-Agent}\""
-    errors stdout
-}
