@@ -73,17 +73,29 @@ services:
       - IMGPROXY_BASE=https://i.clashleaders.com/
     deploy:
       labels:
-        - traefik.frontend.rule=Host:www.clashleaders.com
         - traefik.enable=true
-        - traefik.port=2015
-        - traefik.frontend.headers.browserXSSFilter=true
-        - traefik.frontend.headers.contentTypeNosniff=true
-        - traefik.frontend.headers.frameDeny=true
-        - traefik.frontend.headers.forceSTSHeader=true
-        - traefik.frontend.headers.STSSeconds=315360000
-        - traefik.frontend.headers.SSLRedirect=true
-        - traefik.frontend.headers.STSPreload=true
-        - traefik.frontend.headers.STSIncludeSubdomains=true
+        - traefik.www.frontend.rule=Host:www.clashleaders.com
+        - traefik.www.port=2015
+        - traefik.www.frontend.headers.browserXSSFilter=true
+        - traefik.www.frontend.headers.contentTypeNosniff=true
+        - traefik.www.frontend.headers.frameDeny=true
+        - traefik.www.frontend.headers.forceSTSHeader=true
+        - traefik.www.frontend.headers.STSSeconds=315360000
+        - traefik.www.frontend.headers.SSLRedirect=true
+        - traefik.www.frontend.headers.SSLForceHost=true
+        - traefik.www.frontend.headers.SSLHost=www.clashleaders.com
+        - traefik.top.frontend.rule=Host:clashleaders.com
+        - traefik.top.port=2015
+        - traefik.top.frontend.headers.browserXSSFilter=true
+        - traefik.top.frontend.headers.contentTypeNosniff=true
+        - traefik.top.frontend.headers.frameDeny=true
+        - traefik.top.frontend.headers.forceSTSHeader=true
+        - traefik.top.frontend.headers.STSSeconds=315360000
+        - traefik.top.frontend.headers.SSLRedirect=true
+        - traefik.top.frontend.headers.SSLForceHost=true
+        - traefik.top.frontend.headers.SSLHost=www.clashleaders.com
+        - traefik.top.frontend.headers.STSPreload=true
+        - traefik.top.frontend.headers.STSIncludeSubdotops=true
     networks:
       - web
       - default
