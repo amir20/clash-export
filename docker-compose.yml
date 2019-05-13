@@ -13,11 +13,6 @@ services:
     depends_on:
       - mongo
       - redis
-  proxy-error:
-    image: "amir20/clashleaders-error:${TAG:-latest}"
-    build:
-      context: proxy-error
-      dockerfile: Dockerfile
   web:
     build: .
     image: "amir20/clashleaders:${TAG:-latest}"

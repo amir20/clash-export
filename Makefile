@@ -6,7 +6,6 @@ TAG := $(shell cat package.json | jq -r .version)
 deploy:
 	eval $$(docker-machine env clashleaders --shell bash); docker pull amir20/clashleaders:$(TAG)
 	eval $$(docker-machine env clashleaders --shell bash); docker pull amir20/imgproxy-cache:$(TAG)
-	eval $$(docker-machine env clashleaders --shell bash); docker pull amir20/clashleaders-error:$(TAG)
 	eval $$(docker-machine env clashleaders --shell bash); TAG=$(TAG) docker stack deploy -c docker-compose.yml -c docker-compose.production.yml clashleaders
 
 .PHONY: build
@@ -17,7 +16,6 @@ build:
 push: build
 	docker push amir20/clashleaders:$(TAG)
 	docker push amir20/imgproxy-cache:$(TAG)
-	docker push amir20/clashleaders-error:$(TAG)
 
 .PHONY: test
 test:

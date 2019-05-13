@@ -55,13 +55,6 @@ services:
     networks:
       - web
       - default
-  proxy-error:
-    deploy:
-      labels:
-        - traefik.enable=true
-    networks:
-      - web
-      - default
   web:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
