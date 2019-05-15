@@ -92,7 +92,7 @@ requests==2.21.0
 rq==0.13.0
 rq-dashboard==0.4.0
 Rx==1.6.1
-scikit-learn==0.21.0
+scikit-learn==0.21.1
 scipy==1.2.1
 six==1.12.0
 snapshottest==0.5.0
