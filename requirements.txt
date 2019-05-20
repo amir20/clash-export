@@ -32,7 +32,7 @@ cryptography==2.6.1
 cssselect2==0.2.1
 decorator==4.4.0
 defusedxml==0.6.0
-Flask==1.0.2
+Flask==1.0.3
 Flask-Caching==1.7.1
 Flask-GraphQL==2.0.0
 flask-shell-ipython==0.4.1
