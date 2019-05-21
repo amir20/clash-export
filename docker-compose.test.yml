@@ -16,6 +16,8 @@ services:
       - ./:/clashleaders
       - ./mongosnapshot:/docker-entrypoint-initdb.d
   web:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
     environment:
       - API_TOKEN=not-valid
       - FLASK_APP=clashleaders
@@ -29,6 +31,7 @@ services:
       - IMGPROXY_KEY=01
       - IMGPROXY_SALT=01
   integration:
+    command: "./wait-for-it.sh web:80 -- npm test"
     volumes:
       - ./integration/failed:/app/__image_snapshots__/__diff_output__
     environment:
