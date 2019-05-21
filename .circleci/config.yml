@@ -21,7 +21,10 @@ jobs:
           command: |
             make test
       - run:
+          name: Kill all containers
+          command: |
+            docker-compose -f docker-compose.yml down
+      - run:
           name: Run int tests
           command: |
-            docker-compose down
             make int
