@@ -35,4 +35,4 @@ release_minor:
 
 .PHONY: int
 int:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml run integration
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration
