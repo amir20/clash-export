@@ -29,7 +29,7 @@ RUN pip install pip==19.1
 # Copy requirements file
 COPY ./requirements*.txt /app/
 
-ARG plugins=http.expires,tls.dns.digitalocean,http.cache
+ARG plugins=http.expires
 
 # Install caddy and clean up
 RUN apt-get update \
@@ -74,5 +74,5 @@ ARG SOURCE_COMMIT=DIRTY
 ENV SOURCE_COMMIT $SOURCE_COMMIT
 
 VOLUME /root/.caddy
-EXPOSE 80 443
+
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord-web.conf"]
