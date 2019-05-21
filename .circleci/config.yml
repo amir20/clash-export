@@ -19,4 +19,8 @@ jobs:
       - run:
           name: Run tests
           command: |
-            docker-compose -f docker-compose.yml -f docker-compose.test.yml run test
+            make test
+      - run:
+          name: Run int tests
+          command: |
+            make int

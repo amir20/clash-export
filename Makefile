@@ -19,7 +19,7 @@ push: build
 
 .PHONY: test
 test:
-	python setup.py test
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml run test
 
 .PHONY: start
 start:
@@ -33,3 +33,6 @@ release_patch:
 release_minor:
 	@npm version minor
 
+.PHONY: int
+int:
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml run integration
