@@ -11,3 +11,30 @@ services:
       - IMGPROXY_KEY=01
       - IMGPROXY_SALT=01
       - IMGPROXY_BASE=https://i.clashleaders.com/
+  mongo:
+    volumes:
+      - ./:/clashleaders
+      - ./mongosnapshot:/docker-entrypoint-initdb.d
+  web:
+    environment:
+      - API_TOKEN=not-valid
+      - FLASK_APP=clashleaders
+      - BUGSNAG_API_KEY=
+      - STAGE=testing
+      - IMGPROXY_KEY=01
+      - IMGPROXY_SALT=01
+      - IMGPROXY_BASE=http://imgproxy-cache:2015/
+  imgproxy:
+    environment:
+      - IMGPROXY_KEY=01
+      - IMGPROXY_SALT=01
+  integration:
+    volumes:
+      - ./integration/failed:/app/__image_snapshots__/__diff_output__
+    environment:
+      - BASE=http://web/
+    build:
+      context: ./integration
+      dockerfile: Dockerfile
+    depends_on:
+      - web

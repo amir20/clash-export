@@ -18,10 +18,8 @@ services:
     env_file: .env
     ports:
       - "8000:80"
-      - "9090:9090"
     volumes:
       - ./clashleaders:/app/clashleaders
-      - ./migrations:/app/migrations
       - ./tests/:/app/tests
       - ./setup.cfg:/app/setup.cfg
       - ./Makefile:/app/Makefile
