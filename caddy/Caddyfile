@@ -1,4 +1,4 @@
-0.0.0.0 {
+0.0.0.0, http://web {
     root /app/clashleaders
 
     proxy / unix:/tmp/gunicorn.sock {
