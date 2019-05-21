@@ -23,4 +23,5 @@ jobs:
       - run:
           name: Run int tests
           command: |
+            docker-compose down
             make int
