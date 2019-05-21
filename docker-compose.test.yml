@@ -4,9 +4,9 @@ services:
     image: amir20/clashleaders:latest
     command: "python setup.py test"
     environment:
-      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImFjODA3MmY5LTExYTktNDViMS1iOTUyLWQ5ZjIwNTk0NzJjOCIsImlhdCI6MTUxNDc0ODI3MSwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4xMzEuMTYxLjE5MyIsIjE1OS44OS4xMzkuMzUiXSwidHlwZSI6ImNsaWVudCJ9XX0.S7sP9cDlLywqmpZpker7uZrLBY0xmDFzfXWxb30V1vAtCLrvCItcSUW8Yt3VLcoJu60vbf7_oe0fIiwok68oVw
+      - API_TOKEN=not-valid
       - FLASK_APP=clashleaders
-      - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
+      - BUGSNAG_API_KEY=
       - STAGE=testing
       - IMGPROXY_KEY=01
       - IMGPROXY_SALT=01
@@ -16,8 +16,6 @@ services:
       - ./:/clashleaders
       - ./mongosnapshot:/docker-entrypoint-initdb.d
   web:
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
     environment:
       - API_TOKEN=not-valid
       - FLASK_APP=clashleaders

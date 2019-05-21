@@ -19,7 +19,7 @@ push: build
 
 .PHONY: test
 test:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml run test
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm test
 
 .PHONY: start
 start:
