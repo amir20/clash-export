@@ -30,6 +30,8 @@ services:
   imgproxy-cache:
     ports:
       - "8888:2015"
+  imgproxy:
+    env_file: .env
   cron:
     env_file: .env
     volumes:
