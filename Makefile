@@ -34,6 +34,7 @@ release_minor:
 	@npm version minor
 
 .PHONY: int
-int: build
+int:
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml down
 	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml build
 	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration
