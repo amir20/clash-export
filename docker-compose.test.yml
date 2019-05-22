@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   test:
-    image: amir20/clashleaders:latest
+    image: "amir20/clashleaders:${TAG:-latest}"
     command: "python setup.py test"
     environment:
       - API_TOKEN=not-valid

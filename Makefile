@@ -18,8 +18,8 @@ push: build
 	docker push amir20/imgproxy-cache:$(TAG)
 
 .PHONY: test
-test:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm test
+test: build
+	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm test
 
 .PHONY: start
 start:
@@ -34,5 +34,5 @@ release_minor:
 	@npm version minor
 
 .PHONY: int
-int:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration
+int: build
+	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration
