@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 
 const BASE = process.env.BASE;
 
-describe("jest-image-snapshot usage with an image received from puppeteer", () => {
+describe("home page", () => {
   let browser;
 
   beforeAll(async () => {
@@ -13,7 +13,7 @@ describe("jest-image-snapshot usage with an image received from puppeteer", () =
     });
   });
 
-  it("captures screenshot", async () => {
+  it("renders full page on desktop", async () => {
     const page = await browser.newPage();
     await page.goto(BASE, {
       waitUntil: "networkidle0"
@@ -24,18 +24,29 @@ describe("jest-image-snapshot usage with an image received from puppeteer", () =
     expect(image).toMatchImageSnapshot();
   });
 
-  // xit("captures screenshot reddit dynasty", async () => {
-  //   const page = await browser.newPage();
-  //   await page.goto("http://localhost:8000/clan/reddit-dynasty-ugjpvjr", {
-  //     waitUntil: "networkidle0"
-  //   });
-  //   const image = await page.screenshot({ fullPage: true });
+  it("renders ipad viewport", async () => {
+    const page = await browser.newPage();
+    await page.goto(BASE, {
+      waitUntil: "networkidle0"
+    });
+    await page.waitFor(2000); // wait for animation on home page
+    await page.setViewport({ width: 1024, height: 768 });
+    const image = await page.screenshot();
 
-  //   expect(image).toMatchImageSnapshot({
-  //     failureThreshold: "0.05",
-  //     failureThresholdType: "percent"
-  //   });
-  // });
+    expect(image).toMatchImageSnapshot();
+  });
+
+  it("renders iphone viewport", async () => {
+    const page = await browser.newPage();
+    await page.goto(BASE, {
+      waitUntil: "networkidle0"
+    });
+    await page.waitFor(2000); // wait for animation on home page
+    await page.setViewport({ width: 372, height: 812 });
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+  });
 
   afterAll(async () => {
     await browser.close();
