@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    machine: true
     docker:
       - image: docker:18.06.1-ce-git
     steps:
