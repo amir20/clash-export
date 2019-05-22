@@ -21,10 +21,7 @@ describe("jest-image-snapshot usage with an image received from puppeteer", () =
     await page.waitFor(2000); // wait for animation on home page
     const image = await page.screenshot({ fullPage: true });
 
-    expect(image).toMatchImageSnapshot({
-      failureThreshold: "0.005",
-      failureThresholdType: "percent"
-    });
+    expect(image).toMatchImageSnapshot();
   });
 
   // xit("captures screenshot reddit dynasty", async () => {
