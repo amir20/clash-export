@@ -35,6 +35,6 @@ release_minor:
 
 .PHONY: int
 int:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml stop web
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml rm -fsv web
 	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml build
 	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration
