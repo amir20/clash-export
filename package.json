@@ -14,7 +14,7 @@
     "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.5",
     "brotli-webpack-plugin": "^1.1.0",
-    "buefy": "^0.7.5",
+    "buefy": "^0.7.6",
     "bugsnag-js": "^4.7.3",
     "bugsnag-vue": "^1.0.1",
     "bulma": "^0.7.4",
