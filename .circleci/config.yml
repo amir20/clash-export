@@ -23,4 +23,7 @@ jobs:
       - run:
           name: Run int tests
           command: |
+            docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d mongo
+            docker cp mongosnapshot/clashleaders.gz $(docker-compose -f docker-compose.yml -f docker-compose.test.yml ps -q mongo):/tmp
+            docker-compose -f docker-compose.yml -f docker-compose.test.yml exec mongo mongorestore --gzip --archive=/tmp/clashleaders.gz
             make int
