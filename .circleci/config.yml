@@ -1,18 +1,17 @@
 version: 2
 jobs:
   build:
-    machine: true
     docker:
       - image: docker:18.06.1-ce-git
     steps:
-      - checkout
-      - setup_remote_docker
       - run:
           name: Install dependencies
           command: |
-            apk add --no-cache py-pip make jq
+            apk add --no-cache py-pip make jq git-lfs
             pip install --upgrade pip
             pip install 'docker-compose==1.23.0'
+      - checkout
+      - setup_remote_docker
       - run:
           name: Build application Docker image
           command: |
