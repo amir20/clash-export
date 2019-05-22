@@ -8,7 +8,7 @@
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
-    "@babel/runtime-corejs3": "^7.4.4",
+    "@babel/runtime-corejs3": "^7.4.5",
     "@tweenjs/tween.js": "^17.3.0",
     "apollo-boost": "^0.3.1",
     "autoprefixer": "^9.5.1",
