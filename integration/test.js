@@ -22,7 +22,7 @@ describe("jest-image-snapshot usage with an image received from puppeteer", () =
     const image = await page.screenshot({ fullPage: true });
 
     expect(image).toMatchImageSnapshot({
-      failureThreshold: "0.05",
+      failureThreshold: "0.005",
       failureThresholdType: "percent"
     });
   });
