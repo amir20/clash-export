@@ -31,7 +31,7 @@ services:
   integration:
     command: "./wait-for-it.sh web:80 -- npm test"
     volumes:
-      - ./integration/__image_snapshots__:/app/__image_snapshots__/
+      - ./integration/__image_snapshots__/__diff_output__:/app/__image_snapshots__/__diff_output__
     environment:
       - BASE=http://web/
     build:

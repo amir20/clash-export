@@ -35,4 +35,5 @@ release_minor:
 
 .PHONY: int
 int: build
+	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml build
 	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration
