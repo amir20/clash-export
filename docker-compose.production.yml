@@ -89,9 +89,6 @@ services:
         - traefik.www.frontend.headers.SSLRedirect=true
         - traefik.www.frontend.headers.SSLForceHost=true
         - traefik.www.frontend.headers.SSLHost=www.clashleaders.com
-        - traefik.www.frontend.errors.network.status=500-599
-        - traefik.www.frontend.errors.network.backend=backend-clashleaders-proxy-error
-        - traefik.www.frontend.errors.network.query=/
         - traefik.top.frontend.rule=Host:clashleaders.com
         - traefik.top.port=2015
         - traefik.top.frontend.headers.browserXSSFilter=true
