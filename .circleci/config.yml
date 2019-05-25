@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Save Docker layers cache
           command: |
-            DOCKER_IMAGES=$(docker images --format "{{.Repository}}" --filter=reference="${CIRCLE_PROJECT_REPONAME}_*")
+            DOCKER_IMAGES=$(docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference="amir20/*")
             DOCKER_LAYERS=$(for image in $DOCKER_IMAGES; do docker history $image -q | grep -v missing; done)
             docker save -o ~/docker-layers.tar $DOCKER_LAYERS
       - save_cache:
