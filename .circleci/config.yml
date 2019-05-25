@@ -23,6 +23,7 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
+            docker build --target builder --tag amir20/web-builder .
             make build
       - run:
           name: Run tests
