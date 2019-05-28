@@ -12,9 +12,6 @@ jobs:
             pip install 'docker-compose==1.23.0'
       - checkout
       - setup_remote_docker
-      - restore_cache:
-          keys:
-            - v1-docker-{{ .Branch }}
       - run:
           name: Load Docker layers cache
           command: |
@@ -23,7 +20,6 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build --target builder --tag amir20/web-builder .
             make build
       - run:
           name: Run tests
@@ -36,13 +32,3 @@ jobs:
             docker cp mongosnapshot/clashleaders.gz $(docker-compose -f docker-compose.yml -f docker-compose.test.yml ps -q mongo):/tmp
             docker-compose -f docker-compose.yml -f docker-compose.test.yml exec mongo mongorestore --gzip --archive=/tmp/clashleaders.gz
             make int
-      - run:
-          name: Save Docker layers cache
-          command: |
-            DOCKER_IMAGES=$(docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference="amir20/*")
-            DOCKER_LAYERS=$(for image in $DOCKER_IMAGES; do docker history $image -q | grep -v missing; done)
-            docker save -o ~/docker-layers.tar $DOCKER_LAYERS
-      - save_cache:
-          key: v1-docker-{{ .Branch }}-{{ epoch }}
-          paths:
-            - ~/docker-layers.tar
