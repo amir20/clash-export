@@ -13,11 +13,6 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Load Docker layers cache
-          command: |
-            set +o pipefail
-            docker load -i ~/docker-layers.tar | true
-      - run:
           name: Build application Docker image
           command: |
             make build
