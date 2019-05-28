@@ -9,7 +9,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/runtime-corejs3": "^7.4.5",
-    "@tweenjs/tween.js": "^17.3.2",
+    "@tweenjs/tween.js": "^17.4.0",
     "apollo-boost": "^0.4.0",
     "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.6",
