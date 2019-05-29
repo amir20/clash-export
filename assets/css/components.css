@@ -14,4 +14,4 @@
 @import "~buefy/src/scss/components/_tabs";
 @import "~buefy/src/scss/components/_tag";
 @import "~bulma-tooltip";
-@import "~bulma-badge/dist/css/bulma-badge.sass";
+@import "./badge.sass";
