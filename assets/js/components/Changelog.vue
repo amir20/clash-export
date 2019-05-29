@@ -1,7 +1,7 @@
 <template>
   <b-dropdown class="changelog" position="is-bottom-left">
     <a class="navbar-item" slot="trigger" @click="onMenuClick">
-      <span class="badge is-badge-warning is-badge-small" :data-badge="hasUpdates ? '' : false"> Updates </span>
+      <span class="badge has-badge-warning has-badge-rounded has-badge-small" :data-badge="hasUpdates ? '' : false"> Updates </span>
     </a>
 
     <b-dropdown-item custom v-for="item in items" :key="item.id">
