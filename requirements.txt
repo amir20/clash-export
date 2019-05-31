@@ -28,7 +28,7 @@ colorama==0.4.1
 contentful==1.11.4
 contextlib2==0.5.5
 coverage==4.5.3
-cryptography==2.6.1
+cryptography==2.7
 cssselect2==0.2.1
 decorator==4.4.0
 defusedxml==0.6.0
