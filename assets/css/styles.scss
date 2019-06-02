@@ -126,10 +126,17 @@ body.clan_detail_page main > #app .hero-footer {
   flex-direction: row-reverse;
 }
 
-
 .is-touch-only {
   display: none;
   @media (hover: none) and (pointer: coarse) {
     display: block;
   }
+}
+
+.truncate.clan-name {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
 }
