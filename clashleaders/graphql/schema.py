@@ -7,6 +7,7 @@ from rq.exceptions import NoSuchJobError
 
 import clashleaders.model as model
 from clashleaders.insights.clan_activity import clan_status
+from clashleaders.views import imgproxy_url
 
 
 class PlayerActivity(graphene.ObjectType):
@@ -24,6 +25,18 @@ class BadgeUrls(graphene.ObjectType):
     medium = graphene.String()
     small = graphene.String()
     tiny = graphene.String()
+
+    def resolve_large(self, info):
+        return imgproxy_url(self.large)
+
+    def resolve_medium(self, info):
+        return imgproxy_url(self.medium)
+
+    def resolve_small(self, info):
+        return imgproxy_url(self.small)
+
+    def resolve_tiny(self, info):
+        return imgproxy_url(self.tiny)
 
 
 class PlayerLeague(graphene.ObjectType):
