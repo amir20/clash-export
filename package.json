@@ -65,7 +65,7 @@
     "concurrently": "^4.1.0",
     "husky": "^2.3.0",
     "lint-staged": "^8.1.7",
-    "prettier": "^1.17.1"
+    "prettier": "^1.18.2"
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js",
