@@ -1,7 +1,7 @@
 aiodns==2.0.0
 aiohttp==3.5.4
 aioresponses==0.6.0
-aniso8601==5.1.0
+aniso8601==7.0.0
 ansimarkup==1.4.0
 appdirs==1.4.3
 appnope==0.1.0
