@@ -37,7 +37,7 @@ Flask-Caching==1.7.2
 Flask-GraphQL==2.0.0
 flask-shell-ipython==0.4.1
 freezegun==0.3.12
-graphene==2.1.5
+graphene==2.1.6
 graphql-core==2.2
 graphql-relay==0.4.5
 graphql-server-core==1.1.1
