@@ -1,7 +1,7 @@
 aiodns==2.0.0
 aiohttp==3.5.4
 aioresponses==0.6.0
-aniso8601==5.1.0
+aniso8601==7.0.0
 ansimarkup==1.4.0
 appdirs==1.4.3
 appnope==0.1.0
@@ -20,7 +20,7 @@ cachetools==3.1.1
 cairocffi==1.0.2
 CairoSVG==2.4.0
 cchardet==2.1.4
-certifi==2019.3.9
+certifi==2019.6.16
 cffi==1.12.3
 chardet==3.0.4
 Click==7.0
@@ -37,13 +37,13 @@ Flask-Caching==1.7.2
 Flask-GraphQL==2.0.0
 flask-shell-ipython==0.4.1
 freezegun==0.3.12
-graphene==2.1.5
+graphene==2.1.6
 graphql-core==2.2
 graphql-relay==0.4.5
 graphql-server-core==1.1.1
 gunicorn==19.9.0
 idna==2.8
-importlib-metadata==0.17
+importlib-metadata==0.18
 inflection==0.3.1
 ipython==7.5.0
 ipython-genutils==0.2.0
@@ -55,7 +55,7 @@ loguru==0.2.5
 Mako==1.0.12
 Markdown==3.1.1
 MarkupSafe==1.1.1
-mongoengine==0.17.0
+mongoengine==0.18.0
 more-itertools==7.0.0
 multidict==4.5.2
 mypy==0.701
@@ -82,7 +82,7 @@ pymongo==3.8.0
 Pympler==0.7
 pyOpenSSL==19.0.0
 pyparsing==2.4.0
-pytest==4.6.2
+pytest==4.6.3
 pytest-cov==2.7.1
 pytest-freezegun==0.3.0.post1
 pytest-mock==1.10.4
@@ -92,7 +92,7 @@ python-editor==1.0.4
 pytz==2019.1
 redis==3.2.1
 regex==2019.6.8
-relativetimebuilder==1.0.0
+relativetimebuilder==2.0.0
 requests==2.22.0
 rq==0.13.0
 rq-dashboard==0.4.0
