@@ -10,7 +10,7 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/runtime-corejs3": "^7.4.5",
     "@tweenjs/tween.js": "^17.4.0",
-    "apollo-boost": "^0.4.2",
+    "apollo-boost": "^0.4.3",
     "autoprefixer": "^9.6.0",
     "babel-loader": "^8.0.6",
     "brotli-webpack-plugin": "^1.1.0",
