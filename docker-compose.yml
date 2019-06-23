@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   mongo:
-    image: mongo:4.1.9
+    image: mongo:4.2-rc
   redis:
     image: redis:5.0.4-alpine
   cron:
