@@ -15,7 +15,7 @@ backcall==0.1.0
 better-exceptions-fork==0.2.1.post6
 black==18.9b0
 blinker==1.4
-bugsnag==3.5.2
+bugsnag==3.6.0
 cachetools==3.1.1
 cairocffi==1.0.2
 CairoSVG==2.4.0
