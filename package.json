@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "husky": "^2.5.0",
+    "husky": "^2.6.0",
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2"
   },
