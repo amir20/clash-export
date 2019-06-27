@@ -8,9 +8,6 @@ services:
       - FLASK_APP=clashleaders
       - BUGSNAG_API_KEY=
       - STAGE=testing
-      - IMGPROXY_KEY=01
-      - IMGPROXY_SALT=01
-      - IMGPROXY_BASE=https://i.clashleaders.com/
   mongo:
     volumes:
       - ./:/clashleaders

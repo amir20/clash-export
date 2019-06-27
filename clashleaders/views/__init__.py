@@ -26,9 +26,9 @@ import clashleaders.views.verified
 from clashleaders import app, site_root
 
 MANIFEST_FILE = join(site_root, "static", "manifest.json")
-IMGPROXY_KEY = bytes.fromhex(os.getenv("IMGPROXY_KEY"))
-IMGPROXY_SALT = bytes.fromhex(os.getenv("IMGPROXY_SALT"))
-IMGPROXY_BASE = os.getenv("IMGPROXY_BASE")
+IMGPROXY_KEY = bytes.fromhex(os.getenv("IMGPROXY_KEY", "01"))
+IMGPROXY_SALT = bytes.fromhex(os.getenv("IMGPROXY_SALT", "01"))
+IMGPROXY_BASE = os.getenv("IMGPROXY_BASE", "https://i.clashleaders.com/")
 
 
 # This is needed for mocking

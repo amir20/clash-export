@@ -7,6 +7,7 @@ from pymongo.errors import BulkWriteError
 from rq.decorators import job
 
 import clashleaders.model
+import asyncio
 from clashleaders import redis_connection
 from clashleaders.clash import api
 
@@ -21,11 +22,12 @@ def update_players(json_list: List):
             clashleaders.model.Player._get_collection().bulk_write(bulk_operations)
     except BulkWriteError as bwe:
         logger.exception(f"Error thrown while saving [{bulk_operations}] {bwe.details}")
-    except:
-        logger.exception(f"Error while updating players in fetch_clans_since() with [{bulk_operations}]")
 
 
 @job("player_request", connection=redis_connection, result_ttl=0)
 def fetch_players(tags: List):
-    response = api.fetch_all_players(tags)
-    update_players(response)
+    try:
+        response = api.fetch_all_players(tags)
+        update_players(response)
+    except asyncio.TimeoutError:
+        logger.exception(f"Received TimeoutError while fetching players in fetch_players()")
