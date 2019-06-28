@@ -9,7 +9,12 @@ services:
     volumes:
       - ./clashleaders:/app/clashleaders
       - .ipython/scheduler:/root/.ipython/profile_default
-  rq_worker:
+  rq_player_worker:
+    env_file: .env
+    volumes:
+      - ./clashleaders:/app/clashleaders
+      - .ipython/scheduler:/root/.ipython/profile_default
+  rq_calculation_worker:
     env_file: .env
     volumes:
       - ./clashleaders:/app/clashleaders
