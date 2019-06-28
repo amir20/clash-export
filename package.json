@@ -31,7 +31,7 @@
     "es6-map": "^0.1.5",
     "file-loader": "^4.0.0",
     "flag-icon-css": "^3.3.0",
-    "graphql": "^14.3.1",
+    "graphql": "^14.4.0",
     "lodash": "^4.17.11",
     "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.12.0",
