@@ -32,6 +32,8 @@ def update_calculations(clan):
 
     clan.save()
 
+    return clan
+
 
 def calculate_data(df):
     return ClanDelta(
