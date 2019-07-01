@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
@@ -104,6 +105,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.ProgressPlugin(),
     new VueLoaderPlugin(),
     new ManifestPlugin(),
     new CleanWebpackPlugin({
