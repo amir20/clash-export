@@ -59,6 +59,7 @@
     "webpack-cli": "^3.3.5",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-merge": "^4.2.1",
+    "webpack-spritesmith": "^1.0.1",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
