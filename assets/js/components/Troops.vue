@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import kebabCase from "lodash/kebabCase";
 import Troop from "./Troop";
 
 export default {
