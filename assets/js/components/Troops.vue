@@ -71,7 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 .troop {
-  margin: 1px;
+  margin: 2px;
   position: relative;
 
   small {
