@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const SpritesmithPlugin = require("webpack-spritesmith");
 
 module.exports = {
   context: path.resolve(process.cwd(), "assets"),
@@ -110,6 +111,20 @@ module.exports = {
     new ManifestPlugin(),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["**/*", "!web-manifest*", "!**images", "!**images/*"]
+    }),
+    new SpritesmithPlugin({
+      src: {
+        cwd: path.resolve(__dirname, "assets/sprites"),
+        glob: "*.png"
+      },
+      retina: "@2x",
+      target: {
+        image: path.resolve(__dirname, "assets/images/sprite.png"),
+        css: path.resolve(__dirname, "assets/css/sprite.scss")
+      },
+      apiOptions: {
+        cssImageRef: "../images/sprite.png"
+      }
     })
   ],
   output: {

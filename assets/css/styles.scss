@@ -5,7 +5,9 @@ $flag-icon-css-path: "~flag-icon-css/flags/";
 @import "./similar-clans";
 @import "./components";
 @import "./charts";
-@import "./coc-sprite";
+@import "./sprite";
+
+@include retina-sprites($retina-groups);
 
 .tooltip:before {
   text-transform: none;
