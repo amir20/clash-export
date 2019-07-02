@@ -1,5 +1,7 @@
 <template>
-  <div :class="name | iconClass"><slot></slot></div>
+  <div class="troop" :class="name | iconClass">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
@@ -9,8 +11,16 @@ export default {
   props: ["name"],
   filters: {
     iconClass(value) {
-      return "coc-sprite--" + kebabCase(value);
+      return kebabCase(value);
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.troop {
+  display: inline-block;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+</style>
