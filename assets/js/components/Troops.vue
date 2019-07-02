@@ -61,11 +61,6 @@ export default {
   data() {
     return {};
   },
-  filters: {
-    iconClass(value) {
-      return "coc-sprite--" + kebabCase(value);
-    }
-  },
   methods: {
     filterTroops(list, type) {
       return list.filter(troop => troop.village == type);
@@ -75,7 +70,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-[class*="coc-sprite--"] {
+.troop {
   margin: 1px;
   position: relative;
 
