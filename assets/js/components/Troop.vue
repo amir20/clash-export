@@ -21,6 +21,6 @@ export default {
 .troop {
   display: inline-block;
   border-radius: 4px;
-  border: 1px solid #eee;
+  box-shadow: 0 0 0 1px #eee;
 }
 </style>
