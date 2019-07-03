@@ -36,6 +36,7 @@ services:
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - STAGE=production
     deploy:
+      replicas: 2
       resources:
         limits:
           memory: 200m
