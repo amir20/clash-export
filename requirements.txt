@@ -25,7 +25,7 @@ cffi==1.12.3
 chardet==3.0.4
 Click==7.0
 colorama==0.4.1
-contentful==1.11.4
+contentful==1.12.1
 contextlib2==0.5.5
 coverage==4.5.3
 cryptography==2.7
@@ -45,14 +45,14 @@ gunicorn==19.9.0
 idna==2.8
 importlib-metadata==0.18
 inflection==0.3.1
-ipython==7.5.0
+ipython==7.6.0
 ipython-genutils==0.2.0
 itsdangerous==1.1.0
 jedi==0.14.0
 Jinja2==2.10.1
 joblib==0.13.2
-loguru==0.2.5
-Mako==1.0.12
+loguru==0.3.0
+Mako==1.0.13
 Markdown==3.1.1
 MarkupSafe==1.1.1
 mongoengine==0.18.2
@@ -67,7 +67,7 @@ parso==0.5.0
 pep8==1.7.1
 pexpect==4.7.0
 pickleshare==0.7.5
-Pillow==6.0.0
+Pillow==6.1.0
 pluggy==0.12.0
 promise==2.2.1
 prompt-toolkit==2.0.9
@@ -82,7 +82,7 @@ pymongo==3.8.0
 Pympler==0.7
 pyOpenSSL==19.0.0
 pyparsing==2.4.0
-pytest==4.6.3
+pytest==5.0.0
 pytest-cov==2.7.1
 pytest-freezegun==0.3.0.post1
 pytest-mock==1.10.4
