@@ -3,15 +3,15 @@
   "version": "2.13.0",
   "dependencies": {
     "@babel/core": "^7.5.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.1",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.0",
-    "@babel/runtime-corejs3": "^7.5.0",
+    "@babel/runtime-corejs3": "^7.5.1",
     "@tweenjs/tween.js": "^17.4.0",
     "apollo-boost": "^0.4.3",
-    "autoprefixer": "^9.6.0",
+    "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.6",
     "brotli-webpack-plugin": "^1.1.0",
     "buefy": "^0.7.8",
@@ -20,7 +20,7 @@
     "bulma": "^0.7.4",
     "bulma-badge": "^3.0.1",
     "bulma-tooltip": "^2.0.2",
-    "chartist": "^0.11.2",
+    "chartist": "^0.11.3",
     "chartist-plugin-legend": "^0.6.2",
     "clean-webpack-plugin": "^3.0.0",
     "compression-webpack-plugin": "^3.0.0",
@@ -65,7 +65,7 @@
   "devDependencies": {
     "concurrently": "^4.1.1",
     "husky": "^3.0.0",
-    "lint-staged": "^9.0.2",
+    "lint-staged": "^9.1.0",
     "prettier": "^1.18.2"
   },
   "scripts": {
