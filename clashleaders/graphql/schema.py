@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import sleep
 
 import graphene
@@ -201,15 +201,19 @@ class Clan(graphene.ObjectType):
 
 class Query(graphene.ObjectType):
     player = graphene.Field(Player, tag=graphene.String(required=True))
-    clan = graphene.Field(Clan, tag=graphene.String(required=True), refresh=graphene.Boolean(required=False))
+    clan = graphene.Field(Clan, tag=graphene.String(required=True), refresh=graphene.Int(required=False))
 
     def resolve_clan(self, info, tag, refresh=False):
         if refresh:
-            clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
-            clan.update(inc__page_views=1)
-            wait_for_job(clan.job)
+            clan = model.Clan.find_by_tag(tag)
+            delta = datetime.now() - clan.updated_on
+            if timedelta(minutes=refresh) < delta:
+                clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
+                wait_for_job(clan.job)
 
-        return model.Clan.find_by_tag(tag)
+        clan = model.Clan.find_by_tag(tag)
+        clan.update(inc__page_views=1)
+        return clan
 
     def resolve_player(self, info, tag):
         return model.Player.find_by_tag(tag)
