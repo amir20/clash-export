@@ -45,7 +45,7 @@ const actions = {
     dispatch("FETCH_SAVED_CLAN");
     const { data } = await apolloClient.query({
       query: gql`
-        query GetClan($tag: String!, $days: Int!, $refresh: Boolean!) {
+        query GetClan($tag: String!, $days: Int!, $refresh: Int!) {
           clan(tag: $tag, refresh: $refresh) {
             name
             clanPoints
@@ -84,7 +84,7 @@ const actions = {
       variables: {
         tag: clan.tag,
         days,
-        refresh: true
+        refresh: 15
       },
       fetchPolicy: "network-only"
     });
