@@ -19,12 +19,12 @@ COPY clashleaders/static clashleaders/static
 RUN npm run build
 
 
-FROM python:3.7.3-slim
+FROM python:3.7.4-slim
 
 # Create app directoy
 WORKDIR /app
 
-RUN pip install pip==19.1
+RUN pip install pip==19.1.1
 
 # Copy requirements file
 COPY ./requirements*.txt /app/
