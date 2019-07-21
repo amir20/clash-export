@@ -32,15 +32,15 @@ start = time.time()
 
 def update_single_clan():
     global tags_indexed, start
-    twelve_hour_ago = datetime.now() - timedelta(hours=12)
+    twenty_hours_ago = datetime.now() - timedelta(hours=20)
     try:
-        clan = Clan.active(twelve_hour_ago).skip(max(INDEX - 1, 0)).limit(1).first()
+        clan = Clan.active(twenty_hours_ago).skip(max(INDEX - 1, 0)).limit(1).first()
         if clan:
             logger.debug(f"Worker #%d: Updating clan %s.", WORKER_OFFSET, clan.tag)
             capture_duration(lambda: Clan.fetch_and_update(clan.tag, sync_calculation=True))
             tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:
-                total = Clan.active(twelve_hour_ago).count()
+                total = Clan.active(twenty_hours_ago).count()
                 logger.info(f"Indexed {len(tags_indexed)} clans: {tags_indexed}")
                 logger.info(f"Currently {total} eligible clans.")
                 tags_indexed = []
@@ -64,14 +64,6 @@ def update_single_clan():
     except ApiException:
         logger.warning(f"API exception when fetching {clan.tag}. Pausing for 10 seconds.")
         try_again_clan(clan)
-        time.sleep(10)
-    except TypeError:
-        # Possibly a json error. Let's delete the instance
-        logger.warning(f"TypeError exception thrown for {clan.tag}. Deleting most recent instance.")
-        clan.most_recent.delete()
-        eleven_hour_ago = twelve_hour_ago + timedelta(hours=1)
-        clan.update(set__updated_on=eleven_hour_ago)
-        logger.info(f"Sleeping for 10 seconds.")
         time.sleep(10)
     except Exception:
         logger.exception(f"Error while fetching clan. Pausing for 5 seconds.")
