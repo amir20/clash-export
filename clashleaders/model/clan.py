@@ -142,7 +142,7 @@ class Clan(DynamicDocument):
 
     @classmethod
     def active(cls, update_before=None):
-        query = Q(members__gte=5) & (Q(week_delta__total_attack_wins__ne=0) | Q(computed__total_attack_wins__gt=0))
+        query = Q(members__gte=15) & (Q(week_delta__total_attack_wins__ne=0) | Q(computed__total_attack_wins__gt=0))
         if update_before:
             query = Q(updated_on__lte=update_before) & query
 
