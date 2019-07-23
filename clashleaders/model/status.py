@@ -38,10 +38,10 @@ class Status(Document):
     @classmethod
     def update_status(cls):
         logging.info("Updating status calculations...")
-        twelve_hour_ago = datetime.now() - timedelta(hours=12)
+        twenty_hours_ago = datetime.now() - timedelta(hours=20)
         total_clans = Clan.objects.count()
         total_eligible_clans = Clan.active().count()
-        not_indexed_clans = Clan.active(twelve_hour_ago).count()
+        not_indexed_clans = Clan.active(twenty_hours_ago).count()
         ratio_indexed = 100 * ((total_eligible_clans - not_indexed_clans) / total_eligible_clans)
         Status.objects.upsert_one(
             set__ratio_indexed=ratio_indexed,
