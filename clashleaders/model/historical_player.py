@@ -29,6 +29,9 @@ OTHER_STATS = [
 ]
 
 
+VALID_NAMES = {f.name for f in PlayerStats.DESCRIPTOR.fields}
+
+
 class HistoricalPlayer(Document):
     created_on = DateTimeField(default=datetime.now)
     tag = StringField(required=True)
@@ -57,6 +60,7 @@ class HistoricalPlayer(Document):
                     key = to_mapping(k)
                     player_stats[key] = v
 
+            player_stats = {k: v for k, v in player_stats.items() if k in VALID_NAMES}
             self.stats = PlayerStats(**player_stats)
             super().__init__(tag=kwargs["tag"], clan_tag=kwargs["clan"]["tag"], name=kwargs["name"], bytes=self.stats.SerializeToString())
 
