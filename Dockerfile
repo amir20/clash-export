@@ -19,7 +19,7 @@ COPY clashleaders/static clashleaders/static
 RUN npm run build
 
 
-FROM python:3.7.4-slim
+FROM python:3.8.0-slim
 
 # Create app directoy
 WORKDIR /app
@@ -36,11 +36,11 @@ RUN apt-get update \
     && apt-get install make supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \
     && apt-get install cron -y \
-    && apt-get install gcc -y \
+    && apt-get install gcc gfortran python-dev libopenblas-dev liblapack-dev cython -y \
     && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
     && curl https://getcaddy.com | bash -s personal ${plugins} \
     && pip install -r requirements.txt \
-    && apt-get remove -y gcc \
+    && apt-get remove -y gcc gfortran python-dev libopenblas-dev liblapack-dev cython \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cache
