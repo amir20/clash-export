@@ -161,7 +161,7 @@ class Clan(DynamicDocument):
         save_historical_clan(clan_response, players_response)
 
         # Enqueue player json to queue
-        clashleaders.queue.player.update_players.delay(players_response)
+        clashleaders.queue.player.update_players(players_response)
 
         clan_response["clan_type"] = clan_response["type"]
         del clan_response["type"]
