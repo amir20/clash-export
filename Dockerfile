@@ -24,7 +24,7 @@ FROM python:3.7.4-slim
 # Create app directoy
 WORKDIR /app
 
-RUN pip install pip==19.1.1
+RUN pip install pip==19.3.1
 
 # Copy requirements file
 COPY ./requirements*.txt /app/
