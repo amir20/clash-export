@@ -11,7 +11,7 @@
     "@babel/runtime-corejs3": "^7.6.3",
     "@tweenjs/tween.js": "^18.3.1",
     "apollo-boost": "^0.4.4",
-    "autoprefixer": "^9.7.0",
+    "autoprefixer": "^9.7.1",
     "babel-loader": "^8.0.6",
     "brotli-webpack-plugin": "^1.1.0",
     "buefy": "^0.7.10",
