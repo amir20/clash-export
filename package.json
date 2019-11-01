@@ -56,7 +56,7 @@
     "vue-template-compiler": "^2.6.10",
     "vuex": "^3.1.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.10",
     "webpack-manifest-plugin": "^2.2.0",
     "webpack-merge": "^4.2.2",
     "webpack-spritesmith": "^1.0.2",
