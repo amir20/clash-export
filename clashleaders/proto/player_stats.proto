@@ -103,6 +103,7 @@ message PlayerStats {
   int32 exp_level = 98;
   int32 get_those_other_goblins = 99;
   int32 builderbase_hog_glider = 100;
+  int32 well_seasoned = 101;
 }
 
 

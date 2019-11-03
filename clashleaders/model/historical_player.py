@@ -60,8 +60,9 @@ class HistoricalPlayer(Document):
                     key = to_mapping(k)
                     player_stats[key] = v
 
-            player_stats = {k: v for k, v in player_stats.items() if k in VALID_NAMES}
-            self.stats = PlayerStats(**player_stats)
+            valid_stats = {k: v for k, v in player_stats.items() if k in VALID_NAMES}
+            logger.debug("Unrecognized keys for player: %s", (player_stats.keys() - valid_stats.keys()))
+            self.stats = PlayerStats(**valid_stats)
             super().__init__(tag=kwargs["tag"], clan_tag=kwargs["clan"]["tag"], name=kwargs["name"], bytes=self.stats.SerializeToString())
 
     def __repr__(self):
