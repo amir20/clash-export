@@ -59,7 +59,7 @@ MarkupSafe==1.1.1
 mongoengine==0.18.2
 more-itertools==7.2.0
 multidict==4.5.2
-mypy==0.740
+mypy==0.750
 mypy-extensions==0.4.3
 numpy==1.17.3
 packaging==19.2
