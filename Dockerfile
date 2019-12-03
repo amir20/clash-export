@@ -19,12 +19,10 @@ COPY clashleaders/static clashleaders/static
 RUN npm run build
 
 
-FROM python:3.8.0-slim
+FROM python:3.8
 
 # Create app directoy
 WORKDIR /app
-
-RUN pip install pip==19.3.1
 
 # Copy requirements file
 COPY ./requirements*.txt /app/
@@ -36,10 +34,9 @@ RUN apt-get update \
     && apt-get install make supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \
     && apt-get install cron -y \
-    && apt-get install gcc g++ gfortran  -y \
     && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
     && curl https://getcaddy.com | bash -s personal ${plugins} \
-    && pip install cython numpy && pip install -r requirements.txt \
+    && pip install --no-cache -r requirements.txt \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cache
 
