@@ -36,12 +36,10 @@ RUN apt-get update \
     && apt-get install make supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \
     && apt-get install cron -y \
-    && apt-get install gcc g++ gfortran python-dev libopenblas-dev liblapack-dev cython -y \
+    && apt-get install gcc g++ gfortran  -y \
     && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
     && curl https://getcaddy.com | bash -s personal ${plugins} \
-    && pip install -r requirements.txt \
-    && apt-get remove -y gcc g++ gfortran python-dev libopenblas-dev liblapack-dev cython \
-    && apt-get autoremove -y \
+    && pip install cython numpy && pip install -r requirements.txt \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cache
 
