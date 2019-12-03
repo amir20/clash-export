@@ -66,7 +66,8 @@
     "concurrently": "^5.0.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "terser-webpack-plugin": "^2.2.1"
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js",
