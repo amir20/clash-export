@@ -6,7 +6,7 @@
 
 <script>
 import { mapState } from "vuex";
-import TWEEN from "es6-tween";
+import TWEEN from "@tweenjs/tween.js";
 
 export default {
   props: {
