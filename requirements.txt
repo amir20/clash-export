@@ -40,7 +40,7 @@ Flask-GraphQL==2.0.0
 flask-shell-ipython==0.4.1
 freezegun==0.3.12
 graphene==2.1.8
-graphql-core==2.2.1
+graphql-core==3.0.0
 graphql-relay==2.0.0
 graphql-server-core==1.1.1
 gunicorn==20.0.4
