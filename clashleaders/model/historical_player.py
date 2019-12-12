@@ -61,7 +61,8 @@ class HistoricalPlayer(Document):
                     player_stats[key] = v
 
             valid_stats = {k: v for k, v in player_stats.items() if k in VALID_NAMES}
-            logger.info("Unrecognized keys for player: %s", (player_stats.keys() - valid_stats.keys()))
+            if new_keys := (player_stats.keys() - valid_stats.keys()):
+                logger.info("Unrecognized keys for player: %s", new_keys)
             self.stats = PlayerStats(**valid_stats)
             super().__init__(tag=kwargs["tag"], clan_tag=kwargs["clan"]["tag"], name=kwargs["name"], bytes=self.stats.SerializeToString())
 
