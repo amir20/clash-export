@@ -106,6 +106,8 @@ message PlayerStats {
   int32 well_seasoned = 101;
   int32 home_royal_champion = 102;
   int32 shattered_and_scattered = 103;
+  int32 home_yeti = 104;
+  int32 home_siege_barracks = 105;
 }
 
 
