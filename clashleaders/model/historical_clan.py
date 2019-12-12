@@ -41,6 +41,7 @@ COLUMNS = OrderedDict(
         ("home_barbarian_king", "Barbarian King"),
         ("home_archer_queen", "Archer Queen"),
         ("home_grand_warden", "Grand Warden"),
+        ("home_royal_champion", "Royal Champion"),
         ("builderbase_battle_machine", "Battle Machine"),
     )
 )
