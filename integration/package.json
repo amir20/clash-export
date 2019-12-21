@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jest": "^24.8.0",
-    "jest-image-snapshot": "^2.8.2",
-    "puppeteer": "^1.16.0"
+    "jest": "^24.9.0",
+    "jest-image-snapshot": "^2.11.1",
+    "puppeteer": "^2.0.0"
   },
   "jest": {
     "setupFilesAfterEnv": [
