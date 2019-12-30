@@ -116,14 +116,7 @@ const actions = {
       commit("SET_SAVED_CLAN", data);
     }
   },
-  async SHOW_DIFFERENT_DAYS(
-    {
-      commit,
-      dispatch,
-      state: { clan }
-    },
-    days
-  ) {
+  async SHOW_DIFFERENT_DAYS({ commit, dispatch, state: { clan } }, days) {
     event("days-ago", "Change Days", "Days", days);
     commit("SET_DAYS", days);
     dispatch("FETCH_SAVED_CLAN");
@@ -204,7 +197,6 @@ function convertToMap(header, matrix) {
 const isNonNumericColumns = key => key == "tag" || key == "name";
 
 export default new Vuex.Store({
-  strict: true,
   state,
   getters,
   actions,
