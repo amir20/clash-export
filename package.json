@@ -29,7 +29,7 @@
     "d3": "^5.14.2",
     "date-fns": "^2.8.1",
     "es6-map": "^0.1.5",
-    "file-loader": "^4.2.0",
+    "file-loader": "^5.0.2",
     "flag-icon-css": "^3.4.5",
     "graphql": "^14.5.8",
     "lodash": "^4.17.15",
