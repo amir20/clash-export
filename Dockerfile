@@ -31,6 +31,7 @@ ARG plugins=http.expires
 
 # Install caddy and clean up
 RUN apt-get update \
+    && pip install --upgrade pip \
     && apt-get install make supervisor -y --no-install-recommends \
     && apt-get install curl -y --no-install-recommends \
     && apt-get install cron -y \
