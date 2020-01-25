@@ -77,8 +77,7 @@
   },
   "lint-staged": {
     "*.{js,vue,json,css,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.py": [
       "black -l 160",

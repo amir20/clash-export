@@ -14,6 +14,9 @@ class ClanDelta(EmbeddedDocument):
     avg_war_stars = FloatField(default=0)
     avg_attack_wins = FloatField(default=0)
     avg_versus_wins = FloatField(default=0)
+    avg_games_xp = FloatField(default=0)
+    avg_cwl_stars = FloatField(default=0)
+
     total_trophies = IntField(default=0)
     total_bh_trophies = IntField(default=0)
     total_gold_grab = IntField(default=0)
@@ -22,6 +25,8 @@ class ClanDelta(EmbeddedDocument):
     total_donations = IntField(default=0)
     total_attack_wins = IntField(default=0)
     total_versus_wins = IntField(default=0)
+    total_games_xp = IntField(default=0)
+    total_cwl_stars = IntField(default=0)
 
     def to_dict(self, camel_case=False) -> Dict:
         data: Dict = dict(self.to_mongo())
