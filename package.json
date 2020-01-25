@@ -80,8 +80,7 @@
       "prettier --write"
     ],
     "*.py": [
-      "black -l 160",
-      "git add"
+      "black -l 160"
     ]
   },
   "repository": {
