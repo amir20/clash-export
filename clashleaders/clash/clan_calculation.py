@@ -45,12 +45,16 @@ def calculate_data(df):
         avg_war_stars=mean_single_column("Total War Stars", df),
         avg_attack_wins=mean_single_column("Attack Wins", df),
         avg_versus_wins=mean_single_column("Builder Hall Trophies", df),
+        avg_games_xp=mean_single_column("Clan Games XP", df),
+        avg_cwl_stars=mean_single_column("CWL Stars", df),
         total_donations=sum_single_column("Donations", df),
         total_gold_grab=sum_single_column("Total Gold Grab", df),
         total_elixir_grab=sum_single_column("Total Elixir Grab", df),
         total_de_grab=sum_single_column("Total DE Grab", df),
         total_attack_wins=sum_single_column("Attack Wins", df),
         total_versus_wins=sum_single_column("Versus Battle Wins", df),
+        total_games_xp=sum_single_column("Clan Games XP", df),
+        total_cwl_stars=sum_single_column("CWL Stars", df),
     )
 
 
@@ -64,6 +68,8 @@ def calculate_delta(now_df, start_df) -> ClanDelta:
         avg_war_stars=avg_column("Total War Stars", now_df, start_df),
         avg_attack_wins=avg_column("Attack Wins", now_df, start_df),
         avg_versus_wins=avg_column("Versus Battle Wins", now_df, start_df),
+        avg_games_xp=avg_column("Clan Games XP", now_df, start_df),
+        avg_cwl_stars=avg_column("CWL Stars", now_df, start_df),
         total_trophies=sum_column("Current Trophies", now_df, start_df),
         total_bh_trophies=sum_column("Builder Hall Trophies", now_df, start_df),
         total_gold_grab=sum_column("Total Gold Grab", now_df, start_df),
@@ -72,6 +78,8 @@ def calculate_delta(now_df, start_df) -> ClanDelta:
         total_donations=sum_column("Total Donations", now_df, start_df),
         total_attack_wins=sum_column("Attack Wins", now_df, start_df),
         total_versus_wins=sum_column("Versus Battle Wins", now_df, start_df),
+        total_games_xp=sum_column("Clan Games XP", now_df, start_df),
+        total_cwl_stars=sum_column("CWL Stars", now_df, start_df),
     )
 
 
