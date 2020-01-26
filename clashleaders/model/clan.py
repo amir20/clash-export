@@ -70,6 +70,11 @@ class Clan(DynamicDocument):
             "week_delta.avg_gold_grab",
             "week_delta.avg_donations",
             "week_delta.avg_war_stars",
+            # For computing clan activity
+            "computed.avg_donations",
+            "computed.avg_games_xp",
+            "computed.avg_cwl_stars",
+            "computed.avg_attack_wins",
         ],
     }
 
