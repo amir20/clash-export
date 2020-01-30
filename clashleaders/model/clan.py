@@ -16,6 +16,7 @@ import clashleaders.queue.player
 from clashleaders.clash import api
 from clashleaders.clash.api import clan_warlog
 from clashleaders.model.clan_delta import ClanDelta
+from clashleaders.insights.clan_activity import clan_status
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +27,9 @@ class Clan(DynamicDocument):
     slug: str = StringField(required=True)
     cluster_label = IntField(default=-1)
     members: int = IntField()
+    active_members: int = IntField()
+    inactive_members: int = IntField()
+    new_members: int = IntField()
     clanPoints: int = IntField()
     clanVersusPoints: int = IntField()
     page_views: int = IntField(default=0)
@@ -108,6 +112,9 @@ class Clan(DynamicDocument):
     def days_of_history(self) -> int:
         first: clashleaders.model.HistoricalClan = clashleaders.model.HistoricalClan.objects(tag=self.tag).order_by("created_on").first()
         return (datetime.now() - first.created_on).days
+
+    def player_activity(self):
+        return clan_status(self)
 
     def __repr__(self):
         return "<Clan {0}>".format(self.tag)
