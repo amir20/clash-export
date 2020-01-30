@@ -7,7 +7,7 @@ from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.queue.player import fetch_players
 
 
-def update_calculations(clan):
+def update_calculations(clan: clashleaders.model.Clan):
     last_week = clan.historical_near_days_ago(7)
     yesterday = clan.historical_near_days_ago(1)
     most_recent = clan.historical_near_now()
@@ -29,6 +29,12 @@ def update_calculations(clan):
     old_players = list(set(yesterday.to_df().index) - set(most_recent_df.index))
     if old_players:
         fetch_players.delay(old_players)
+
+    activity = clan.player_activity()
+    values = list(activity.values())
+    clan.new_members = values.count("new")
+    clan.inactive_members = values.count("inactive")
+    clan.active_members = clan.members - clan.inactive_members
 
     clan.save()
 
