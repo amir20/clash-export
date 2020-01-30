@@ -6,7 +6,6 @@ from graphene.types.generic import GenericScalar
 from rq.exceptions import NoSuchJobError
 
 import clashleaders.model as model
-from clashleaders.insights.clan_activity import clan_status
 from clashleaders.views import imgproxy_url
 
 
@@ -196,7 +195,7 @@ class Clan(graphene.ObjectType):
         return ClanActivity(**df.to_dict("l"))
 
     def resolve_player_status(self, info):
-        return clan_status(self)
+        return self.player_activity()
 
 
 class Query(graphene.ObjectType):
