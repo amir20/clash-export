@@ -5,6 +5,7 @@ import numpy as np
 import clashleaders.clustering.kmeans
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.queue.player import fetch_players
+from clashleaders.clash.percentile import clan_percentile
 
 
 def update_calculations(clan: clashleaders.model.Clan):
@@ -26,8 +27,7 @@ def update_calculations(clan: clashleaders.model.Clan):
         [label] = clashleaders.clustering.kmeans.predict_clans(clan)
         clan.cluster_label = label
 
-    old_players = list(set(yesterday.to_df().index) - set(most_recent_df.index))
-    if old_players:
+    if old_players := list(set(yesterday.to_df().index) - set(most_recent_df.index)):
         fetch_players.delay(old_players)
 
     activity = clan.player_activity()
@@ -35,6 +35,9 @@ def update_calculations(clan: clashleaders.model.Clan):
     clan.new_members = values.count("new")
     clan.inactive_members = values.count("inactive")
     clan.active_members = clan.members - clan.inactive_members
+
+    for field in ["avg_donations", "avg_attack_wins", "avg_versus_wins", "avg_games_xp", "avg_cwl_stars"]:
+        setattr(clan.computed, f"{field}_percentile", clan_percentile(clan, field))
 
     clan.save()
 
