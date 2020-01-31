@@ -17,6 +17,13 @@ class ClanDelta(EmbeddedDocument):
     avg_games_xp = FloatField(default=0)
     avg_cwl_stars = FloatField(default=0)
 
+    avg_donations_percentile = FloatField(default=0)
+    avg_war_stars_percentile = FloatField(default=0)
+    avg_attack_wins_percentile = FloatField(default=0)
+    avg_versus_wins_percentile = FloatField(default=0)
+    avg_games_xp_percentile = FloatField(default=0)
+    avg_cwl_stars_percentile = FloatField(default=0)
+
     total_trophies = IntField(default=0)
     total_bh_trophies = IntField(default=0)
     total_gold_grab = IntField(default=0)

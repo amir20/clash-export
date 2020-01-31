@@ -110,6 +110,16 @@ class ClanDelta(graphene.ObjectType):
     avg_gold_grab = graphene.Float()
     avg_versus_wins = graphene.Float()
     avg_war_stars = graphene.Float()
+    avg_games_xp = graphene.Float()
+    avg_cwl_stars = graphene.Float()
+
+    avg_donations_percentile = graphene.Float()
+    avg_war_stars_percentile = graphene.Float()
+    avg_attack_wins_percentile = graphene.Float()
+    avg_versus_wins_percentile = graphene.Float()
+    avg_games_xp_percentile = graphene.Float()
+    avg_cwl_stars_percentile = graphene.Float()
+
     total_attack_wins = graphene.Int()
     total_bh_trophies = graphene.Int()
     total_de_grab = graphene.Int()
@@ -118,6 +128,8 @@ class ClanDelta(graphene.ObjectType):
     total_gold_grab = graphene.Float()
     total_trophies = graphene.Float()
     total_versus_wins = graphene.Float()
+    total_games_xp = graphene.Float()
+    total_cwl_stars = graphene.Float()
 
 
 class SimilarClanDelta(graphene.ObjectType):
