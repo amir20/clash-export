@@ -66,7 +66,10 @@ def update_single_clan():
         try_again_clan(clan)
         time.sleep(10)
     except Exception:
-        logger.exception(f"Error while fetching clan. Pausing for 5 seconds.")
+        if clan:
+            logger.exception(f"Error while fetching {clan.tag}. Pausing for 5 seconds.")
+        else:
+            logger.exception(f"Error while fetching clan. Pausing for 5 seconds.")
         time.sleep(5)
 
 

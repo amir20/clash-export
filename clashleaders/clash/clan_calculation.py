@@ -14,35 +14,35 @@ def update_calculations(clan: clashleaders.model.Clan):
     most_recent = clan.historical_near_now()
     most_recent_df = most_recent.to_df()
 
-    if most_recent_df.empty:
-        clan.computed = ClanDelta()
-        clan.week_delta = ClanDelta()
-        clan.day_delta = ClanDelta()
-    else:
-        clan.computed = calculate_data(most_recent_df)
-        clan.week_delta = most_recent.clan_delta(last_week)
-        clan.day_delta = most_recent.clan_delta(yesterday)
+    try:
+        if most_recent_df.empty:
+            clan.computed = ClanDelta()
+            clan.week_delta = ClanDelta()
+            clan.day_delta = ClanDelta()
+        else:
+            clan.computed = calculate_data(most_recent_df)
+            clan.week_delta = most_recent.clan_delta(last_week)
+            clan.day_delta = most_recent.clan_delta(yesterday)
 
-    if clan.cluster_label == -1:
-        [label] = clashleaders.clustering.kmeans.predict_clans(clan)
-        clan.cluster_label = label
+        if clan.cluster_label == -1:
+            [label] = clashleaders.clustering.kmeans.predict_clans(clan)
+            clan.cluster_label = label
 
-    if old_players := list(set(yesterday.to_df().index) - set(most_recent_df.index)):
-        fetch_players.delay(old_players)
+        if old_players := list(set(yesterday.to_df().index) - set(most_recent_df.index)):
+            fetch_players.delay(old_players)
 
-    activity = clan.player_activity()
-    values = list(activity.values())
-    clan.new_members = values.count("new")
-    clan.inactive_members = values.count("inactive")
-    clan.active_members = clan.members - clan.inactive_members
+        activity = clan.player_activity()
+        values = list(activity.values())
+        clan.new_members = values.count("new")
+        clan.inactive_members = values.count("inactive")
+        clan.active_members = clan.members - clan.inactive_members
 
-    for field in ["avg_donations", "avg_attack_wins", "avg_versus_wins", "avg_games_xp", "avg_cwl_stars"]:
-        setattr(clan.computed, f"{field}_percentile", clan_percentile(clan, f"computed.{field}"))
+        for field in ["avg_donations", "avg_attack_wins", "avg_versus_wins", "avg_games_xp", "avg_cwl_stars"]:
+            setattr(clan.computed, f"{field}_percentile", clan_percentile(clan, f"computed.{field}"))
+            setattr(clan.week_delta, f"{field}_percentile", clan_percentile(clan, f"week_delta.{field}"))
 
-    for field in ["avg_donations", "avg_attack_wins", "avg_versus_wins", "avg_games_xp", "avg_cwl_stars"]:
-        setattr(clan.week_delta, f"{field}_percentile", clan_percentile(clan, f"week_delta.{field}"))
-
-    clan.save()
+    finally:
+        clan.save()
 
     return clan
 
