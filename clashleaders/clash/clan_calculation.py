@@ -97,12 +97,22 @@ def calculate_delta(now_df, start_df) -> ClanDelta:
 
 def avg_column(column, now, start):
     value = (now[column] - start[column]).mean()
-    return 0 if np.isnan(value) else value
+    if np.isnan(value):
+        return 0
+    elif value < 0:
+        return now[column].mean()
+    else:
+        return value
 
 
 def sum_column(column, now, start):
     value = (now[column] - start[column]).sum()
-    return 0 if np.isnan(value) else value
+    if np.isnan(value):
+        return 0
+    elif value < 0:
+        return now[column].sum()
+    else:
+        return value
 
 
 def sum_single_column(column, df):
