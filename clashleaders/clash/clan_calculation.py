@@ -7,6 +7,8 @@ from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.queue.player import fetch_players
 from clashleaders.clash.percentile import clan_percentile
 
+import clashleaders.model
+
 
 def update_calculations(clan: clashleaders.model.Clan):
     last_week = clan.historical_near_days_ago(7)
@@ -70,7 +72,10 @@ def calculate_data(df):
     )
 
 
-def calculate_delta(now_df, start_df) -> ClanDelta:
+def calculate_delta(now: clashleaders.model.HistoricalClan, start: clashleaders.model.HistoricalClan) -> ClanDelta:
+    now_df = now.to_df()
+    start_df = start.to_df()
+
     return ClanDelta(
         avg_donations=avg_column("Total Donations", now_df, start_df),
         avg_donations_received=avg_column("Donations Received", now_df, start_df),
@@ -82,8 +87,8 @@ def calculate_delta(now_df, start_df) -> ClanDelta:
         avg_versus_wins=avg_column("Versus Battle Wins", now_df, start_df),
         avg_games_xp=avg_column("Clan Games XP", now_df, start_df),
         avg_cwl_stars=avg_column("CWL Stars", now_df, start_df),
-        total_trophies=sum_column("Current Trophies", now_df, start_df),
-        total_bh_trophies=sum_column("Builder Hall Trophies", now_df, start_df),
+        total_trophies=now.clanPoints - start.clanPoints,
+        total_bh_trophies=now.clanVersusPoints - start.clanVersusPoints,
         total_gold_grab=sum_column("Total Gold Grab", now_df, start_df),
         total_elixir_grab=sum_column("Total Elixir Grab", now_df, start_df),
         total_de_grab=sum_column("Total DE Grab", now_df, start_df),

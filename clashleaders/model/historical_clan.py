@@ -49,15 +49,15 @@ COLUMNS = OrderedDict(
 
 class HistoricalClan(Document):
     created_on = DateTimeField(default=datetime.now)
-    tag = StringField(required=True)
-    clanLevel = IntField()
-    clanPoints = IntField()
-    clanVersusPoints = IntField()
-    members = IntField()
-    warWinStreak = IntField()
-    warWins = IntField()
-    warTies = IntField()
-    warLosses = IntField()
+    tag: str = StringField(required=True)
+    clanLevel: int = IntField()
+    clanPoints: int = IntField()
+    clanVersusPoints: int = IntField()
+    members: int = IntField()
+    warWinStreak: int = IntField()
+    warWins: int = IntField()
+    warTies: int = IntField()
+    warLosses: int = IntField()
     players = ListField(ReferenceField(HistoricalPlayer))
 
     meta = {"index_background": True, "indexes": ["tag", "created_on", ("tag", "created_on"), "members"]}
@@ -106,7 +106,7 @@ class HistoricalClan(Document):
         return clashleaders.insights.player_activity.player_activity_scores(self, days)
 
     def clan_delta(self, other: HistoricalClan) -> ClanDelta:
-        return clashleaders.clash.clan_calculation.calculate_delta(self.to_df(), other.to_df())
+        return clashleaders.clash.clan_calculation.calculate_delta(self, other)
 
     @classmethod
     def find_by_tag_near_time(cls, tag, dt) -> HistoricalClan:
