@@ -26,7 +26,7 @@ handle_exceptions(app)
 logging.basicConfig(level=logging.INFO)
 
 # Cache settings
-cache_type = "null" if app.debug else "redis"
+cache_type = "null" if app.debug and not os.getenv("ENABLE_CACHE", False) else "redis"
 cache = Cache(app, config={"CACHE_TYPE": cache_type, "CACHE_REDIS_HOST": "redis"})
 
 # Set connect to False for pre-forking to work
