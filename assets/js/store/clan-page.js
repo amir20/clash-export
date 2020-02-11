@@ -63,7 +63,7 @@ const actions = {
             }
             weekDelta {
               totalTrophies
-              totalVersusWins
+              totalBhTrophies
               totalDonations
               totalAttackWins
               totalVersusWins

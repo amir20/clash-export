@@ -84,8 +84,7 @@
                       <a href="{{ url_for('country_clans', code=clan.location.countryCode.lower()) }}">
                         <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
                       </a>
-                      {% endif %}
-                      ●
+                      {% endif %} ●
                       <span class="has-text-weight-semibold"> {{ clan.tag }}</span>
                     </h2>
                   </div>
@@ -120,8 +119,7 @@
               "weekDelta.totalVersusWins") }}
             </div>
             <div class="has-text-centered is-touch-only">
-              <a class="button is-info"
-                 href="clashofclans://action=OpenClanProfile&tag={{ clan.tag }}">
+              <a class="button is-info" href="clashofclans://action=OpenClanProfile&tag={{ clan.tag }}">
                 <span class="icon"> <i class="fas fa-external-link-alt"></i></span> <span>Open Clan in Game</span>
               </a>
             </div>
