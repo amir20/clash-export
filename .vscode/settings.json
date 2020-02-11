@@ -1,0 +1,14 @@
+{
+  "python.pythonPath": ".direnv/python-venv-3.8.0/bin/python",
+  "python.linting.enabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length", "160"],
+  "editor.renderWhitespace": "all",
+  "python.linting.mypyEnabled": true,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
