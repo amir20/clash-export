@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from cachetools import cached, TTLCache
+
 from collections import OrderedDict
+from clashleaders import cache
 from bisect import bisect_left
 from clashleaders.clash.transformer import deep_getattr
 
@@ -15,7 +16,7 @@ def clan_percentile(clan: clashleaders.model.Clan, field: str):
     return list(percentiles.values())[index]
 
 
-@cached(cache=TTLCache(maxsize=32, ttl=3600))
+@cache.memoize(timeout=3600)
 def field_percentiles(field: str):
     max_value = deep_getattr(clashleaders.model.Clan.objects.order_by(f"-{field}").first(), field)
     step = max(int(max_value / 100), 1)
