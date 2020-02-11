@@ -105,6 +105,5 @@ node_modules
 **/static/service-worker.js
 
 .bashful
-.vscode
 .pytest_cache
 .mypy*
