@@ -102,7 +102,7 @@ rq-dashboard==0.6.1
 Rx==3.0.1
 scikit-learn==0.22.1
 scipy==1.4.1
-six==1.13.0
+six==1.14.0
 snapshottest==0.5.1
 termcolor==1.1.0
 tinycss2==1.0.2
