@@ -16,7 +16,7 @@ def clan_detail_xlsx(slug):
         return render_template("error.html"), 404
     else:
         h = clan.historical_near_days_ago(request.args.get("daysAgo", 0))
-        return send_file(to_stream(h), attachment_filename=f"{clan.tag}.xlsx", as_attachment=True)
+        return send_file(to_stream(h), attachment_filename=f"{clan.tag}.xlsx", as_attachment=True, cache_timeout=0)
 
 
 def to_stream(clan):
