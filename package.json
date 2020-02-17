@@ -79,7 +79,7 @@
       "prettier --write"
     ],
     "*.py": [
-      "black -l 160"
+      "direnv exec . black -l 160"
     ]
   },
   "repository": {
