@@ -39,7 +39,14 @@ def update_calculations(clan: clashleaders.model.Clan):
         clan.inactive_members = values.count("inactive")
         clan.active_members = clan.members - clan.inactive_members
 
-        for field in ["avg_donations", "avg_attack_wins", "avg_versus_wins", "avg_games_xp", "avg_cwl_stars"]:
+        for field in [
+            "avg_donations",
+            "avg_attack_wins",
+            "avg_versus_wins",
+            "avg_games_xp",
+            "avg_cwl_stars",
+            "avg_war_stars",
+        ]:
             setattr(clan.computed, f"{field}_percentile", clan_percentile(clan, f"computed.{field}"))
             setattr(clan.week_delta, f"{field}_percentile", clan_percentile(clan, f"week_delta.{field}"))
 
