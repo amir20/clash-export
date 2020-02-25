@@ -40,8 +40,9 @@ class Clan(DynamicDocument):
     clanLevel: int = IntField()
     verified_accounts = ListField(StringField())
     computed: ClanDelta = EmbeddedDocumentField(ClanDelta)
-    week_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
     day_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
+    week_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
+    month_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
 
     meta = {
         "index_background": True,
