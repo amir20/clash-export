@@ -17,7 +17,6 @@ def clan_detail_page(slug):
     try:
         clan = Clan.find_by_slug(slug)
         description = transform_description(clan.description)
-        start_count, similar_clans = clan.similar_clans()
         initial_state = dict(
             name=clan.name,
             tag=clan.tag,
@@ -32,15 +31,7 @@ def clan_detail_page(slug):
     except DoesNotExist:
         return render_template("404.html"), 404
     else:
-        return render_template(
-            "clan.html",
-            clan=clan,
-            trophy_distribution=clan_trophies(clan),
-            initial_state=initial_state,
-            description=description,
-            similar_clans=similar_clans,
-            similar_clans_start_count=start_count,
-        )
+        return render_template("clan.html", clan=clan, trophy_distribution=clan_trophies(clan), initial_state=initial_state, description=description,)
 
 
 @cache.memoize(600)

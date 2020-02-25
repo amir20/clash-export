@@ -6,6 +6,7 @@ import TrophyChart from "./components/TrophyChart";
 import Notification from "./components/Notification";
 import LastUpdated from "./components/LastUpdated";
 import ClanField from "./components/ClanField";
+import ClanScore from "./components/ClanScore";
 import bugsnag from "./bugsnag";
 import store from "./store/clan-page";
 
@@ -22,7 +23,8 @@ new Vue({
     TrophyChart,
     Notification,
     LastUpdated,
-    ClanField
+    ClanField,
+    ClanScore
   }
 });
 

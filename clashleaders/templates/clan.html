@@ -21,52 +21,11 @@
 </div>
 {%- endmacro %}{% block body %}
 <div id="app">
-  <section class="hero is-warning is-bold">
+  <section class="hero is-warning">
     <div class="hero-body">
       <div class="container is-fluid">
-        <div class="columns">
-          <div class="column is-narrow is-hidden-mobile">
-            <h5
-              class="title is-5 is-tooltip-right tooltip is-tooltip-multiline"
-              data-tooltip="Similar clans are based on clan activity and progress in the last 24 hours."
-            >
-              Similar Clans <i class="fas fa-info-circle"></i>
-            </h5>
-            <ol start="{{ similar_clans_start_count }}" class="leaderboard">
-              {% for similar in similar_clans %}
-              <li class="{{ 'active' if similar==clan else ''}}">
-                <a href="{{ url_for('clan_detail_page', slug=similar.slug) }}" data-position="{{ similar_clans_start_count + loop.index0}}">
-                  <div class="media">
-                    <div class="media-left">
-                      <span class="icon is-large">
-                        <img src="{{ imgproxy_url(similar.badgeUrls.small) }}" alt="{{ similar.name }}" width="48" />
-                      </span>
-                    </div>
-                    <div class="media-content">
-                      <p>
-                        <strong class="truncate clan-name">{{ similar.name }}</strong>
-                      </p>
-                      <div class="level is-mobile">
-                        <small class="level-left">
-                          {% if similar.location.countryCode %}
-                          <span class="level-item">
-                            <span class="flag-icon flag-icon-{{ similar.location.countryCode | lower }}"></span>
-                          </span>
-                          {% endif %}
-                          <span class="level-item">
-                            <span class="icon"> <i class="fas fa-trophy" aria-hidden="true"></i> </span>
-                            {{ "{:,}".format(similar.clanPoints) }}
-                          </span>
-                        </small>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              {% endfor %}
-            </ol>
-          </div>
-          <div class="column">
+        <div class="columns is-multiline">
+          <div class="column is-10-desktop is-12-tablet">
             <div class="columns is-vcentered has-text-centered-mobile">
               <div class="column is-narrow">
                 <img src="{{ imgproxy_url(clan.badgeUrls.medium) }}" width="128" alt="{{ clan.tag }}" />
@@ -86,18 +45,18 @@
                       </a>
                       {% endif %} ●
                       <span class="has-text-weight-semibold"> {{ clan.tag }}</span>
+
+                      {% if 'reddit' in clan.verified_accounts %}
+                      ●
+                      <span class="has-text-weight-bold">
+                        <i class="fab fa-reddit fa-lg reddit-color"></i> Verified Reddit Clan
+                        <i class="fas fa-check has-text-success"></i>
+                      </span>
+                      {% endif %}
+                      <div class="has-text-weight-light">
+                        <i> <last-updated></last-updated> </i>
+                      </div>
                     </h2>
-                  </div>
-                  <div class="column is-narrow has-text-right has-text-centered-mobile">
-                    {% if 'reddit' in clan.verified_accounts %}
-                    <div class="has-text-weight-bold">
-                      <i class="fab fa-reddit fa-lg reddit-color"></i> Verified Reddit Clan
-                      <i class="fas fa-check has-text-success"></i>
-                    </div>
-                    {% endif %}
-                    <div class="has-text-weight-light">
-                      <i> <last-updated></last-updated> </i>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -125,6 +84,27 @@
             </div>
             <div class="is-hidden-mobile">
               <trophy-chart :distribution-data="{{ trophy_distribution | tojson | forceescape }}"></trophy-chart>
+            </div>
+          </div>
+
+          <div class="column is-12-tablet is-2-desktop">
+            <div class="panel is-primary scoreboard">
+              <h3 class="panel-heading has-text-centered">Clan Scoreboard&trade;</h3>
+              <div class="panel-block">
+                <clan-score title="Champion War League" :score="{{ clan.week_delta.avg_cwl_stars_percentile}}" field="weekDelta.avgCwlStarsPercentile"></clan-score>
+              </div>
+              <div class="panel-block">
+                <clan-score title="Clan Games" :score="{{ clan.week_delta.avg_games_xp_percentile}}" field="weekDelta.avgGamesXpPercentile"></clan-score>
+              </div>
+              <div class="panel-block">
+                <clan-score title="Clan Wars" :score="{{ clan.week_delta.avg_war_stars_percentile}}" field="weekDelta.avgWarStarsPercentile"></clan-score>
+              </div>
+              <div class="panel-block">
+                <clan-score title="Donations" :score="{{ clan.week_delta.avg_donations_percentile}}" field="weekDelta.avgDonationsPercentile"></clan-score>
+              </div>
+              <div class="panel-block">
+                <clan-score title="Attacks Won" :score="{{ clan.week_delta.avg_attack_wins_percentile}}" field="weekDelta.avgAttackWinsPercentile"></clan-score>
+              </div>
             </div>
           </div>
         </div>
