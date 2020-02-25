@@ -11,6 +11,7 @@ import clashleaders.model
 
 
 def update_calculations(clan: clashleaders.model.Clan):
+    last_month = clan.historical_near_days_ago(30)
     last_week = clan.historical_near_days_ago(7)
     yesterday = clan.historical_near_days_ago(1)
     most_recent = clan.historical_near_now()
@@ -23,8 +24,9 @@ def update_calculations(clan: clashleaders.model.Clan):
             clan.day_delta = ClanDelta()
         else:
             clan.computed = calculate_data(most_recent_df)
-            clan.week_delta = most_recent.clan_delta(last_week)
             clan.day_delta = most_recent.clan_delta(yesterday)
+            clan.week_delta = most_recent.clan_delta(last_week)
+            clan.month_delta = most_recent.clan_delta(last_month)
 
         if clan.cluster_label == -1:
             [label] = clashleaders.clustering.kmeans.predict_clans(clan)
@@ -49,6 +51,7 @@ def update_calculations(clan: clashleaders.model.Clan):
         ]:
             setattr(clan.computed, f"{field}_percentile", clan_percentile(clan, f"computed.{field}"))
             setattr(clan.week_delta, f"{field}_percentile", clan_percentile(clan, f"week_delta.{field}"))
+            setattr(clan.month_delta, f"{field}_percentile", clan_percentile(clan, f"month_delta.{field}"))
 
     finally:
         clan.save()

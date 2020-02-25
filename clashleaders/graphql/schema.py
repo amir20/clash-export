@@ -155,10 +155,13 @@ class Clan(graphene.ObjectType):
     clanVersusPoints = graphene.Int()
     members = graphene.Int()
     updated_on = graphene.Float()
-    week_delta = graphene.Field(ClanDelta)
-    day_delta = graphene.Field(ClanDelta)
+
     computed = graphene.Field(ClanDelta)
+    day_delta = graphene.Field(ClanDelta)
+    week_delta = graphene.Field(ClanDelta)
+    month_delta = graphene.Field(ClanDelta)
     delta = graphene.Field(ClanDelta, days=graphene.Int(required=True))
+
     player_matrix = GenericScalar(days=graphene.Int(required=False))
     players = graphene.List(Player)
     activity = graphene.Field(ClanActivity)
