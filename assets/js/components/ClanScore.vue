@@ -40,7 +40,7 @@ export default {
       }
 
       if (["B", "C"].indexOf(grade.charAt(0)) > -1) {
-        classes.push("has-text-warning");
+        classes.push("has-text-grey");
       }
 
       if (["D", "E", "F"].indexOf(grade.charAt(0)) > -1) {
