@@ -3,7 +3,7 @@
     <div class="column is-8 has-text-right">
       {{ title }}
     </div>
-    <div class="column is-4 is-size-1">
+    <div class="column is-4 is-size-1 grade" :class="gradeColor(score)">
       {{ score | grade }}
     </div>
   </div>
@@ -20,9 +20,6 @@ export default {
     field: { type: String },
     title: { type: String }
   },
-  data: function() {
-    return {};
-  },
   watch: {
     scoreValue(newValue, oldValue) {
       this.score = newValue;
@@ -34,7 +31,25 @@ export default {
       return this.field.split(".").reduce((prev, curr) => (prev ? prev[curr] : null), this.clan);
     }
   },
-  methods: {},
+  methods: {
+    gradeColor(value) {
+      const grade = this.$options.filters.grade(value);
+      const classes = [];
+      if (["A"].indexOf(grade.charAt(0)) > -1) {
+        classes.push("has-text-success");
+      }
+
+      if (["B", "C"].indexOf(grade.charAt(0)) > -1) {
+        classes.push("has-text-warning");
+      }
+
+      if (["D", "E", "F"].indexOf(grade.charAt(0)) > -1) {
+        classes.push("has-text-danger");
+      }
+
+      return classes;
+    }
+  },
   filters: {
     grade(value) {
       const s = Math.ceil((100 - value * 100) / 3);
@@ -46,5 +61,11 @@ export default {
 <style lang="scss">
 .scoreboard .panel-block {
   display: block !important;
+}
+</style>
+
+<style lang="scss" scoped>
+.grade {
+  font-weight: lighter;
 }
 </style>
