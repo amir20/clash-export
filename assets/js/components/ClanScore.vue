@@ -59,7 +59,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.scoreboard .panel-block {
+.scorecard .panel-block {
   display: block !important;
 }
 </style>
