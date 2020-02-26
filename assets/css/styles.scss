@@ -1,5 +1,7 @@
 $flag-icon-css-path: "~flag-icon-css/flags/";
 
+$navbar-breakpoint: 1260px;
+
 @import "~bulma";
 @import "~flag-icon-css/sass/flag-icon";
 @import "./similar-clans";
