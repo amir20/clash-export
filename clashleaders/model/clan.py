@@ -57,6 +57,8 @@ class Clan(DynamicDocument):
             "tag",
             "slug",
             "members",
+            "active_members",
+            "inactive_members",
             ("members", "-clanPoints"),
             ("members", "-clanVersusPoints"),
             ("location.countryCode", "-clanPoints"),
