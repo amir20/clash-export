@@ -67,11 +67,14 @@ const actions = {
               totalDonations
               totalAttackWins
               totalVersusWins
-              avgCwlStarsPercentile
-              avgGamesXpPercentile
+
               avgWarStarsPercentile
               avgDonationsPercentile
               avgAttackWinsPercentile
+            }
+            monthDelta {
+              avgCwlStarsPercentile
+              avgGamesXpPercentile
             }
             delta(days: $days) {
               avgDeGrab
