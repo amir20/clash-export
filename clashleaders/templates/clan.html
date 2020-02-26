@@ -91,19 +91,19 @@
             <div class="panel is-primary scorecard">
               <h3 class="panel-heading has-text-centered">Clan Scorecard&trade;</h3>
               <div class="panel-block">
-                <clan-score title="Champion War League" :score="{{ clan.week_delta.avg_cwl_stars_percentile}}" field="weekDelta.avgCwlStarsPercentile"></clan-score>
+                <clan-score title="Champion War League" :score="{{ clan.month_delta.avg_cwl_stars_percentile }}" field="monthDelta.avgCwlStarsPercentile"></clan-score>
               </div>
               <div class="panel-block">
-                <clan-score title="Clan Games" :score="{{ clan.week_delta.avg_games_xp_percentile}}" field="weekDelta.avgGamesXpPercentile"></clan-score>
+                <clan-score title="Clan Games" :score="{{ clan.month_delta.avg_games_xp_percentile }}" field="month_delta.avgGamesXpPercentile"></clan-score>
               </div>
               <div class="panel-block">
-                <clan-score title="Clan Wars" :score="{{ clan.week_delta.avg_war_stars_percentile}}" field="weekDelta.avgWarStarsPercentile"></clan-score>
+                <clan-score title="Clan Wars" :score="{{ clan.week_delta.avg_war_stars_percentile }}" field="weekDelta.avgWarStarsPercentile"></clan-score>
               </div>
               <div class="panel-block">
-                <clan-score title="Donations" :score="{{ clan.week_delta.avg_donations_percentile}}" field="weekDelta.avgDonationsPercentile"></clan-score>
+                <clan-score title="Donations" :score="{{ clan.week_delta.avg_donations_percentile }}" field="weekDelta.avgDonationsPercentile"></clan-score>
               </div>
               <div class="panel-block">
-                <clan-score title="Attacks Won" :score="{{ clan.week_delta.avg_attack_wins_percentile}}" field="weekDelta.avgAttackWinsPercentile"></clan-score>
+                <clan-score title="Attacks Won" :score="{{ clan.week_delta.avg_attack_wins_percentile }}" field="weekDelta.avgAttackWinsPercentile"></clan-score>
               </div>
             </div>
           </div>
