@@ -13,7 +13,11 @@ def clan_percentile(clan: clashleaders.model.Clan, field: str):
     value = deep_getattr(clan, field)
     percentiles = field_percentiles(field)
     index = bisect_left(list(percentiles.keys()), value)
-    return list(percentiles.values())[index]
+    values = list(percentiles.values())
+    if index >= len(values):
+        return 1
+    else:
+        return values[index]
 
 
 @cache.memoize(timeout=3600)
