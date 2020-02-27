@@ -89,14 +89,14 @@ def calculate_delta(now: clashleaders.model.HistoricalClan, start: clashleaders.
     return ClanDelta(
         avg_donations=avg_column("Total Donations", now_df, start_df),
         avg_donations_received=avg_column("Donations Received", now_df, start_df),
-        avg_gold_grab=avg_column("Total Gold Grab", now_df, start_df),
-        avg_elixir_grab=avg_column("Total Elixir Grab", now_df, start_df),
+        avg_gold_grab=avg_column("Total Gold Grab", now_df, start_df, remove_zero=True),
+        avg_elixir_grab=avg_column("Total Elixir Grab", now_df, start_df, remove_zero=True),
         avg_de_grab=avg_column("Total DE Grab", now_df, start_df),
-        avg_war_stars=avg_column("Total War Stars", now_df, start_df),
+        avg_war_stars=avg_column("Total War Stars", now_df, start_df, remove_zero=True),
         avg_attack_wins=avg_column("Attack Wins", now_df, start_df),
         avg_versus_wins=avg_column("Versus Battle Wins", now_df, start_df),
         avg_games_xp=avg_column("Clan Games XP", now_df, start_df),
-        avg_cwl_stars=avg_column("CWL Stars", now_df, start_df),
+        avg_cwl_stars=avg_column("CWL Stars", now_df, start_df, remove_zero=True),
         total_trophies=now.clanPoints - start.clanPoints,
         total_bh_trophies=now.clanVersusPoints - start.clanVersusPoints,
         total_gold_grab=sum_column("Total Gold Grab", now_df, start_df),
@@ -110,8 +110,13 @@ def calculate_delta(now: clashleaders.model.HistoricalClan, start: clashleaders.
     )
 
 
-def avg_column(column, now, start):
-    value = (now[column] - start[column]).mean()
+def avg_column(column, now, start, remove_zero=False):
+    series = now[column] - start[column]
+
+    if remove_zero:
+        series = series[series > 0]
+
+    value = series.mean()
     if np.isnan(value):
         return 0
     elif value < 0:
