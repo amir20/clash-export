@@ -9,13 +9,7 @@ def test_detail_page_oldest_days(client, mocker, clan):
     client.get("/clan/reddit-dynasty-ugjpvjr")
 
     clashleaders.views.clan.render_template.assert_called_once_with(
-        "clan.html",
-        clan=clan,
-        trophy_distribution=mocker.ANY,
-        initial_state=mocker.ANY,
-        description=mocker.ANY,
-        similar_clans=mocker.ANY,
-        similar_clans_start_count=mocker.ANY,
+        "clan.html", clan=clan, trophy_distribution=mocker.ANY, initial_state=mocker.ANY, description=mocker.ANY,
     )
 
 
