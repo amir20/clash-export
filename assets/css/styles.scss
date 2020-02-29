@@ -94,16 +94,6 @@ body.clan_detail_page main > #app .hero-footer {
   min-width: 285px;
 }
 
-.DO-logo {
-  background-image: url("../images/DO_Powered_by_Badge_blue.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  text-indent: -9999em;
-  height: 35px;
-  width: 170px;
-  display: inline-block;
-}
-
 .reddit-color {
   color: #eb6200 !important;
 }
@@ -135,12 +125,4 @@ body.clan_detail_page main > #app .hero-footer {
   @media (hover: none) and (pointer: coarse) {
     display: block;
   }
-}
-
-.truncate.clan-name {
-  width: 150px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
 }
