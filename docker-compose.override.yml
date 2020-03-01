@@ -6,7 +6,7 @@ services:
       - ./mongosnapshot:/docker-entrypoint-initdb.d
   worker:
     env_file: .env
-    environment: 
+    environment:
       - ENABLE_CACHE=true
     volumes:
       - ./clashleaders:/app/clashleaders

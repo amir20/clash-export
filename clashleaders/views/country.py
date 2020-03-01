@@ -6,11 +6,10 @@ from clashleaders.text.clan_description_processor import transform_description
 
 
 @app.route("/country/<code>")
+@cache.cached(600)
 def country_clans(code):
     code = code.upper()
     clans = fetch_country(code)
-    for c in clans:
-        c.description = transform_description(c.description)
 
     if clans:
         return render_template("country.html", clans=clans, name=clans[0].location["name"])
@@ -18,6 +17,9 @@ def country_clans(code):
         return render_template("404.html"), 404
 
 
-@cache.memoize(300)
 def fetch_country(code):
-    return Clan.objects(location__countryCode=code).order_by("-clanPoints").limit(50)
+    clans = Clan.objects(location__countryCode=code).order_by("-clanPoints").limit(50)
+    for c in clans:
+        c.description = transform_description(c.description)
+
+    return clans
