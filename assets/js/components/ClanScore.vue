@@ -1,9 +1,9 @@
 <template>
   <div class="columns is-vcentered is-mobile">
-    <div class="column is-8 has-text-right">
+    <div class="column has-text-right">
       {{ title }}
     </div>
-    <div class="column is-4 is-size-1 grade" :class="gradeColor(score)">
+    <div class="column is-size-1 has-text-weight-light" :class="gradeColor(score)">
       {{ score | grade }}
     </div>
   </div>
@@ -64,8 +64,4 @@ export default {
 }
 </style>
 
-<style lang="scss" scoped>
-.grade {
-  font-weight: lighter;
-}
-</style>
+<style lang="scss" scoped></style>
