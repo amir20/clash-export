@@ -6,7 +6,7 @@
     {% for clan in clans %}
     <li class="media">
       <figure class="media-left">
-        <p class="image is-64x64"><img src="{{ imgproxy_url(clan.badgeUrls.medium) }}" alt="{{ clan.name }} badge" /></p>
+        <p class="image is-64x64"><img src="{{ imgproxy_url(clan.badgeUrls.medium) }}" alt="{{ clan.name }} badge" loading="lazy"/></p>
       </figure>
       <div class="media-content columns">
         <div class="column">
