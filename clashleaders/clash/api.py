@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import uvloop
 import logging
 import os
 from typing import List
@@ -65,6 +66,7 @@ def find_clan_by_tag(tag):
     future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}")
 
     try:
+
         code, response = asyncio.get_event_loop().run_until_complete(future)
     except asyncio.TimeoutError:
         raise ApiTimeout(f"API timed while fetching {tag} clan.")
