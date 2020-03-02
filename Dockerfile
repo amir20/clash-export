@@ -52,6 +52,7 @@ RUN chmod +x /usr/local/bin/cron.sh
 COPY ./conf/supervisord-*.conf /etc/supervisor/conf.d/
 COPY ./caddy/Caddyfile /etc/Caddyfile
 COPY ./caddy /etc/caddy
+COPY ./conf/gunicorn.conf.py /app/
 
 COPY ./clashleaders /app/clashleaders
 COPY ./tests /app/tests
