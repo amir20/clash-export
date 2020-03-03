@@ -18,7 +18,7 @@ def country_clans(code):
 
 @cache.memoize(600)
 def fetch_country(code):
-    clans = Clan.objects(location__countryCode=code).order_by("-clanPoints").limit(50)
+    clans = list(Clan.objects(location__countryCode=code).order_by("-clanPoints").limit(50))
     for c in clans:
         c.description = transform_description(c.description)
 
