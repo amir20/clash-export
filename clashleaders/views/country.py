@@ -6,6 +6,7 @@ from clashleaders.text.clan_description_processor import transform_description
 
 
 @app.route("/country/<code>")
+@cache.cached(600)
 def country_clans(code):
     code = code.upper()
     clans = fetch_country(code)
@@ -16,7 +17,6 @@ def country_clans(code):
         return render_template("404.html"), 404
 
 
-@cache.memoize(600)
 def fetch_country(code):
     clans = list(Clan.objects(location__countryCode=code).order_by("-clanPoints").limit(50))
     for c in clans:

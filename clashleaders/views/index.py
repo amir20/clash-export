@@ -6,6 +6,7 @@ from clashleaders.model import Clan, Status
 
 
 @app.route("/")
+@cache.cached(600)
 def index():
     latest_status = Status.instance()
     return render_template(
@@ -20,7 +21,6 @@ def index():
     )
 
 
-@cache.memoize(1800)
 def leaderboard(field):
     return clans_leaderboard(Clan.objects(members__gt=20).order_by(f"-{field}").limit(10), field)
 
