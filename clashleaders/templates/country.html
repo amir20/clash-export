@@ -1,5 +1,4 @@
 {% extends "layout.html" %} {% block body %}
-{% cache 600, name %}
 <main class="container section">
   <h1 class="title is-2">Top {{ name }} Clans</h1>
   <ol>
@@ -68,7 +67,6 @@
     {% endfor %}
   </ol>
 </main>
-{% endcache %}
 {% endblock %} {% block title %}Top {{ name }} Clans{% endblock %}{% block meta %}
 <meta name="description" content="Top {{ name }} Clans by trophies - Clash Leaders" />
 <meta name="keywords" content="{{ name }}, clash of clans, achievements, leaderboard" />
