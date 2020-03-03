@@ -41,3 +41,9 @@ import clashleaders.graphql.schema
 
 view_func = GraphQLView.as_view("graphql", schema=Schema(query=clashleaders.graphql.schema.Query), graphiql=True)
 app.add_url_rule("/graphql", view_func=view_func)
+
+
+@app.before_first_request
+def delete_cached_views():
+    for key in redis_connection.scan_iter("flask_cache_view*"):
+        redis_connection.delete(key)
