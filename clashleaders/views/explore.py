@@ -1,6 +1,6 @@
 from flask import render_template
 
-from clashleaders import app
+from clashleaders import app, cache
 from clashleaders.model import Clan
 
 ORDER_MAPPING = {
@@ -21,6 +21,7 @@ TITLE_MAPPING = {
 
 
 @app.route("/explore/<sort>")
+@cache.cached(600)
 def explore_clans(sort):
     clans = Clan.objects(members__gt=20).order_by(ORDER_MAPPING[sort]).limit(50)
     return render_template("explore.html", clans=clans, sort=sort, title=TITLE_MAPPING[sort])
