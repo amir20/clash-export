@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Optional
 
 import json
 from codecs import decode, encode
@@ -15,6 +16,7 @@ from clashleaders.clash import api
 from clashleaders.insights.player_activity import clan_history
 from clashleaders.model import Clan
 from clashleaders.model.clan import prepend_hash
+from mongoengine.fields import BooleanField
 
 
 class Player(DynamicDocument):
@@ -24,6 +26,7 @@ class Player(DynamicDocument):
     tag = StringField(required=True, unique=True)
     lab_levels = DictField()
     slug = StringField(unique=True)
+    active = BooleanField(default=False)
 
     meta = {
         "index_background": True,
@@ -40,13 +43,14 @@ class Player(DynamicDocument):
             "attackWins",
             "donations",
             "slug",
+            "active",
         ],
     }
 
     def as_replace_one(self) -> ReplaceOne:
         return ReplaceOne({"tag": self.tag}, self.compressed_fields(), upsert=True)
 
-    def most_recent_clan(self) -> Clan:
+    def most_recent_clan(self) -> Optional[Clan]:
         return Clan.find_by_tag(self.clan["tag"]) if "clan" in self else None
 
     def player_score(self):
