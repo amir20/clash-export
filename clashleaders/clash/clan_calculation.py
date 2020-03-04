@@ -53,6 +53,10 @@ def update_calculations(clan: clashleaders.model.Clan):
             setattr(clan.week_delta, f"{field}_percentile", clan_percentile(clan, f"week_delta.{field}"))
             setattr(clan.month_delta, f"{field}_percentile", clan_percentile(clan, f"month_delta.{field}"))
 
+        inactive_tags = set([tag for tag, status in activity.items() if status == "inactive"])
+        active_tags = set(most_recent_df.index.to_list()) - inactive_tags
+        clashleaders.model.Player.objects(tag__in=inactive_tags).update(active=False)
+        clashleaders.model.Player.objects(tag__in=active_tags).update(active=True)
     finally:
         clan.save()
 
