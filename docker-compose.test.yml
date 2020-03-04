@@ -8,6 +8,8 @@ services:
       - FLASK_APP=clashleaders
       - BUGSNAG_API_KEY=
       - STAGE=testing
+    depends_on:
+      - redis
   mongo:
     volumes:
       - ./:/clashleaders
