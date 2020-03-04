@@ -33,7 +33,7 @@ module.exports = merge(common, {
     new CompressionPlugin({ test: /\.(js|css|map|svg)$/ }),
     new BrotliPlugin({ test: /\.(js|css|map|svg)$/ }),
     new SWPrecacheWebpackPlugin({
-      staticFileGlobsIgnorePatterns: [/\.map$/, /\.svg$/, /\.svg.gz$/, /\.map.gz$/],
+      staticFileGlobsIgnorePatterns: [/\.map$/, /\.svg$/, /\.br$/, /\.gz$/, , /\.LICENSE\.txt$/],
       stripPrefix: assetsPath
     })
   ],
