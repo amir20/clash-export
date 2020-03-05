@@ -1,5 +1,5 @@
 # Build assets
-FROM node:12-alpine as builder
+FROM node:13-alpine as builder
 
 RUN apk add --no-cache git openssh python make g++ \
     && npm install -g npm
@@ -19,7 +19,7 @@ COPY clashleaders/static clashleaders/static
 RUN npm run build
 
 
-FROM python:3.8.1
+FROM python:3.8.2
 
 # Create app directoy
 WORKDIR /app
