@@ -15,7 +15,7 @@ from redis import Redis
 app = Flask(__name__)
 app.config.from_object(rq_dashboard.default_settings)
 app.config["REDIS_HOST"] = "redis"
-app.debug = os.getenv("DEBUG", False)
+app.debug = bool(os.getenv("DEBUG", False))
 app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
 
 bugsnag.configure(
