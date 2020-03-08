@@ -220,14 +220,14 @@ class Query(graphene.ObjectType):
     def resolve_clan(self, info, tag, refresh=False):
         if refresh:
             clan = model.Clan.find_by_tag(tag)
+            clan.update(inc__page_views=1)
             delta = datetime.now() - clan.updated_on
             if timedelta(minutes=refresh) < delta:
                 clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
                 wait_for_job(clan.job)
-
-        clan = model.Clan.find_by_tag(tag)
-        clan.update(inc__page_views=1)
-        return clan
+                clan = model.Clan.find_by_tag(tag)
+        else:
+            return model.Clan.find_by_tag(tag)
 
     def resolve_player(self, info, tag):
         return model.Player.find_by_tag(tag)

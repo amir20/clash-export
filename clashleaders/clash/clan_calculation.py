@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 
 import clashleaders.clustering.kmeans
+import logging
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.queue.player import fetch_players
 from clashleaders.clash.percentile import clan_percentile
@@ -10,7 +11,12 @@ from clashleaders.clash.percentile import clan_percentile
 import clashleaders.model
 
 
+logger = logging.getLogger(__name__)
+
+
 def update_calculations(clan: clashleaders.model.Clan):
+    logger.debug(f"Calculating clan {clan}")
+
     last_month = clan.historical_near_days_ago(30)
     last_week = clan.historical_near_days_ago(7)
     yesterday = clan.historical_near_days_ago(1)
