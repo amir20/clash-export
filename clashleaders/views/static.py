@@ -33,6 +33,6 @@ def about():
     return render_template("about.html")
 
 
-@cache.memoize(90)
+@cache.memoize(600)
 def fetch_changelog():
     return list(client.entries({"content_type": "changelog", "order": "-fields.publishedOn"}))
