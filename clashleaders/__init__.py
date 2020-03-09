@@ -17,6 +17,8 @@ app.config.from_object(rq_dashboard.default_settings)
 app.config["REDIS_HOST"] = "redis"
 app.debug = bool(os.getenv("DEBUG", False))
 app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
 
 bugsnag.configure(
     api_key=os.getenv("BUGSNAG_API_KEY"), project_root="/app", release_stage=os.getenv("STAGE", "development"), notify_release_stages=["production"]
