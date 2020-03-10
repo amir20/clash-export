@@ -225,9 +225,8 @@ class Query(graphene.ObjectType):
             if timedelta(minutes=refresh) < delta:
                 clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
                 wait_for_job(clan.job)
-                clan = model.Clan.find_by_tag(tag)
-        else:
-            return model.Clan.find_by_tag(tag)
+
+        return model.Clan.find_by_tag(tag)
 
     def resolve_player(self, info, tag):
         return model.Player.find_by_tag(tag)
