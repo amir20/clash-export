@@ -83,7 +83,7 @@ prompt-toolkit==3.0.4
 protobuf==3.11.3
 ptyprocess==0.6.0
 py==1.8.1
-pycares==3.1.0
+pycares==3.1.1
 pycodestyle==2.5.0
 pycparser==2.19
 Pygments==2.5.2
