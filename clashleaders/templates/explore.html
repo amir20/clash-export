@@ -1,80 +1,17 @@
+{% from 'macros/list.html' import clan_list %} 
 {% extends "layout.html" %} {% block body %}
-
 <main class="container section">
   <div class="tabs">
     <ul>
       <li {% if sort == 'most-popular' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-popular') }}">Popular Today</a></li>
-      <li {% if sort == 'most-attacks' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-attacks') }}">Most Attacks</a></li>
-      <li {% if sort == 'most-versus-attacks' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-versus-attacks') }}">Most Versus Attacks</a></li>
-      <li {% if sort == 'most-donations' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-donations') }}">Most Donations</a></li>
-      <li {% if sort == 'most-war-stars' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='most-war-stars') }}">Most War Stars</a></li>
+      <li {% if sort == 'cwl' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='cwl') }}">CWL Score</a></li>
+      <li {% if sort == 'wars' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='wars') }}">Clan Wars Score</a></li>
+      <li {% if sort == 'donations' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='donations') }}">Donations Score</a></li>
+      <li {% if sort == 'clan-games' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='clan-games') }}">Clan Games Score</a></li>
+      <li {% if sort == 'attacks' %} class="is-active"{% endif%}><a href="{{ url_for('explore_clans', sort='attacks') }}">Attacking Score</a></li>
     </ul>
   </div>
-  <ol>
-    {% for clan in clans %}
-    <li class="media">
-      <figure class="media-left">
-        <p class="image is-64x64"><img src="{{ imgproxy_url(clan.badgeUrls.medium) }}" alt="{{ clan.name }} badge" loading="lazy"/></p>
-      </figure>
-      <div class="media-content columns">
-        <div class="column">
-          <div class="content">
-            <p>
-              <strong>
-                <a href="{{ url_for('clan_detail_page', slug=clan.slug) }}">{{ clan.name }}</a>
-              </strong>
-              <small
-                >from {% if clan.location.countryCode %} <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span> {% endif %} {{
-                clan.location.name }}
-              </small>
-              <small>with {{ clan.members }} members</small> <br />
-              {{ clan.description | safe }}
-            </p>
-          </div>
-        </div>
-        <div class="column is-5-desktop is-6-tablet is-4-widescreen">
-          <div class="level is-mobile">
-            <div class="level-item has-text-centered">
-              <div>
-                <p class="heading">Total Trophies</p>
-                <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
-                <p>
-                  <span class="tag {{'is-success' if clan.week_delta.total_trophies > 0 else 'is-danger'}}"
-                    >{{ "{:+,}".format(clan.week_delta.total_trophies) }}</span
-                  >
-                </p>
-              </div>
-            </div>
-
-            <div class="level-item has-text-centered">
-              <div>
-                <p class="heading">Total BH Trophies</p>
-                <p class="title">{{ "{:,}".format(clan.clanVersusPoints) }}</p>
-                <p>
-                  <span class="tag {{'is-success' if clan.week_delta.total_bh_trophies > 0 else 'is-danger'}}"
-                    >{{ "{:+,}".format(clan.week_delta.total_bh_trophies) }}</span
-                  >
-                </p>
-              </div>
-            </div>
-
-            <div class="level-item has-text-centered is-hidden-mobile">
-              <div>
-                <p class="heading">Total Donations</p>
-                <p class="title">{{ "{:,}".format(clan.computed.total_donations) }}</p>
-                <p>
-                  <span class="tag {{'is-success' if clan.week_delta.total_donations > 0 else 'is-danger'}}"
-                    >{{ "{:+,}".format(clan.week_delta.total_donations) }}</span
-                  >
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </li>
-    {% endfor %}
-  </ol>
+  {{ clan_list(clans) }}
 </main>
 {% endblock %} {% block title %}Explore {{ title }}{% endblock %}{% block meta %}
 <meta name="description" content="Explore {{ title }} - Clash Leaders" />
