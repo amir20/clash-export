@@ -61,7 +61,6 @@ class Clan(DynamicDocument):
             "inactive_members",
             ("members", "-clanPoints"),
             ("members", "-clanVersusPoints"),
-            ("location.countryCode", "-clanPoints"),
             "isWarLogPublic",
             "page_views",
             # Aggregated indexes
@@ -73,10 +72,22 @@ class Clan(DynamicDocument):
             # Leaderboards
             "week_delta.total_trophies",
             "week_delta.total_gold_grab",
+            # Country
+            ("location.countryCode", "-clanPoints"),
+            ("location.countryCode", "-month_delta.avg_cwl_stars_percentile"),
+            ("location.countryCode", "-month_delta.avg_games_xp_percentile"),
+            ("location.countryCode", "-week_delta.avg_war_stars_percentile"),
+            ("location.countryCode", "-week_delta.avg_donations_percentile"),
+            ("location.countryCode", "-week_delta.avg_attack_wins_percentile"),
             # Explore
             "week_delta.avg_gold_grab",
             "week_delta.avg_donations",
             "week_delta.avg_war_stars",
+            "month_delta.avg_cwl_stars_percentile",
+            "month_delta.avg_games_xp_percentile",
+            "week_delta.avg_war_stars_percentile",
+            "week_delta.avg_donations_percentile",
+            "week_delta.avg_attack_wins_percentile",
             # For computing clan activity
             "computed.avg_donations",
             "computed.avg_games_xp",
