@@ -1,5 +1,6 @@
 {% from 'macros/list.html' import clan_list %} {% extends "layout.html" %} {% block body %}
 <main class="container section">
+  <h1 class="title is-2">Top {{ name }} Clans</h1>
   <div class="tabs">
     <ul>
       <li {% if sort == 'trophies' %} class="is-active"{% endif%}><a href="{{ url_for('country_clans', code=code, sort='trophies') }}">Highest Trophies</a></li>
@@ -10,7 +11,6 @@
       <li {% if sort == 'attacks' %} class="is-active"{% endif%}><a href="{{ url_for('country_clans', code=code, sort='attacks') }}">Attacking Score</a></li>
     </ul>
   </div>
-  <h1 class="title is-2">Top {{ name }} Clans</h1>
   {{ clan_list(clans) }}
 </main>
 {% endblock %} {% block title %}Top {{ name }} Clans{% endblock %}{% block meta %}
