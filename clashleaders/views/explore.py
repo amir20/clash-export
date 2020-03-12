@@ -2,7 +2,6 @@ from flask import render_template
 
 from clashleaders import app, cache
 from clashleaders.model import Clan
-from clashleaders.text.clan_description_processor import transform_description
 
 ORDER_MAPPING = {
     "most-popular": "-page_views",
@@ -25,18 +24,17 @@ TITLE_MAPPING = {
     "most-versus-attacks": "Most Versus Attacks",
     "most-donations": "Most Donations",
     "most-war-stars": "Most War Stars",
-    "cwl": "Clan War League Acitivty",
-    "clan-games": "Clan Games XP",
-    "wars": "Clan Wars",
-    "donations": "Most Donations",
-    "attacks": "Most Attacks",
+    "cwl": "Highest CWL Activity",
+    "clan-games": "Highest Games XP",
+    "wars": "Highest War Stars",
+    "donations": "Highest Donations",
+    "attacks": "Highest Attack Activity",
+    "trophies": "Highest Trophies",
 }
 
 
 @app.route("/explore/<sort>")
 @cache.cached(600)
 def explore_clans(sort):
-    clans = Clan.objects(members__gt=20).order_by(ORDER_MAPPING[sort]).limit(50)
-    for c in clans:
-        c.description = transform_description(c.description)
+    clans = Clan.objects(active_members__gte=10).order_by(ORDER_MAPPING[sort]).limit(50)
     return render_template("explore.html", clans=clans, sort=sort, title=TITLE_MAPPING[sort])
