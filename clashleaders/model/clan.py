@@ -17,6 +17,7 @@ from clashleaders.clash import api
 from clashleaders.clash.api import clan_warlog
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.insights.clan_activity import clan_status
+from clashleaders.text.clan_description_processor import transform_description
 
 logger = logging.getLogger(__name__)
 
@@ -96,6 +97,10 @@ class Clan(DynamicDocument):
         ],
     }
 
+    @property
+    def rich_description(self):
+        return transform_description(self.description)
+
     def update_calculations(self):
         return clashleaders.clash.clan_calculation.update_calculations(self)
 
@@ -130,12 +135,6 @@ class Clan(DynamicDocument):
     def player_activity(self):
         return clan_status(self)
 
-    def __repr__(self):
-        return "<Clan {0}>".format(self.tag)
-
-    def __str__(self):
-        return "<Clan {0}>".format(self.tag)
-
     def warlog(self):
         return clan_warlog(self.tag)["items"]
 
@@ -152,6 +151,12 @@ class Clan(DynamicDocument):
             data = {k: data[k] for k in keys}
 
         return data
+
+    def __repr__(self):
+        return "<Clan {0}>".format(self.tag)
+
+    def __str__(self):
+        return "<Clan {0}>".format(self.tag)
 
     @classmethod
     def find_by_tag(cls, tag) -> Clan:
