@@ -1,6 +1,6 @@
 {% from 'macros/list.html' import clan_list %} {% extends "layout.html" %} {% block body %}
 <main class="container section">
-  <h1 class="title is-2">Top {{ name }} Clans</h1>
+  <h1 class="title is-2">{{ title }}</h1>
   <div class="tabs">
     <ul>
       <li {% if sort == 'trophies' %} class="is-active"{% endif%}><a href="{{ url_for('country_clans', code=code, sort='trophies') }}">Highest Trophies</a></li>
@@ -13,8 +13,8 @@
   </div>
   {{ clan_list(clans) }}
 </main>
-{% endblock %} {% block title %}Top {{ name }} Clans{% endblock %}{% block meta %}
-<meta name="description" content="Top {{ name }} Clans by trophies - Clash Leaders" />
-<meta name="keywords" content="{{ name }}, clash of clans, achievements, leaderboard" />
-<meta property="og:title" content="Top {{ name }} Clans - Clash Leaders" />
+{% endblock %} {% block title %}{{ title }}{% endblock %}{% block meta %}
+<meta name="description" content="{{ title }} - Clash Leaders" />
+<meta name="keywords" content="{{ title }}, clash of clans, achievements, leaderboard" />
+<meta property="og:title" content="Top {{ title }} - Clash Leaders" />
 {% endblock %}
