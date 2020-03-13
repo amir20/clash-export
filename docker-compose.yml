@@ -28,6 +28,7 @@ services:
       - IMGPROXY_MAX_CLIENTS=100
       - IMGPROXY_DOWNLOAD_TIMEOUT=10
       - IMGPROXY_TTL=2628000
+      - IMGPROXY_IGNORE_SSL_VERIFICATION=true
   imgproxy-cache:
     image: "amir20/imgproxy-cache:${TAG:-latest}"
     build:
