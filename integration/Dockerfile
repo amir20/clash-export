@@ -32,9 +32,9 @@ USER pptruser
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY --chown=pptruser:pptruser package*.json /app/
 RUN npm ci
 
-COPY . /app/
+COPY --chown=pptruser:pptruser . /app/
 
 CMD [ "npm", "test"]
