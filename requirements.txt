@@ -127,7 +127,7 @@ wasmer==0.4.1
 wcwidth==0.1.8
 webencodings==0.5.1
 WebOb==1.8.6
-Werkzeug==1.0.0
+Werkzeug==1.0.1
 wrapt==1.12.1
 xlrd==1.2.0
 XlsxWriter==1.2.8
