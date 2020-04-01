@@ -12,6 +12,9 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/reposit
   ttf-freefont \
   nodejs \
   npm \
+  python \
+  g++ \
+  make \
   bash \
   font-noto-emoji@edge \
   wqy-zenhei@edge
