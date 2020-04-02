@@ -5,6 +5,7 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/reposit
   apk add --no-cache \
   chromium \
   nss \
+  curl \
   freetype \
   freetype-dev \
   harfbuzz \
