@@ -7,10 +7,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Docker Build
+      - name: Build Docker images
         run: make build
-      - name: make test
+      - name: Run tests
         run: make test
-      - name: make int
+      - name: Run integeration tests
         run: |
           make int
