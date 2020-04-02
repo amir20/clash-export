@@ -2,7 +2,7 @@ on: push
 name: Test
 jobs:
   docker-build:
-    name: docker build
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
