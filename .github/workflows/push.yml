@@ -12,7 +12,4 @@ jobs:
       - name: Run tests
         run: make test
       - name: Run integeration tests
-        run: |
-          make int
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v2
+        run: make int
