@@ -15,7 +15,7 @@ const state = {
   clan: window.__INITIAL_STATE__,
   days: 7,
   savedClan: {},
-  sortField: "value"
+  sortField: "value",
 };
 
 const mutations = {
@@ -36,7 +36,7 @@ const mutations = {
   },
   CHANGE_SORT_FIELD(state, field) {
     state.sortField = field;
-  }
+  },
 };
 
 const actions = {
@@ -92,9 +92,9 @@ const actions = {
       variables: {
         tag: clan.tag,
         days,
-        refresh: 15
+        refresh: 15,
       },
-      fetchPolicy: "network-only"
+      fetchPolicy: "network-only",
     });
     commit("STOP_LOADING");
     commit("SET_CLAN_DATA", data);
@@ -118,8 +118,8 @@ const actions = {
         `,
         variables: {
           tag: savedTag,
-          days
-        }
+          days,
+        },
       });
       commit("SET_SAVED_CLAN", data);
     }
@@ -150,20 +150,20 @@ const actions = {
       `,
       variables: {
         tag: clan.tag,
-        days
-      }
+        days,
+      },
     });
     commit("STOP_LOADING");
     commit("SET_CLAN_DATA", data);
-  }
+  },
 };
 
 const getters = {
   header({ clan }) {
-    return clan.recentData[0].map(column => ({
+    return clan.recentData[0].map((column) => ({
       label: column,
       field: camelCase(column),
-      numeric: !isNonNumericColumns(camelCase(column))
+      numeric: !isNonNumericColumns(camelCase(column)),
     }));
   },
   tableData({ clan }, getters) {
@@ -171,7 +171,7 @@ const getters = {
     const previousData = convertToMap(getters.header, clan.historicData.slice(1));
     const previousByTag = keyBy(previousData, "tag");
 
-    return data.map(row => {
+    return data.map((row) => {
       const previousRow = previousByTag[row.tag];
       return reduce(
         row,
@@ -186,11 +186,11 @@ const getters = {
         {}
       );
     });
-  }
+  },
 };
 
 function convertToMap(header, matrix) {
-  return matrix.map(row => {
+  return matrix.map((row) => {
     return reduce(
       row,
       (map, value, columnIndex) => {
@@ -202,11 +202,11 @@ function convertToMap(header, matrix) {
   });
 }
 
-const isNonNumericColumns = key => key == "tag" || key == "name";
+const isNonNumericColumns = (key) => key == "tag" || key == "name";
 
 export default new Vuex.Store({
   state,
   getters,
   actions,
-  mutations
+  mutations,
 });
