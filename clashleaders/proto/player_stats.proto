@@ -108,6 +108,10 @@ message PlayerStats {
   int32 shattered_and_scattered = 103;
   int32 home_yeti = 104;
   int32 home_siege_barracks = 105;
+  int32 home_sneaky_goblin = 106;
+  int32 home_super_giant = 107;
+  int32 home_super_barbarian = 108;
+  int32 home_super_wall_breaker = 109;
 }
 
 
