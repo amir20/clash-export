@@ -19,7 +19,7 @@ bugsnag(Vue);
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
 new Vue({
-  el: "header",
+  el: "#common-nav",
   components: {
     SearchBox,
     Changelog,
