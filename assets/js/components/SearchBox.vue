@@ -4,13 +4,14 @@
     field="tag"
     :size="size"
     icon="search"
+    icon-pack="fa"
     keep-first
     expanded
     v-model="tag"
     :data="data"
     :loading="isLoading"
     @input="fetchData"
-    @select="option => this.$emit('update:selectedTag', option ? option.tag : null)"
+    @select="(option) => this.$emit('update:selectedTag', option ? option.tag : null)"
   >
     <template slot-scope="props">
       <div class="media">
@@ -35,11 +36,11 @@ export default {
     return {
       tag: null,
       isLoading: false,
-      data: []
+      data: [],
     };
   },
   methods: {
-    fetchData: debounce(async function() {
+    fetchData: debounce(async function () {
       this.data = [];
       this.isLoading = true;
 
@@ -52,7 +53,7 @@ export default {
       }
 
       this.isLoading = false;
-    }, 600)
-  }
+    }, 600),
+  },
 };
 </script>

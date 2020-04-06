@@ -14,7 +14,8 @@ module.exports = {
     "troop-page": "./js/troop-page.js",
     index: "./js/index.js",
     common: "./js/common.js",
-    styles: "./css/styles.scss"
+    shims: "./js/shims.js",
+    styles: "./css/styles.scss",
   },
   optimization: {
     splitChunks: {
@@ -22,33 +23,33 @@ module.exports = {
         commons: {
           test: /node_modules/,
           chunks: "initial",
-          name: "vendors"
+          name: "vendors",
         },
         "styles-compiled": {
           name: "styles-compiled",
-          test: module => module.nameForCondition && /\.(s?css|vue)$/.test(module.nameForCondition()) && !/^javascript/.test(module.type),
+          test: (module) => module.nameForCondition && /\.(s?css|vue)$/.test(module.nameForCondition()) && !/^javascript/.test(module.type),
           chunks: "all",
-          enforce: true
-        }
-      }
-    }
+          enforce: true,
+        },
+      },
+    },
   },
   resolve: {
     extensions: [".js", ".vue", ".json"],
     alias: {
-      vue$: "vue/dist/vue.esm.js"
-    }
+      vue$: "vue/dist/vue.esm.js",
+    },
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: ["babel-loader"],
       },
       {
         test: /\.vue$/,
-        loader: "vue-loader"
+        loader: "vue-loader",
       },
       {
         test: /.*flags.*\.(svg)$/,
@@ -56,8 +57,8 @@ module.exports = {
         options: {
           name: "[name]-[hash].[ext]",
           outputPath: "flags/",
-          publicPath: "/static/flags/"
-        }
+          publicPath: "/static/flags/",
+        },
       },
       {
         test: /\.png$/,
@@ -65,15 +66,15 @@ module.exports = {
         options: {
           name: "[name]-[hash].[ext]",
           outputPath: "images/compiled/",
-          publicPath: "/static/images/compiled/"
-        }
+          publicPath: "/static/images/compiled/",
+        },
       },
       {
         test: /\.svg$/,
         exclude: [/flags/],
         use: {
-          loader: "svg-url-loader"
-        }
+          loader: "svg-url-loader",
+        },
       },
       {
         test: /\.(sass|scss|css)$/,
@@ -82,54 +83,54 @@ module.exports = {
           {
             loader: "css-loader",
             query: {
-              importLoaders: 1
-            }
+              importLoaders: 1,
+            },
           },
           {
             loader: "postcss-loader",
             options: {
               ident: "postcss",
-              plugins: loader => [
+              plugins: (loader) => [
                 require("postcss-import")(),
                 require("postcss-cssnext")({
                   features: {
-                    customProperties: { warnings: false }
-                  }
+                    customProperties: { warnings: false },
+                  },
                 }),
-                require("postcss-font-magician")({ display: "swap" })
-              ]
-            }
+                require("postcss-font-magician")({ display: "swap" }),
+              ],
+            },
           },
-          "sass-loader"
-        ]
-      }
-    ]
+          "sass-loader",
+        ],
+      },
+    ],
   },
   plugins: [
     new webpack.ProgressPlugin(),
     new VueLoaderPlugin(),
     new ManifestPlugin(),
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ["**/*", "!web-manifest*", "!**images", "!**images/*"]
+      cleanOnceBeforeBuildPatterns: ["**/*", "!web-manifest*", "!**images", "!**images/*"],
     }),
     new SpritesmithPlugin({
       src: {
         cwd: path.resolve(__dirname, "assets/sprites"),
-        glob: "*.png"
+        glob: "*.png",
       },
       retina: "@2x",
       target: {
         image: path.resolve(__dirname, "assets/images/sprite.png"),
-        css: path.resolve(__dirname, "assets/css/sprite.scss")
+        css: path.resolve(__dirname, "assets/css/sprite.scss"),
       },
       apiOptions: {
-        cssImageRef: "../images/sprite.png"
-      }
-    })
+        cssImageRef: "../images/sprite.png",
+      },
+    }),
   ],
   output: {
     path: __dirname + "/clashleaders/static/",
     filename: "js/[name].js",
-    publicPath: "/static/"
-  }
+    publicPath: "/static/",
+  },
 };
