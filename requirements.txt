@@ -17,7 +17,7 @@ better-exceptions-fork==0.2.1.post6
 black==19.10b0
 blinker==1.4
 bugsnag==3.6.0
-cachetools==4.0.0
+cachetools==4.1.0
 cairocffi==1.1.0
 CairoSVG==2.4.2
 cchardet==2.1.6
