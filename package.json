@@ -28,7 +28,7 @@
     "core-js": "^3.6.5",
     "css-loader": "^3.5.1",
     "d3": "^5.15.1",
-    "date-fns": "^2.11.1",
+    "date-fns": "^2.12.0",
     "es6-map": "^0.1.5",
     "file-loader": "^6.0.0",
     "flag-icon-css": "^3.4.6",
