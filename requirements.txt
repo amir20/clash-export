@@ -87,7 +87,7 @@ pycares==3.1.1
 pycodestyle==2.5.0
 pycparser==2.20
 Pygments==2.6.1
-pylint==2.4.4
+pylint==2.5.0
 pymongo==3.10.1
 Pympler==0.8
 pyOpenSSL==19.1.0
