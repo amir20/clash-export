@@ -63,7 +63,7 @@ Mako==1.1.2
 Markdown==3.2.1
 MarkupSafe==1.1.1
 mccabe==0.6.1
-mongoengine==0.19.1
+mongoengine==0.20.0
 more-itertools==8.2.0
 multidict==4.7.5
 mypy==0.770
