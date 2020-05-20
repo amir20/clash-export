@@ -1,6 +1,7 @@
 localhost:80 {
     root * /app/clashleaders
-    file_server /static/*
+    file_server /static/* 
+    file_server /robots.txt
 
     reverse_proxy / unix//tmp/gunicorn.sock     
 
