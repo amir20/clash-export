@@ -14,6 +14,10 @@ http://localhost {
         not {
             path /robots.txt            
         }
+
+        not {
+            path /favicon.ico            
+        }
     }       
 
     reverse_proxy @proxy unix//tmp/gunicorn.sock   
@@ -22,8 +26,8 @@ http://localhost {
         -Server
     }
     
-    encode gzip
+    encode gzip 
     log {
-        output stdout
+        output stdout    
     }
 }
