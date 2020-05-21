@@ -1,4 +1,8 @@
-localhost:80 {
+{
+    experimental_http3
+}
+
+http://localhost {
     root * /app/clashleaders
     file_server     
 
@@ -10,7 +14,7 @@ localhost:80 {
         not {
             path /robots.txt            
         }
-    }         
+    }       
 
     reverse_proxy @proxy unix//tmp/gunicorn.sock   
 
