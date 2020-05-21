@@ -1,13 +1,19 @@
 localhost:80 {
     root * /app/clashleaders
-    file_server /static/* 
+    file_server /static/*
     file_server /robots.txt
 
-    reverse_proxy / unix//tmp/gunicorn.sock     
+    @proxy {        
+        not {
+            path /static/*            
+        }
 
-    header /static {
-        Cache-Control "public, max-age=31536000"
-    }
+        not {
+            path /robots.txt            
+        }
+    }         
+
+    reverse_proxy @proxy unix//tmp/gunicorn.sock   
 
     header / {
         -Server
@@ -16,6 +22,5 @@ localhost:80 {
     encode gzip
     log {
         output stdout
-        format single_field common_log
     }
 }
