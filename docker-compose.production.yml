@@ -91,11 +91,11 @@ services:
         - traefik.http.routers.nowww.entrypoints=web
         - traefik.http.routers.nowww.middlewares=web_headers
 
-        - traefik.http.routers.web.rule=Host(`www2.clashleaders.com`)
+        - traefik.http.routers.web.rule=Host(`www.clashleaders.com`)
         - traefik.http.routers.web.entrypoints=web
         - traefik.http.routers.web.middlewares=web_headers
 
-        - traefik.http.routers.websecured.rule=Host(`www2.clashleaders.com`)
+        - traefik.http.routers.websecured.rule=Host(`www.clashleaders.com`)
         - traefik.http.routers.websecured.entrypoints=websecure
         - traefik.http.routers.websecured.tls.certresolver=myresolver
         - traefik.http.routers.websecured.middlewares=web_headers
@@ -109,7 +109,7 @@ services:
         - traefik.http.middlewares.web_headers.headers.stsSeconds=315360000
         - traefik.http.middlewares.web_headers.headers.sslredirect=true
         - traefik.http.middlewares.web_headers.headers.sslForceHost=true
-        - traefik.http.middlewares.web_headers.headers.sslHost=www2.clashleaders.com
+        - traefik.http.middlewares.web_headers.headers.sslHost=www.clashleaders.com
         - traefik.http.middlewares.web_headers.headers.stsPreload=true
     networks:
       - web
