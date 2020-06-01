@@ -30,21 +30,7 @@ class Player(DynamicDocument):
 
     meta = {
         "index_background": True,
-        "indexes": [
-            "name",
-            "tag",
-            "townHallWeaponLevel",
-            "townHallLevel",
-            "trophies",
-            "warStars",
-            "expLevel",
-            "builderHallLevel",
-            "defenseWins",
-            "attackWins",
-            "donations",
-            "slug",
-            "active",
-        ],
+        "indexes": ["tag", "slug", "active",],
     }
 
     def as_replace_one(self) -> ReplaceOne:
