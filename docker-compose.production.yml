@@ -55,14 +55,14 @@ services:
         - traefik.enable=true
         - traefik.http.routers.imgproxy.rule=Host(`i.clashleaders.com`)
         - traefik.http.routers.imgproxy.tls.certresolver=myresolver
-        - traefik.http.routers.imgproxy.middlewares=web_headers
+        - traefik.http.routers.imgproxy.middlewares=i_headers
         - traefik.http.services.imgproxy.loadbalancer.server.port=2015
-        - traefik.http.middlewares.web_headers.headers.browserXssFilter=true
-        - traefik.http.middlewares.web_headers.headers.contentTypeNosniff=true
-        - traefik.http.middlewares.web_headers.headers.forceSTSHeader=true
-        - traefik.http.middlewares.web_headers.headers.stsSeconds=315360000
-        - traefik.http.middlewares.web_headers.headers.sslredirect=true
-        - traefik.http.middlewares.web_headers.headers.sslForceHost=true
+        - traefik.http.middlewares.i_headers.headers.browserXssFilter=true
+        - traefik.http.middlewares.i_headers.headers.contentTypeNosniff=true
+        - traefik.http.middlewares.i_headers.headers.forceSTSHeader=true
+        - traefik.http.middlewares.i_headers.headers.stsSeconds=315360000
+        - traefik.http.middlewares.i_headers.headers.sslredirect=true
+        - traefik.http.middlewares.i_headers.headers.sslForceHost=true
 
 
     networks:
