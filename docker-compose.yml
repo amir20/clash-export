@@ -13,6 +13,7 @@ services:
     depends_on:
       - mongo
       - redis
+      - rq_player_worker
   web:
     build: .
     image: "amir20/clashleaders:${TAG:-latest}"
@@ -21,14 +22,13 @@ services:
       - mongo
       - imgproxy-cache
   imgproxy:
-    image: darthsim/imgproxy:v2.2.12
+    image: darthsim/imgproxy:v2.13
     environment:
       - IMGPROXY_ENFORCE_WEBP=true
       - IMGPROXY_USE_ETAG=true
       - IMGPROXY_MAX_CLIENTS=100
       - IMGPROXY_DOWNLOAD_TIMEOUT=10
       - IMGPROXY_TTL=31622400
-      - IMGPROXY_IGNORE_SSL_VERIFICATION=true
   imgproxy-cache:
     image: "amir20/imgproxy-cache:${TAG:-latest}"
     build:

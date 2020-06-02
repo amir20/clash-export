@@ -6,7 +6,6 @@ services:
   mongo:
     volumes:
       - /data/mongo:/data/db
-      - /data/backups:/data/backups
     deploy:
       resources:
         limits:
@@ -16,9 +15,7 @@ services:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6Ijc4MDhhYzU5LTJhYjAtNGUyNS05MDlmLWQ1YmY1NjhiMDM4OCIsImlhdCI6MTU5MDg5MTg5NCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjY0LjIyNy4xMDIuMzEiXSwidHlwZSI6ImNsaWVudCJ9XX0.kebKZ_0SWGEZiq6KZ_spj-NtE8bd_1_7Eo8hIXFQQr23rH6w1zeimb5UQwOSsBhkFb5EziYkrL_Xe0OMg8t4qA
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - STAGE=production
-      - IMGPROXY_KEY=15c1f2542afea936263aaf8a5244e0f2edf7bfb54dec26fb19b12133ad02869b254d71587227d3a58e43fb6885f1290cb158ab31e62d4f6361c50f21e089883a
-      - IMGPROXY_SALT=95490c60f0bba290a0ae56e897ad5a9a7845ca375ca9922d07bbfacb62453c05165048c75fb3488018f34115c98ec2fb7a1c7e1a4508cd20233ad9b2190986e5
-      - WORKER_OFFSET=1
+      - WORKER_OFFSET={{.Task.Slot}}
     deploy:
       replicas: 2
       resources:
@@ -26,7 +23,7 @@ services:
           memory: 200m
   rq_calculation_worker:
     environment:
-      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjI4NmNiZjkxLTkwZWMtNDJmMC04YTY2LWUxZjEzYzUwZDg4MiIsImlhdCI6MTU0ODcxNDcyNCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4yNDguNzguODAiLCI2OC4xODMuMTY0LjI0MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.Iswu6xnxOjgkFkWiyWc9qQwLtZ0sREDylzIJHJRvRjSFb_yGNbX6HeeCrdrwfNnp9dPja1SVPJuhN8-SWXWMbA
+      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQxM2I5NDE1LWQ1MmEtNGM2YS1iZTUyLTlkM2I2NjVkOWI4ZSIsImlhdCI6MTU5MTA0OTgyNywic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjY0LjIyNy4xMDIuMzEiXSwidHlwZSI6ImNsaWVudCJ9XX0.kHV83-93nISFrd_J1nltu7WK4HqgY0-VtyX8Y6tBFOyUASXPLVDtvlzCXmGTmuSr0ZT_VJYjerWM2N4dTUDLGg
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - STAGE=production
     deploy:
@@ -35,36 +32,39 @@ services:
           memory: 200m
   rq_player_worker:
     environment:
-      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjI4NmNiZjkxLTkwZWMtNDJmMC04YTY2LWUxZjEzYzUwZDg4MiIsImlhdCI6MTU0ODcxNDcyNCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4yNDguNzguODAiLCI2OC4xODMuMTY0LjI0MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.Iswu6xnxOjgkFkWiyWc9qQwLtZ0sREDylzIJHJRvRjSFb_yGNbX6HeeCrdrwfNnp9dPja1SVPJuhN8-SWXWMbA
+      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQxM2I5NDE1LWQ1MmEtNGM2YS1iZTUyLTlkM2I2NjVkOWI4ZSIsImlhdCI6MTU5MTA0OTgyNywic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjY0LjIyNy4xMDIuMzEiXSwidHlwZSI6ImNsaWVudCJ9XX0.kHV83-93nISFrd_J1nltu7WK4HqgY0-VtyX8Y6tBFOyUASXPLVDtvlzCXmGTmuSr0ZT_VJYjerWM2N4dTUDLGg
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - STAGE=production
     deploy:
-      replicas: 2
+      replicas: 1
       resources:
         limits:
           memory: 200m
   cron:
     environment:
-      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6Ijg0Nzg1MmYwLTNmNjctNDBkZS1iZWVmLWJkMjM4NjY0ZTlmOSIsImlhdCI6MTU0ODcxNDc1OCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4yNDguNzguODAiLCI2OC4xODMuMTY0LjI0MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.MKhr-j--B95Z6lBpQqlLILtWUZSs6GjJdbh-BXK-xJvAaGLRrhP_Ldz6MN7OwzNrjoajVVrgtL881kcPhlA_pA
+      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6Ijc4MDhhYzU5LTJhYjAtNGUyNS05MDlmLWQ1YmY1NjhiMDM4OCIsImlhdCI6MTU5MDg5MTg5NCwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjY0LjIyNy4xMDIuMzEiXSwidHlwZSI6ImNsaWVudCJ9XX0.kebKZ_0SWGEZiq6KZ_spj-NtE8bd_1_7Eo8hIXFQQr23rH6w1zeimb5UQwOSsBhkFb5EziYkrL_Xe0OMg8t4qA
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - STAGE=production
   imgproxy:
-    image: darthsim/imgproxy:v2.2.12
     environment:
       - IMGPROXY_KEY=15c1f2542afea936263aaf8a5244e0f2edf7bfb54dec26fb19b12133ad02869b254d71587227d3a58e43fb6885f1290cb158ab31e62d4f6361c50f21e089883a
       - IMGPROXY_SALT=95490c60f0bba290a0ae56e897ad5a9a7845ca375ca9922d07bbfacb62453c05165048c75fb3488018f34115c98ec2fb7a1c7e1a4508cd20233ad9b2190986e5
   imgproxy-cache:
     deploy:
       labels:
-        - traefik.frontend.rule=Host:i.clashleaders.com
         - traefik.enable=true
-        - traefik.port=2015
-        - traefik.frontend.headers.browserXSSFilter=true
-        - traefik.frontend.headers.contentTypeNosniff=true
-        - traefik.frontend.headers.forceSTSHeader=true
-        - traefik.frontend.headers.frameDeny=true
-        - traefik.frontend.headers.STSSeconds=315360000
-        - traefik.frontend.headers.SSLRedirect=true
+        - traefik.http.routers.imgproxy.rule=Host(`i.clashleaders.com`)
+        - traefik.http.routers.imgproxy.tls.certresolver=myresolver
+        - traefik.http.routers.imgproxy.middlewares=i_headers
+        - traefik.http.services.imgproxy.loadbalancer.server.port=2015
+        - traefik.http.middlewares.i_headers.headers.browserXssFilter=true
+        - traefik.http.middlewares.i_headers.headers.contentTypeNosniff=true
+        - traefik.http.middlewares.i_headers.headers.forceSTSHeader=true
+        - traefik.http.middlewares.i_headers.headers.stsSeconds=315360000
+        - traefik.http.middlewares.i_headers.headers.sslredirect=true
+        - traefik.http.middlewares.i_headers.headers.sslForceHost=true
+
+
     networks:
       - web
       - default
@@ -78,7 +78,7 @@ services:
         limits:
           memory: 400m
     environment:
-      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM0ZjQ0N2YwLTFhMjctNGY1Yy1iZmJmLTAzNmU3ZTUwNGNhMSIsImlhdCI6MTU0ODcxNDgxMiwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwNC4yNDguNzguODAiLCI2OC4xODMuMTY0LjI0MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.sJTwjukALofUQMI5fXISE0pkYK1rVeGrJPEPhr9QJcRLcz8oVMT0svdHkkqg8YiLtRZo7n-Nz4skd-9HIfSfeQ
+      - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM0YTY4NjFlLTE4YmMtNGY0Yy1hZDczLTJiYzNlYTQ1ZjU0YSIsImlhdCI6MTU5MTA0OTg3Miwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjY0LjIyNy4xMDIuMzEiXSwidHlwZSI6ImNsaWVudCJ9XX0.3HQ9H_ZyOzrtRIBEMmT_XaF5mCNDtfJQZiZ47kEXn_cio2WotWKgUk-p-j_o-Ww1bxmZkGIb2pyPaRf_IH93hg
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - STAGE=production
       - IMGPROXY_KEY=15c1f2542afea936263aaf8a5244e0f2edf7bfb54dec26fb19b12133ad02869b254d71587227d3a58e43fb6885f1290cb158ab31e62d4f6361c50f21e089883a
@@ -87,28 +87,30 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.www.frontend.rule=Host:www.clashleaders.com
-        - traefik.www.port=2015
-        - traefik.www.frontend.headers.browserXSSFilter=true
-        - traefik.www.frontend.headers.contentTypeNosniff=true
-        - traefik.www.frontend.headers.frameDeny=true
-        - traefik.www.frontend.headers.forceSTSHeader=true
-        - traefik.www.frontend.headers.STSSeconds=315360000
-        - traefik.www.frontend.headers.SSLRedirect=true
-        - traefik.www.frontend.headers.SSLForceHost=true
-        - traefik.www.frontend.headers.SSLHost=www.clashleaders.com
-        - traefik.top.frontend.rule=Host:clashleaders.com
-        - traefik.top.port=2015
-        - traefik.top.frontend.headers.browserXSSFilter=true
-        - traefik.top.frontend.headers.contentTypeNosniff=true
-        - traefik.top.frontend.headers.frameDeny=true
-        - traefik.top.frontend.headers.forceSTSHeader=true
-        - traefik.top.frontend.headers.STSSeconds=315360000
-        - traefik.top.frontend.headers.SSLRedirect=true
-        - traefik.top.frontend.headers.SSLForceHost=true
-        - traefik.top.frontend.headers.SSLHost=www.clashleaders.com
-        - traefik.top.frontend.headers.STSPreload=true
-        - traefik.top.frontend.headers.STSIncludeSubdotops=true
+        - traefik.http.routers.nowww.rule=Host(`clashleaders.com`)
+        - traefik.http.routers.nowww.entrypoints=web
+        - traefik.http.routers.nowww.middlewares=web_headers
+
+        - traefik.http.routers.web.rule=Host(`www.clashleaders.com`)
+        - traefik.http.routers.web.entrypoints=web
+        - traefik.http.routers.web.middlewares=web_headers
+
+        - traefik.http.routers.websecured.rule=Host(`www.clashleaders.com`)
+        - traefik.http.routers.websecured.entrypoints=websecure
+        - traefik.http.routers.websecured.tls.certresolver=myresolver
+        - traefik.http.routers.websecured.middlewares=web_headers
+
+        - traefik.http.services.websecured.loadbalancer.server.port=2015
+
+        - traefik.http.middlewares.web_headers.headers.browserXssFilter=true
+        - traefik.http.middlewares.web_headers.headers.contentTypeNosniff=true
+        - traefik.http.middlewares.web_headers.headers.frameDeny=true
+        - traefik.http.middlewares.web_headers.headers.forceSTSHeader=true
+        - traefik.http.middlewares.web_headers.headers.stsSeconds=315360000
+        - traefik.http.middlewares.web_headers.headers.sslredirect=true
+        - traefik.http.middlewares.web_headers.headers.sslForceHost=true
+        - traefik.http.middlewares.web_headers.headers.sslHost=www.clashleaders.com
+        - traefik.http.middlewares.web_headers.headers.stsPreload=true
     networks:
       - web
       - default
