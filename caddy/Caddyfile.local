@@ -11,6 +11,10 @@ localhost:80 {
         except /favicon.ico /robots.txt /static
     }
 
+    header / {
+        -Server
+    }
+
     gzip
     log / stdout "[{when}] \"{method} {uri} {proto}\" {status} {size} \"{>User-Agent}\"" {
         except /static
