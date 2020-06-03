@@ -14,6 +14,10 @@
         Cache-Control "public, max-age=31536000"
     }
 
+    header / {
+        -Server
+    }
+
     gzip
     log / stdout "[{when}] \"{method} {uri} {proto}\" {status} {size} \"{>User-Agent}\"" {
         except /static
