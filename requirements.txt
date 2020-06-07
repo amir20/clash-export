@@ -80,7 +80,7 @@ Pillow==7.1.2
 pluggy==0.13.1
 promise==2.3
 prompt-toolkit==3.0.5
-protobuf==3.12.1
+protobuf==3.12.2
 ptyprocess==0.6.0
 py==1.8.1
 pycares==3.1.1
