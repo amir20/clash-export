@@ -17,7 +17,7 @@
     "buefy": "^0.8.20",
     "bugsnag-js": "^4.7.3",
     "bugsnag-vue": "^1.0.1",
-    "bulma": "^0.8.2",
+    "bulma": "^0.9.0",
     "bulma-badge": "^3.0.1",
     "bulma-tooltip": "^3.0.2",
     "caniuse-lite": "^1.0.30001079",
