@@ -77,6 +77,18 @@ services:
       resources:
         limits:
           memory: 400m
+      update_config:
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM0YTY4NjFlLTE4YmMtNGY0Yy1hZDczLTJiYzNlYTQ1ZjU0YSIsImlhdCI6MTU5MTA0OTg3Miwic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjY0LjIyNy4xMDIuMzEiXSwidHlwZSI6ImNsaWVudCJ9XX0.3HQ9H_ZyOzrtRIBEMmT_XaF5mCNDtfJQZiZ47kEXn_cio2WotWKgUk-p-j_o-Ww1bxmZkGIb2pyPaRf_IH93hg
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
