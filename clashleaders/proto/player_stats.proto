@@ -112,6 +112,11 @@ message PlayerStats {
   int32 home_super_giant = 107;
   int32 home_super_barbarian = 108;
   int32 home_super_wall_breaker = 109;
+  int32 home_super_archer = 110;
+  int32 home_super_valkyrie = 111;
+  int32 home_inferno_dragon = 112;
+  int32 home_super_witch = 113;
+  int32 home_headhunter = 114;
 }
 
 
