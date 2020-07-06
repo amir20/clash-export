@@ -61,7 +61,7 @@
     "webpack-manifest-plugin": "^2.2.0",
     "webpack-merge": "^4.2.2",
     "webpack-spritesmith": "^1.1.0",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.1.0"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
