@@ -1,4 +1,4 @@
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
@@ -11,11 +11,11 @@ module.exports = merge(common, {
   devtool: "inline-source-map",
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "css/[name].css"
+      filename: "css/[name].css",
     }),
     new SWPrecacheWebpackPlugin({
       staticFileGlobsIgnorePatterns: [/\.map$/, /\.svg$/],
-      stripPrefix: assetsPath
-    })
-  ]
+      stripPrefix: assetsPath,
+    }),
+  ],
 });
