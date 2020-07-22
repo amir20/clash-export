@@ -19,7 +19,7 @@ COPY clashleaders/static clashleaders/static
 RUN npm run build
 
 
-FROM python:3.8.3
+FROM python:3.8.5
 
 # Create app directoy
 WORKDIR /app
