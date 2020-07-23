@@ -1,26 +1,26 @@
 http://localhost {
     root * /app/clashleaders
-    file_server     
+    file_server
 
-    @proxy {        
+    @proxy {
         not {
-            path /static/*            
+            path /static/*
         }
 
         not {
-            path /robots.txt            
+            path /robots.txt
         }
-    } 
+    }
 
     header /static/* {
         Cache-Control "public, max-age=31536000"
     }
-    
+
     header / {
         -Server
     }
 
-    reverse_proxy @proxy unix//tmp/gunicorn.sock   
+    reverse_proxy @proxy unix//tmp/gunicorn.sock
 
     encode gzip
     log {
