@@ -70,7 +70,7 @@ services:
       - default
   web:
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
+      test: ["CMD", "curl", "-f", "http://localhost/healthcheck"]
     volumes:
       - /data/caddy:/root/.caddy
     deploy:
