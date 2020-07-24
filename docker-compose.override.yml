@@ -30,7 +30,7 @@ services:
       - ./tests/:/app/tests
       - ./setup.cfg:/app/setup.cfg
       - ./Makefile:/app/Makefile
-      - ./caddy/Caddyfile.local:/etc/Caddyfile
+      - ./caddy/Caddyfile:/etc/Caddyfile
       - .ipython/web:/root/.ipython/profile_default
   imgproxy-cache:
     ports:

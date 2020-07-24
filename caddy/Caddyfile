@@ -1,16 +1,18 @@
-0.0.0.0, http://web {
-    root /app/clashleaders
+http://localhost, http://web {
+    root * /app/clashleaders
+    file_server
 
-    proxy / unix:/tmp/gunicorn.sock {
-        transparent
-        except /favicon.ico /robots.txt /static
+    @proxy {
+        not {
+            path /static/*
+        }
+
+        not {
+            path /robots.txt
+        }
     }
 
-    expires {
-        match /static 1y
-    }
-
-    header /static {
+    header /static/* {
         Cache-Control "public, max-age=31536000"
     }
 
@@ -18,15 +20,10 @@
         -Server
     }
 
-    gzip
-    log / stdout "[{when}] \"{method} {uri} {proto}\" {status} {size} \"{>User-Agent}\"" {
-        except /static
-    }
-    errors stdout
-}
+    reverse_proxy @proxy unix//tmp/gunicorn.sock
 
-localhost:8000 {
-   proxy / unix:/tmp/gunicorn.sock {
-        transparent
+    encode gzip
+    log {
+        output stdout
     }
 }

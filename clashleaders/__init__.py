@@ -12,7 +12,7 @@ from graphene import Schema
 from mongoengine import connect
 from redis import Redis
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="_does_not_exists_", static_url_path="/static")
 app.config.from_object(rq_dashboard.default_settings)
 app.config["REDIS_HOST"] = "redis"
 app.debug = bool(os.getenv("DEBUG", False))
