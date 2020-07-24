@@ -112,7 +112,7 @@ services:
         - traefik.http.routers.websecured.tls.certresolver=myresolver
         - traefik.http.routers.websecured.middlewares=web_headers
 
-        - traefik.http.services.websecured.loadbalancer.server.port=2015
+        - traefik.http.services.websecured.loadbalancer.server.port=80
 
         - traefik.http.middlewares.web_headers.headers.browserXssFilter=true
         - traefik.http.middlewares.web_headers.headers.contentTypeNosniff=true
