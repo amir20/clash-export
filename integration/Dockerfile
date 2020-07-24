@@ -1,8 +1,8 @@
-FROM amir20/docker-alpine-puppeteer:edge
+FROM amir20/docker-alpine-puppeteer:v1
 
-COPY --chown=pptruser:pptruser package*.json /app/
+COPY package*.json /app/
 RUN npm ci
 
-COPY --chown=pptruser:pptruser . /app/
+COPY . /app/
 
-CMD [ "npm", "test"]
+CMD ["npm", "test"]

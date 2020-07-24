@@ -30,8 +30,6 @@ module.exports = merge(common, {
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     new MiniCssExtractPlugin({ filename: "css/[name].[chunkhash].css" }),
-    new CompressionPlugin({ test: /\.(js|css|map|svg)$/ }),
-    new BrotliPlugin({ test: /\.(js|css|map|svg)$/ }),
     new SWPrecacheWebpackPlugin({
       staticFileGlobsIgnorePatterns: [/\.map$/, /\.svg$/, /\.br$/, /\.gz$/, , /\.LICENSE\.txt$/],
       stripPrefix: assetsPath,
