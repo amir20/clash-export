@@ -17,7 +17,7 @@
     }
 
     header /* {
-        -Server
+        -server
     }
 
     reverse_proxy @proxy unix//tmp/gunicorn.sock
