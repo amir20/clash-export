@@ -1,4 +1,4 @@
-http://localhost, http://web, http://clashleaders.com, http://www.clashleaders.com {
+:80 {
     root * /app/clashleaders
     file_server
 
