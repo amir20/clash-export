@@ -28,7 +28,7 @@ click==7.1.2
 colorama==0.4.3
 contentful==1.12.4
 contextlib2==0.6.0.post1
-coverage==5.2
+coverage==5.2.1
 cryptography==3.0
 cssselect2==0.3.0
 Cython==0.29.21
