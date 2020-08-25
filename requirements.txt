@@ -121,7 +121,7 @@ typing-extensions==3.7.4.2
 ua-parser==0.10.0
 Unidecode==1.1.1
 urllib3==1.25.10
-user-agents==2.1
+user-agents==2.2.0
 uvloop==0.14.0
 wasmer==0.4.1
 wcwidth==0.2.5
