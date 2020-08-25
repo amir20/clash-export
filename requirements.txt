@@ -5,7 +5,7 @@ aniso8601==8.0.0
 ansimarkup==1.4.0
 appdirs==1.4.4
 appnope==0.1.0
-arrow==0.15.8
+arrow==0.16.0
 asn1crypto==1.4.0
 astroid==2.4.2
 async-timeout==3.0.1
