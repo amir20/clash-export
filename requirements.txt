@@ -95,7 +95,7 @@ pyparsing==2.4.7
 pytest==6.0.1
 pytest-cov==2.10.1
 pytest-freezegun==0.4.2
-pytest-mock==3.2.0
+pytest-mock==3.3.0
 pytest-runner==5.2
 python-dateutil==2.8.1
 python-editor==1.0.4
