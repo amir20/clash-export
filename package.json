@@ -36,7 +36,7 @@
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^0.10.0",
     "node-sass": "^4.14.1",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
     "postcss-cssnext": "^3.1.0",
     "postcss-custom-properties": "^9.1.1",
     "postcss-font-magician": "^2.3.1",
