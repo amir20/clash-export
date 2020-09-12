@@ -25,5 +25,6 @@
     encode gzip
     log {
         output stdout
+        format single_field common_log
     }
 }
