@@ -27,7 +27,7 @@
     "compression-webpack-plugin": "^6.0.0",
     "core-js": "^3.6.5",
     "css-loader": "^4.3.0",
-    "d3": "^6.1.1",
+    "d3": "^6.2.0",
     "date-fns": "^2.16.1",
     "es6-map": "^0.1.5",
     "file-loader": "^6.1.0",
