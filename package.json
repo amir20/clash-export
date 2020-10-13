@@ -30,7 +30,7 @@
     "d3": "^6.2.0",
     "date-fns": "^2.16.1",
     "es6-map": "^0.1.5",
-    "file-loader": "^6.1.0",
+    "file-loader": "^6.1.1",
     "flag-icon-css": "^3.5.0",
     "graphql": "^15.3.0",
     "lodash": "^4.17.20",
