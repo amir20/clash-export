@@ -117,6 +117,7 @@ message PlayerStats {
   int32 home_inferno_dragon = 112;
   int32 home_super_witch = 113;
   int32 home_headhunter = 114;
+  int32 home_super_minion = 115;
 }
 
 
