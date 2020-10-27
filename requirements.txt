@@ -108,7 +108,7 @@ rq==1.5.2
 rq-dashboard==0.6.1
 Rx==3.1.1
 scikit-learn==0.23.2
-scipy==1.5.2
+scipy==1.5.3
 six==1.15.0
 snapshottest==0.6.0
 termcolor==1.1.0
