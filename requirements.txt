@@ -52,7 +52,7 @@ importlib-metadata==2.0.0
 inflection==0.5.1
 ipython==7.19.0
 ipython-genutils==0.2.0
-isort==5.5.3
+isort==5.6.4
 itsdangerous==1.1.0
 jedi==0.17.2
 Jinja2==2.11.2
