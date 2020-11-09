@@ -112,7 +112,7 @@ scipy==1.5.3
 six==1.15.0
 snapshottest==0.6.0
 termcolor==1.1.0
-tinycss2==1.0.2
+tinycss2==1.1.0
 toml==0.10.1
 traitlets==5.0.5
 typed-ast==1.4.1
