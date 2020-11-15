@@ -192,7 +192,7 @@ class Clan(graphene.ObjectType):
                 "attack_wins": "attackWins",
             }
         )
-        return [Player(**p) for p in df.to_dict("i").values()]
+        return [Player(**p) for p in df.to_dict("index").values()]
 
     def resolve_similar(self, info, days):
         key = {1: "day_delta", 7: "week_delta"}[days]
@@ -207,7 +207,7 @@ class Clan(graphene.ObjectType):
         df.index.name = "labels"
         df = df.reset_index().rename(columns={"clanPoints": "trophies"})
         df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
-        return ClanActivity(**df.to_dict("l"))
+        return ClanActivity(**df.to_dict("list"))
 
     def resolve_player_status(self, info):
         return self.player_activity()
