@@ -34,14 +34,14 @@ def next_troop_recommendation(player) -> Dict:
 
     builder_troops = {}
     if "builderBase" in df.index:
-        builder_troops = df.loc["builderBase"].to_dict("i")
+        builder_troops = df.loc["builderBase"].to_dict("index")
         for k, v in builder_troops.items():
             v["name"] = k
         builder_troops = list(builder_troops.values())
 
     home_troops = {}
     if "home" in df.index:
-        home_troops = df.loc["home"].to_dict("i")
+        home_troops = df.loc["home"].to_dict("index")
         for k, v in home_troops.items():
             v["name"] = k
         home_troops = list(home_troops.values())
