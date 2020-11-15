@@ -31,7 +31,13 @@ def clan_detail_page(slug):
     except DoesNotExist:
         return render_template("404.html"), 404
     else:
-        return render_template("clan.html", clan=clan, trophy_distribution=clan_trophies(clan), initial_state=initial_state, description=description,)
+        return render_template(
+            "clan.html",
+            clan=clan,
+            trophy_distribution=clan_trophies(clan),
+            initial_state=initial_state,
+            description=description,
+        )
 
 
 @cache.memoize(600)
@@ -39,7 +45,7 @@ def clan_trophies(clan):
     df = clan.to_historical_df()[["members", "clanPoints"]].resample("D").mean().dropna()
     df = df.reset_index().rename(columns={"created_on": "labels"})
     df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
-    return df.to_dict("l")
+    return df.to_dict("list")
 
 
 @cache.memoize(1000)
