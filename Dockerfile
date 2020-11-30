@@ -16,7 +16,7 @@ COPY clashleaders/static clashleaders/static
 RUN npm run build
 
 
-FROM python:3.8.5
+FROM python:3.9.0
 
 # Create app directoy
 WORKDIR /app
@@ -33,7 +33,7 @@ RUN echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \
 RUN apt-get update \
     && pip install --upgrade pip==20.3.1 \
     && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
-    && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
+    && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev libopenblas-dev gfortran -y \
     && pip install --no-cache -r requirements.txt \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cache
