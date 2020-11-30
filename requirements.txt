@@ -73,7 +73,7 @@ numpy==1.19.4
 packaging==20.4
 pandas==1.1.4
 parso==0.7.1
-pathspec==0.8.0
+pathspec==0.8.1
 pep8==1.7.1
 pexpect==4.8.0
 pickleshare==0.7.5
