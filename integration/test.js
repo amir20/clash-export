@@ -18,7 +18,7 @@ describe("home page", () => {
     await page.goto(BASE, {
       waitUntil: "networkidle0",
     });
-    await page.waitForTimeout(2000); // wait for animation on home page
+    await page.waitFor(2000); // wait for animation on home page
     await page.mouse.move(-10, -10);
     const image = await page.screenshot({ fullPage: true });
 
@@ -30,7 +30,7 @@ describe("home page", () => {
     await page.goto(BASE, {
       waitUntil: "networkidle0",
     });
-    await page.waitForTimeout(2000); // wait for animation on home page
+    await page.waitFor(2000); // wait for animation on home page
     await page.setViewport({ width: 1024, height: 768 });
     const image = await page.screenshot();
 
@@ -42,7 +42,7 @@ describe("home page", () => {
     await page.goto(BASE, {
       waitUntil: "networkidle0",
     });
-    await page.waitForTimeout(2000); // wait for animation on home page
+    await page.waitFor(2000); // wait for animation on home page
     await page.setViewport({ width: 372, height: 812 });
     const image = await page.screenshot();
 
