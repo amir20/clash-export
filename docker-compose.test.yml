@@ -33,7 +33,7 @@ services:
     environment:
       - BASE=http://web/
     volumes:
-        - ./integration/__image_snapshots__:/app/__image_snapshots__  
+        - ./integration/__image_snapshots__:/app/__image_snapshots__
     build:
       context: ./integration
       dockerfile: Dockerfile
