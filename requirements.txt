@@ -89,7 +89,7 @@ pycodestyle==2.6.0
 pycparser==2.20
 Pygments==2.7.2
 pylint==2.6.0
-pymongo==3.11.0
+pymongo==3.11.2
 Pympler==0.9
 pyOpenSSL==20.0.0
 pyparsing==2.4.7
