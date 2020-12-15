@@ -118,8 +118,8 @@ message PlayerStats {
   int32 home_super_witch = 113;
   int32 home_headhunter = 114;
   int32 home_super_minion = 115;
+  int32 home_super_wizard = 116;
+  int32 home_invisibility_spell = 117;
+  int32 home_log_launcher = 118;
+  int32 home_ice_hound = 119;
 }
-
-
-
-
