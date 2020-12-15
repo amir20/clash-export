@@ -12,45 +12,45 @@
       default-sort="currentTrophies.value"
       default-sort-direction="desc"
       :opened-detailed="openDetails"
-      @details-open="row => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
-      @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
+      @details-open="(row) => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
+      @sort="(column) => gaEvent('sort-players', 'Sort Column', 'Column', column)"
       @click="onRowClicked"
     >
-      <template slot-scope="props">
-        <b-table-column
-          v-for="column in header"
-          :label="column.label"
-          :field="`${column.field}.${sortField}`"
-          :key="column.field"
-          :numeric="column.numeric"
-          sortable
+      <b-table-column
+        v-for="column in header"
+        :label="column.label"
+        :field="`${column.field}.${sortField}`"
+        :key="column.field"
+        :numeric="column.numeric"
+        sortable
+        v-slot="props"
+      >
+        {{ props.row[column.field].value.toLocaleString() }}
+        <span
+          v-if="column.field == 'name' && clan.playerStatus[props.row.tag.value]"
+          class="tag is-uppercase"
+          :class="clan.playerStatus[props.row.tag.value]"
+          >{{ clan.playerStatus[props.row.tag.value] }}</span
         >
-          {{ props.row[column.field].value.toLocaleString() }}
+        <b
+          v-if="column.numeric && props.row[column.field].delta != 0"
+          :class="{
+            up: props.row[column.field].delta > 0,
+            down: props.row[column.field].delta < 0,
+          }"
+          :key="props.row[column.field].delta"
+        >
           <span
-            v-if="column.field == 'name' && clan.playerStatus[props.row.tag.value]"
-            class="tag is-uppercase"
-            :class="clan.playerStatus[props.row.tag.value]"
-            >{{ clan.playerStatus[props.row.tag.value] }}</span
-          >
-          <b
-            v-if="column.numeric && props.row[column.field].delta != 0"
             :class="{
-              up: props.row[column.field].delta > 0,
-              down: props.row[column.field].delta < 0
+              'fa-caret-up': props.row[column.field].delta > 0,
+              'fa-caret-down': props.row[column.field].delta < 0,
             }"
-            :key="props.row[column.field].delta"
-          >
-            <span
-              :class="{
-                'fa-caret-up': props.row[column.field].delta > 0,
-                'fa-caret-down': props.row[column.field].delta < 0
-              }"
-              class="fa-sm fa"
-            ></span>
-            {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
-          </b>
-        </b-table-column>
-      </template>
+            class="fa-sm fa"
+          ></span>
+          {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
+        </b>
+      </b-table-column>
+
       <template slot="detail" slot-scope="props">
         <player-comparison :player-data="props.row"></player-comparison>
       </template>
@@ -68,12 +68,12 @@ export default {
   mixins: [gaMixin, UserMixin],
   props: ["tag", "name", "oldestDays"],
   components: {
-    PlayerComparison
+    PlayerComparison,
   },
   data() {
     return {
       selected: null,
-      openDetails: []
+      openDetails: [],
     };
   },
   created() {
@@ -91,13 +91,13 @@ export default {
   },
   computed: {
     ...mapState(["sortField", "clan"]),
-    ...mapGetters(["header", "tableData"])
+    ...mapGetters(["header", "tableData"]),
   },
   watch: {
     sortField(newValue) {
       const column = this.$refs.table.currentSortColumn;
       this.$nextTick(() => this.$refs.table.sort(column, true));
-    }
+    },
   },
   methods: {
     ...mapActions({ fetchClanData: "FETCH_CLAN_DATA" }),
@@ -113,8 +113,8 @@ export default {
       if (!document.hidden) {
         this.fetchClanData();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
