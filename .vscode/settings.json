@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": ".direnv/python-venv-3.8.6/bin/python",
+  "python.pythonPath": ".direnv/python-venv-3.9.0/bin/python",
   "python.linting.enabled": true,
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["--line-length", "160"],
