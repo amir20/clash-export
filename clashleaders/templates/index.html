@@ -1,4 +1,5 @@
-{% from 'macros/country-leaderboard.html' import country_leaderboard %} {% from 'macros/leaderboard.html' import leaderboard %} {% extends "layout.html" %} {% block body %}
+{% from 'macros/country-leaderboard.html' import country_leaderboard %} {% from 'macros/leaderboard.html' import leaderboard %} {% extends "layout.html" %} {%
+block body %}
 <section class="section hero is-light">
   <div class="container" id="app">
     <div class="columns is-centered is-vcentered">
@@ -79,5 +80,5 @@
   window.__DISTRIBUTION__ = {{ trophy_distribution | tojson | safe }};
 </script>
 <script defer src="{{ manifest_path('index.js') }}"></script>
-<link rel="prefetch" as="script" href="{{ manifest_path('clan-page.js') }}">
+<link rel="prefetch" as="script" href="{{ manifest_path('clan-page.js') }}" />
 {% endblock %}{% block nav_class %}is-light{% endblock %}
