@@ -20,7 +20,7 @@
     "bulma": "^0.9.1",
     "bulma-badge": "^3.0.1",
     "bulma-tooltip": "^3.0.2",
-    "caniuse-lite": "^1.0.30001166",
+    "caniuse-lite": "^1.0.30001170",
     "chartist": "^0.11.4",
     "chartist-plugin-legend": "^0.6.2",
     "clean-webpack-plugin": "^3.0.0",
