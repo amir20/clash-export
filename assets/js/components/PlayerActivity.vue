@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-if="loading || hasData">
-    <b-tabs size="is-medium" @change="onChange">
-      <b-tab-item label="Attacks">
+    <b-tabs size="is-medium" @input="onChange">
+      <b-tab-item label="Attacks" value="attacks">
         <activity-distribution
           ref="attacks"
           :labels="player.labels"
@@ -12,8 +12,7 @@
         >
         </activity-distribution>
       </b-tab-item>
-
-      <b-tab-item label="Donations">
+      <b-tab-item label="Donations" value="donations">
         <activity-distribution
           ref="donations"
           :labels="player.labels"
@@ -25,7 +24,7 @@
         </activity-distribution>
       </b-tab-item>
 
-      <b-tab-item label="Trophies">
+      <b-tab-item label="Trophies" value="trophies">
         <activity-distribution
           ref="trophies"
           :labels="player.labels"
@@ -36,7 +35,7 @@
         >
         </activity-distribution>
       </b-tab-item>
-      <b-tab-item label="DE Grab">
+      <b-tab-item label="DE Grab" value="loot">
         <activity-distribution
           ref="loot"
           :labels="player.labels"
@@ -50,12 +49,8 @@
     </b-tabs>
   </div>
   <div class="container" v-else>
-    <div v-if="isSameUser">
-      Chief! Come back tomorrow. I am still collecting data to be able to show your activity.
-    </div>
-    <div v-else>
-      This player doesn't have any activity yet. Try again tomorrow after I've had a chance to collect some data.
-    </div>
+    <div v-if="isSameUser">Chief! Come back tomorrow. I am still collecting data to be able to show your activity.</div>
+    <div v-else>This player doesn't have any activity yet. Try again tomorrow after I've had a chance to collect some data.</div>
   </div>
 </template>
 
@@ -68,7 +63,7 @@ import { gql } from "apollo-boost";
 
 export default {
   components: {
-    ActivityDistribution
+    ActivityDistribution,
   },
   mixins: [UserMixin],
   props: ["playerTag"],
@@ -80,8 +75,8 @@ export default {
         attackWins: [],
         donations: [],
         deGrab: [],
-        trophies: []
-      }
+        trophies: [],
+      },
     };
   },
   async created() {
@@ -114,8 +109,8 @@ export default {
       variables: {
         playerTag: this.playerTag,
         userTag: this.userTag,
-        hasUser: this.hasDifferentUser
-      }
+        hasUser: this.hasDifferentUser,
+      },
     });
 
     const { user, player } = data;
@@ -140,11 +135,10 @@ export default {
     this.loading = false;
   },
   methods: {
-    onChange(index) {
-      const { attacks, donations, trophies, loot } = this.$refs;
-      const chart = [attacks, donations, trophies, loot][index];
+    onChange(tab) {
+      const chart = this.$refs[tab];
       setTimeout(() => chart.redraw(), 100);
-    }
+    },
   },
   computed: {
     hasDifferentUser() {
@@ -155,8 +149,8 @@ export default {
     },
     hasData() {
       return this.player.labels.length > 0;
-    }
-  }
+    },
+  },
 };
 </script>
 
