@@ -19,12 +19,12 @@ new Vue({
   components: {
     SearchBox,
     Changelog,
-    User,
+    User
   },
   data() {
     return {
       selectedTag: null,
-      showNav: false,
+      showNav: false
     };
   },
   watch: {
@@ -40,11 +40,11 @@ new Vue({
             }
           `,
           variables: {
-            tag: newValue,
-          },
+            tag: newValue
+          }
         });
         window.location = `/clan/${data.clan.slug}`;
       }
-    },
-  },
+    }
+  }
 });

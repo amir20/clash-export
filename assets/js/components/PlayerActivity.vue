@@ -63,7 +63,7 @@ import { gql } from "apollo-boost";
 
 export default {
   components: {
-    ActivityDistribution,
+    ActivityDistribution
   },
   mixins: [UserMixin],
   props: ["playerTag"],
@@ -75,8 +75,8 @@ export default {
         attackWins: [],
         donations: [],
         deGrab: [],
-        trophies: [],
-      },
+        trophies: []
+      }
     };
   },
   async created() {
@@ -109,8 +109,8 @@ export default {
       variables: {
         playerTag: this.playerTag,
         userTag: this.userTag,
-        hasUser: this.hasDifferentUser,
-      },
+        hasUser: this.hasDifferentUser
+      }
     });
 
     const { user, player } = data;
@@ -138,7 +138,7 @@ export default {
     onChange(tab) {
       const chart = this.$refs[tab];
       setTimeout(() => chart.redraw(), 100);
-    },
+    }
   },
   computed: {
     hasDifferentUser() {
@@ -149,8 +149,8 @@ export default {
     },
     hasData() {
       return this.player.labels.length > 0;
-    },
-  },
+    }
+  }
 };
 </script>
 

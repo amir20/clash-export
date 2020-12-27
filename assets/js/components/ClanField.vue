@@ -1,6 +1,8 @@
 <template>
   <span v-if="tweeningValue != null" :class="{ [positiveClass]: tweeningValue > 0, [negativeClass]: tweeningValue < 0 }">
-    <template v-if="showPlusSign && tweeningValue > 0">+</template>{{ tweeningValue.toLocaleString() }}
+    <template v-if="showPlusSign && tweeningValue > 0"
+      >+</template
+    >{{ tweeningValue.toLocaleString() }}
   </span>
 </template>
 
@@ -14,11 +16,11 @@ export default {
     name: { type: String },
     showPlusSign: { type: Boolean, default: false },
     positiveClass: { type: String, default: "" },
-    negativeClass: { type: String, default: "" },
+    negativeClass: { type: String, default: "" }
   },
-  data: function () {
+  data: function() {
     return {
-      tweeningValue: 0,
+      tweeningValue: 0
     };
   },
   created() {
@@ -27,13 +29,13 @@ export default {
   watch: {
     targetValue(newValue, oldValue) {
       this.tween(this.tweeningValue, this.targetValue);
-    },
+    }
   },
   computed: {
     ...mapState(["clan"]),
     targetValue() {
       return this.name.split(".").reduce((prev, curr) => (prev ? prev[curr] : null), this.clan);
-    },
+    }
   },
   methods: {
     tween(startValue, endValue) {
@@ -49,7 +51,7 @@ export default {
         .onUpdate(({ tweeningValue }) => (this.tweeningValue = Math.ceil(tweeningValue)))
         .start();
       animate();
-    },
-  },
+    }
+  }
 };
 </script>
