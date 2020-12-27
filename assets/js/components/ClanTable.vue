@@ -12,8 +12,8 @@
       default-sort="currentTrophies.value"
       default-sort-direction="desc"
       :opened-detailed="openDetails"
-      @details-open="(row) => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
-      @sort="(column) => gaEvent('sort-players', 'Sort Column', 'Column', column)"
+      @details-open="row => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
+      @sort="column => gaEvent('sort-players', 'Sort Column', 'Column', column)"
       @click="onRowClicked"
     >
       <b-table-column
@@ -36,14 +36,14 @@
           v-if="column.numeric && props.row[column.field].delta != 0"
           :class="{
             up: props.row[column.field].delta > 0,
-            down: props.row[column.field].delta < 0,
+            down: props.row[column.field].delta < 0
           }"
           :key="props.row[column.field].delta"
         >
           <span
             :class="{
               'fa-caret-up': props.row[column.field].delta > 0,
-              'fa-caret-down': props.row[column.field].delta < 0,
+              'fa-caret-down': props.row[column.field].delta < 0
             }"
             class="fa-sm fa"
           ></span>
@@ -68,12 +68,12 @@ export default {
   mixins: [gaMixin, UserMixin],
   props: ["tag", "name", "oldestDays"],
   components: {
-    PlayerComparison,
+    PlayerComparison
   },
   data() {
     return {
       selected: null,
-      openDetails: [],
+      openDetails: []
     };
   },
   created() {
@@ -91,13 +91,13 @@ export default {
   },
   computed: {
     ...mapState(["sortField", "clan"]),
-    ...mapGetters(["header", "tableData"]),
+    ...mapGetters(["header", "tableData"])
   },
   watch: {
     sortField(newValue) {
       const column = this.$refs.table.currentSortColumn;
       this.$nextTick(() => this.$refs.table.sort(column, true));
-    },
+    }
   },
   methods: {
     ...mapActions({ fetchClanData: "FETCH_CLAN_DATA" }),
@@ -113,8 +113,8 @@ export default {
       if (!document.hidden) {
         this.fetchClanData();
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
