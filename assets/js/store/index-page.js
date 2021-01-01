@@ -12,7 +12,7 @@ const SKIP_PLAYER_QUESTION = "skipPlayerQuestion";
 const state = {
   foundClan: null,
   savedTag: store.get(STORAGE_KEY),
-  skipPlayerQuestion: store.get(SKIP_PLAYER_QUESTION) ? true : false
+  skipPlayerQuestion: store.get(SKIP_PLAYER_QUESTION) ? true : false,
 };
 
 const mutations = {
@@ -41,7 +41,7 @@ const mutations = {
     event("skip-player", "Skip Player Saving");
     state.skipPlayerQuestion = true;
     store.set(SKIP_PLAYER_QUESTION, true);
-  }
+  },
 };
 
 const actions = {};
@@ -51,5 +51,5 @@ export default new Vuex.Store({
   state,
   getters,
   actions,
-  mutations
+  mutations,
 });

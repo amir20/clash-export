@@ -43,7 +43,7 @@ export default {
     onMenuClick() {
       store.set(KEY, this.items[0].id);
       this.hasUpdates = false;
-    }
-  }
+    },
+  },
 };
 </script>

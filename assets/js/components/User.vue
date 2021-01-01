@@ -26,6 +26,6 @@
 import UserMixin from "../user";
 
 export default {
-  mixins: [UserMixin]
+  mixins: [UserMixin],
 };
 </script>

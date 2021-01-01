@@ -11,9 +11,7 @@
       </b-radio-button>
     </b-field>
     <b-field class="column is-hidden-mobile">
-      <b-switch v-model="sort" true-value="delta" false-value="value">
-        Sort by difference
-      </b-switch>
+      <b-switch v-model="sort" true-value="delta" false-value="value"> Sort by difference </b-switch>
     </b-field>
   </div>
 </template>
@@ -25,12 +23,12 @@ export default {
   data() {
     return {
       days: 7,
-      sort: "value"
+      sort: "value",
     };
   },
   methods: {
     ...mapActions({ loadDaysAgo: "SHOW_DIFFERENT_DAYS" }),
-    ...mapMutations({ changeSort: "CHANGE_SORT_FIELD" })
+    ...mapMutations({ changeSort: "CHANGE_SORT_FIELD" }),
   },
   watch: {
     days(newValue) {
@@ -42,8 +40,8 @@ export default {
       if (newValue) {
         this.changeSort(newValue);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

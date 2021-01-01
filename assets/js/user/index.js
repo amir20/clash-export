@@ -26,14 +26,14 @@ export default {
   data() {
     return {
       savedUser: store.get(PLAYER_KEY),
-      userData: null
+      userData: null,
     };
   },
   created() {
     this.fetchUser();
   },
   mounted() {
-    document.addEventListener("user-state-changed", e => {
+    document.addEventListener("user-state-changed", (e) => {
       this.savedUser = store.get(PLAYER_KEY);
       this.fetchUser();
     });
@@ -67,8 +67,8 @@ export default {
           }
         `,
         variables: {
-          tag: this.savedUser.tag
-        }
+          tag: this.savedUser.tag,
+        },
       });
       return data.player;
     },
@@ -77,7 +77,7 @@ export default {
     },
     saveUser(data) {
       saveUser(data);
-    }
+    },
   },
   computed: {
     userTag() {
@@ -91,13 +91,13 @@ export default {
     },
     userSlug() {
       return this.userData ? this.userData.slug : null;
-    }
+    },
   },
   watch: {
     savedUser(newValue) {
       if (newValue) {
         this.fetchUser();
       }
-    }
-  }
+    },
+  },
 };

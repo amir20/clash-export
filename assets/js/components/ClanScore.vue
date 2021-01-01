@@ -18,18 +18,18 @@ export default {
   props: {
     score: { type: Number },
     field: { type: String },
-    title: { type: String }
+    title: { type: String },
   },
   watch: {
     scoreValue(newValue, oldValue) {
       this.score = newValue;
-    }
+    },
   },
   computed: {
     ...mapState(["clan"]),
     scoreValue() {
       return this.field.split(".").reduce((prev, curr) => (prev ? prev[curr] : null), this.clan);
-    }
+    },
   },
   methods: {
     gradeColor(value) {
@@ -48,14 +48,14 @@ export default {
       }
 
       return classes;
-    }
+    },
   },
   filters: {
     grade(value) {
       const s = Math.ceil((100 - value * 100) / 3);
       return grades[Math.min(s, grades.length - 1)];
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">

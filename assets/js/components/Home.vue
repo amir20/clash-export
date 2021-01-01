@@ -69,13 +69,13 @@ export default {
     Card,
     SearchBox,
     PlayerList,
-    WebPImage
+    WebPImage,
   },
   mixins: [UserMixin],
   data() {
     return {
       fetchedClan: null,
-      showModal: true
+      showModal: true,
     };
   },
   methods: {
@@ -101,18 +101,18 @@ export default {
       link.rel = "prefetch";
       link.as = "fetch";
       document.head.appendChild(link);
-    }
+    },
   },
   watch: {
     foundClan(newValue) {
       if (newValue) {
         this.prefetch(`/clan/${newValue.slug}`);
       }
-    }
+    },
   },
   computed: {
-    ...mapState(["foundClan", "savedTag", "savedPlayer", "skipPlayerQuestion"])
-  }
+    ...mapState(["foundClan", "savedTag", "savedPlayer", "skipPlayerQuestion"]),
+  },
 };
 </script>
 <style lang="scss" scoped>

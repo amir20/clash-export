@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       text: "",
-      interval: null
+      interval: null,
     };
   },
   mounted() {
@@ -25,20 +25,20 @@ export default {
     ...mapState(["clan", "loading"]),
     lastUpdated() {
       return new Date(this.clan.updatedOn);
-    }
+    },
   },
   methods: {
     updateFromNow() {
       this.text = formatDistance(this.lastUpdated, new Date(), {
-        addSuffix: true
+        addSuffix: true,
       });
-    }
+    },
   },
   watch: {
     lastUpdated() {
       this.updateFromNow();
-    }
-  }
+    },
+  },
 };
 </script>
 

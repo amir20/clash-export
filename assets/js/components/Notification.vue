@@ -5,7 +5,7 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["clan"])
+    ...mapState(["clan"]),
   },
   mounted() {
     if (this.clan.oldestDays < 3) {
@@ -15,9 +15,9 @@ export default {
         type: "is-warning",
         position: "is-bottom-left",
         actionText: "Got it",
-        duration: 20000
+        duration: 20000,
       });
     }
-  }
+  },
 };
 </script>
