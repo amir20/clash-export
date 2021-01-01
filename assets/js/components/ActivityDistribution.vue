@@ -21,7 +21,7 @@ export default {
     userSeries: { type: Array },
     playerSeries: { type: Array },
     showUser: { type: Boolean },
-    loading: { type: Boolean, default: true }
+    loading: { type: Boolean, default: true },
   },
   mounted() {
     this.draw();
@@ -32,12 +32,12 @@ export default {
       const player = { name: "This player", data: playerSeries, className: "player-activity" };
       const user = { name: "You", data: userSeries, className: "user-activity" };
       return { labels, series: this.showUser ? [player, user] : [player] };
-    }
+    },
   },
   watch: {
     loading() {
       this.draw();
-    }
+    },
   },
   methods: {
     redraw() {
@@ -49,13 +49,13 @@ export default {
         this.$refs.chart,
         {
           labels: data.labels,
-          series: data.series
+          series: data.series,
         },
         {
           plugins: [
             Chartist.plugins.legend({
-              classNames: ["player-activity", "user-activity"]
-            })
+              classNames: ["player-activity", "user-activity"],
+            }),
           ],
           axisX: {
             showLabel: true,
@@ -66,19 +66,19 @@ export default {
               } else {
                 return null;
               }
-            }
+            },
           },
           axisY: {
             showLabel: true,
             showGrid: false,
-            labelInterpolationFnc: value => value.toLocaleString()
+            labelInterpolationFnc: (value) => value.toLocaleString(),
           },
           width: "100%",
           fullWidth: true,
           showArea: true,
           showLine: true,
           showPoint: false,
-          distributeSeries: true
+          distributeSeries: true,
         },
         [
           [
@@ -91,19 +91,19 @@ export default {
                   } else {
                     return null;
                   }
-                }
-              }
-            }
-          ]
+                },
+              },
+            },
+          ],
         ]
       );
-    }
-  }
+    },
+  },
 };
 
 const fakeData = {
   series: [{ data: times(28, random.bind(0, 10)), name: "This player" }],
-  labels: fill(Array(28), "█")
+  labels: fill(Array(28), "█"),
 };
 </script>
 

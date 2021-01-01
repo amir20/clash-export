@@ -12,8 +12,8 @@ export default {
   filters: {
     iconClass(value) {
       return kebabCase(value);
-    }
-  }
+    },
+  },
 };
 </script>
 

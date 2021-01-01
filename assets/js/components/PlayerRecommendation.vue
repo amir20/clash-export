@@ -60,19 +60,19 @@ export default {
   mixins: [UserMixin],
   components: {
     Troop,
-    WebPImage
+    WebPImage,
   },
   computed: {
     homeBaseTroop() {
-      return maxBy(this.insights.home, i => i.delta);
+      return maxBy(this.insights.home, (i) => i.delta);
     },
     builderBaseTroop() {
-      return maxBy(this.insights.builderBase, i => i.delta);
+      return maxBy(this.insights.builderBase, (i) => i.delta);
     },
     showInsights() {
       return this.playerTag === this.userTag;
-    }
-  }
+    },
+  },
 };
 </script>
 

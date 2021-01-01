@@ -49,17 +49,17 @@ const role = {
   coLeader: "Co-leader",
   leader: "Leader",
   admin: "Elder",
-  member: "Member"
+  member: "Member",
 };
 
 export default {
   components: {
-    Troops
+    Troops,
   },
   props: ["playerData"],
   data() {
     return {
-      player: null
+      player: null,
     };
   },
   created() {
@@ -71,7 +71,7 @@ export default {
   filters: {
     role(value) {
       return role[value];
-    }
+    },
   },
   methods: {
     update() {
@@ -79,7 +79,7 @@ export default {
         this.$refs.chart,
         {
           labels: ["Recent DE Grab", "Recent Elixir Grab", "Recent Gold Grab"],
-          series: this.series
+          series: this.series,
         },
         {
           seriesBarDistance: -20,
@@ -90,8 +90,8 @@ export default {
           axisX: {
             labelInterpolationFnc(value, index) {
               return index % 2 === 0 ? value.toLocaleString() : null;
-            }
-          }
+            },
+          },
         }
       );
     },
@@ -114,15 +114,15 @@ export default {
             }
           `,
           variables: {
-            tag: this.playerData.tag.value
-          }
+            tag: this.playerData.tag.value,
+          },
         });
         this.player = data.player;
       } catch (e) {
         console.error(e);
         bugsnagClient.notify(e);
       }
-    }
+    },
   },
   watch: {
     clan(newValue) {
@@ -139,7 +139,7 @@ export default {
       if (newValue && newValue.name) {
         this.update();
       }
-    }
+    },
   },
   computed: {
     ...mapState(["clan", "savedClan"]),
@@ -148,32 +148,32 @@ export default {
       s.push({
         name: this.playerData.name.value,
         data: [this.playerData.totalDeGrab.delta, this.playerData.totalElixirGrab.delta, this.playerData.totalGoldGrab.delta],
-        className: "player"
+        className: "player",
       });
 
       s.push({
         name: "This clan's average",
         data: [this.clan.delta.avgDeGrab, this.clan.delta.avgElixirGrab, this.clan.delta.avgGoldGrab],
-        className: "clan"
+        className: "clan",
       });
 
       s.push({
         name: "Similar clans' average",
         data: [this.clan.similar.avgDeGrab, this.clan.similar.avgElixirGrab, this.clan.similar.avgGoldGrab],
-        className: "similar-clans"
+        className: "similar-clans",
       });
 
       if (this.savedClan && this.savedClan.name) {
         s.push({
           name: this.savedClan.name,
           data: [this.savedClan.delta.avgDeGrab, this.savedClan.delta.avgElixirGrab, this.savedClan.delta.avgGoldGrab],
-          className: "saved-clan"
+          className: "saved-clan",
         });
       }
 
       return s;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -34,13 +34,13 @@ export default {
       loading: true,
       data: {
         badgeUrls: {
-          medium: "https://placehold.jp/250x250.png?text=%20"
+          medium: "https://placehold.jp/250x250.png?text=%20",
         },
         name: "██████",
         tag: "██████",
         description: "██████ ████████████ █ ████ █ ██████ ████████████ ███ ███ ███████████ █ ███ ███",
-        clanPoints: "0"
-      }
+        clanPoints: "0",
+      },
     };
   },
   async created() {
@@ -66,8 +66,8 @@ export default {
           }
         `,
         variables: {
-          tag: this.tag
-        }
+          tag: this.tag,
+        },
       });
       this.data = data.clan;
     } catch (e) {
@@ -80,8 +80,8 @@ export default {
     this.loading = false;
   },
   methods: {
-    ...mapMutations(["setFoundClan"])
-  }
+    ...mapMutations(["setFoundClan"]),
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -17,18 +17,18 @@ export default {
   props: ["players"],
   data() {
     return {
-      selectedPlayer: Object
+      selectedPlayer: Object,
     };
   },
   methods: {
     pickPlayer(player) {
       this.selectedPlayer = player;
       this.$emit("update:selectedPlayer", player);
-    }
+    },
   },
   computed: {
-    ...mapState(["foundClan", "savedTag"])
-  }
+    ...mapState(["foundClan", "savedTag"]),
+  },
 };
 </script>
 <style lang="scss" scoped>

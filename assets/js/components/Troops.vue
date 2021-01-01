@@ -55,16 +55,16 @@ import Troop from "./Troop";
 export default {
   props: ["player"],
   components: {
-    Troop
+    Troop,
   },
   data() {
     return {};
   },
   methods: {
     filterTroops(list, type) {
-      return list.filter(troop => troop.village == type);
-    }
-  }
+      return list.filter((troop) => troop.village == type);
+    },
+  },
 };
 </script>
 
