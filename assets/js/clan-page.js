@@ -24,8 +24,8 @@ new Vue({
     Notification,
     LastUpdated,
     ClanField,
-    ClanScore
-  }
+    ClanScore,
+  },
 });
 
 store.dispatch("FETCH_CLAN_DATA");

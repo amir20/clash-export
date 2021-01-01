@@ -15,6 +15,6 @@ new Vue({
   components: {
     Troops,
     PlayerRecommendation,
-    PlayerActivity
-  }
+    PlayerActivity,
+  },
 });

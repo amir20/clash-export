@@ -14,6 +14,6 @@ new Vue({
   store,
   components: {
     Home,
-    TrophyDistribution
-  }
+    TrophyDistribution,
+  },
 });

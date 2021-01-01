@@ -12,20 +12,20 @@ export default {
       this.$refs.chart,
       {
         labels: this.data.levels,
-        series: this.data.series
+        series: this.data.series,
       },
       {
         axisX: {
           showLabel: true,
-          showGrid: false
+          showGrid: false,
         },
         axisY: {
           showLabel: true,
-          showGrid: true
+          showGrid: true,
         },
         width: "100%",
         height: "300px",
-        stackBars: true
+        stackBars: true,
       }
     );
   },
@@ -41,8 +41,8 @@ export default {
         deltas.push(+max - +avg);
       }
       return { levels, series: [averages, deltas] };
-    }
-  }
+    },
+  },
 };
 </script>
 

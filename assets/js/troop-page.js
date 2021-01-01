@@ -7,6 +7,6 @@ bugsnag(Vue);
 new Vue({
   el: "#app",
   components: {
-    TroopAverageDistribution
-  }
+    TroopAverageDistribution,
+  },
 });

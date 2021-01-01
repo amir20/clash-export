@@ -26,7 +26,7 @@ const d3 = {
   line,
   timeDay,
   area,
-  curveMonotoneX
+  curveMonotoneX,
 };
 
 const margin = { top: 10, right: 50, bottom: 40, left: 70 };
@@ -39,13 +39,13 @@ const dom = {
   leftAxis: null,
   rightAxis: null,
   rightLabel: null,
-  leftLabel: null
+  leftLabel: null,
 };
 export default {
   props: ["distributionData"],
   data() {
     return {
-      data: []
+      data: [],
     };
   },
   async created() {
@@ -56,7 +56,7 @@ export default {
       this.data.push({
         date: parseTime(date),
         trophies: trophy,
-        members: member
+        members: member,
       });
     }
 
@@ -76,31 +76,13 @@ export default {
     dom.bottomAxis = root.append("g").attr("class", "axis x");
     dom.leftAxis = root.append("g").attr("class", "axis y");
     dom.rightAxis = root.append("g").attr("class", "axis y");
-    dom.rightLabel = root
-      .append("text")
-      .attr("transform", "rotate(90)")
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .attr("y", 1000)
-      .attr("x", 1000);
+    dom.rightLabel = root.append("text").attr("transform", "rotate(90)").attr("dy", "1em").style("text-anchor", "middle").attr("y", 1000).attr("x", 1000);
 
-    dom.rightLabel
-      .append("tspan")
-      .attr("class", "members-legend")
-      .text("◼ ");
+    dom.rightLabel.append("tspan").attr("class", "members-legend").text("◼ ");
     dom.rightLabel.append("tspan").text("Members");
 
-    dom.leftLabel = root
-      .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .attr("y", 1000)
-      .attr("x", 1000);
-    dom.leftLabel
-      .append("tspan")
-      .attr("class", "trophy-legend")
-      .text("◼ ");
+    dom.leftLabel = root.append("text").attr("transform", "rotate(-90)").attr("dy", "1em").style("text-anchor", "middle").attr("y", 1000).attr("x", 1000);
+    dom.leftLabel.append("tspan").attr("class", "trophy-legend").text("◼ ");
     dom.leftLabel.append("tspan").text("Trophy Points");
 
     window.addEventListener("resize", this.render);
@@ -109,7 +91,7 @@ export default {
     window.removeEventListener("resize", this.render);
   },
   methods: {
-    render: debounce(function() {
+    render: debounce(function () {
       const { svg, membersPath, trophyPath, bottomAxis, leftAxis, rightAxis, rightLabel, leftLabel } = dom;
       const { data } = this;
 
@@ -120,20 +102,20 @@ export default {
 
       const trophyArea = d3
         .area()
-        .x(d => x(d.date))
+        .x((d) => x(d.date))
         .y0(height)
-        .y1(d => yLeft(d.trophies))
+        .y1((d) => yLeft(d.trophies))
         .curve(d3.curveMonotoneX);
 
       const membersLine = d3
         .line()
-        .x(d => x(d.date))
-        .y(d => yRight(d.members))
+        .x((d) => x(d.date))
+        .y((d) => yRight(d.members))
         .curve(d3.curveMonotoneX);
 
-      x.domain(d3.extent(data, d => d.date));
-      yLeft.domain(d3.extent(data, d => d.trophies));
-      const [yRightMin, yRightMax] = d3.extent(data, d => d.members);
+      x.domain(d3.extent(data, (d) => d.date));
+      yLeft.domain(d3.extent(data, (d) => d.trophies));
+      const [yRightMin, yRightMax] = d3.extent(data, (d) => d.members);
       yRight.domain([Math.min(yRightMax - 5, yRightMin), yRightMax]);
 
       trophyPath.data([data]).attr("d", trophyArea);
@@ -152,8 +134,8 @@ export default {
 
       rightLabel.attr("y", 0 - width - margin.right).attr("x", height / 2);
       leftLabel.attr("y", 0 - margin.left).attr("x", -height / 2);
-    }, 10)
-  }
+    }, 10),
+  },
 };
 </script>
 

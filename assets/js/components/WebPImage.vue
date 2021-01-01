@@ -8,6 +8,6 @@
 
 <script>
 export default {
-  props: ["name", "width", "height"]
+  props: ["name", "width", "height"],
 };
 </script>

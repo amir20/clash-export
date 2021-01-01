@@ -20,7 +20,7 @@ export default {
       this.$refs.chart,
       {
         labels: this.data.labels,
-        series: this.data.values
+        series: this.data.values,
       },
       {
         axisX: {
@@ -28,15 +28,15 @@ export default {
           showGrid: false,
           labelInterpolationFnc(value, index) {
             return index % 20 === 0 ? value.toLocaleString() : null;
-          }
+          },
         },
         axisY: {
           showLabel: true,
-          showGrid: true
+          showGrid: true,
         },
         width: "100%",
         fullWidth: true,
-        distributeSeries: true
+        distributeSeries: true,
       }
     );
 
@@ -44,7 +44,7 @@ export default {
       this.highlightClan(this.foundClan);
     });
 
-    chart.on("draw", data => {
+    chart.on("draw", (data) => {
       if (data.type === "bar") {
         this.animationStarted();
         if (!this.started) {
@@ -53,8 +53,8 @@ export default {
               dur: "350ms",
               from: data.y1,
               to: data.y2,
-              easing: Chartist.Svg.Easing.easeOutQuint
-            }
+              easing: Chartist.Svg.Easing.easeOutQuint,
+            },
           });
         }
         data.element.attr({ label: labels[data.seriesIndex] });
@@ -64,7 +64,7 @@ export default {
     this.chart = chart;
   },
   methods: {
-    animationStarted: debounce(function() {
+    animationStarted: debounce(function () {
       this.started = true;
     }, 1000),
     highlightClan(clan) {
@@ -79,16 +79,16 @@ export default {
           bar.classList.add("highlight");
         }
       }
-    }
+    },
   },
   watch: {
     foundClan(newValue) {
       this.highlightClan(newValue);
-    }
+    },
   },
   computed: {
-    ...mapState(["foundClan"])
-  }
+    ...mapState(["foundClan"]),
+  },
 };
 </script>
 
