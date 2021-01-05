@@ -69,6 +69,8 @@ class Clan(DynamicDocument):
             "week_delta.avg_versus_wins",
             # Active clans
             ["week_delta.total_attack_wins", "updated_on", "members"],
+            ["active_members", "updated_on"],
+            ["active_members", "-updated_on"],
             "computed.total_attack_wins",
             # Leaderboards
             "week_delta.total_trophies",
