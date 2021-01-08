@@ -1,4 +1,5 @@
-from flask import render_template
+from flask import render_template, url_for, redirect
+
 
 from clashleaders import app, cache
 from clashleaders.model import Clan
@@ -36,5 +37,7 @@ TITLE_MAPPING = {
 @app.route("/explore/<sort>")
 @cache.cached(600)
 def explore_clans(sort):
+    if sort == "most-donations":
+        return redirect(url_for("explore_clans", sort="donations"), code=301)
     clans = Clan.objects(active_members__gte=10).order_by(ORDER_MAPPING[sort]).limit(50)
     return render_template("explore.html", clans=clans, sort=sort, title=TITLE_MAPPING[sort])
