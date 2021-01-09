@@ -25,37 +25,22 @@
         <div class="level is-mobile">
           <div class="level-item has-text-centered">
             <div>
-              <p class="heading">Total Trophies</p>
-              <p class="title">{{ "{:,}".format(clan.clanPoints) }}</p>
-              <p>
-                <span class="tag {{'is-success' if clan.week_delta.total_trophies > 0 else 'is-danger'}}"
-                  >{{ "{:+,}".format(clan.week_delta.total_trophies) }}</span
-                >
-              </p>
+              <p class="title">{{ clan.grade('month_delta.avg_cwl_stars_percentile') }}</p>
+              <p class="heading">CWL</p>
             </div>
           </div>
 
           <div class="level-item has-text-centered">
             <div>
-              <p class="heading">Total BH Trophies</p>
-              <p class="title">{{ "{:,}".format(clan.clanVersusPoints) }}</p>
-              <p>
-                <span class="tag {{'is-success' if clan.week_delta.total_bh_trophies > 0 else 'is-danger'}}"
-                  >{{ "{:+,}".format(clan.week_delta.total_bh_trophies) }}</span
-                >
-              </p>
+              <p class="title">{{ clan.grade('week_delta.avg_war_stars_percentile') }}</p>
+              <p class="heading">Wars</p>
             </div>
           </div>
 
-          <div class="level-item has-text-centered is-hidden-mobile">
+          <div class="level-item has-text-centered">
             <div>
-              <p class="heading">Total Donations</p>
-              <p class="title">{{ "{:,}".format(clan.computed.total_donations) }}</p>
-              <p>
-                <span class="tag {{'is-success' if clan.week_delta.total_donations > 0 else 'is-danger'}}">
-                  {{ "{:+,}".format(clan.week_delta.total_donations) }}
-                </span>
-              </p>
+              <p class="title">{{ clan.grade('week_delta.avg_donations_percentile') }}</p>
+              <p class="heading">Donations</p>
             </div>
           </div>
         </div>
