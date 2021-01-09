@@ -12,7 +12,7 @@
 <script>
 import { mapState } from "vuex";
 
-const grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "E", "E", "E", "F"];
+const grades = ["Max", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "E", "E", "E", "F"];
 
 export default {
   props: {
@@ -35,6 +35,11 @@ export default {
     gradeColor(value) {
       const grade = this.$options.filters.grade(value);
       const classes = [];
+
+      if (["M"].indexOf(grade.charAt(0)) > -1) {
+        classes.push("has-text-success");
+      }
+
       if (["A"].indexOf(grade.charAt(0)) > -1) {
         classes.push("has-text-success");
       }
