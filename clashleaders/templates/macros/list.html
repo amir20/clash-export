@@ -25,21 +25,21 @@
         <div class="level is-mobile">
           <div class="level-item has-text-centered">
             <div>
-              <p class="title">{{ clan.grade('month_delta.avg_cwl_stars_percentile') }}</p>
-              <p class="heading">CWL</p>
+              <p class="title {{ scorecard_class(scorecard(clan.month_delta.avg_cwl_stars_percentile)) }}">{{ scorecard(clan.month_delta.avg_cwl_stars_percentile) }}</p>
+              <p class="heading">War League</p>
             </div>
           </div>
 
           <div class="level-item has-text-centered">
             <div>
-              <p class="title">{{ clan.grade('week_delta.avg_war_stars_percentile') }}</p>
-              <p class="heading">Wars</p>
+              <p class="title {{ scorecard_class(scorecard(clan.week_delta.avg_war_stars_percentile)) }}">{{ scorecard(clan.week_delta.avg_war_stars_percentile) }}</p>
+              <p class="heading">Clan Wars</p>
             </div>
           </div>
 
           <div class="level-item has-text-centered">
             <div>
-              <p class="title">{{ clan.grade('week_delta.avg_donations_percentile') }}</p>
+              <p class="title {{ scorecard_class(scorecard(clan.week_delta.avg_donations_percentile)) }}">{{ scorecard(clan.week_delta.avg_donations_percentile) }}</p>
               <p class="heading">Donations</p>
             </div>
           </div>

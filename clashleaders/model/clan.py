@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 from datetime import datetime, timedelta
 from typing import List, Tuple, Dict
-from math import ceil
 
 import pandas as pd
 from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
@@ -21,8 +20,6 @@ from clashleaders.insights.clan_activity import clan_status
 from clashleaders.text.clan_description_processor import transform_description
 
 logger = logging.getLogger(__name__)
-
-GRADES = ["Max", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "E", "E", "E", "F"]
 
 
 class Clan(DynamicDocument):
@@ -137,11 +134,6 @@ class Clan(DynamicDocument):
         first: clashleaders.model.HistoricalClan = clashleaders.model.HistoricalClan.objects(tag=self.tag).order_by("created_on").first()
         return (datetime.now() - first.created_on).days
 
-    def grade(self, field: str) -> str:
-        value = clashleaders.clash.transformer.deep_getattr(self, field)
-        s = ceil((100 - value * 100) / 3)
-        return GRADES[min(s, len(GRADES) - 1)]
-
     def player_activity(self):
         return clan_status(self)
 
@@ -206,7 +198,7 @@ class Clan(DynamicDocument):
 
         clan_response["clan_type"] = clan_response["type"]
         del clan_response["type"]
-        clan_response["slug"] = slugify(f"{clan_response['name']}-{tag}", to_lower=True)
+        clan_response["slug"] = slugify(f"{clan_response['name']}-{tag}", lowercase=True)
         clan_response["updated_on"] = datetime.now()
 
         clan = Clan.objects(tag=tag).upsert_one(**clan_response)
