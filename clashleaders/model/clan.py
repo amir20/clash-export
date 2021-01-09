@@ -198,7 +198,7 @@ class Clan(DynamicDocument):
 
         clan_response["clan_type"] = clan_response["type"]
         del clan_response["type"]
-        clan_response["slug"] = slugify(f"{clan_response['name']}-{tag}", lowercase=True)
+        clan_response["slug"] = slugify(f"{clan_response['name']}-{tag}", to_lower=True)
         clan_response["updated_on"] = datetime.now()
 
         clan = Clan.objects(tag=tag).upsert_one(**clan_response)
