@@ -71,7 +71,7 @@ mypy==0.790
 mypy-extensions==0.4.3
 numpy==1.19.4
 packaging==20.7
-pandas==1.1.4
+pandas==1.2.0
 parso==0.7.1
 pathspec==0.8.1
 pep8==1.7.1
