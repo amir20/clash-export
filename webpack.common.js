@@ -1,5 +1,5 @@
 const webpack = require("webpack");
-const ManifestPlugin = require("webpack-manifest-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -82,8 +82,8 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
-            query: {
-              importLoaders: 1,
+            options: {
+              importLoaders: 2,
             },
           },
           {
@@ -107,7 +107,7 @@ module.exports = {
   plugins: [
     new webpack.ProgressPlugin(),
     new VueLoaderPlugin(),
-    new ManifestPlugin(),
+    new WebpackManifestPlugin(),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["**/*", "!web-manifest*", "!**images", "!**images/*"],
     }),
