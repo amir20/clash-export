@@ -90,7 +90,12 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: (loader) => [require("postcss-font-magician")({ display: "swap" })],
+                plugins: [
+                  require("autoprefixer"),
+                  require("postcss-font-magician")({
+                    display: "swap",
+                  }),
+                ],
               },
             },
           },
