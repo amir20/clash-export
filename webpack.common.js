@@ -90,15 +90,7 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               ident: "postcss",
-              plugins: (loader) => [
-                require("postcss-import")(),
-                require("postcss-cssnext")({
-                  features: {
-                    customProperties: { warnings: false },
-                  },
-                }),
-                require("postcss-font-magician")({ display: "swap" }),
-              ],
+              plugins: (loader) => [require("postcss-font-magician")({ display: "swap" })],
             },
           },
           "sass-loader",
