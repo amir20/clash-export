@@ -37,9 +37,6 @@
     <script defer src="{{ manifest_path('shims.js') }}"></script>
     <script defer src="{{ manifest_path('vendors.js') }}"></script>
     <script defer src="{{ manifest_path('common.js') }}"></script>
-    <script>
-      {{ inline_path("styles-compiled.js") | safe }}
-    </script>
     {% block scripts %} {% endblock %}
     <script>
       window.dataLayer = window.dataLayer || [];
