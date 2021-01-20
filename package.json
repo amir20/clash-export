@@ -68,7 +68,7 @@
     "build": "webpack --config webpack.prod.js",
     "watch": "webpack --watch --config webpack.dev.js",
     "prestart": "docker-compose stop web",
-    "start": "concurrently 'docker-compose up web' 'npm run watch'"
+    "start": "concurrently 'docker-compose up web' 'yarn watch'"
   },
   "lint-staged": {
     "*.{js,vue,json,css,md}": [
