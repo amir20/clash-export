@@ -2,10 +2,10 @@
 FROM node:15 as builder
 
 WORKDIR /build
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
 # Install dependencies
-RUN npm install --production
+RUN yarn
 
 # Copy all files for webpack
 COPY webpack* .babelrc ./
@@ -13,7 +13,7 @@ COPY assets/ assets/
 COPY clashleaders/static clashleaders/static
 
 # Do the build
-RUN npm run build
+RUN yarn build
 
 
 FROM python:3.9.1
