@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   mongo:
-    image: mongo:4.4.1-bionic
+    image: mongo:4.4.3-bionic
   redis:
     image: redis:6-alpine
   cron:
