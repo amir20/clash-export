@@ -3,7 +3,7 @@ services:
   mongo:
     image: mongo:4.4.1-bionic
   redis:
-    image: redis:5.0.4-alpine
+    image: redis:6-alpine
   cron:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "cron.sh"
