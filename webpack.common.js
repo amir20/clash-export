@@ -89,8 +89,9 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {
-              ident: "postcss",
-              plugins: (loader) => [require("postcss-font-magician")({ display: "swap" })],
+              postcssOptions: {
+                plugins: (loader) => [require("postcss-font-magician")({ display: "swap" })],
+              },
             },
           },
           "sass-loader",
