@@ -17,7 +17,7 @@ better-exceptions-fork==0.2.1.post6
 black==20.8b1
 blinker==1.4
 bugsnag==4.0.2
-cachetools==4.1.1
+cachetools==4.2.0
 cairocffi==1.2.0
 CairoSVG==2.5.1
 cchardet==2.1.7
@@ -28,8 +28,8 @@ click==7.1.2
 colorama==0.4.4
 contentful==1.12.4
 contextlib2==0.6.0.post1
-coverage==5.3
-cryptography==3.2.1
+coverage==5.3.1
+cryptography==3.3.1
 cssselect2==0.4.1
 Cython==0.29.21
 decorator==4.4.2
@@ -39,8 +39,8 @@ Flask==1.1.2
 Flask-Caching==1.9.0
 Flask-GraphQL==2.0.1
 flask-shell-ipython==0.4.1
-freezegun==1.0.0
-gevent==20.9.0
+freezegun==1.1.0
+gevent==21.1.2
 graphene==2.1.8
 graphql-core==2.3.2
 graphql-relay==2.0.1
