@@ -94,9 +94,9 @@ Pympler==0.9
 pyOpenSSL==20.0.0
 pyparsing==2.4.7
 pytest==6.2.1
-pytest-cov==2.10.1
+pytest-cov==2.11.1
 pytest-freezegun==0.4.2
-pytest-mock==3.3.1
+pytest-mock==3.5.1
 pytest-runner==5.2
 python-dateutil==2.8.1
 python-editor==1.0.4
