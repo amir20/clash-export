@@ -45,8 +45,17 @@ export default {
       this.isLoading = true;
 
       try {
-        const query = this.tag.replace("#", "");
-        this.data = await (await fetch(`/search.json?q=${query}`)).json();
+        const q = this.tag.replace("#", "");
+        this.data = await (
+          await fetch(`/search.json`, {
+            method: "POST",
+            body: JSON.stringify({ q }),
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": window.CSRF_TOKEN,
+            },
+          })
+        ).json();
       } catch (e) {
         console.error(e);
         bugsnagClient.notify(e);

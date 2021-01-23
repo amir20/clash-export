@@ -123,13 +123,13 @@
             </div>
             <div class="dropdown-menu" role="menu">
               <div class="dropdown-content">
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx"> Today </a>
+                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?token={{ csrf_token() }}"> Today </a>
                 <hr class="dropdown-divider" />
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=1"> Yesterday </a>
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=2"> Two Days Ago </a>
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=3"> Three Days Ago </a>
+                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=1&token={{ csrf_token() }}"> Yesterday </a>
+                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=2&token={{ csrf_token() }}"> Two Days Ago </a>
+                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=3&token={{ csrf_token() }}"> Three Days Ago </a>
                 <hr class="dropdown-divider" />
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=7"> Last Week </a>
+                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=7&token={{ csrf_token() }}"> Last Week </a>
               </div>
             </div>
           </div>

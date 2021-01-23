@@ -48,6 +48,7 @@
     </script>
     <script>
       window.__UPDATES__ = {{ updates | first(3) | tojson | safe }};
+      window.CSRF_TOKEN = "{{ csrf_token() }}";
     </script>
 
     <link rel="manifest" href="{{ url_for('static', filename='web-manifest.json') }}" />

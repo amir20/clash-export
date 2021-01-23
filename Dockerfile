@@ -31,7 +31,7 @@ RUN echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \
 
 # Install caddy and clean up
 RUN apt-get update \
-    && pip install --upgrade pip==20.3.3 \
+    && pip install --upgrade pip==21.0 \
     && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
     && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
     && pip install --no-cache -r requirements.txt \

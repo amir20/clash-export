@@ -4,12 +4,15 @@ import pandas as pd
 from flask import render_template, send_file, request
 from mongoengine import DoesNotExist
 
-from clashleaders import app
+from clashleaders import app, csrf
+from flask_wtf.csrf import validate_csrf
 from clashleaders.model import Clan
 
 
 @app.route("/clan/<slug>.xlsx")
 def clan_detail_xlsx(slug):
+    validate_csrf(request.args.get("token"))
+
     try:
         clan = Clan.find_by_slug(slug)
     except DoesNotExist:
