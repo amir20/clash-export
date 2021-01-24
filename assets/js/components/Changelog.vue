@@ -32,7 +32,7 @@ export default {
     return { items: [], hasUpdates: false };
   },
   created() {
-    this.items = this.data = window.__UPDATES__;
+    this.items = this.data = __UPDATES__;
   },
   mounted() {
     if (store.get(KEY) != this.items[0].id) {

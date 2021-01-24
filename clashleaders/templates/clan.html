@@ -46,8 +46,7 @@
                       {% endif %} ●
                       <span class="has-text-weight-semibold"> {{ clan.tag }}</span>
 
-                      {% if 'reddit' in clan.verified_accounts %}
-                      ●
+                      {% if 'reddit' in clan.verified_accounts %} ●
                       <span class="has-text-weight-bold">
                         <i class="fab fa-reddit fa-lg reddit-color"></i> Verified Reddit Clan
                         <i class="fas fa-check has-text-success"></i>
@@ -91,7 +90,11 @@
             <div class="panel is-primary scorecard">
               <h3 class="panel-heading has-text-centered">Clan Scorecard&trade;</h3>
               <div class="panel-block">
-                <clan-score title="Champion War League" :score="{{ clan.month_delta.avg_cwl_stars_percentile }}" field="monthDelta.avgCwlStarsPercentile"></clan-score>
+                <clan-score
+                  title="Champion War League"
+                  :score="{{ clan.month_delta.avg_cwl_stars_percentile }}"
+                  field="monthDelta.avgCwlStarsPercentile"
+                ></clan-score>
               </div>
               <div class="panel-block">
                 <clan-score title="Clan Games" :score="{{ clan.month_delta.avg_games_xp_percentile }}" field="month_delta.avgGamesXpPercentile"></clan-score>
@@ -103,7 +106,11 @@
                 <clan-score title="Donations" :score="{{ clan.week_delta.avg_donations_percentile }}" field="weekDelta.avgDonationsPercentile"></clan-score>
               </div>
               <div class="panel-block">
-                <clan-score title="Attacks Won" :score="{{ clan.week_delta.avg_attack_wins_percentile }}" field="weekDelta.avgAttackWinsPercentile"></clan-score>
+                <clan-score
+                  title="Attacks Won"
+                  :score="{{ clan.week_delta.avg_attack_wins_percentile }}"
+                  field="weekDelta.avgAttackWinsPercentile"
+                ></clan-score>
               </div>
             </div>
           </div>
@@ -114,25 +121,7 @@
       <div class="columns">
         <div class="column"><table-nav></table-nav></div>
         <div class="column is-narrow is-hidden-mobile">
-          <div class="dropdown is-hoverable is-right has-text-left">
-            <div class="dropdown-trigger">
-              <button class="button is-danger" aria-haspopup="true" aria-controls="dropdown-menu">
-                <span class="icon"> <i class="fa fa-download"></i> </span> <span>Export to Excel</span>
-                <span class="icon is-small"> <i class="fa fa-angle-down" aria-hidden="true"></i> </span>
-              </button>
-            </div>
-            <div class="dropdown-menu" role="menu">
-              <div class="dropdown-content">
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?token={{ csrf_token() }}"> Today </a>
-                <hr class="dropdown-divider" />
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=1&token={{ csrf_token() }}"> Yesterday </a>
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=2&token={{ csrf_token() }}"> Two Days Ago </a>
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=3&token={{ csrf_token() }}"> Three Days Ago </a>
-                <hr class="dropdown-divider" />
-                <a class="dropdown-item" href="{{ clan.slug }}.xlsx?daysAgo=7&token={{ csrf_token() }}"> Last Week </a>
-              </div>
-            </div>
-          </div>
+          <download-button></download-button>
         </div>
       </div>
     </div>
