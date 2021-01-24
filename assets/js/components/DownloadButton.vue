@@ -49,7 +49,7 @@ export default {
       document.body.appendChild(a);
       const url = URL.createObjectURL(blob);
       a.href = url;
-      a.download = `${this.clan.tag}.xslx`;
+      a.download = `${this.clan.tag}.xlsx`;
       a.click();
       setTimeout(() => {
         window.URL.revokeObjectURL(url);
