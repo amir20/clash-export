@@ -8,17 +8,27 @@ from bugsnag.flask import handle_exceptions
 from flask import Flask
 from flask_caching import Cache
 from flask_graphql import GraphQLView
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from graphene import Schema
 from mongoengine import connect
 from redis import Redis
 
 app = Flask(__name__, static_folder="_does_not_exists_", static_url_path="/static")
-app.config.from_object(rq_dashboard.default_settings)
-app.config["RQ_DASHBOARD_REDIS_HOST"] = "redis"
+app.secret_key = "2b2eaed61f28ea8ac252ace5e862bea1eb258c03f5669b3a"
 app.debug = bool(os.getenv("DEBUG", False))
-app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
+
+# Template settings
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+
+# RQ
+app.config.from_object(rq_dashboard.default_settings)
+app.config["RQ_DASHBOARD_REDIS_HOST"] = "redis"
+app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
+
+# CSRF
+csrf = CSRFProtect()
+csrf.init_app(app)
 
 bugsnag.configure(
     api_key=os.getenv("BUGSNAG_API_KEY"), project_root="/app", release_stage=os.getenv("STAGE", "development"), notify_release_stages=["production"]
@@ -41,6 +51,7 @@ site_root = dirname(abspath(__file__))
 import clashleaders.views  # noqa
 import clashleaders.graphql.schema
 
+# GraphQL
 view_func = GraphQLView.as_view("graphql", schema=Schema(query=clashleaders.graphql.schema.Query), graphiql=True)
 app.add_url_rule("/graphql", view_func=view_func)
 
@@ -49,3 +60,9 @@ app.add_url_rule("/graphql", view_func=view_func)
 def delete_cached_views():
     for key in redis_connection.scan_iter("flask_cache_view*"):
         redis_connection.delete(key)
+
+
+@app.after_request
+def inject_csrf_token(response):
+    response.set_cookie("csrf_token", generate_csrf())
+    return response

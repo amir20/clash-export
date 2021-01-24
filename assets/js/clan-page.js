@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Buefy from "buefy";
 import ClanTable from "./components/ClanTable";
+import DownloadButton from "./components/DownloadButton";
 import TableNav from "./components/TableNav";
 import TrophyChart from "./components/TrophyChart";
 import Notification from "./components/Notification";
@@ -19,6 +20,7 @@ new Vue({
   store,
   components: {
     ClanTable,
+    DownloadButton,
     TableNav,
     TrophyChart,
     Notification,
