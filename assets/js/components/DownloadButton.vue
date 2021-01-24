@@ -8,13 +8,13 @@
     </div>
     <div class="dropdown-menu" role="menu">
       <div class="dropdown-content">
-        <a class="dropdown-item" @click="download($event, 0)"> Today </a>
+        <a class="dropdown-item" @click="download($event, 0)" :href="`${clan.tag}.xlsx`"> Today </a>
         <hr class="dropdown-divider" />
-        <a class="dropdown-item" @click="download($event, 1)"> Yesterday </a>
-        <a class="dropdown-item" @click="download($event, 2)"> Two Days Ago </a>
-        <a class="dropdown-item" @click="download($event, 3)"> Three Days Ago </a>
+        <a class="dropdown-item" @click="download($event, 1)" :href="`${clan.tag}.xlsx`"> Yesterday </a>
+        <a class="dropdown-item" @click="download($event, 2)" :href="`${clan.tag}.xlsx`"> Two Days Ago </a>
+        <a class="dropdown-item" @click="download($event, 3)" :href="`${clan.tag}.xlsx`"> Three Days Ago </a>
         <hr class="dropdown-divider" />
-        <a class="dropdown-item" @click="download($event, 7)"> Last Week </a>
+        <a class="dropdown-item" @click="download($event, 7)" :href="`${clan.tag}.xlsx`"> Last Week </a>
       </div>
     </div>
   </div>
