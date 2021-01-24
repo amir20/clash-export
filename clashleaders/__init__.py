@@ -8,7 +8,7 @@ from bugsnag.flask import handle_exceptions
 from flask import Flask
 from flask_caching import Cache
 from flask_graphql import GraphQLView
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from graphene import Schema
 from mongoengine import connect
 from redis import Redis
@@ -60,3 +60,9 @@ app.add_url_rule("/graphql", view_func=view_func)
 def delete_cached_views():
     for key in redis_connection.scan_iter("flask_cache_view*"):
         redis_connection.delete(key)
+
+
+@app.after_request
+def inject_csrf_token(response):
+    response.set_cookie("csrf_token", generate_csrf())
+    return response

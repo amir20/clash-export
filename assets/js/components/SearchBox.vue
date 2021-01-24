@@ -29,6 +29,7 @@
 <script>
 import debounce from "lodash/debounce";
 import { bugsnagClient } from "../bugsnag";
+import { csrfToken } from "../client";
 
 export default {
   props: { size: { type: String } },
@@ -52,7 +53,7 @@ export default {
             body: JSON.stringify({ q }),
             headers: {
               "Content-Type": "application/json",
-              "X-CSRFToken": window.CSRF_TOKEN,
+              "X-CSRFToken": csrfToken,
             },
           })
         ).json();
