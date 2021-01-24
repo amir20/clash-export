@@ -45,10 +45,16 @@ export default {
         })
       ).blob();
 
-      const file = new File([blob], `${this.clan.tag}.xslx`, { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-      const url = URL.createObjectURL(file);
-      window.location.assign(url);
-      // URL.revokeObjectURL(url);
+      const a = document.createElement("a");
+      document.body.appendChild(a);
+      const url = URL.createObjectURL(blob);
+      a.href = url;
+      a.download = `${this.clan.tag}.xslx`;
+      a.click();
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }, 0);
     },
   },
 };
