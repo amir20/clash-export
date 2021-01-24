@@ -1,6 +1,6 @@
 from flask import jsonify, request
 
-from clashleaders import app, csrf
+from clashleaders import app
 from clashleaders.clash import api
 from clashleaders.clash.transformer import to_short_clan
 from clashleaders.model import Clan
