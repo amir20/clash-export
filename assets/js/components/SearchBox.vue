@@ -29,6 +29,7 @@
 <script>
 import debounce from "lodash/debounce";
 import { bugsnagClient } from "../bugsnag";
+import { csrfToken } from "../client";
 
 export default {
   props: { size: { type: String } },
@@ -45,8 +46,17 @@ export default {
       this.isLoading = true;
 
       try {
-        const query = this.tag.replace("#", "");
-        this.data = await (await fetch(`/search.json?q=${query}`)).json();
+        const q = this.tag.replace("#", "");
+        this.data = await (
+          await fetch(`/search.json`, {
+            method: "POST",
+            body: JSON.stringify({ q }),
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken,
+            },
+          })
+        ).json();
       } catch (e) {
         console.error(e);
         bugsnagClient.notify(e);
