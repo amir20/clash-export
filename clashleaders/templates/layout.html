@@ -47,7 +47,7 @@
       gtag("config", "UA-88927228-3");
     </script>
     <script>
-      window.__UPDATES__ = {{ updates | first(3) | tojson | safe }};
+      const __UPDATES__ = {{ updates | first(3) | tojson | safe }};
     </script>
 
     <link rel="manifest" href="{{ url_for('static', filename='web-manifest.json') }}" />

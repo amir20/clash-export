@@ -6,9 +6,9 @@ from clashleaders.clash.transformer import to_short_clan
 from clashleaders.model import Clan
 
 
-@app.route("/search.json")
+@app.route("/search.json", methods=["POST"])
 def search():
-    query = request.args.get("q")
+    query = request.json["q"]
     try:
         clan = api.find_clan_by_tag(query)
         results = [Clan(**clan)]
