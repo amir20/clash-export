@@ -34,10 +34,6 @@ def update_calculations(clan: clashleaders.model.Clan):
             clan.week_delta = most_recent.clan_delta(last_week)
             clan.month_delta = most_recent.clan_delta(last_month)
 
-        if clan.cluster_label == -1:
-            [label] = clashleaders.clustering.kmeans.predict_clans(clan)
-            clan.cluster_label = label
-
         if old_players := list(set(yesterday.to_df().index) - set(most_recent_df.index)):
             fetch_players.delay(old_players)
 
@@ -63,6 +59,10 @@ def update_calculations(clan: clashleaders.model.Clan):
         active_tags = set(most_recent_df.index.to_list()) - inactive_tags
         clashleaders.model.Player.objects(tag__in=inactive_tags).update(active=False)
         clashleaders.model.Player.objects(tag__in=active_tags).update(active=True)
+
+        if clan.cluster_label == -1:
+            [label] = clashleaders.clustering.kmeans.predict_clans(clan)
+            clan.cluster_label = label
     finally:
         clan.save()
 
