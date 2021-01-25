@@ -5,6 +5,15 @@ const csrfToken = () => Cookies.get("csrf_token");
 
 const client = new GraphQLClient("/graphql", { headers: { "X-CSRFToken": csrfToken() } });
 
-const request = (query, variable) => client.request(query, variable);
+async function request(query, variable) {
+  try {
+    return await client.request(query, variable);
+  } catch (e) {
+    if (e.status == 400) {
+      client.setHeader("X-CSRFToken", csrfToken());
+      return client.request(query, variable);
+    }
+  }
+}
 
 export { request, csrfToken };
