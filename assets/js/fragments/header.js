@@ -6,7 +6,7 @@ import Changelog from "../components/Changelog";
 import User from "../components/User";
 import { event } from "../ga";
 import { apolloClient } from "../client";
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client/core";
 
 bugsnag(Vue);
 

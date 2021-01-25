@@ -43,7 +43,7 @@ import { bugsnagClient } from "../bugsnag";
 import Troops from "./Troops";
 import { mapState } from "vuex";
 import { apolloClient } from "../client";
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client/core";
 
 const role = {
   coLeader: "Co-leader",

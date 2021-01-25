@@ -53,7 +53,7 @@ export default {
             body: JSON.stringify({ q }),
             headers: {
               "Content-Type": "application/json",
-              "X-CSRFToken": csrfToken,
+              "X-CSRFToken": csrfToken(),
             },
           })
         ).json();

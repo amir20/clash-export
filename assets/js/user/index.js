@@ -1,6 +1,6 @@
 import store from "store/dist/store.modern";
 import { apolloClient } from "../client";
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client/core";
 
 const PLAYER_KEY = "savedPlayer";
 

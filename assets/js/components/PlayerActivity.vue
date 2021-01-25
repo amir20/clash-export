@@ -59,7 +59,7 @@ import ActivityDistribution from "./ActivityDistribution";
 import times from "lodash/times";
 import UserMixin from "../user";
 import { apolloClient } from "../client";
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client/core";
 
 export default {
   components: {

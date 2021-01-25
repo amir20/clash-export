@@ -6,7 +6,7 @@ import keyBy from "lodash/keyBy";
 import { event } from "../ga";
 import store from "store/dist/store.modern";
 import { apolloClient } from "../client";
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client/core";
 
 Vue.use(Vuex);
 
