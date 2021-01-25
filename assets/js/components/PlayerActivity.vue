@@ -58,8 +58,8 @@
 import ActivityDistribution from "./ActivityDistribution";
 import times from "lodash/times";
 import UserMixin from "../user";
-import { apolloClient } from "../client";
-import { gql } from "@apollo/client/core";
+import { request } from "../client";
+import { gql } from "graphql-request";
 
 export default {
   components: {
@@ -81,8 +81,8 @@ export default {
   },
   async created() {
     this.loading = true;
-    const { data } = await apolloClient.query({
-      query: gql`
+    const data = await request(
+      gql`
         query GetPlayerActivities($playerTag: String!, $userTag: String = "", $hasUser: Boolean!) {
           player: player(tag: $playerTag) {
             tag
@@ -106,12 +106,12 @@ export default {
           }
         }
       `,
-      variables: {
+      {
         playerTag: this.playerTag,
         userTag: this.userTag,
         hasUser: this.hasDifferentUser,
-      },
-    });
+      }
+    );
 
     const { user, player } = data;
     this.player = player.activity;

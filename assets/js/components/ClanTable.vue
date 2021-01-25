@@ -82,7 +82,7 @@ export default {
   mounted() {
     if (this.hasUser) {
       this.openDetails = [this.userTag];
-    } else {
+    } else if (this.tableData.length > 0) {
       this.openDetails = [this.tableData[0].id];
     }
   },

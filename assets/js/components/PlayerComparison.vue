@@ -42,8 +42,8 @@ import "chartist-plugin-legend";
 import { bugsnagClient } from "../bugsnag";
 import Troops from "./Troops";
 import { mapState } from "vuex";
-import { apolloClient } from "../client";
-import { gql } from "@apollo/client/core";
+import { request } from "../client";
+import { gql } from "graphql-request";
 
 const role = {
   coLeader: "Co-leader",
@@ -97,8 +97,8 @@ export default {
     },
     async fetchPlayer() {
       try {
-        const { data } = await apolloClient.query({
-          query: gql`
+        const data = await request(
+          gql`
             query GetPlayerDetails($tag: String!) {
               player(tag: $tag) {
                 name
@@ -113,10 +113,10 @@ export default {
               }
             }
           `,
-          variables: {
+          {
             tag: this.playerData.tag.value,
-          },
-        });
+          }
+        );
         this.player = data.player;
       } catch (e) {
         console.error(e);

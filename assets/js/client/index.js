@@ -1,34 +1,10 @@
-import { ApolloClient, InMemoryCache, createHttpLink, from } from "@apollo/client/core";
-import { onError } from "@apollo/client/link/error";
-import { setContext } from "@apollo/client/link/context";
+import { GraphQLClient } from "graphql-request";
 import Cookies from "js-cookie";
 
-export const csrfToken = () => Cookies.get("csrf_token");
+const csrfToken = () => Cookies.get("csrf_token");
 
-const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
-  if (networkError.statusCode == 400) {
-    const oldHeaders = operation.getContext().headers;
-    operation.setContext({
-      headers: {
-        ...oldHeaders,
-        "X-CSRFToken": csrfToken(),
-      },
-    });
-    return forward(operation);
-  }
-});
+const client = new GraphQLClient("/graphql", { headers: { "X-CSRFToken": csrfToken() } });
 
-const authLink = setContext((_, { headers }) => {
-  return {
-    headers: {
-      ...headers,
-      "X-CSRFToken": csrfToken(),
-    },
-  };
-});
-const httpLink = createHttpLink({ uri: "/graphql" });
+const request = (query, variable) => client.request(query, variable);
 
-export const apolloClient = new ApolloClient({
-  link: from([authLink, errorLink, httpLink]),
-  cache: new InMemoryCache(),
-});
+export { request, csrfToken };

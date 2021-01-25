@@ -5,8 +5,8 @@ import reduce from "lodash/reduce";
 import keyBy from "lodash/keyBy";
 import { event } from "../ga";
 import store from "store/dist/store.modern";
-import { apolloClient } from "../client";
-import { gql } from "@apollo/client/core";
+import { request } from "../client";
+import { gql } from "graphql-request";
 
 Vue.use(Vuex);
 
@@ -43,8 +43,9 @@ const actions = {
   async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }) {
     commit("START_LOADING");
     dispatch("FETCH_SAVED_CLAN");
-    const { data } = await apolloClient.query({
-      query: gql`
+
+    const data = await request(
+      gql`
         query GetClan($tag: String!, $days: Int!, $refresh: Int!) {
           clan(tag: $tag, refresh: $refresh) {
             name
@@ -89,13 +90,12 @@ const actions = {
           }
         }
       `,
-      variables: {
+      {
         tag: clan.tag,
         days,
         refresh: 15,
-      },
-      fetchPolicy: "network-only",
-    });
+      }
+    );
     commit("STOP_LOADING");
     commit("SET_CLAN_DATA", data);
   },
@@ -103,8 +103,8 @@ const actions = {
     const savedTag = store.get("lastTag");
     if (savedTag && savedTag !== clan.tag) {
       console.log(`Found saved tag value [${savedTag}].`);
-      const { data } = await apolloClient.query({
-        query: gql`
+      const data = await request(
+        gql`
           query GetSavedClan($tag: String!, $days: Int!) {
             clan(tag: $tag) {
               name
@@ -116,11 +116,11 @@ const actions = {
             }
           }
         `,
-        variables: {
+        {
           tag: savedTag,
           days,
-        },
-      });
+        }
+      );
       commit("SET_SAVED_CLAN", data);
     }
   },
@@ -130,8 +130,8 @@ const actions = {
     dispatch("FETCH_SAVED_CLAN");
 
     commit("START_LOADING");
-    const { data } = await apolloClient.query({
-      query: gql`
+    const data = await request(
+      gql`
         query ChangeClanHistoric($tag: String!, $days: Int!) {
           clan(tag: $tag) {
             historicData: playerMatrix(days: $days)
@@ -148,11 +148,11 @@ const actions = {
           }
         }
       `,
-      variables: {
+      {
         tag: clan.tag,
         days,
-      },
-    });
+      }
+    );
     commit("STOP_LOADING");
     commit("SET_CLAN_DATA", data);
   },
