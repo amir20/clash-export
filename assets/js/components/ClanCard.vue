@@ -24,8 +24,8 @@
 <script>
 import { bugsnagClient } from "../bugsnag";
 import { mapMutations } from "vuex";
-import { apolloClient } from "../client";
-import { gql } from "apollo-boost";
+import { request } from "../client";
+import { gql } from "graphql-request";
 
 export default {
   props: ["tag", "foundClan"],
@@ -45,8 +45,8 @@ export default {
   },
   async created() {
     try {
-      const { data } = await apolloClient.query({
-        query: gql`
+      const data = await request(
+        gql`
           query GetClan($tag: String!) {
             clan(tag: $tag) {
               name
@@ -65,10 +65,10 @@ export default {
             }
           }
         `,
-        variables: {
+        {
           tag: this.tag,
-        },
-      });
+        }
+      );
       this.data = data.clan;
     } catch (e) {
       console.error(e);
