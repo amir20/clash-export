@@ -91,7 +91,7 @@ Pygments==2.7.4
 pylint==2.6.0
 pymongo==3.11.2
 Pympler==0.9
-pyOpenSSL==20.0.0
+pyOpenSSL==20.0.1
 pyparsing==2.4.7
 pytest==6.2.1
 pytest-cov==2.11.1
