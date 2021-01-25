@@ -40,7 +40,7 @@ export default {
           body: JSON.stringify({ tag: this.clan.tag, daysAgo }),
           headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": csrfToken,
+            "X-CSRFToken": csrfToken(),
           },
         })
       ).blob();

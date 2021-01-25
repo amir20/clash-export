@@ -1,6 +1,6 @@
 import store from "store/dist/store.modern";
-import { apolloClient } from "../client";
-import { gql } from "apollo-boost";
+import { request } from "../client";
+import { gql } from "graphql-request";
 
 const PLAYER_KEY = "savedPlayer";
 
@@ -51,8 +51,8 @@ export default {
       }
     },
     async userPromise() {
-      const { data } = await apolloClient.query({
-        query: gql`
+      const data = await request(
+        gql`
           query GetPlayerDetails($tag: String!) {
             player(tag: $tag) {
               name
@@ -66,10 +66,10 @@ export default {
             }
           }
         `,
-        variables: {
+        {
           tag: this.savedUser.tag,
-        },
-      });
+        }
+      );
       return data.player;
     },
     removeUser() {
