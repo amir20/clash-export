@@ -22,7 +22,8 @@
 
 <script>
 import { mapState } from "vuex";
-import { csrfToken } from "../client";
+import { gql } from "graphql-request";
+import { request } from "../client";
 
 export default {
   data() {
@@ -34,17 +35,21 @@ export default {
   methods: {
     async download(event, daysAgo) {
       event.preventDefault();
-      const blob = await (
-        await fetch(`/clan/download`, {
-          method: "POST",
-          body: JSON.stringify({ tag: this.clan.tag, daysAgo }),
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrfToken(),
-          },
-        })
-      ).blob();
+      const { clan } = await request(
+        gql`
+          query ExportClan($tag: String!, $days: Int!) {
+            clan(tag: $tag) {
+              xlsxExport(days: $days)
+            }
+          }
+        `,
+        {
+          tag: this.clan.tag,
+          days: daysAgo,
+        }
+      );
 
+      const blob = await (await fetch(clan.xlsxExport)).blob();
       const a = document.createElement("a");
       document.body.appendChild(a);
       const url = URL.createObjectURL(blob);
