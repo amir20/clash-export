@@ -6,6 +6,7 @@ from graphene.types.generic import GenericScalar
 from rq.exceptions import NoSuchJobError
 
 import clashleaders.model as model
+from clashleaders.clash import api
 from clashleaders.views import imgproxy_url
 
 
@@ -51,6 +52,8 @@ class ShortClan(graphene.ObjectType):
     name = graphene.String()
     tag = graphene.String()
     slug = graphene.String()
+    members = graphene.Int()
+    badge_urls = graphene.Field(BadgeUrls)
 
 
 class Player(graphene.ObjectType):
@@ -216,6 +219,7 @@ class Clan(graphene.ObjectType):
 class Query(graphene.ObjectType):
     player = graphene.Field(Player, tag=graphene.String(required=True))
     clan = graphene.Field(Clan, tag=graphene.String(required=True), refresh=graphene.Int(required=False))
+    search_clan = graphene.List(ShortClan, query=graphene.String(required=True))
 
     def resolve_clan(self, info, tag, refresh=False):
         if refresh:
@@ -230,6 +234,17 @@ class Query(graphene.ObjectType):
 
     def resolve_player(self, info, tag):
         return model.Player.find_by_tag(tag)
+
+    def resolve_search_clan(self, info, query):
+        try:
+            clan = api.find_clan_by_tag(query)
+            results = [model.Clan(**clan)]
+        except api.ClanNotFound:
+            results = [model.Clan(**c) for c in api.search_by_name(query, limit=6)]
+
+        results = sorted(results, key=lambda c: c.members, reverse=True)
+
+        return results
 
 
 def wait_for_job(job, wait_time=3):
