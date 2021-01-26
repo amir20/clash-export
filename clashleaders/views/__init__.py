@@ -15,7 +15,6 @@ import clashleaders.views.clan
 import clashleaders.views.country
 import clashleaders.views.error
 import clashleaders.views.explore
-import clashleaders.views.export
 import clashleaders.views.index
 import clashleaders.views.player
 import clashleaders.views.sitemap
