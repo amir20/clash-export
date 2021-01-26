@@ -15,7 +15,7 @@
   >
     <template slot-scope="props">
       <div class="media">
-        <div class="media-left"><img width="32" :src="props.option.badge" /></div>
+        <div class="media-left"><img width="32" :src="props.option.badgeUrls.small" /></div>
         <div class="media-content">
           <strong>{{ props.option.name }}</strong> <small> <i class="fa fa-tag"></i> {{ props.option.tag }} </small>
           <br />
@@ -29,7 +29,8 @@
 <script>
 import debounce from "lodash/debounce";
 import { bugsnagClient } from "../bugsnag";
-import { csrfToken } from "../client";
+import { request } from "../client";
+import { gql } from "graphql-request";
 
 export default {
   props: { size: { type: String } },
@@ -46,17 +47,25 @@ export default {
       this.isLoading = true;
 
       try {
-        const q = this.tag.replace("#", "");
-        this.data = await (
-          await fetch(`/search.json`, {
-            method: "POST",
-            body: JSON.stringify({ q }),
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRFToken": csrfToken(),
-            },
-          })
-        ).json();
+        const query = this.tag.replace("#", "");
+        const { searchClan: clans } = await request(
+          gql`
+            query SearchClans($query: String!) {
+              searchClan(query: $query) {
+                tag
+                name
+                members
+                badgeUrls {
+                  small
+                }
+              }
+            }
+          `,
+          {
+            query,
+          }
+        );
+        this.data = clans;
       } catch (e) {
         console.error(e);
         bugsnagClient.notify(e);
