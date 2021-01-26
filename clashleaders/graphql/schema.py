@@ -5,6 +5,9 @@ import graphene
 from graphene.types.generic import GenericScalar
 from rq.exceptions import NoSuchJobError
 
+import pandas as pd
+from io import BytesIO
+import base64
 import clashleaders.model as model
 from clashleaders.clash import api
 from clashleaders.views import imgproxy_url
@@ -173,6 +176,7 @@ class Clan(graphene.ObjectType):
     activity = graphene.Field(ClanActivity)
     similar = graphene.Field(SimilarClanDelta, days=graphene.Int(required=True))
     player_status = GenericScalar()
+    xlsx_export = graphene.String(days=graphene.Int(required=True))
 
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)
@@ -217,6 +221,15 @@ class Clan(graphene.ObjectType):
 
     def resolve_player_status(self, info):
         return self.player_activity()
+
+    def resolve_xlsx_export(self, info, days):
+        historical = self.historical_near_days_ago(days)
+
+        stream = BytesIO()
+        writer = pd.ExcelWriter(stream, engine="xlsxwriter", options={"strings_to_urls": False, "strings_to_formulas": False})
+        historical.to_df(formatted=True).to_excel(writer, sheet_name=self.tag)
+        writer.close()
+        return "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + base64.b64encode(stream.getvalue()).decode()
 
 
 class Query(graphene.ObjectType):
