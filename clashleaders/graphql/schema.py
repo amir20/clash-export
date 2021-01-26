@@ -55,6 +55,9 @@ class ShortClan(graphene.ObjectType):
     members = graphene.Int()
     badge_urls = graphene.Field(BadgeUrls)
 
+    def resolve_badge_urls(self, info):
+        return BadgeUrls(**self.badgeUrls)
+
 
 class Player(graphene.ObjectType):
     name = graphene.String()
@@ -243,7 +246,6 @@ class Query(graphene.ObjectType):
             results = [model.Clan(**c) for c in api.search_by_name(query, limit=6)]
 
         results = sorted(results, key=lambda c: c.members, reverse=True)
-
         return results
 
 

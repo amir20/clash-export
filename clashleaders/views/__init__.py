@@ -18,7 +18,6 @@ import clashleaders.views.explore
 import clashleaders.views.export
 import clashleaders.views.index
 import clashleaders.views.player
-import clashleaders.views.search
 import clashleaders.views.sitemap
 import clashleaders.views.static
 import clashleaders.views.status
