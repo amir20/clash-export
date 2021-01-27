@@ -12,7 +12,7 @@ Vue.use(Vuex);
 
 const state = {
   loading: true,
-  clan: window.__INITIAL_STATE__,
+  clan: __INITIAL_STATE__,
   days: 7,
   savedClan: {},
   sortField: "value",
@@ -57,6 +57,7 @@ const actions = {
             playerStatus
             recentData: playerMatrix
             historicData: playerMatrix(days: $days)
+            trophyHistory
             computed {
               totalDonations
               totalAttackWins
