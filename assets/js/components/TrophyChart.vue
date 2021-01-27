@@ -56,21 +56,11 @@ export default {
   },
   watch: {
     "clan.trophyHistory": function (newVal, oldVal) {
-      this.created();
+      this.refresh();
     },
   },
   created() {
-    this.data = [];
-    const { labels, clanPoints, members } = this.clan.trophyHistory;
-    for (const [date, trophy, member] of zip(labels, clanPoints, members)) {
-      this.data.push({
-        date: parseTime(date),
-        trophies: trophy,
-        members: member,
-      });
-    }
-
-    this.$nextTick(this.render);
+    this.refresh();
   },
   mounted() {
     dom.svg = d3
@@ -101,6 +91,18 @@ export default {
     window.removeEventListener("resize", this.render);
   },
   methods: {
+    refresh() {
+      this.data = [];
+      const { labels, clanPoints, members } = this.clan.trophyHistory;
+      for (const [date, trophy, member] of zip(labels, clanPoints, members)) {
+        this.data.push({
+          date: parseTime(date),
+          trophies: trophy,
+          members: member,
+        });
+      }
+      this.$nextTick(this.render);
+    },
     render: debounce(function () {
       const { svg, membersPath, trophyPath, bottomAxis, leftAxis, rightAxis, rightLabel, leftLabel } = dom;
       const { data } = this;
