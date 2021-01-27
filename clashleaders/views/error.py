@@ -1,4 +1,5 @@
 from flask import render_template
+from flask.globals import request
 
 from clashleaders import app
 from flask_wtf.csrf import CSRFError
@@ -16,4 +17,7 @@ def error_500(e):
 
 @app.errorhandler(CSRFError)
 def handle_csrf_error(e):
-    return render_template("500.html", reason=e.description), 401
+    if request.accept_mimetypes["application/json"]:
+        return dict(error=e.description), 401
+    else:
+        return render_template("500.html", reason=e.description), 401
