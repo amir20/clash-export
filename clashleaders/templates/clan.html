@@ -60,7 +60,7 @@
                 </div>
               </div>
             </div>
-            <p class="subtitle clan-description">{{ description | safe }}</p>
+            <p class="subtitle clan-description">{{ clan.rich_description | safe }}</p>
             <div class="level">
               <!-- Total Trophies -->
               {{ insight( "Total Trophies", clan.clanPoints, clan.week_delta.total_trophies, "clanPoints", "weekDelta.totalTrophies", "Delta is calculated based
@@ -82,7 +82,7 @@
               </a>
             </div>
             <div class="is-hidden-mobile">
-              <trophy-chart :distribution-data="{{ trophy_distribution | tojson | forceescape }}"></trophy-chart>
+              <trophy-chart></trophy-chart>
             </div>
           </div>
 
@@ -133,7 +133,7 @@
 </div>
 {% endblock %} {% block scripts %}
 <script>
-  window.__INITIAL_STATE__ = {{ initial_state | tojson | safe }};
+  const __INITIAL_STATE__ = {{ initial_state | tojson | safe }};
 </script>
 <script type="application/ld+json">
   {

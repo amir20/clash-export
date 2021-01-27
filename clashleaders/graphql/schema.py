@@ -177,6 +177,7 @@ class Clan(graphene.ObjectType):
     similar = graphene.Field(SimilarClanDelta, days=graphene.Int(required=True))
     player_status = GenericScalar()
     xlsx_export = graphene.String(days=graphene.Int(required=True))
+    trophy_history = GenericScalar()
 
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)
@@ -230,6 +231,9 @@ class Clan(graphene.ObjectType):
         historical.to_df(formatted=True).to_excel(writer, sheet_name=self.tag)
         writer.close()
         return "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + base64.b64encode(stream.getvalue()).decode()
+
+    def resolve_trophy_history(self, info):
+        return self.trophy_history()
 
 
 class Query(graphene.ObjectType):

@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState } from "vuex";
 import { select } from "d3-selection";
 import { extent } from "d3-array";
 import { timeFormat, timeParse } from "d3-time-format";
@@ -42,16 +43,24 @@ const dom = {
   leftLabel: null,
 };
 export default {
-  props: ["distributionData"],
+  props: [],
   data() {
     return {
       data: [],
     };
   },
+  computed: {
+    ...mapState(["clan"]),
+  },
+  watch: {
+    "clan.trophyHistory": function (newVal, oldVal) {
+      this.render();
+    },
+  },
   async created() {
     const parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S+00:00Z");
     this.data = [];
-    const { labels, clanPoints, members } = this.distributionData;
+    const { labels, clanPoints, members } = this.clan.trophyHistory;
     for (const [date, trophy, member] of zip(labels, clanPoints, members)) {
       this.data.push({
         date: parseTime(date),

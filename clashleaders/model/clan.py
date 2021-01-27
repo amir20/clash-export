@@ -137,6 +137,12 @@ class Clan(DynamicDocument):
     def player_activity(self):
         return clan_status(self)
 
+    def trophy_history(self) -> Dict:
+        df = self.to_historical_df()[["members", "clanPoints"]].resample("D").mean().dropna()
+        df = df.reset_index().rename(columns={"created_on": "labels"})
+        df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
+        return df.to_dict("list")
+
     def warlog(self):
         return clan_warlog(self.tag)["items"]
 
