@@ -30,6 +30,8 @@ const d3 = {
   curveMonotoneX,
 };
 
+const parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S+00:00Z");
+
 const margin = { top: 10, right: 50, bottom: 40, left: 70 };
 const height = 190 - margin.top - margin.bottom;
 const dom = {
@@ -54,11 +56,10 @@ export default {
   },
   watch: {
     "clan.trophyHistory": function (newVal, oldVal) {
-      this.render();
+      this.created();
     },
   },
-  async created() {
-    const parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S+00:00Z");
+  created() {
     this.data = [];
     const { labels, clanPoints, members } = this.clan.trophyHistory;
     for (const [date, trophy, member] of zip(labels, clanPoints, members)) {
