@@ -153,6 +153,15 @@ class ClanActivity(graphene.ObjectType):
     members = graphene.List(graphene.Float)
 
 
+class ClanLabel(graphene.ObjectType):
+    id = graphene.Int()
+    name = graphene.String()
+    iconUrls = graphene.Field(BadgeUrls)
+
+    def resolve_iconUrls(self, info):
+        return BadgeUrls(**self.iconUrls)
+
+
 class Clan(graphene.ObjectType):
     name = graphene.String()
     slug = graphene.String()
@@ -164,6 +173,7 @@ class Clan(graphene.ObjectType):
     clanVersusPoints = graphene.Int()
     members = graphene.Int()
     updated_on = graphene.Float()
+    labels = graphene.List(ClanLabel)
 
     computed = graphene.Field(ClanDelta)
     day_delta = graphene.Field(ClanDelta)
@@ -185,6 +195,9 @@ class Clan(graphene.ObjectType):
 
     def resolve_badge_urls(self, info):
         return BadgeUrls(**self.badgeUrls)
+
+    def resolve_labels(self, info):
+        return [ClanLabel(**l) for l in self.labels]
 
     def resolve_updated_on(self, info):
         return self.updated_on.timestamp() * 1000
