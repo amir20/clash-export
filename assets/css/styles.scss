@@ -126,3 +126,12 @@ body.clan_detail_page main > #app .hero-footer {
     display: block;
   }
 }
+
+.footer {
+  position: relative;
+  overflow: hidden;
+  .bottom-hero {
+    position: absolute;
+    left: -90px;
+  }
+}
