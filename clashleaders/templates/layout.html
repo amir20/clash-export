@@ -186,10 +186,17 @@
     <main>{% block body %}{% endblock %}</main>
 
     <footer class="section footer is-size-6">
+      <picture>
+        <source srcset="{{ url_for('static', filename='images/royal-champion.webp') }}" type="image/webp" />
+        <source srcset="{{ url_for('static', filename='images/royal-champion.png') }}" type="image/png" />
+        <img src="{{ url_for('static', filename='images/royal-champion.png') }}" width="380px" class="bottom-hero is-hidden-mobile" />
+      </picture>
       <section>
         <div class="container">
           <div class="columns">
-            <div class="column is-narrow has-text-centered"><a href="/" class="clashleader-logo">Clash Leader</a></div>
+            <div class="column is-narrow has-text-centered">
+              <a href="/" class="clashleader-logo">Clash Leader</a>
+            </div>
             <div class="column">
               <h6 class="has-text-weight-semibold">Website</h6>
               <ul>
@@ -215,9 +222,8 @@
               </ul>
             </div>
             <div class="column">
-              <h6 class="has-text-weight-semibold">Sponsorships</h6>
               <ul>
-                <li><a href="https://www.digitalocean.com/">Digital Ocean</a></li>
+                <li></li>
               </ul>
             </div>
             <div class="column is-3">

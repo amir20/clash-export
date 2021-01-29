@@ -22,7 +22,6 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
 # RQ
-app.config.from_object(rq_dashboard.default_settings)
 app.config["RQ_DASHBOARD_REDIS_HOST"] = "redis"
 app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
 
@@ -39,7 +38,7 @@ logging.basicConfig(level=logging.INFO)
 
 # Cache settings
 cache_type = "null" if app.debug and not os.getenv("ENABLE_CACHE", False) else "redis"
-cache = Cache(app, config={"CACHE_TYPE": cache_type, "CACHE_REDIS_HOST": "redis"})
+cache = Cache(app, config={"CACHE_TYPE": cache_type, "CACHE_REDIS_HOST": cache_type})
 
 # Set connect to False for pre-forking to work
 connect(db="clashstats", host="mongo", connect=False)
