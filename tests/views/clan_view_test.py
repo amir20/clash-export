@@ -1,6 +1,5 @@
 from collections import defaultdict
 
-import clashleaders.views.clan
 from clashleaders.model import Status
 
 
