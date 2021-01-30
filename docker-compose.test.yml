@@ -10,6 +10,9 @@ services:
       - FLASK_ENV=test
     depends_on:
       - redis
+    volumes:
+      - ./clashleaders:/app/clashleaders
+      - ./tests/:/app/tests
   mongo:
     volumes:
       - ./:/clashleaders
