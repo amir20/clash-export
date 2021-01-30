@@ -5,6 +5,7 @@ import pytest
 
 from clashleaders import app
 from clashleaders.model import *
+from flask import template_rendered
 
 parent = os.path.abspath(os.path.dirname(__file__))
 
@@ -49,4 +50,6 @@ def historical_clan_before():
 
 @pytest.fixture
 def client():
-    return app.test_client()
+    app.config["TESTING"] = True
+    with app.test_client() as client:
+        yield client
