@@ -55,20 +55,23 @@
         <player-comparison :player-data="props.row"></player-comparison>
       </template>
     </b-table>
+    <notification></notification>
   </section>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import PlayerComparison from "./PlayerComparison";
+import Notification from "./Notification";
 import { gaMixin } from "../ga";
 import UserMixin from "../user";
 
 export default {
   mixins: [gaMixin, UserMixin],
-  props: ["tag", "name", "oldestDays"],
+  props: [],
   components: {
     PlayerComparison,
+    Notification,
   },
   data() {
     return {
