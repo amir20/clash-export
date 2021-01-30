@@ -10,10 +10,20 @@ bugsnag(Vue);
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
 new Vue({
-  el: "#app",
+  el: "#home",
   store,
   components: {
     Home,
     TrophyDistribution,
   },
+  render: (h) => h(Home),
+});
+
+new Vue({
+  el: "#distribution",
+  store,
+  components: {
+    TrophyDistribution,
+  },
+  render: (h) => h(TrophyDistribution),
 });
