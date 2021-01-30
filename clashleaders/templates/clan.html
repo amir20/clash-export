@@ -35,14 +35,23 @@
                   <div class="column">
                     <h1 class="title">{{ clan.name }}</h1>
                     <h2 class="subtitle is-6 has-text-weight-light">
-                      <span class="has-text-weight-semibold"> <clan-field :initial-value="{{ clan.members }}" name="members"></clan-field> members </span>
+                      <span class="has-text-weight-semibold">
+                        <div class="tags has-addons">
+                          <span class="tag is-dark"> <clan-field :initial-value="{{ clan.members }}" name="members"></clan-field></span>
+                          <span class="tag is-dark">member</span>
+                        </div>
+                      </span>
                       ●
                       <span class="has-text-weight-semibold"> Level <clan-field :initial-value="{{ clan.clanLevel }}" name="clanLevel"></clan-field></span>
                       {% if clan.location.countryCode %} ●
-                      <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span>
-                      <a href="{{ url_for('country_clans', code=clan.location.countryCode.lower()) }}">
-                        <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
-                      </a>
+
+                      
+                      <div class="tags has-addons">
+                        <span class="tag is-dark"> <span class="flag-icon flag-icon-{{ clan.location.countryCode | lower }}"></span></span>
+                        <span class="tag is-dark"><a href="{{ url_for('country_clans', code=clan.location.countryCode.lower()) }}">
+                          <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
+                        </a></span>
+                      </div>
                       {% endif %} ●
                       <span class="has-text-weight-semibold"> {{ clan.tag }}</span>
 
