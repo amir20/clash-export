@@ -7,7 +7,7 @@ services:
       - API_TOKEN=not-valid
       - FLASK_APP=clashleaders
       - BUGSNAG_API_KEY=
-      - STAGE=testing
+      - FLASK_ENV=test
     depends_on:
       - redis
   mongo:
@@ -19,7 +19,7 @@ services:
       - API_TOKEN=not-valid
       - FLASK_APP=clashleaders
       - BUGSNAG_API_KEY=
-      - STAGE=testing
+      - FLASK_ENV=test
       - IMGPROXY_KEY=01
       - IMGPROXY_SALT=01
       - IMGPROXY_BASE=http://imgproxy-cache:2015/
