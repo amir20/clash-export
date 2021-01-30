@@ -5,7 +5,6 @@ import pytest
 
 from clashleaders import app
 from clashleaders.model import *
-from flask import template_rendered
 
 parent = os.path.abspath(os.path.dirname(__file__))
 
