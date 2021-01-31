@@ -26,7 +26,7 @@
 
     <div class="column is-3">
       <h4 class="title is-4 is-marginless">Spells</h4>
-      <troop v-for="spell in this.player.spells" :key="spell.name" :name="spell.name" class="is-tooltip-right tooltip" :data-tooltip="spell.name">
+      <troop v-for="spell in player.spells" :key="spell.name" :name="spell.name" class="is-tooltip-right tooltip" :data-tooltip="spell.name">
         <small :class="{ max: spell.maxLevel == spell.level }">{{ spell.level }}</small>
       </troop>
     </div>
@@ -50,15 +50,19 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Troop from "./Troop";
 
 export default {
-  props: ["player"],
+  props: [],
   components: {
     Troop,
   },
   data() {
     return {};
+  },
+  computed: {
+    ...mapState(["player"]),
   },
   methods: {
     filterTroops(list, type) {

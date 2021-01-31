@@ -30,7 +30,11 @@ class Player(DynamicDocument):
 
     meta = {
         "index_background": True,
-        "indexes": ["tag", "slug", "active",],
+        "indexes": [
+            "tag",
+            "slug",
+            "active",
+        ],
     }
 
     def as_replace_one(self) -> ReplaceOne:
@@ -128,11 +132,11 @@ class Player(DynamicDocument):
         return Player.upsert_player(player_tag=data["tag"], **data)
 
     @classmethod
-    def find_by_slug(cls, slug):
+    def find_by_slug(cls, slug) -> Player:
         return Player.objects.get(slug=slug)
 
     @classmethod
-    def find_by_tag(cls, tag):
+    def find_by_tag(cls, tag) -> Player:
         tag = prepend_hash(tag)
         player = Player.objects(tag=tag).first()
 

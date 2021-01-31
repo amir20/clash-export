@@ -50,27 +50,32 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState } from "vuex";
 import maxBy from "lodash/maxBy";
 import Troop from "./Troop";
 import WebPImage from "./WebPImage";
 import UserMixin from "../user";
 
 export default {
-  props: ["insights", "playerTag"],
+  props: [],
   mixins: [UserMixin],
   components: {
     Troop,
     WebPImage,
   },
   computed: {
+    ...mapState(["player"]),
     homeBaseTroop() {
-      return maxBy(this.insights.home, (i) => i.delta);
+      return maxBy(this.player.insights.home, (i) => i.delta);
     },
     builderBaseTroop() {
-      return maxBy(this.insights.builderBase, (i) => i.delta);
+      return maxBy(this.player.insights.builderBase, (i) => i.delta);
     },
     showInsights() {
-      return this.playerTag === this.userTag;
+      return this.player.tag === this.userTag;
+    },
+    insights() {
+      return this.player.insights;
     },
   },
 };

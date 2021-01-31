@@ -16,18 +16,12 @@ const grades = ["Max", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", 
 
 export default {
   props: {
-    score: { type: Number },
     field: { type: String },
     title: { type: String },
   },
-  watch: {
-    scoreValue(newValue, oldValue) {
-      this.score = newValue;
-    },
-  },
   computed: {
     ...mapState(["clan"]),
-    scoreValue() {
+    score() {
       return this.field.split(".").reduce((prev, curr) => (prev ? prev[curr] : null), this.clan);
     },
   },
