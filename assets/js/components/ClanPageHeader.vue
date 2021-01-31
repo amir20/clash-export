@@ -15,11 +15,13 @@
                     <span class="has-text-weight-semibold"> <clan-field name="members"></clan-field> members </span>
                     ●
                     <span class="has-text-weight-semibold"> Level <clan-field name="clanLevel"></clan-field></span>
-                    ●
-                    <span class="flag-icon" :class="`flag-icon-${clan.location.countryCode.toLowerCase()}`"></span>
-                    <a :href="`/country/${clan.location.countryCode.toLowerCase()}`">
-                      <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
-                    </a>
+                    <template v-if="clan.location.isCountry">
+                      ●
+                      <span class="flag-icon" :class="`flag-icon-${clan.location.countryCode.toLowerCase()}`"></span>
+                      <a :href="`/country/${clan.location.countryCode.toLowerCase()}`">
+                        <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
+                      </a>
+                    </template>
                     ●
                     <span class="has-text-weight-semibold"> {{ clan.tag }}</span>
 
