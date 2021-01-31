@@ -27,3 +27,8 @@ const items = document.querySelectorAll("[data-from-now]");
       addSuffix: true,
     }))
 );
+
+document.querySelector(".navbar-burger.burger").addEventListener("click", (e) => {
+  e.target.classList.toggle("is-active");
+  document.querySelector(".navbar .navbar-menu").classList.toggle("is-active");
+});
