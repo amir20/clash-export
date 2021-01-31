@@ -10,11 +10,28 @@ bugsnag(Vue);
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
 new Vue({
-  el: "#app",
+  el: "#troops",
   store,
   components: {
     Troops,
+  },
+  render: (h) => h(Troops),
+});
+
+new Vue({
+  el: "#recommendation",
+  store,
+  components: {
     PlayerRecommendation,
+  },
+  render: (h) => h(PlayerRecommendation),
+});
+
+new Vue({
+  el: "#activity",
+  store,
+  components: {
     PlayerActivity,
   },
+  render: (h) => h(PlayerActivity),
 });
