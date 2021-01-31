@@ -276,6 +276,14 @@ class Query(graphene.ObjectType):
             results = [model.Clan(**c) for c in api.search_by_name(query, limit=6)]
 
         results = sorted(results, key=lambda c: c.members, reverse=True)
+
+        tags = [c.tag for c in results]
+        existing_clans = list(model.Clan.objects(tag__in=tags))
+        slugs = {c.tag: c.slug for c in existing_clans}
+
+        for c in results:
+            c.slug = slugs.get(c.tag)
+
         return results
 
 
