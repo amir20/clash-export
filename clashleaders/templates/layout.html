@@ -104,9 +104,9 @@
       <nav class="navbar {% block nav_class %} {% endblock %}" aria-label="main navigation">
         <div class="navbar-brand">
           <a href="/" class="navbar-item clashleader-logo">Clash Leader</a>
-          <div class="navbar-burger burger" @click="showNav = !showNav" :class="{ 'is-active': showNav }"><span></span> <span></span> <span></span></div>
+          <div class="navbar-burger burger"><span></span> <span></span> <span></span></div>
         </div>
-        <div class="navbar-menu" :class="{ 'is-active': showNav }">
+        <div class="navbar-menu">
           <div class="navbar-start">
             {% block nav_header %}
             <div class="navbar-item has-dropdown is-hoverable">
