@@ -2,7 +2,7 @@
   <div class="navbar-end">
     <changelog> </changelog>
     <div class="navbar-item nav-search-item">
-      <div class="field is-expanded"><search-box :selected-tag.sync="selectedTag"></search-box></div>
+      <div class="field is-expanded"><search-box :selected-clan.sync="selectedClan"></search-box></div>
     </div>
     <user> </user>
   </div>
@@ -24,27 +24,31 @@ export default {
   },
   data() {
     return {
-      selectedTag: null,
+      selectedClan: null,
       showNav: false,
     };
   },
   watch: {
-    async selectedTag(newValue) {
-      if (newValue) {
+    async selectedClan() {
+      if (this.selectedClan) {
         event("search-clans", "Search");
-        const data = await request(
-          gql`
-            query GetClan($tag: String!) {
-              clan(tag: $tag) {
-                slug
+        if (this.selectedClan.slug == null) {
+          const { clan } = await request(
+            gql`
+              query GetClan($tag: String!) {
+                clan(tag: $tag) {
+                  slug
+                }
               }
+            `,
+            {
+              tag: this.selectedClan.tag,
             }
-          `,
-          {
-            tag: newValue,
-          }
-        );
-        window.location = `/clan/${data.clan.slug}`;
+          );
+          window.location = `/clan/${clan.slug}`;
+        } else {
+          window.location = `/clan/${this.selectedClan.slug}`;
+        }
       }
     },
   },

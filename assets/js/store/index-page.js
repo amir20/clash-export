@@ -23,7 +23,7 @@ const mutations = {
     event("saved-player", "Save Player");
     saveUser(player);
   },
-  setSavedTag(state, tag) {
+  setSavedClan(state, { tag }) {
     event("saved-clan", "Save Clan");
     state.savedTag = tag;
     store.set(STORAGE_KEY, tag);

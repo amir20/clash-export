@@ -11,7 +11,7 @@
     :data="data"
     :loading="isLoading"
     @input="fetchData"
-    @select="(option) => this.$emit('update:selectedTag', option ? option.tag : null)"
+    @select="(option) => this.$emit('update:selectedClan', option ? option : null)"
   >
     <template slot-scope="props">
       <div class="media">
@@ -54,6 +54,7 @@ export default {
               searchClan(query: $query) {
                 tag
                 name
+                slug
                 members
                 badgeUrls {
                   small

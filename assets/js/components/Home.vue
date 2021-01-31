@@ -50,7 +50,7 @@
         </div>
       </section>
       <div class="column field">
-        <p class="control"><search-box @update:selectedTag="setSavedTag" size="is-large"></search-box></p>
+        <p class="control"><search-box @update:selectedTag="setSavedClan" size="is-large"></search-box></p>
       </div>
     </template>
   </form>
@@ -79,7 +79,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setSavedTag", "clearSavedTag", "doNotAskForPlayer", "setSavedPlayer"]),
+    ...mapMutations(["setSavedClan", "clearSavedTag", "doNotAskForPlayer", "setSavedPlayer"]),
     onReset() {
       this.showModal = true;
       this.clearSavedTag();
