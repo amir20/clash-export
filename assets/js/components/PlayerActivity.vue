@@ -150,7 +150,7 @@ export default {
       return this.hasUser && this.userTag === this.player.tag;
     },
     hasData() {
-      return this.playerActivity.length > 0;
+      return this.playerActivity.labels.length > 0;
     },
   },
 };
