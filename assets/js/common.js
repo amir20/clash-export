@@ -1,5 +1,23 @@
+import Vue from "vue";
+import { Dropdown, Autocomplete, Icon } from "buefy";
+import bugsnag from "./bugsnag";
 import formatDistance from "date-fns/formatDistance";
 import parse from "date-fns/parse";
+import NavBarEnd from "./components/NavBarEnd";
+
+bugsnag(Vue);
+
+Vue.use(Dropdown);
+Vue.use(Autocomplete);
+Vue.use(Icon);
+
+new Vue({
+  el: "#nav-end",
+  components: {
+    NavBarEnd,
+  },
+  render: (h) => h(NavBarEnd),
+});
 
 const items = document.querySelectorAll("[data-from-now]");
 [].forEach.call(
@@ -9,5 +27,3 @@ const items = document.querySelectorAll("[data-from-now]");
       addSuffix: true,
     }))
 );
-
-import("./fragments/header");

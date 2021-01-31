@@ -4,9 +4,9 @@
       <b-tab-item label="Attacks" value="attacks">
         <activity-distribution
           ref="attacks"
-          :labels="player.labels"
+          :labels="playerActivity.labels"
           :user-series="user.attackWins"
-          :player-series="player.attackWins"
+          :player-series="playerActivity.attackWins"
           :loading="loading"
           :show-user="hasDifferentUser"
         >
@@ -15,9 +15,9 @@
       <b-tab-item label="Donations" value="donations">
         <activity-distribution
           ref="donations"
-          :labels="player.labels"
+          :labels="playerActivity.labels"
           :user-series="user.donations"
-          :player-series="player.donations"
+          :player-series="playerActivity.donations"
           :loading="loading"
           :show-user="hasDifferentUser"
         >
@@ -27,9 +27,9 @@
       <b-tab-item label="Trophies" value="trophies">
         <activity-distribution
           ref="trophies"
-          :labels="player.labels"
+          :labels="playerActivity.labels"
           :user-series="user.trophies"
-          :player-series="player.trophies"
+          :player-series="playerActivity.trophies"
           :loading="loading"
           :show-user="hasDifferentUser"
         >
@@ -38,9 +38,9 @@
       <b-tab-item label="DE Grab" value="loot">
         <activity-distribution
           ref="loot"
-          :labels="player.labels"
+          :labels="playerActivity.labels"
           :user-series="user.deGrab"
-          :player-series="player.deGrab"
+          :player-series="playerActivity.deGrab"
           :loading="loading"
           :show-user="hasDifferentUser"
         >
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ActivityDistribution from "./ActivityDistribution";
 import times from "lodash/times";
 import UserMixin from "../user";
@@ -66,11 +67,11 @@ export default {
     ActivityDistribution,
   },
   mixins: [UserMixin],
-  props: ["playerTag"],
+  props: [],
   data() {
     return {
       loading: true,
-      player: {},
+      playerActivity: {},
       user: {
         attackWins: [],
         donations: [],
@@ -107,25 +108,25 @@ export default {
         }
       `,
       {
-        playerTag: this.playerTag,
+        playerTag: this.player.tag,
         userTag: this.userTag,
         hasUser: this.hasDifferentUser,
       }
     );
 
     const { user, player } = data;
-    this.player = player.activity;
+    this.playerActivity = player.activity;
     if (user) {
       this.user = user.activity;
-      if (user.activity.labels.length < player.activity.labels.length) {
-        const zeros = player.activity.labels.length - user.activity.labels.length;
+      if (user.activity.labels.length < this.playerActivity.labels.length) {
+        const zeros = this.playerActivity.labels.length - user.activity.labels.length;
         const nulls = times(zeros, null);
         this.user.attackWins.unshift(...nulls);
         this.user.donations.unshift(...nulls);
         this.user.trophies.unshift(...nulls);
         this.user.deGrab.unshift(...nulls);
-      } else if (user.activity.labels.length > player.activity.labels.length) {
-        const length = player.activity.labels.length;
+      } else if (user.activity.labels.length > this.playerActivity.labels.length) {
+        const length = this.playerActivity.labels.length;
         this.user.attackWins = this.user.attackWins.slice(-length);
         this.user.donations = this.user.donations.slice(-length);
         this.user.trophies = this.user.trophies.slice(-length);
@@ -141,14 +142,15 @@ export default {
     },
   },
   computed: {
+    ...mapState(["player"]),
     hasDifferentUser() {
-      return this.hasUser && this.userTag !== this.playerTag;
+      return this.hasUser && this.userTag !== this.player.tag;
     },
     isSameUser() {
-      return this.hasUser && this.userTag === this.playerTag;
+      return this.hasUser && this.userTag === this.player.tag;
     },
     hasData() {
-      return this.player.labels.length > 0;
+      return this.playerActivity.length > 0;
     },
   },
 };

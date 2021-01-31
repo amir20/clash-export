@@ -10,7 +10,6 @@ import TWEEN from "@tweenjs/tween.js";
 
 export default {
   props: {
-    initialValue: { type: Number },
     name: { type: String },
     showPlusSign: { type: Boolean, default: false },
     positiveClass: { type: String, default: "" },
@@ -22,7 +21,7 @@ export default {
     };
   },
   created() {
-    this.tweeningValue = this.initialValue;
+    this.tweeningValue = this.targetValue;
   },
   watch: {
     targetValue(newValue, oldValue) {
