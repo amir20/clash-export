@@ -1,21 +1,22 @@
-import Vue from "vue";
-import { Dropdown, Autocomplete, Icon } from "buefy";
-import bugsnag from "../bugsnag";
-import SearchBox from "../components/SearchBox";
-import Changelog from "../components/Changelog";
-import User from "../components/User";
+<template>
+  <div class="navbar-end">
+    <changelog> </changelog>
+    <div class="navbar-item nav-search-item">
+      <div class="field is-expanded"><search-box :selected-tag.sync="selectedTag"></search-box></div>
+    </div>
+    <user> </user>
+  </div>
+</template>
+
+<script>
+import SearchBox from "./SearchBox";
+import Changelog from "./Changelog";
+import User from "./User";
 import { event } from "../ga";
 import { request } from "../client";
 import { gql } from "graphql-request";
 
-bugsnag(Vue);
-
-Vue.use(Dropdown);
-Vue.use(Autocomplete);
-Vue.use(Icon);
-
-new Vue({
-  el: "header",
+export default {
   components: {
     SearchBox,
     Changelog,
@@ -47,4 +48,7 @@ new Vue({
       }
     },
   },
-});
+};
+</script>
+
+<style></style>
