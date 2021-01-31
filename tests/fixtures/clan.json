@@ -81,6 +81,24 @@
     "total_attack_wins": 100,
     "total_versus_wins": 63
   },
+  "month_delta": {
+    "avg_donations": 91.93877551020408,
+    "avg_donations_received": 134.0204081632653,
+    "avg_gold_grab": 588336.9591836735,
+    "avg_elixir_grab": 599598.6530612245,
+    "avg_de_grab": 7344.448979591837,
+    "avg_war_stars": 0.8775510204081632,
+    "avg_attack_wins": 2.0408163265306123,
+    "avg_versus_wins": 1.2857142857142858,
+    "total_trophies": -396,
+    "total_bh_trophies": 312,
+    "total_gold_grab": 28828511,
+    "total_elixir_grab": 29380334,
+    "total_de_grab": 359878,
+    "total_donations": 4505,
+    "total_attack_wins": 100,
+    "total_versus_wins": 63
+  },
   "clan_type": "inviteOnly",
   "isWarLogPublic": true,
   "memberList": [
