@@ -111,7 +111,7 @@
               <clan-score title="Champion War League" field="monthDelta.avgCwlStarsPercentile"></clan-score>
             </div>
             <div class="panel-block">
-              <clan-score title="Clan Games" field="month_delta.avgGamesXpPercentile"></clan-score>
+              <clan-score title="Clan Games" field="monthDelta.avgGamesXpPercentile"></clan-score>
             </div>
             <div class="panel-block">
               <clan-score title="Clan Wars" field="weekDelta.avgWarStarsPercentile"></clan-score>

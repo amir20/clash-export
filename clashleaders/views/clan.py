@@ -22,6 +22,7 @@ def clan_detail_page(slug):
             clanPoints=clan.clanPoints,
             clanVersusPoints=clan.clanVersusPoints,
             weekDelta=clan.week_delta.to_dict(camel_case=True),
+            monthDelta=clan.month_delta.to_dict(camel_case=True),
             computed=clan.computed.to_dict(camel_case=True),
             updatedOn=clan.updated_on.timestamp() * 1000,
             historicData=clan.historical_near_days_ago(7).to_matrix(),
