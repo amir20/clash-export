@@ -50,7 +50,7 @@
         </div>
       </section>
       <div class="column field">
-        <p class="control"><search-box @update:selectedTag="setSavedClan" size="is-large"></search-box></p>
+        <p class="control"><search-box @update:selectedClan="setSavedClan" size="is-large"></search-box></p>
       </div>
     </template>
   </form>
