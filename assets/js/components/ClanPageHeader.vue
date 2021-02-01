@@ -130,16 +130,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
-
-import TrophyChart from "./TrophyChart";
+import { mapState } from "vuex";
 import LastUpdated from "./LastUpdated";
 import ClanField from "./ClanField";
 import ClanScore from "./ClanScore";
 
 export default {
   components: {
-    TrophyChart,
+    TrophyChart: () => import("./TrophyChart"),
     LastUpdated,
     ClanField,
     ClanScore,

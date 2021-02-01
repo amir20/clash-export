@@ -61,7 +61,6 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import PlayerComparison from "./PlayerComparison";
 import Notification from "./Notification";
 import { gaMixin } from "../ga";
 import UserMixin from "../user";
@@ -70,7 +69,7 @@ export default {
   mixins: [gaMixin, UserMixin],
   props: [],
   components: {
-    PlayerComparison,
+    PlayerComparison: () => import("./PlayerComparison"),
     Notification,
   },
   data() {
