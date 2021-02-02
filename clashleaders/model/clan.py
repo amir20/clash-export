@@ -45,6 +45,7 @@ class Clan(DynamicDocument):
     week_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
     month_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
     labels = ListField(DictField())
+    warLeague = DictField()
 
     meta = {
         "index_background": True,

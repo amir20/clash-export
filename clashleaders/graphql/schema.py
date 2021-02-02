@@ -153,6 +153,11 @@ class ClanActivity(graphene.ObjectType):
     members = graphene.List(graphene.Float)
 
 
+class IdNamePair(graphene.ObjectType):
+    id = graphene.Int()
+    name = graphene.String()
+
+
 class ClanLabel(graphene.ObjectType):
     id = graphene.Int()
     name = graphene.String()
@@ -188,6 +193,15 @@ class Clan(graphene.ObjectType):
     player_status = GenericScalar()
     xlsx_export = graphene.String(days=graphene.Int(required=True))
     trophy_history = GenericScalar()
+
+    warLeague = graphene.Field(IdNamePair)
+    isWarLogPublic = graphene.Boolean()
+    requiredTrophies = graphene.Int()
+    warFrequency = graphene.String()
+    warLosses = graphene.Int()
+    warTies = graphene.Int()
+    warWinStreak = graphene.Int()
+    warWins = graphene.Int()
 
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)
@@ -247,6 +261,9 @@ class Clan(graphene.ObjectType):
 
     def resolve_trophy_history(self, info):
         return self.trophy_history()
+
+    def resolve_warLeague(self, info):
+        return IdNamePair(**self.warLeague)
 
 
 class Query(graphene.ObjectType):
