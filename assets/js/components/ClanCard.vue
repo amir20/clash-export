@@ -106,6 +106,6 @@ export default {
 }
 
 .tags.are-small .tag:not(.is-normal):not(.is-large):not(.is-medium) {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
 }
 </style>
