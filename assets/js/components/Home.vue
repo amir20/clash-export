@@ -1,13 +1,23 @@
 <template>
-  <form class="section" action="/search" method="get" @reset="onReset">
+  <form class="" @reset="onReset">
     <template v-if="savedTag">
       <section class="hero">
         <div class="hero-body">
           <h1 class="title is-1">Hey there, {{ hasUser ? userName : "chief" }}!</h1>
           <h2 class="subtitle">I found your clan! Let's continue or start over again.</h2>
+          <card :tag="savedTag" @error="onClanError" :found-clan.sync="fetchedClan"></card>
+          <p class="buttons">
+            <button type="reset" class="button is-warning is-large">Reset</button>
+            <a :href="`/clan/${foundClan ? foundClan.slug : ''}`" class="button is-success is-large" :disabled="foundClan == null">{{
+              foundClan ? foundClan.name : "Your Clan"
+            }}</a>
+            <a :href="`/player/${userSlug}`" class="button is-info is-large" v-if="hasUser" :disabled="userSlug == null">
+              <b-icon pack="fas" icon="user"></b-icon>
+              <span>Your Profile</span>
+            </a>
+          </p>
         </div>
       </section>
-      <card :tag="savedTag" @error="onClanError" :found-clan.sync="fetchedClan"></card>
       <b-modal :active.sync="showModal" has-modal-card v-if="!skipPlayerQuestion && fetchedClan && !hasUser">
         <div class="modal-card">
           <header class="modal-card-head"></header>
@@ -28,16 +38,6 @@
           </footer>
         </div>
       </b-modal>
-      <p class="buttons">
-        <button type="reset" class="button is-warning is-large">Reset</button>
-        <a :href="`/clan/${foundClan ? foundClan.slug : ''}`" class="button is-success is-large" :disabled="foundClan == null">{{
-          foundClan ? foundClan.name : "Your Clan"
-        }}</a>
-        <a :href="`/player/${userSlug}`" class="button is-info is-large" v-if="hasUser" :disabled="userSlug == null">
-          <b-icon pack="fas" icon="user"></b-icon>
-          <span>Your Profile</span>
-        </a>
-      </p>
     </template>
     <template v-else>
       <section class="hero">
@@ -123,6 +123,12 @@ a[disabled="disabled"] {
 .modal-card {
   max-width: 900px;
   width: 100%;
-  max-height: calc(95vh);
+}
+</style>
+
+<style lang="scss">
+.hero.is-fullheight .hero-body {
+  flex-direction: column;
+  align-items: unset !important;
 }
 </style>

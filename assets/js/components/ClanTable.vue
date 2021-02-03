@@ -142,6 +142,14 @@ export default {
     tr.detail .detail-container {
       padding: 0;
     }
+
+    th.is-sortable {
+      padding-right: 1em;
+
+      .is-relative {
+        padding-left: 0.2em;
+      }
+    }
   }
 
   & /deep/ table {

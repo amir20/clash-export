@@ -1,7 +1,7 @@
 {% from 'macros/country-leaderboard.html' import country_leaderboard %} {% from 'macros/leaderboard.html' import leaderboard %} {% extends "layout.html" %} {%
 block body %}
-<section class="section hero is-light">
-  <div class="container" id="app">
+<section class="hero is-light is-threequarterheight">
+  <div class="hero-body container">
     <div class="columns is-centered is-vcentered">
       <div class="column is-3 is-hidden-mobile">
         <picture>
@@ -16,12 +16,10 @@ block body %}
     </div>
     <div class="is-hidden-mobile">
       <h3 class="has-text-centered subtitle is-5">Trophy Distribution</h3>
-      <div id="distribution">
-
-      </div>
+      <div id="distribution"></div>
     </div>
 
-    <nav class="level">
+    <section class="level section">
       <div class="level-item has-text-centered">
         <div>
           <p class="heading">Total Clans</p>
@@ -40,7 +38,7 @@ block body %}
           <p class="title">{{ "{:,}".format(status.total_countries) }}</p>
         </div>
       </div>
-    </nav>
+    </section>
   </div>
 </section>
 
@@ -76,7 +74,7 @@ block body %}
         "position": {{ loop.index }},
         "url":"{{ url_for('clan_detail_page', slug=clan.slug, _external=True) }}"
       }{% if not loop.last %},{% endif %}
-     {% endfor %}
+    {% endfor %}
     ]
   }
 </script>

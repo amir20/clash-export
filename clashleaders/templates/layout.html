@@ -28,12 +28,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16.png') }}" />
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88927228-3"></script>
-    <script
-      defer
-      src="https://use.fontawesome.com/releases/v5.7.1/js/all.js"
-      integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/7657a4ca8d.js" crossorigin="anonymous"></script>
     <script defer src="{{ manifest_path('shims.js') }}"></script>
     <script defer src="{{ manifest_path('vendors.js') }}"></script>
     <script defer src="{{ manifest_path('common.js') }}"></script>
@@ -65,7 +60,7 @@
     <link rel="apple-touch-icon" type="image/png" sizes="200x200" href="{{ url_for('static', filename='images/logo.png') }}" />
     <script type="text/javascript">
       (window.heap = window.heap || []),
-        (heap.load = function(e, t) {
+        (heap.load = function (e, t) {
           (window.heap.appid = e), (window.heap.config = t = t || {});
           var r = t.forceSSL || "https:" === document.location.protocol,
             a = document.createElement("script");
@@ -73,8 +68,8 @@
           var n = document.getElementsByTagName("script")[0];
           n.parentNode.insertBefore(a, n);
           for (
-            var o = function(e) {
-                return function() {
+            var o = function (e) {
+                return function () {
                   heap.push([e].concat(Array.prototype.slice.call(arguments, 0)));
                 };
               },
@@ -87,7 +82,7 @@
                 "removeEventProperty",
                 "setEventProperties",
                 "track",
-                "unsetEventProperty"
+                "unsetEventProperty",
               ],
               c = 0;
             c < p.length;
@@ -110,25 +105,13 @@
           <div class="navbar-start">
             {% block nav_header %}
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link" href="{{  url_for('explore_clans', sort='most-popular') }}">
-                Explore Clans
-              </a>
+              <a class="navbar-link" href="{{  url_for('explore_clans', sort='most-popular') }}"> Explore Clans </a>
               <div class="navbar-dropdown">
-                <a class="navbar-item" href="{{  url_for('explore_clans', sort='most-popular') }}">
-                  Popular Today
-                </a>
-                <a class="navbar-item" href="{{  url_for('explore_clans', sort='cwl') }}">
-                  Best in CWL
-                </a>
-                <a class="navbar-item" href="{{  url_for('explore_clans', sort='wars') }}">
-                  Best in Wars
-                </a>
-                <a class="navbar-item" href="{{  url_for('explore_clans', sort='donations') }}">
-                  Most Donations
-                </a>
-                <a class="navbar-item" href="{{  url_for('explore_clans', sort='clan-games') }}">
-                  Most Games XP
-                </a>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='most-popular') }}"> Popular Today </a>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='cwl') }}"> Best in CWL </a>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='wars') }}"> Best in Wars </a>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='donations') }}"> Most Donations </a>
+                <a class="navbar-item" href="{{  url_for('explore_clans', sort='clan-games') }}"> Most Games XP </a>
               </div>
             </div>
             <div class="navbar-item has-dropdown is-hoverable">
