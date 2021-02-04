@@ -2,9 +2,7 @@
   <form class="" @reset="onReset">
     <template v-if="savedTag">
       <section class="hero">
-        <div class="hero-body">
-          <h1 class="title is-1">Hey there, {{ hasUser ? userName : "chief" }}!</h1>
-          <h2 class="subtitle">I found your clan! Let's continue or start over again.</h2>
+        <div class="hero-body has-text-centered-mobile">
           <card :tag="savedTag" @error="onClanError" :found-clan.sync="fetchedClan"></card>
           <p class="buttons">
             <button type="reset" class="button is-warning is-large">Reset</button>
