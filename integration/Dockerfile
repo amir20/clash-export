@@ -1,4 +1,4 @@
-FROM amir20/docker-alpine-puppeteer:v1
+FROM amir20/docker-alpine-puppeteer:v2
 
 COPY package*.json /app/
 RUN npm ci

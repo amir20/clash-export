@@ -9,7 +9,6 @@ describe("home page", () => {
     browser = await puppeteer.launch({
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
       executablePath: process.env.CHROME_EXE_PATH || "",
-      defaultViewport: { width: 1280, height: 1080 },
     });
   });
 
@@ -18,9 +17,15 @@ describe("home page", () => {
     await page.goto(BASE, {
       waitUntil: "networkidle0",
     });
-    await page.waitFor(2000); // wait for animation on home page
-    await page.mouse.move(-10, -10);
-    const image = await page.screenshot({ fullPage: true });
+
+    await page.waitForTimeout(2000);
+
+    await page.setViewport({
+      width: 1280,
+      height: 960,
+    });
+
+    const image = await page.screenshot();
 
     expect(image).toMatchImageSnapshot();
   });
@@ -30,7 +35,7 @@ describe("home page", () => {
     await page.goto(BASE, {
       waitUntil: "networkidle0",
     });
-    await page.waitFor(2000); // wait for animation on home page
+    await page.waitForTimeout(2000); // wait for animation on home page
     await page.setViewport({ width: 1024, height: 768 });
     const image = await page.screenshot();
 
@@ -42,7 +47,7 @@ describe("home page", () => {
     await page.goto(BASE, {
       waitUntil: "networkidle0",
     });
-    await page.waitFor(2000); // wait for animation on home page
+    await page.waitForTimeout(2000); // wait for animation on home page
     await page.setViewport({ width: 372, height: 812 });
     const image = await page.screenshot();
 
