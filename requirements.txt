@@ -122,7 +122,7 @@ typing==3.7.4.3
 typing-extensions==3.7.4.3
 ua-parser==0.10.0
 Unidecode==0.4.21
-urllib3==1.26.2
+urllib3==1.26.3
 user-agents==2.2.0
 uvloop==0.14.0
 wasmer==1.0.0
