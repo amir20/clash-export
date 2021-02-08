@@ -26,7 +26,7 @@
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "d3": "^6.5.0",
-    "date-fns": "^2.16.1",
+    "date-fns": "^2.17.0",
     "es6-map": "^0.1.5",
     "file-loader": "^6.2.0",
     "flag-icon-css": "^3.5.0",
