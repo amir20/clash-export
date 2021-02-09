@@ -30,6 +30,9 @@
                           <span class="flag-icon mr-1" :class="`flag-icon-${clan.location.countryCode.toLowerCase()}`"></span>
                           {{ clan.location.name }}
                         </a>
+                        <span class="tag is-light">
+                          {{ clan.warLeague.name }}
+                        </span>
                       </div>
                     </div>
                   </div>

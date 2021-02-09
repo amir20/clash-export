@@ -58,6 +58,9 @@ const actions = {
             recentData: playerMatrix
             historicData: playerMatrix(days: $days)
             trophyHistory
+            warLeague {
+              name
+            }
             labels {
               id
               name

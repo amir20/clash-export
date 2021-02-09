@@ -39,6 +39,7 @@ def clan_detail_page(slug):
             trophyHistory=clan.trophy_history(),
             verifiedAccounts=clan.verified_accounts,
             labels=labels(clan),
+            warLeague=clan.warLeague,
         )
     except DoesNotExist:
         return render_template("404.html"), 404
