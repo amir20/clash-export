@@ -1,9 +1,9 @@
+import clashleaders.views
 from flask import render_template
 from mongoengine import DoesNotExist
 
 from clashleaders import app
 from clashleaders.model import Clan, Status
-import clashleaders.views
 
 
 @app.context_processor
@@ -34,10 +34,11 @@ def clan_detail_page(slug):
             delta=clan.week_delta.to_dict(camel_case=True),
             similar=clan.week_delta.to_dict(camel_case=True),
             oldestDays=clan.days_of_history(),
-            badgeUrls=dict(medium=clashleaders.views.imgproxy_url(clan.badgeUrls["medium"])),
+            badgeUrls=dict(large=clashleaders.views.imgproxy_url(clan.badgeUrls["large"])),
             richDescription=clan.rich_description,
             trophyHistory=clan.trophy_history(),
             verifiedAccounts=clan.verified_accounts,
+            labels=labels(clan),
         )
     except DoesNotExist:
         return render_template("404.html"), 404
@@ -47,3 +48,11 @@ def clan_detail_page(slug):
             clan=clan,
             initial_state=initial_state,
         )
+
+
+def labels(clan):
+    labels = clan.labels
+    for label in labels:
+        label["iconUrls"] = {key: clashleaders.views.imgproxy_url(value) for key, value in label["iconUrls"].items()}
+
+    return labels

@@ -104,7 +104,9 @@ export default {
 .still-loading * {
   color: #efefef !important;
 }
+</style>
 
+<style lang="scss">
 .tags.are-small .tag:not(.is-normal):not(.is-large):not(.is-medium) {
   font-size: 0.65rem;
 }

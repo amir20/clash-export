@@ -5,36 +5,49 @@
         <div class="column is-12-tablet is-9-desktop is-10-widescreen">
           <div class="columns is-vcentered has-text-centered-mobile">
             <div class="column is-narrow">
-              <img :src="clan.badgeUrls.medium" width="128" />
+              <img :src="clan.badgeUrls.large" width="150" />
             </div>
             <div class="column">
               <div class="columns">
                 <div class="column">
-                  <h1 class="title">{{ clan.name }}</h1>
-                  <h2 class="subtitle is-6 has-text-weight-light">
-                    <span class="has-text-weight-semibold"> <clan-field name="members"></clan-field> members </span>
-                    ●
-                    <span class="has-text-weight-semibold"> Level <clan-field name="clanLevel"></clan-field></span>
+                  <h1 class="title is-marginless">{{ clan.name }}</h1>
+                  <div class="has-text-weight-light">
+                    <i> <last-updated></last-updated> </i>
+                  </div>
+                  <div class="tags mt-2 mb-0">
+                    <span class="tag is-info is-light">
+                      <i class="fas fa-hashtag mr-1"></i>
+                      {{ clan.tag.substr(1) }}
+                    </span>
+                    <span class="tag is-info is-light">
+                      <i class="fas fa-user-friends mr-1"></i>
+                      {{ clan.members }}
+                    </span>
+                    <span class="tag is-info is-light">Level {{ clan.clanLevel }}</span>
                     <template v-if="clan.location.isCountry">
-                      ●
-                      <span class="flag-icon" :class="`flag-icon-${clan.location.countryCode.toLowerCase()}`"></span>
                       <a :href="`/country/${clan.location.countryCode.toLowerCase()}`">
-                        <span class="has-text-weight-semibold">{{ clan.location.name }}</span>
+                        <span class="tag is-info is-light">
+                          <span class="flag-icon mr-1" :class="`flag-icon-${clan.location.countryCode.toLowerCase()}`"></span>
+                          {{ clan.location.name }}
+                        </span>
                       </a>
                     </template>
-                    ●
-                    <span class="has-text-weight-semibold"> {{ clan.tag }}</span>
+                  </div>
+                  <div class="tags">
+                    <span class="tag is-info is-light" v-for="label in clan.labels" :key="label.id">
+                      <img :src="label.iconUrls.small" width="20" class="mr-1" />
 
+                      {{ label.name }}
+                    </span>
+                  </div>
+                  <div class="subtitle is-6 has-text-weight-light">
                     <!-- {% if 'reddit' in clan.verified_accounts %} ●
                     <span class="has-text-weight-bold">
                       <i class="fab fa-reddit fa-lg reddit-color"></i> Verified Reddit Clan
                       <i class="fas fa-check has-text-success"></i>
                     </span>
                     {% endif %} -->
-                    <div class="has-text-weight-light">
-                      <i> <last-updated></last-updated> </i>
-                    </div>
-                  </h2>
+                  </div>
                 </div>
               </div>
             </div>

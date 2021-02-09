@@ -58,6 +58,13 @@ const actions = {
             recentData: playerMatrix
             historicData: playerMatrix(days: $days)
             trophyHistory
+            labels {
+              id
+              name
+              iconUrls {
+                small
+              }
+            }
             computed {
               totalDonations
               totalAttackWins
