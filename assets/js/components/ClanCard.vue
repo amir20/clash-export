@@ -12,20 +12,16 @@
                 {{ clan.name }}
               </h3>
             </div>
-            <div class="column mt-1">
-              <div class="field is-grouped is-grouped-multiline">
-                <div class="control">
-                  <div class="tags has-addons are-small">
-                    <span class="tag is-dark"><i class="fas fa-hashtag"></i></span>
-                    <span class="tag is-light">{{ clan.tag.substr(1) }}</span>
-                  </div>
-                </div>
-                <div class="control">
-                  <div class="tags has-addons are-small">
-                    <span class="tag is-dark"><i class="fas fa-user-friends"></i></span>
-                    <span class="tag is-light">{{ clan.members }}</span>
-                  </div>
-                </div>
+            <div class="column is-narrow mt-1">
+              <div class="tags is-centered">
+                <span class="tag is-light">
+                  <i class="fas fa-hashtag mr-1"></i>
+                  {{ clan.tag.substr(1) }}
+                </span>
+                <span class="tag is-light">
+                  <i class="fas fa-user-friends mr-1"></i>
+                  {{ clan.members }}
+                </span>
               </div>
             </div>
           </div>
@@ -103,11 +99,5 @@ export default {
 <style lang="scss" scoped>
 .still-loading * {
   color: #efefef !important;
-}
-</style>
-
-<style lang="scss">
-.tags.are-small .tag:not(.is-normal):not(.is-large):not(.is-medium) {
-  font-size: 0.65rem;
 }
 </style>

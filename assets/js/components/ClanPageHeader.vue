@@ -14,31 +14,34 @@
                   <div class="has-text-weight-light">
                     <i> <last-updated></last-updated> </i>
                   </div>
-                  <div class="tags mt-2 mb-0">
-                    <span class="tag is-info is-light">
-                      <i class="fas fa-hashtag mr-1"></i>
-                      {{ clan.tag.substr(1) }}
-                    </span>
-                    <span class="tag is-info is-light">
-                      <i class="fas fa-user-friends mr-1"></i>
-                      {{ clan.members }}
-                    </span>
-                    <span class="tag is-info is-light">Level {{ clan.clanLevel }}</span>
-                    <template v-if="clan.location.isCountry">
-                      <a :href="`/country/${clan.location.countryCode.toLowerCase()}`">
-                        <span class="tag is-info is-light">
+                  <div class="columns mt-2 mb-0">
+                    <div class="column is-narrow pt-0 pb-0">
+                      <div class="tags is-centered">
+                        <span class="tag is-light">
+                          <i class="fas fa-hashtag mr-1"></i>
+                          {{ clan.tag.substr(1) }}
+                        </span>
+                        <span class="tag is-light">
+                          <i class="fas fa-user-friends mr-1"></i>
+                          {{ clan.members }}
+                        </span>
+                        <span class="tag is-light">Level {{ clan.clanLevel }}</span>
+                        <a class="tag is-light" :href="`/country/${clan.location.countryCode.toLowerCase()}`" v-if="clan.location.isCountry">
                           <span class="flag-icon mr-1" :class="`flag-icon-${clan.location.countryCode.toLowerCase()}`"></span>
                           {{ clan.location.name }}
-                        </span>
-                      </a>
-                    </template>
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                  <div class="tags">
-                    <span class="tag is-info is-light" v-for="label in clan.labels" :key="label.id">
-                      <img :src="label.iconUrls.small" width="20" class="mr-1" />
-
-                      {{ label.name }}
-                    </span>
+                  <div class="columns mt-2 mb-0">
+                    <div class="column is-narrow pt-0 pb-0">
+                      <div class="tags is-centered">
+                        <span class="tag is-light" v-for="label in clan.labels" :key="label.id">
+                          <img :src="label.iconUrls.small" width="20" class="mr-1" />
+                          {{ label.name }}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <div class="subtitle is-6 has-text-weight-light">
                     <!-- {% if 'reddit' in clan.verified_accounts %} ●
@@ -106,7 +109,7 @@
             </div>
           </div>
           <div class="has-text-centered is-touch-only">
-            <a class="button is-info" :href="`clashofclans://action=OpenClanProfile&tag=${clan.tag}`">
+            <a class="button" :href="`clashofclans://action=OpenClanProfile&tag=${clan.tag}`">
               <span class="icon"> <i class="fas fa-external-link-alt"></i></span> <span>Open Clan in Game</span>
             </a>
           </div>
