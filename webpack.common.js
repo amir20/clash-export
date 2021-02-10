@@ -22,7 +22,7 @@ module.exports = {
       cacheGroups: {
         commons: {
           test: /node_modules/,
-          chunks: "initial",
+          chunks: "all",
           name: "vendors",
         },
         "styles-compiled": {
