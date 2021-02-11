@@ -4,7 +4,7 @@ const common = require("./webpack.common.js");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const path = require("path");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
   mode: "production",
@@ -23,3 +23,9 @@ module.exports = merge(common, {
     filename: "js/[name].[chunkhash].js",
   },
 });
+
+if (process.env.SHOW_ANALYZER == "true") {
+  module.exports = merge(module.exports, {
+    plugins: [new BundleAnalyzerPlugin()],
+  });
+}
