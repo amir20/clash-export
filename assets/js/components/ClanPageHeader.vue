@@ -39,7 +39,7 @@
                   <div class="columns mt-2 mb-0">
                     <div class="column is-narrow pt-0 pb-0">
                       <div class="tags is-centered">
-                        <span class="tag is-light" v-for="label in clan.labels" :key="label.id">
+                        <span class="tag is-danger is-light" v-for="label in clan.labels" :key="label.id">
                           <img :src="label.iconUrls.small" width="20" class="mr-1" />
                           {{ label.name }}
                         </span>
@@ -112,7 +112,7 @@
             </div>
           </div>
           <div class="has-text-centered is-touch-only">
-            <a class="button" :href="`clashofclans://action=OpenClanProfile&tag=${clan.tag}`">
+            <a class="button is-info" :href="`clashofclans://action=OpenClanProfile&tag=${clan.tag}`">
               <span class="icon"> <i class="fas fa-external-link-alt"></i></span> <span>Open Clan in Game</span>
             </a>
           </div>
@@ -165,4 +165,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+a.tag {
+  text-decoration: underline;
+}
+</style>
