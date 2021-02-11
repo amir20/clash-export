@@ -21,18 +21,24 @@
                           <i class="fas fa-hashtag mr-1"></i>
                           {{ clan.tag.substr(1) }}
                         </span>
-                        <span class="tag is-light">
-                          <i class="fas fa-user-friends mr-1"></i>
-                          {{ clan.members }}
-                        </span>
-                        <span class="tag is-light">Level {{ clan.clanLevel }}</span>
+                        <b-tooltip label="Members" position="is-right" type="is-dark" delay="350">
+                          <span class="tag is-light">
+                            <i class="fas fa-user-friends mr-1"></i>
+                            {{ clan.members }}
+                          </span>
+                        </b-tooltip>
+                        <b-tooltip label="Clan Level" position="is-right" type="is-dark" delay="350">
+                          <span class="tag is-light">Level {{ clan.clanLevel }}</span>
+                        </b-tooltip>
                         <a class="tag is-light" :href="`/country/${clan.location.countryCode.toLowerCase()}`" v-if="clan.location.isCountry">
                           <span class="flag-icon mr-1" :class="`flag-icon-${clan.location.countryCode.toLowerCase()}`"></span>
                           {{ clan.location.name }}
                         </a>
-                        <span class="tag is-light">
-                          {{ clan.warLeague.name }}
-                        </span>
+                        <b-tooltip label="Clan War League" position="is-right" type="is-dark" delay="350">
+                          <span class="tag is-light">
+                            {{ clan.warLeague.name }}
+                          </span>
+                        </b-tooltip>
                       </div>
                     </div>
                   </div>

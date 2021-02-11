@@ -29,8 +29,8 @@
             troops.
           </div>
           <div class="column">
-            <troop v-if="homeBaseTroop" :name="homeBaseTroop.name" class="is-tooltip-right tooltip" :data-tooltip="homeBaseTroop.name"></troop>
-            <troop v-if="builderBaseTroop" :name="builderBaseTroop.name" class="is-tooltip-right tooltip" :data-tooltip="builderBaseTroop.name"></troop>
+            <troop v-if="homeBaseTroop" :name="homeBaseTroop.name"></troop>
+            <troop v-if="builderBaseTroop" :name="builderBaseTroop.name"></troop>
             <b v-if="!homeBaseTroop && !builderBaseTroop">No recommendations right now. Great job!</b>
           </div>
         </div>

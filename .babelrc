@@ -6,8 +6,9 @@
         "modules": false,
         "useBuiltIns": "usage",
         "corejs": 3,
+        "bugfixes": true,
         "targets": {
-          "browsers": ["> 0.25%", "last 2 versions", "not ie <= 9"]
+          "browsers": ["> 0.5%", "last 2 versions", "not dead"]
         }
       }
     ]
@@ -19,7 +20,7 @@
       "@babel/plugin-transform-runtime",
       {
         "regenerator": true,
-        "corejs": 3,
+        "corejs": 3
       }
     ]
   ]
