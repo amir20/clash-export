@@ -69,7 +69,7 @@
             <!-- Total Trophies -->
             <div class="level-item has-text-centered">
               <div>
-                <p class="heading is-tooltip-right tooltip is-tooltip-multiline">Total Trophies <i class="fas fa-info-circle"></i></p>
+                <p class="heading">Total Trophies</p>
                 <p class="title">
                   <clan-field name="clanPoints" class="has-text-weight-light"></clan-field> <br />
                   <clan-field name="weekDelta.totalTrophies" show-plus-sign class="tag" positive-class="is-success" negative-class="is-danger"></clan-field>
