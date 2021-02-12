@@ -8,7 +8,7 @@ COPY package.json yarn.lock ./
 RUN yarn
 
 # Copy all files for webpack
-COPY webpack* .babelrc ./
+COPY webpack* .* ./
 COPY assets/ assets/
 COPY clashleaders/static clashleaders/static
 

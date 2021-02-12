@@ -6,10 +6,7 @@
         "modules": false,
         "useBuiltIns": "usage",
         "corejs": 3,
-        "bugfixes": true,
-        "targets": {
-          "browsers": ["> 0.5%", "last 2 versions", "not dead"]
-        }
+        "bugfixes": true
       }
     ]
   ],
