@@ -1,3 +1,4 @@
+import "whatwg-fetch";
 import Vue from "vue";
 import { Dropdown, Autocomplete, Icon } from "buefy";
 import bugsnag from "./bugsnag";

@@ -14,16 +14,28 @@ module.exports = {
     "troop-page": "./js/troop-page.js",
     index: "./js/index.js",
     common: "./js/common.js",
-    shims: "./js/shims.js",
     styles: "./css/styles.scss",
   },
   optimization: {
     splitChunks: {
       cacheGroups: {
         commons: {
-          test: /node_modules/,
+          test(mod /* , chunk */) {
+            if (!mod.context.includes("node_modules") || ["node_modules/core-js-pure", "node_modules/whatwg-fetch"].some((str) => mod.context.includes(str))) {
+              return false;
+            }
+
+            return true;
+          },
           chunks: "all",
           name: "vendors",
+        },
+        shims: {
+          test(mod /* , chunk */) {
+            return ["node_modules/core-js-pure", "node_modules/whatwg-fetch"].some((str) => mod.context.includes(str));
+          },
+          chunks: "all",
+          name: "shims",
         },
         "styles-compiled": {
           name: "styles-compiled",
