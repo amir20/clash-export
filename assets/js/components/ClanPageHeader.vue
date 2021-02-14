@@ -21,20 +21,20 @@
                           <i class="fas fa-hashtag mr-1"></i>
                           {{ clan.tag.substr(1) }}
                         </span>
-                        <b-tooltip label="Members" position="is-right" type="is-dark" delay="350">
+                        <b-tooltip label="Members" position="is-right" type="is-dark" :delay="350">
                           <span class="tag is-light">
                             <i class="fas fa-user-friends mr-1"></i>
                             {{ clan.members }}
                           </span>
                         </b-tooltip>
-                        <b-tooltip label="Clan Level" position="is-right" type="is-dark" delay="350">
+                        <b-tooltip label="Clan Level" position="is-right" type="is-dark" :delay="350">
                           <span class="tag is-light">Level {{ clan.clanLevel }}</span>
                         </b-tooltip>
                         <a class="tag is-light" :href="`/country/${clan.location.countryCode.toLowerCase()}`" v-if="clan.location.isCountry">
                           <span class="flag-icon mr-1" :class="`flag-icon-${clan.location.countryCode.toLowerCase()}`"></span>
                           {{ clan.location.name }}
                         </a>
-                        <b-tooltip label="Clan War League" position="is-right" type="is-dark" delay="350">
+                        <b-tooltip label="Clan War League" position="is-right" type="is-dark" :delay="350">
                           <span class="tag is-light">
                             {{ clan.warLeague.name }}
                           </span>
@@ -70,9 +70,8 @@
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading">Total Trophies</p>
-                <p class="title">
-                  <clan-field name="clanPoints" class="has-text-weight-light"></clan-field> <br />
-                  <clan-field name="weekDelta.totalTrophies" show-plus-sign class="tag" positive-class="is-success" negative-class="is-danger"></clan-field>
+                <p class="title has-text-weight-light">
+                  <clan-field :value="clan.clanPoints"></clan-field>
                 </p>
               </div>
             </div>
@@ -80,9 +79,8 @@
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading">Total BH Trophies</p>
-                <p class="title">
-                  <clan-field name="clanVersusPoints" class="has-text-weight-light"></clan-field> <br />
-                  <clan-field name="weekDelta.totalBhTrophies" show-plus-sign class="tag" positive-class="is-success" negative-class="is-danger"></clan-field>
+                <p class="title has-text-weight-light">
+                  <clan-field :value="clan.clanVersusPoints"></clan-field>
                 </p>
               </div>
             </div>
@@ -90,36 +88,34 @@
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading">Donations</p>
-                <p class="title">
-                  <clan-field name="computed.totalDonations" class="has-text-weight-light"></clan-field> <br />
-                  <clan-field name="weekDelta.totalDonations" show-plus-sign class="tag" positive-class="is-success" negative-class="is-danger"></clan-field>
+                <p class="title has-text-weight-light">
+                  <clan-field :value="clan.computed.totalDonations"></clan-field>
                 </p>
               </div>
             </div>
-            <!-- Total Wins -->
+            <!-- War Wins -->
             <div class="level-item has-text-centered">
               <div>
-                <p class="heading">Total Wins</p>
-                <p class="title">
-                  <clan-field name="computed.totalAttackWins" class="has-text-weight-light"></clan-field> <br />
-                  <clan-field name="weekDelta.totalAttackWins" show-plus-sign class="tag" positive-class="is-success" negative-class="is-danger"></clan-field>
+                <p class="heading">War Wins</p>
+                <p class="title has-text-weight-light">
+                  <clan-field :value="clan.warWins"></clan-field>
                 </p>
               </div>
             </div>
-            <!-- Total Versus Wins -->
+            <!-- Warn Win Ratio -->
             <div class="level-item has-text-centered">
               <div>
-                <p class="heading">Total Versus Wins</p>
-                <p class="title">
-                  <clan-field name="computed.totalVersusWins" class="has-text-weight-light"></clan-field> <br />
-                  <clan-field name="weekDelta.totalVersusWins" show-plus-sign class="tag" positive-class="is-success" negative-class="is-danger"></clan-field>
+                <p class="heading">War Win Ratio</p>
+                <p class="title has-text-weight-light">
+                  <clan-field :value="clan.warWinRatio" :locale-style="{ style: 'percent' }"></clan-field>
                 </p>
               </div>
             </div>
           </div>
           <div class="has-text-centered is-touch-only">
             <a class="button is-info" :href="`clashofclans://action=OpenClanProfile&tag=${clan.tag}`">
-              <span class="icon"> <i class="fas fa-external-link-alt"></i></span> <span>Open Clan in Game</span>
+              <span class="icon"> <i class="fas fa-external-link-alt"></i></span>
+              <span>Open Clan in Game</span>
             </a>
           </div>
           <div class="is-hidden-mobile">

@@ -1,5 +1,5 @@
 <template>
-  <b-tooltip :label="name" position="is-right" type="is-dark" active="showTooltip" delay="350">
+  <b-tooltip :label="name" position="is-right" type="is-dark" :active="showTooltip" :delay="350">
     <div class="troop" :class="name | iconClass">
       <slot></slot>
     </div>

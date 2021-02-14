@@ -202,6 +202,8 @@ class Clan(graphene.ObjectType):
     warTies = graphene.Int()
     warWinStreak = graphene.Int()
     warWins = graphene.Int()
+    war_win_ratio = graphene.Float()
+    war_total = graphene.Int()
 
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)

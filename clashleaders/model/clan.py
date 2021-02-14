@@ -44,8 +44,11 @@ class Clan(DynamicDocument):
     day_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
     week_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
     month_delta: ClanDelta = EmbeddedDocumentField(ClanDelta)
-    labels = ListField(DictField())
-    warLeague = DictField()
+    labels: List[Dict] = ListField(DictField())
+    warLeague: Dict = DictField()
+    warLosses: int = IntField(default=0)
+    warTies: int = IntField(default=0)
+    warWins: int = IntField(default=0)
 
     meta = {
         "index_background": True,
@@ -104,6 +107,14 @@ class Clan(DynamicDocument):
     @property
     def rich_description(self):
         return transform_description(self.description)
+
+    @property
+    def war_total(self) -> int:
+        return self.warLosses + self.warTies + self.warWins
+
+    @property
+    def war_win_ratio(self) -> float:
+        return self.warWins / self.war_total
 
     def update_calculations(self):
         return clashleaders.clash.clan_calculation.update_calculations(self)

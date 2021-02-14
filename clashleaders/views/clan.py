@@ -40,6 +40,8 @@ def clan_detail_page(slug):
             verifiedAccounts=clan.verified_accounts,
             labels=labels(clan),
             warLeague=clan.warLeague,
+            warWinRatio=clan.war_win_ratio,
+            warWins=clan.warWins,
         )
     except DoesNotExist:
         return render_template("404.html"), 404
