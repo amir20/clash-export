@@ -114,7 +114,7 @@ class Clan(DynamicDocument):
 
     @property
     def war_win_ratio(self) -> float:
-        return self.warWins / self.war_total
+        return 0 if self.war_total == 0 else self.warWins / self.war_total
 
     def update_calculations(self):
         return clashleaders.clash.clan_calculation.update_calculations(self)
