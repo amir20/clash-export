@@ -57,7 +57,7 @@ isort==5.7.0
 itsdangerous==1.1.0
 jedi==0.17.2
 Jinja2==2.11.3
-joblib==1.0.0
+joblib==1.0.1
 lazy-object-proxy==1.4.3
 loguru==0.5.3
 Mako==1.1.4
