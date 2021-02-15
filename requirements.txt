@@ -80,7 +80,7 @@ pickleshare==0.7.5
 Pillow==8.1.0
 pluggy==0.13.1
 promise==2.3
-prompt-toolkit==3.0.11
+prompt-toolkit==3.0.16
 protobuf==3.14.0
 ptyprocess==0.7.0
 py==1.10.0
