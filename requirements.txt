@@ -71,7 +71,7 @@ mypy==0.800
 mypy-extensions==0.4.3
 numpy==1.20.1
 packaging==20.9
-pandas==1.2.1
+pandas==1.2.2
 parso==0.7.1
 pathspec==0.8.1
 pep8==1.7.1
@@ -110,6 +110,8 @@ rq-dashboard==0.6.1
 Rx==1.6.1
 scikit-learn==0.24.1
 scipy==1.6.0
+semantic-version==2.8.5
+setuptools-rust==0.11.6
 six==1.15.0
 snapshottest==0.6.0
 termcolor==1.1.0

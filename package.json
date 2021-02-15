@@ -71,7 +71,8 @@
     "watch": "webpack --watch --config webpack.dev.js",
     "prestart": "docker-compose stop web",
     "start": "concurrently 'docker-compose up web' 'yarn watch'",
-    "analyzer": "SHOW_ANALYZER=true yarn build"
+    "analyzer": "SHOW_ANALYZER=true yarn build",
+    "postinstall": "husky install"
   },
   "lint-staged": {
     "*.{js,vue,json,css,md}": [
