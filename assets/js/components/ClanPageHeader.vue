@@ -5,7 +5,7 @@
         <div class="column is-12-tablet is-9-desktop is-10-widescreen">
           <div class="columns is-vcentered has-text-centered-mobile">
             <div class="column is-narrow">
-              <img :src="clan.badgeUrls.large" width="150" />
+              <img :src="clan.badgeUrls.large" width="180" height="180" />
             </div>
             <div class="column">
               <div class="columns">
