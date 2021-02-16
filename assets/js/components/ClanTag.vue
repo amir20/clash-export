@@ -21,9 +21,7 @@ export default {
     };
   },
   async created() {
-    // const result = await navigator.permissions.query({ name: "clipboard-write" });
-    // this.hasPermission = result.state == "granted" || result.state == "prompt";
-    this.hasPermission = true;
+    this.hasPermission = !!navigator.clipboard;
   },
   methods: {
     async writeToClipboard(e) {
