@@ -17,10 +17,7 @@
                   <div class="columns mt-2 mb-0">
                     <div class="column is-narrow pt-0 pb-0">
                       <div class="tags is-centered">
-                        <span class="tag is-light">
-                          <i class="fas fa-hashtag mr-1"></i>
-                          {{ clan.tag.substr(1) }}
-                        </span>
+                        <clan-tag :value="clan.tag"></clan-tag>
                         <b-tooltip label="Members" position="is-right" type="is-dark" :delay="350">
                           <span class="tag is-light">
                             <i class="fas fa-user-friends mr-1"></i>
@@ -153,6 +150,7 @@ import { mapState } from "vuex";
 import LastUpdated from "./LastUpdated";
 import ClanField from "./ClanField";
 import ClanScore from "./ClanScore";
+import ClanTag from "./ClanTag";
 
 export default {
   components: {
@@ -160,6 +158,7 @@ export default {
     LastUpdated,
     ClanField,
     ClanScore,
+    ClanTag,
   },
   computed: {
     ...mapState(["clan"]),

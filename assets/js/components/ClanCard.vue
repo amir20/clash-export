@@ -14,10 +14,7 @@
             </div>
             <div class="column is-narrow mt-1">
               <div class="tags is-centered">
-                <span class="tag is-light">
-                  <i class="fas fa-hashtag mr-1"></i>
-                  {{ clan.tag.substr(1) }}
-                </span>
+                <clan-tag :value="clan.tag"></clan-tag>
                 <span class="tag is-light">
                   <i class="fas fa-user-friends mr-1"></i>
                   {{ clan.members }}
@@ -36,11 +33,13 @@
 <script>
 import { bugsnagClient } from "../bugsnag";
 import { mapMutations } from "vuex";
+import ClanTag from "./ClanTag";
 import { request } from "../client";
 import { gql } from "graphql-request";
 
 export default {
   props: ["tag", "foundClan"],
+  components: { ClanTag },
   data() {
     return {
       loading: true,
