@@ -24,6 +24,7 @@
 import { mapState } from "vuex";
 import { gql } from "graphql-request";
 import { request } from "../client";
+import { event } from "../ga";
 
 export default {
   data() {
@@ -33,8 +34,9 @@ export default {
     ...mapState(["clan"]),
   },
   methods: {
-    async download(event, daysAgo) {
-      event.preventDefault();
+    async download(e, daysAgo) {
+      e.preventDefault();
+      event("download", `Download ${daysAgo} days ago`);
       const { clan } = await request(
         gql`
           query ExportClan($tag: String!, $days: Int!) {
