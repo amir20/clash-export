@@ -3,7 +3,7 @@
   "version": "2.40.8",
   "dependencies": {
     "@babel/core": "^7.13.8",
-    "@babel/plugin-proposal-object-rest-spread": "^7.12.13",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.12.17",
     "@babel/polyfill": "^7.12.1",
