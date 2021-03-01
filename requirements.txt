@@ -7,7 +7,7 @@ appdirs==1.4.4
 appnope==0.1.2
 arrow==0.17.0
 asn1crypto==1.4.0
-astroid==2.5
+astroid==2.5.1
 async-timeout==3.0.1
 atomicwrites==1.4.0
 attrs==20.3.0
