@@ -30,7 +30,7 @@ contextlib2==0.6.0.post1
 coverage==5.4
 cryptography==3.4.6
 cssselect2==0.4.1
-Cython==0.29.21
+Cython==0.29.22
 decorator==4.4.2
 defusedxml==0.6.0
 fastdiff==0.2.0
