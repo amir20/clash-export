@@ -78,4 +78,5 @@
 <meta property="og:image" content="{{ url_for('clan_badge_png', size='large', tag=clan.tag.lstrip('#'), _external=True) }}" />
 <meta property="og:description" content="{{ clan.name }} | {{ clan.tag }} {{ clan.description.replace('\n', ' ').replace('\r', '') }} at Clash Leaders." />
 <link rel="canonical" href="{{ url_for('clan_detail_page', slug=clan.slug, _external=True) }}" />
+<link rel="preload" as="image" href="{{ initial_state.badgeUrls.large }}" />
 {% endblock %} {% block nav_class %}is-light{% endblock %}
