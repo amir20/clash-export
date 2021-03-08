@@ -61,7 +61,7 @@ joblib==1.0.1
 lazy-object-proxy==1.4.3
 loguru==0.5.3
 Mako==1.1.4
-Markdown==3.3.3
+Markdown==3.3.4
 MarkupSafe==1.1.1
 mccabe==0.6.1
 mongoengine==0.20.0
