@@ -1,6 +1,8 @@
 import re
 
 from flask import escape
+from clashleaders.clash.transformer import tag_to_slug
+from flask import url_for
 
 URL_LINK_REGEX = re.compile(
     r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|ga|gl|ly|co|me|gd|xyz)[/\w-]*)", flags=re.IGNORECASE
@@ -8,21 +10,31 @@ URL_LINK_REGEX = re.compile(
 
 REDDIT_LINK_REGEX = re.compile(r"((reddit.com)?(/r/\w+))", flags=re.IGNORECASE)
 
+TAG_REGEX = re.compile(r"(.*)(#[A-Z0-9]+)(.*)", flags=re.IGNORECASE)
+
 
 def transform_description(description):
     return " ".join([lookup(t) for t in description.split()])
 
 
 def lookup(token):
-    link = reddit_link(token)
-    if link:
+    if link := reddit_link(token):
         return link
 
-    link = regular_link(token)
-    if link:
+    if link := regular_link(token):
+        return link
+
+    if link := clashleader_link(token):
         return link
 
     return escape(token)
+
+
+def clashleader_link(token):
+    if (match := TAG_REGEX.match(token)) and (slug := tag_to_slug(match.group(2))):
+        return f'{match.group(1)}<a href="{url_for("clan_detail_page", slug=slug)}" target="_blank">{match.group(2)}</a>{match.group(3)}'
+
+    return None
 
 
 def reddit_link(token):
