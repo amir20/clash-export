@@ -16,7 +16,7 @@ COPY clashleaders/static clashleaders/static
 RUN yarn build
 
 
-FROM python:3.9.1
+FROM python:3.9.2
 
 # Create app directoy
 WORKDIR /app
