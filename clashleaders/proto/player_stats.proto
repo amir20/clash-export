@@ -132,4 +132,5 @@ message PlayerStats {
   int32 home_mighty_yak = 127;
   int32 home_unicorn = 128;
   int32 not_so_easy_this_time = 129;
+  int32 bust_this = 130;
 }
