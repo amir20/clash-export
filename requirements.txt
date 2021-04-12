@@ -93,7 +93,7 @@ pymongo==3.11.3
 Pympler==0.9
 pyOpenSSL==20.0.1
 pyparsing==2.4.7
-pytest==6.2.2
+pytest==6.2.3
 pytest-cov==2.11.1
 pytest-freezegun==0.4.2
 pytest-mock==3.5.1
