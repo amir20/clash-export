@@ -122,4 +122,17 @@ message PlayerStats {
   int32 home_invisibility_spell = 117;
   int32 home_log_launcher = 118;
   int32 home_ice_hound = 119;
+
+  int32 siege_sharer = 120;
+  int32 home_electro_owl = 121;
+  int32 clan_war_wealth = 122;
+  int32 superb_work = 123;
+  int32 discover_new_troops = 124;
+  int32 home_lassi = 125;
+  int32 keep_your_account_safe = 126;
+  int32 home_mighty_yak = 127;
+  int32 home_unicorn = 128;
+
+
+
 }
