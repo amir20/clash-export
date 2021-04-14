@@ -18,7 +18,6 @@ def clan_diff(previous: clashleaders.model.HistoricalClan, most_recent: clashlea
         "Total DE Grab",
         "Total Donations",
         "Total Spells Donated",
-        "Total War Collected Gold",
         "Clan Games XP",
     ]
     diff = mr_df[columns] - pd_df[columns]

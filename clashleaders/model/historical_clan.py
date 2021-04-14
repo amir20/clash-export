@@ -31,7 +31,6 @@ COLUMNS = OrderedDict(
         ("elixir_escapade", "Total Elixir Grab"),
         ("heroic_heist", "Total DE Grab"),
         ("friend_in_need", "Total Donations"),
-        ("treasurer", "Total War Collected Gold"),
         ("war_hero", "Total War Stars"),
         ("games_champion", "Clan Games XP"),
         ("war_league_legend", "CWL Stars"),
