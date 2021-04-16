@@ -41,6 +41,10 @@ COLUMNS = OrderedDict(
         ("home_archer_queen", "Archer Queen"),
         ("home_grand_warden", "Grand Warden"),
         ("home_royal_champion", "Royal Champion"),
+        ("home_lassi", "L.a.s.s.i."),
+        ("home_electro_owl", "Electro Owl"),
+        ("home_mighty_yak", "Mighty Yak"),
+        ("home_unicorn", "Unicorn"),
         ("builderbase_battle_machine", "Battle Machine"),
     )
 )
