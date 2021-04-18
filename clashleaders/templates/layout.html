@@ -33,13 +33,13 @@
     <script defer src="{{ manifest_path('vendors.js') }}"></script>
     <script defer src="{{ manifest_path('common.js') }}"></script>
     {% block scripts %} {% endblock %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MMNK6HD8L"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "UA-88927228-3");
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-2MMNK6HD8L');
     </script>
     <script>
       const __UPDATES__ = {{ updates | first(3) | tojson | safe }};
