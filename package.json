@@ -24,7 +24,7 @@
     "core-js": "^3.10.1",
     "css-loader": "^5.2.1",
     "css-minimizer-webpack-plugin": "^2.0.0",
-    "d3": "^6.6.2",
+    "d3": "^6.7.0",
     "date-fns": "^2.21.1",
     "es6-map": "^0.1.5",
     "file-loader": "^6.2.0",
