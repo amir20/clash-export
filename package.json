@@ -46,7 +46,7 @@
     "store": "^2.0.12",
     "style-loader": "^2.0.0",
     "svg-url-loader": "^7.1.1",
-    "terser-webpack-plugin": "^5.1.1",
+    "terser-webpack-plugin": "^5.1.2",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.7",
     "vue-style-loader": "^4.1.3",
