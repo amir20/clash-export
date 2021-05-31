@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jest": "^26.1.0",
+    "jest": "^27.0.3",
     "jest-image-snapshot": "^4.1.0",
     "puppeteer": "^9.0.0"
   },
