@@ -34,7 +34,7 @@ Cython==0.29.22
 decorator==5.0.7
 defusedxml==0.6.0
 fastdiff==0.2.0
-Flask==1.1.2
+Flask==2.0.1
 Flask-Caching==1.10.1
 Flask-GraphQL==2.0.1
 flask-shell-ipython==0.4.1
@@ -54,15 +54,15 @@ iniconfig==1.1.1
 ipython==7.21.0
 ipython-genutils==0.2.0
 isort==5.8.0
-itsdangerous==1.1.0
+itsdangerous==2.0.1
 jedi==0.17.2
-Jinja2==2.11.3
+Jinja2==3.0.1
 joblib==1.0.1
 lazy-object-proxy==1.6.0
 loguru==0.5.3
 Mako==1.1.4
 Markdown==3.3.4
-MarkupSafe==1.1.1
+MarkupSafe==2.0.1
 mccabe==0.6.1
 mongoengine==0.20.0
 more-itertools==8.7.0
@@ -131,7 +131,7 @@ wasmer==1.0.0
 wcwidth==0.2.5
 webencodings==0.5.1
 WebOb==1.8.7
-Werkzeug==1.0.1
+Werkzeug==2.0.1
 wrapt==1.12.1
 WTForms==2.3.3
 xlrd==2.0.1
