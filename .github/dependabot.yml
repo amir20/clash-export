@@ -5,7 +5,7 @@ updates:
   schedule:
     interval: weekly
     time: "13:00"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 50
   ignore:
   - dependency-name: mongoengine
     versions:
@@ -50,7 +50,7 @@ updates:
   schedule:
     interval: weekly
     time: "13:00"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 50
   ignore:
   - dependency-name: caniuse-lite
     versions:
@@ -63,4 +63,4 @@ updates:
   schedule:
     interval: weekly
     time: "13:00"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 50
