@@ -10,7 +10,7 @@ asn1crypto==1.4.0
 astroid==2.5
 async-timeout==3.0.1
 atomicwrites==1.4.0
-attrs==20.3.0
+attrs==21.2.0
 awesome-slugify==1.6.5
 backcall==0.2.0
 black==21.5b2
