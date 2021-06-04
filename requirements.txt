@@ -87,7 +87,7 @@ py==1.10.0
 pycares==4.0.0
 pycodestyle==2.7.0
 pycparser==2.20
-Pygments==2.8.1
+Pygments==2.9.0
 pylint==2.6.0
 pymongo==3.11.4
 Pympler==0.9
