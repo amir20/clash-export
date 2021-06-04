@@ -7,7 +7,7 @@ appdirs==1.4.4
 appnope==0.1.2
 arrow==1.1.0
 asn1crypto==1.4.0
-astroid==2.5
+astroid==2.5.6
 async-timeout==3.0.1
 atomicwrites==1.4.0
 attrs==21.2.0
@@ -63,6 +63,7 @@ loguru==0.5.3
 Mako==1.1.4
 Markdown==3.3.4
 MarkupSafe==2.0.1
+matplotlib-inline==0.1.2
 mccabe==0.6.1
 mongoengine==0.20.0
 more-itertools==8.8.0
@@ -88,7 +89,7 @@ pycares==4.0.0
 pycodestyle==2.7.0
 pycparser==2.20
 Pygments==2.9.0
-pylint==2.6.0
+pylint==2.8.3
 pymongo==3.11.4
 Pympler==0.9
 pyOpenSSL==20.0.1
@@ -128,6 +129,7 @@ urllib3==1.26.5
 user-agents==2.2.0
 uvloop==0.15.2
 wasmer==1.0.0
+wasmer-compiler-cranelift==1.0.0
 wcwidth==0.2.5
 webencodings==0.5.1
 WebOb==1.8.7
