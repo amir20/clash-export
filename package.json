@@ -39,7 +39,7 @@
     "postcss": "^8.3.5",
     "postcss-font-magician": "^3.0.0",
     "postcss-loader": "^6.1.0",
-    "postcss-safe-parser": "^5.0.2",
+    "postcss-safe-parser": "^6.0.0",
     "promise-polyfill": "^8.2.0",
     "sass-loader": "^12.1.0",
     "semver": "^7.3.5",
