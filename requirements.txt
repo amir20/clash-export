@@ -51,7 +51,7 @@ idna==2.10
 importlib-metadata==4.5.0
 inflection==0.5.1
 iniconfig==1.1.1
-ipython==7.24.1
+ipython==7.25.0
 ipython-genutils==0.2.0
 isort==5.9.0
 itsdangerous==2.0.1
