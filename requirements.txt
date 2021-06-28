@@ -15,7 +15,7 @@ awesome-slugify==1.6.5
 backcall==0.2.0
 black==21.6b0
 blinker==1.4
-bugsnag==4.0.3
+bugsnag==4.1.0
 cachetools==4.2.2
 cairocffi==1.2.0
 CairoSVG==2.5.2
