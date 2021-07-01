@@ -133,4 +133,6 @@ message PlayerStats {
   int32 home_unicorn = 128;
   int32 not_so_easy_this_time = 129;
   int32 bust_this = 130;
+  int32 home_rocket_balloon = 131;
+  int32 home_dragon_rider = 132;
 }
