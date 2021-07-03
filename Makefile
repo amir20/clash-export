@@ -11,7 +11,7 @@ deploy:
 
 .PHONY: build
 build:
-	TAG=$(TAG) docker-compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD)
+	TAG=$(TAG) docker compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD)
 	docker tag amir20/clashleaders:$(TAG) amir20/clashleaders:latest
 
 .PHONY: push
@@ -21,7 +21,7 @@ push: build
 
 .PHONY: test
 test: build
-	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm test
+	TAG=$(TAG) docker compose -f docker-compose.yml -f docker-compose.test.yml run --rm test
 
 .PHONY: start
 start:
@@ -37,6 +37,6 @@ release_minor:
 
 .PHONY: int
 int:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml rm -fsv web
-	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml build
-	TAG=$(TAG) docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration
+	docker compose -f docker-compose.yml -f docker-compose.test.yml rm -fsv web
+	TAG=$(TAG) docker compose -f docker-compose.yml -f docker-compose.test.yml build
+	TAG=$(TAG) docker compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration
