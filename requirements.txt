@@ -137,7 +137,7 @@ Werkzeug==2.0.1
 wrapt==1.12.1
 WTForms==2.3.3
 xlrd==2.0.1
-XlsxWriter==1.4.3
+XlsxWriter==1.4.4
 yarl==1.6.3
 zipp==3.4.1
 zope.event==4.5.0
