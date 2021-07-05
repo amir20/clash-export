@@ -17,7 +17,7 @@
     "bugsnag-vue": "^1.0.1",
     "bulma": "^0.9.3",
     "bulma-badge": "^3.0.1",
-    "caniuse-lite": "^1.0.30001240",
+    "caniuse-lite": "^1.0.30001242",
     "chartist": "^0.11.4",
     "chartist-plugin-legend": "^0.6.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
