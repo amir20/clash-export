@@ -1,12 +1,12 @@
 from __future__ import annotations
-from typing import Optional
 
 import json
 from codecs import decode, encode
-from typing import Dict
+from typing import Dict, Optional
 
 import pandas as pd
-from mongoengine import DynamicDocument, BinaryField, signals, StringField, DictField
+from mongoengine import BinaryField, DictField, DynamicDocument, StringField, signals
+from mongoengine.fields import BooleanField
 from pymongo import ReplaceOne
 from slugify import slugify
 
@@ -16,7 +16,6 @@ from clashleaders.clash import api
 from clashleaders.insights.player_activity import clan_history
 from clashleaders.model import Clan
 from clashleaders.model.clan import prepend_hash
-from mongoengine.fields import BooleanField
 
 
 class Player(DynamicDocument):

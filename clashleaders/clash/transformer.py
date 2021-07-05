@@ -1,7 +1,8 @@
 from collections import namedtuple
 from functools import reduce
-from clashleaders import cache
+
 import clashleaders.model.clan
+from clashleaders import cache
 
 ShortClan = namedtuple("ShortClan", "name tag badge slug members score")
 

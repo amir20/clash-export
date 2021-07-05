@@ -1,7 +1,7 @@
 import contentful
 from flask import render_template
 
-from clashleaders import cache, app
+from clashleaders import app, cache
 from clashleaders.model import AverageTroop
 
 client = contentful.Client("zmnodi6xws9d", "8017b7370aaf68e6caefc204d56fc6f2b3cee22adc907ebf0b4fbc40d7d98799")

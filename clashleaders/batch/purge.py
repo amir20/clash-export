@@ -1,5 +1,5 @@
 import logging
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
 from clashleaders.model import Clan, HistoricalClan, HistoricalPlayer
 

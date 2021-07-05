@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from typing import Dict
+
 from inflection import camelize
 from mongoengine import EmbeddedDocument, FloatField, IntField
-from typing import Dict
 
 
 class ClanDelta(EmbeddedDocument):

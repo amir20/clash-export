@@ -1,11 +1,12 @@
 from datetime import datetime
 
 import pandas as pd
-from cachetools import cached, TTLCache
+from cachetools import TTLCache, cached
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.preprocessing import MinMaxScaler
 
 import clashleaders.model
+
 from .csv_export import extract_features
 
 SCALER = "SCALER_CLUSTER"

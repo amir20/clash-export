@@ -2,10 +2,10 @@ import base64
 import hashlib
 import hmac
 import json
-from math import ceil
 import os
 import re
 import textwrap
+from math import ceil
 from os.path import join
 
 from markdown import markdown
@@ -16,13 +16,13 @@ import clashleaders.views.country
 import clashleaders.views.error
 import clashleaders.views.explore
 import clashleaders.views.index
+import clashleaders.views.multi_export
 import clashleaders.views.player
 import clashleaders.views.sitemap
 import clashleaders.views.static
 import clashleaders.views.status
 import clashleaders.views.troop
 import clashleaders.views.verified
-import clashleaders.views.multi_export
 from clashleaders import app, site_root
 
 MANIFEST_FILE = join(site_root, "static", "manifest.json")

@@ -1,6 +1,6 @@
 import logging
 import os
-from os.path import dirname, abspath
+from os.path import abspath, dirname
 
 import bugsnag
 import rq_dashboard
@@ -43,8 +43,8 @@ redis_connection = Redis("redis")
 
 site_root = dirname(abspath(__file__))
 
-import clashleaders.views  # noqa
 import clashleaders.graphql.schema
+import clashleaders.views  # noqa
 
 # GraphQL
 view_func = GraphQLView.as_view("graphql", schema=Schema(query=clashleaders.graphql.schema.Query))

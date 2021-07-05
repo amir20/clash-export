@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import pandas as pd
 from typing import Dict
+
+import pandas as pd
 
 import clashleaders.model
 

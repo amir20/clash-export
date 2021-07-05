@@ -4,7 +4,7 @@ from functools import lru_cache
 
 import pandas as pd
 from inflection import *
-from mongoengine import Document, StringField, DateTimeField, BinaryField
+from mongoengine import BinaryField, DateTimeField, Document, StringField
 
 from clashleaders.proto.player_stats_pb2 import PlayerStats
 
