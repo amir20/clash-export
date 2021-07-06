@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import logging
 from typing import List
 
@@ -8,6 +7,7 @@ from pymongo.errors import BulkWriteError
 from rq.decorators import job
 
 import clashleaders.model
+import asyncio
 from clashleaders import redis_connection
 from clashleaders.clash import api
 

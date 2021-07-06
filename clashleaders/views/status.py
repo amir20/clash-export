@@ -1,11 +1,11 @@
 import json
 import os
 
-from flask import jsonify, render_template
+from flask import render_template, jsonify
 
 from clashleaders import app, site_root
 from clashleaders.clash import uptime
-from clashleaders.model import Clan, Player, Status
+from clashleaders.model import Status, Player, Clan
 
 
 @app.route("/status")

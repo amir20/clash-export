@@ -1,4 +1,5 @@
-from flask import redirect, render_template, url_for
+from flask import render_template, url_for, redirect
+
 
 from clashleaders import app, cache
 from clashleaders.model import Clan

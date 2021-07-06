@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-from typing import Dict, List, Tuple
+from typing import List, Tuple, Dict
 
 import pandas as pd
-from mongoengine import DateTimeField, DictField, DynamicDocument, EmbeddedDocumentField, IntField, ListField, Q, StringField
+from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
 from slugify import slugify
 
 import clashleaders.clash.clan_calculation
@@ -15,8 +15,8 @@ import clashleaders.queue.calculation
 import clashleaders.queue.player
 from clashleaders.clash import api
 from clashleaders.clash.api import clan_warlog
-from clashleaders.insights.clan_activity import clan_status
 from clashleaders.model.clan_delta import ClanDelta
+from clashleaders.insights.clan_activity import clan_status
 from clashleaders.text.clan_description_processor import transform_description
 
 logger = logging.getLogger(__name__)

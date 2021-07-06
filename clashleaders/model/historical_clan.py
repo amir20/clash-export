@@ -4,7 +4,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 import pandas as pd
-from mongoengine import DateTimeField, Document, IntField, ListField, ReferenceField, StringField
+from mongoengine import Document, StringField, IntField, DateTimeField, ReferenceField, ListField
 
 import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity

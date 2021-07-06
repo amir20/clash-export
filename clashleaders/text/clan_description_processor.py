@@ -1,8 +1,8 @@
 import re
 
-from flask import escape, url_for
-
+from flask import escape
 from clashleaders.clash.transformer import tag_to_slug
+from flask import url_for
 
 URL_LINK_REGEX = re.compile(
     r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|ga|gl|ly|co|me|gd|xyz)[/\w-]*)", flags=re.IGNORECASE

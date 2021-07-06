@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-import logging
-
 import numpy as np
 
 import clashleaders.clustering.kmeans
-import clashleaders.model
-from clashleaders.clash.percentile import clan_percentile
+import logging
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.queue.player import fetch_players
+from clashleaders.clash.percentile import clan_percentile
+
+import clashleaders.model
+
 
 logger = logging.getLogger(__name__)
 

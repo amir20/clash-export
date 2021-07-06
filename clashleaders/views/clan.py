@@ -1,7 +1,7 @@
+import clashleaders.views
 from flask import render_template
 from mongoengine import DoesNotExist
 
-import clashleaders.views
 from clashleaders import app
 from clashleaders.model import Clan, Status
 

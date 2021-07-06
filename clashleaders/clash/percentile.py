@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-from bisect import bisect_left
+
 from collections import OrderedDict
+from clashleaders import cache
+from bisect import bisect_left
+from clashleaders.clash.transformer import deep_getattr
 
 import clashleaders.model
-from clashleaders import cache
-from clashleaders.clash.transformer import deep_getattr
 
 
 def clan_percentile(clan: clashleaders.model.Clan, field: str):

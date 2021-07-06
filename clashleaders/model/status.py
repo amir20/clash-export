@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 from mongoengine import DateTimeField, DictField, Document, FloatField, IntField, ListField, ReferenceField
 
-from clashleaders.model import Clan, Player
+from clashleaders.model import Player, Clan
 
 logger = logging.getLogger(__name__)
 
