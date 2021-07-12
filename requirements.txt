@@ -116,7 +116,7 @@ setuptools-rust==0.12.1
 six==1.16.0
 snapshottest==0.6.0
 termcolor==1.1.0
-threadpoolctl==2.1.0
+threadpoolctl==2.2.0
 tinycss2==1.1.0
 toml==0.10.2
 traitlets==5.0.5
