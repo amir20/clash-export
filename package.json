@@ -36,7 +36,7 @@
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.1.0",
     "node-sass": "^6.0.1",
-    "postcss": "^8.3.5",
+    "postcss": "^8.3.6",
     "postcss-font-magician": "^3.0.0",
     "postcss-loader": "^6.1.1",
     "postcss-safe-parser": "^6.0.0",
