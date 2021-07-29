@@ -25,6 +25,10 @@ class ClanNotFound(ApiException):
     pass
 
 
+class WarNotFound(ApiException):
+    pass
+
+
 class PlayerNotFound(ApiException):
     pass
 
@@ -132,6 +136,42 @@ def clan_warlog(tag):
 
     if code != 200:
         raise ClanNotFound(f"Clan [{tag}] not found.")
+
+    return response
+
+
+def clan_current_leaguegroup(tag):
+    tag = prepend_hash(tag)
+    logger.info(f"Fetching clan current leaguegroup from API {tag}.")
+    future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup")
+    code, response = asyncio.get_event_loop().run_until_complete(future)
+
+    if code != 200:
+        raise WarNotFound(f"Clan leaguegroup [{tag}] not found.")
+
+    return response
+
+
+def clan_current_war(tag):
+    tag = prepend_hash(tag)
+    logger.info(f"Fetching clan current war from API {tag}.")
+    future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar")
+    code, response = asyncio.get_event_loop().run_until_complete(future)
+
+    if code != 200:
+        raise WarNotFound(f"War for clan [{tag}] not found.")
+
+    return response
+
+
+def cwl_war_by_tag(tag):
+    tag = prepend_hash(tag)
+    logger.info(f"Fetching war from API with {tag}.")
+    future = __fetch(f"https://api.clashofclans.com/v1/clanwarleagues/wars/{quote(tag)}")
+    code, response = asyncio.get_event_loop().run_until_complete(future)
+
+    if code != 200:
+        raise WarNotFound(f"War [{tag}] not found.")
 
     return response
 

@@ -14,7 +14,7 @@ import clashleaders.model
 import clashleaders.queue.calculation
 import clashleaders.queue.player
 from clashleaders.clash import api
-from clashleaders.clash.api import clan_warlog
+from clashleaders.clash.api import clan_warlog, clan_current_leaguegroup, clan_current_war
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.insights.clan_activity import clan_status
 from clashleaders.text.clan_description_processor import transform_description
@@ -158,6 +158,12 @@ class Clan(DynamicDocument):
 
     def warlog(self):
         return clan_warlog(self.tag)["items"]
+
+    def current_leaguegroup(self):
+        return clan_current_leaguegroup(self.tag)
+
+    def current_war(self):
+        return clan_current_war(self.tag)
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
