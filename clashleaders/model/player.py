@@ -15,7 +15,7 @@ import clashleaders.model
 from clashleaders.clash import api
 from clashleaders.insights.player_activity import clan_history
 from clashleaders.model import Clan
-from clashleaders.model.clan import prepend_hash
+from clashleaders.util import correct_tag
 from mongoengine.fields import BooleanField
 
 
@@ -137,7 +137,7 @@ class Player(DynamicDocument):
 
     @classmethod
     def find_by_tag(cls, tag) -> Player:
-        tag = prepend_hash(tag)
+        tag = correct_tag(tag)
         player = Player.objects(tag=tag).first()
 
         if player is None:

@@ -9,6 +9,7 @@ from urllib.parse import quote
 import aiohttp
 import requests
 from async_timeout import timeout
+from clashleaders.util import correct_tag
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +64,7 @@ async def __fetch_all(urls, loop=None):
 
 
 def find_clan_by_tag(tag):
-    tag = prepend_hash(tag)
+    tag = correct_tag(tag)
     logger.info(f"Fetching clan from API {tag}.")
 
     future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}")
@@ -87,7 +88,7 @@ def find_clan_by_tag(tag):
 
 
 def find_player_by_tag(tag):
-    tag = prepend_hash(tag)
+    tag = correct_tag(tag)
     logger.info(f"Fetching player from API {tag}.")
 
     future = __fetch(f"https://api.clashofclans.com/v1/players/{quote(tag)}")
@@ -129,7 +130,7 @@ def top_players_and_clan():
 
 
 def clan_warlog(tag):
-    tag = prepend_hash(tag)
+    tag = correct_tag(tag)
     logger.info(f"Fetching clan warlog from API {tag}.")
     future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog")
     code, response = asyncio.get_event_loop().run_until_complete(future)
@@ -141,7 +142,7 @@ def clan_warlog(tag):
 
 
 def clan_current_leaguegroup(tag):
-    tag = prepend_hash(tag)
+    tag = correct_tag(tag)
     logger.info(f"Fetching clan current leaguegroup from API {tag}.")
     future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup")
     code, response = asyncio.get_event_loop().run_until_complete(future)
@@ -153,7 +154,7 @@ def clan_current_leaguegroup(tag):
 
 
 def clan_current_war(tag):
-    tag = prepend_hash(tag)
+    tag = correct_tag(tag)
     logger.info(f"Fetching clan current war from API {tag}.")
     future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar")
     code, response = asyncio.get_event_loop().run_until_complete(future)
@@ -165,7 +166,7 @@ def clan_current_war(tag):
 
 
 def cwl_war_by_tag(tag):
-    tag = prepend_hash(tag)
+    tag = correct_tag(tag)
     logger.info(f"Fetching war from API with {tag}.")
     future = __fetch(f"https://api.clashofclans.com/v1/clanwarleagues/wars/{quote(tag)}")
     code, response = asyncio.get_event_loop().run_until_complete(future)
@@ -180,7 +181,3 @@ def fetch_all_players(tags: List):
     urls = ["https://api.clashofclans.com/v1/players/" + quote(tag) for tag in tags]
     future = __fetch_all(urls, loop=asyncio.get_event_loop())
     return asyncio.get_event_loop().run_until_complete(future)
-
-
-def prepend_hash(tag):
-    return "#" + tag.lstrip("#").upper()

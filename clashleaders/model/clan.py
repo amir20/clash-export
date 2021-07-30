@@ -18,6 +18,7 @@ from clashleaders.clash.api import clan_warlog, clan_current_leaguegroup, clan_c
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.insights.clan_activity import clan_status
 from clashleaders.text.clan_description_processor import transform_description
+from clashleaders.util import correct_tag
 
 logger = logging.getLogger(__name__)
 
@@ -159,11 +160,14 @@ class Clan(DynamicDocument):
     def warlog(self):
         return clan_warlog(self.tag)["items"]
 
-    def current_leaguegroup(self):
+    def fetch_and_save_current_leaguegroup(self):
         return clan_current_leaguegroup(self.tag)
 
-    def current_war(self):
+    def fetch_and_save_current_war(self):
         return clan_current_war(self.tag)
+
+    def wars() -> List[War]:
+        return War.objects(clan=self)
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
@@ -187,7 +191,7 @@ class Clan(DynamicDocument):
 
     @classmethod
     def find_by_tag(cls, tag) -> Clan:
-        clan = Clan.objects(tag=prepend_hash(tag)).first()
+        clan = Clan.objects(tag=correct_tag(tag)).first()
 
         if not clan:
             clan = Clan.fetch_and_update(tag, sync_calculation=True)
@@ -208,7 +212,7 @@ class Clan(DynamicDocument):
 
     @classmethod
     def fetch_and_update(cls, tag, sync_calculation=True) -> Clan:
-        tag = prepend_hash(tag)
+        tag = correct_tag(tag)
 
         # Fetch from API
         clan_response = api.find_clan_by_tag(tag)
