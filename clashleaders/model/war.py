@@ -13,7 +13,6 @@ class War(DynamicDocument):
     }
 
     def __init__(self, *args, **kwargs):
-
         kwargs["preparationStartTime"] = from_timestamp(kwargs.get("preparationStartTime"))
         kwargs["startTime"] = from_timestamp(kwargs.get("startTime"))
         kwargs["endTime"] = from_timestamp(kwargs.get("endTime"))

@@ -11,24 +11,15 @@ def correct_tag(tag: str, prefix: str = "#") -> str:
     return prefix + tag.lstrip(prefix).upper()
 
 
-def corrected_tag() -> Callable:
-    """Helper decorator to fix tags passed into client calls. The tag must be the first parameter."""
+def corrected_tag(func: Callable[..., T]) -> Callable[..., T]:
+    @wraps(func)
+    def wrapper(*args, **kwargs) -> T:
+        print(args, kwargs)
+        args = list(args)
+        args[1] = correct_tag(args[1])
+        return func(*tuple(args), **kwargs)
 
-    def deco(func: Callable[..., T]) -> Callable[..., T]:
-        @wraps(func)
-        def wrapper(*args, **kwargs) -> T:
-            self = args[0]
-
-            if not self.correct_tags:
-                return func(*args, **kwargs)
-
-            args = list(args)
-            args[1] = correct_tag(args[1])
-            return func(*tuple(args), **kwargs)
-
-        return wrapper
-
-    return deco
+    return wrapper
 
 
 def from_timestamp(timestamp) -> datetime:

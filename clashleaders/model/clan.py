@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 
 import pandas as pd
 from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
@@ -16,6 +16,7 @@ import clashleaders.queue.player
 from clashleaders.clash import api
 from clashleaders.clash.api import clan_warlog, clan_current_leaguegroup, clan_current_war
 from clashleaders.model.clan_delta import ClanDelta
+from clashleaders.model.war import War
 from clashleaders.insights.clan_activity import clan_status
 from clashleaders.text.clan_description_processor import transform_description
 from clashleaders.util import correct_tag
@@ -163,11 +164,21 @@ class Clan(DynamicDocument):
     def fetch_and_save_current_leaguegroup(self):
         return clan_current_leaguegroup(self.tag)
 
-    def fetch_and_save_current_war(self):
-        return clan_current_war(self.tag)
+    def fetch_and_save_current_war(self) -> Optional[War]:
+        try:
+            current_war = War(**clan_current_war(self.tag))
+            existing_war = War.find_by_clan_and_start_time(tag=self.tag, start_time=current_war.startTime)
+            if existing_war:
+                existing_war.update(**current_war.to_dict())
+                current_war = existing_war
+            else:
+                current_war.save()
+            return current_war
+        except api.WarNotFound:
+            return None
 
-    def wars() -> List[War]:
-        return War.objects(clan=self)
+    def wars(self) -> List[War]:
+        return War.objects(clan__tag=self.tag)
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
