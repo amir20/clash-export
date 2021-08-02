@@ -54,7 +54,7 @@ inflection==0.5.1
 iniconfig==1.1.1
 ipython==7.26.0
 ipython-genutils==0.2.0
-isort==5.9.2
+isort==5.9.3
 itsdangerous==2.0.1
 jedi==0.17.2
 Jinja2==3.0.1
