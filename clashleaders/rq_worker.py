@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 
 from rq import Connection, SimpleWorker
@@ -12,7 +13,7 @@ def main():
     with Connection(connection=redis_connection):
         qs = sys.argv[1:] or ["default"]
         w = SimpleWorker(qs)
-        w.work(logging_level="WARN")
+        w.work(logging_level="WARN", with_scheduler=("USE_SCHEDULER" in os.environ))
 
 
 if __name__ == "__main__":

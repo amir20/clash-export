@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 
 import pandas as pd
 from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
@@ -13,11 +13,14 @@ import clashleaders.clash.transformer
 import clashleaders.model
 import clashleaders.queue.calculation
 import clashleaders.queue.player
+import clashleaders.queue.war
 from clashleaders.clash import api
 from clashleaders.clash.api import clan_warlog, clan_current_leaguegroup, clan_current_war
 from clashleaders.model.clan_delta import ClanDelta
+from clashleaders.model.war import War
 from clashleaders.insights.clan_activity import clan_status
 from clashleaders.text.clan_description_processor import transform_description
+from clashleaders.util import correct_tag
 
 logger = logging.getLogger(__name__)
 
@@ -156,14 +159,35 @@ class Clan(DynamicDocument):
         df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
         return df.to_dict("list")
 
-    def warlog(self):
-        return clan_warlog(self.tag)["items"]
+    def update_wars(self):
+        # self.fetch_and_save_current_leaguegroup()
+        self.fetch_and_save_current_war()
 
-    def current_leaguegroup(self):
+        return self
+
+    def fetch_and_save_current_leaguegroup(self):
         return clan_current_leaguegroup(self.tag)
 
-    def current_war(self):
-        return clan_current_war(self.tag)
+    def fetch_and_save_current_war(self) -> Optional[War]:
+        current_war = None
+        try:
+            current_war = War(**clan_current_war(self.tag))
+            if current_war.state != "notInWar":
+                existing_war = War.find_by_clan_and_start_time(tag=self.tag, start_time=current_war.startTime)
+                if existing_war:
+                    existing_war.update(**current_war.to_dict())
+                    current_war = existing_war
+                else:
+                    current_war.save()
+                    clashleaders.queue.war.schedule_war_update(current_war.endTime, self.tag)
+
+        except api.WarNotFound:
+            pass
+
+        return current_war
+
+    def wars(self) -> List[War]:
+        return War.objects(clan__tag=self.tag)
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
@@ -187,7 +211,7 @@ class Clan(DynamicDocument):
 
     @classmethod
     def find_by_tag(cls, tag) -> Clan:
-        clan = Clan.objects(tag=prepend_hash(tag)).first()
+        clan = Clan.objects(tag=correct_tag(tag)).first()
 
         if not clan:
             clan = Clan.fetch_and_update(tag, sync_calculation=True)
@@ -208,7 +232,7 @@ class Clan(DynamicDocument):
 
     @classmethod
     def fetch_and_update(cls, tag, sync_calculation=True) -> Clan:
-        tag = prepend_hash(tag)
+        tag = correct_tag(tag)
 
         # Fetch from API
         clan_response = api.find_clan_by_tag(tag)
@@ -226,7 +250,7 @@ class Clan(DynamicDocument):
         clan_response["slug"] = slugify(f"{clan_response['name']}-{tag}", to_lower=True)
         clan_response["updated_on"] = datetime.now()
 
-        clan = Clan.objects(tag=tag).upsert_one(**clan_response)
+        clan: Clan = Clan.objects(tag=tag).upsert_one(**clan_response)
 
         if sync_calculation:
             clan.update_calculations()

@@ -10,8 +10,9 @@ import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity
 import clashleaders.model
 from clashleaders.model import ClanDelta
-from clashleaders.model.clan import prepend_hash
+from clashleaders.util import correct_tag
 from clashleaders.model.historical_player import HistoricalPlayer
+
 
 COLUMNS = OrderedDict(
     (
@@ -113,7 +114,7 @@ class HistoricalClan(Document):
 
     @classmethod
     def find_by_tag_near_time(cls, tag, dt) -> HistoricalClan:
-        tag = prepend_hash(tag)
+        tag = correct_tag(tag)
         clan = HistoricalClan.objects(tag=tag, created_on__lte=dt).order_by("-created_on").first()
 
         if clan is None:

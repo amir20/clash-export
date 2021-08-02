@@ -1,6 +1,8 @@
 from collections import namedtuple
 from functools import reduce
 from clashleaders import cache
+from clashleaders.util import correct_tag
+
 import clashleaders.model.clan
 
 ShortClan = namedtuple("ShortClan", "name tag badge slug members score")
@@ -17,5 +19,5 @@ def to_short_clan(clan, prop=None):
 
 @cache.memoize(timeout=43200)
 def tag_to_slug(tag: str) -> str:
-    clan = clashleaders.model.clan.Clan.objects(tag=clashleaders.model.clan.prepend_hash(tag)).only("slug").first()
+    clan = clashleaders.model.clan.Clan.objects(tag=correct_tag(tag)).only("slug").first()
     return clan.slug if clan else None
