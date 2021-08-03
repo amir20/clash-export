@@ -160,13 +160,27 @@ class Clan(DynamicDocument):
         return df.to_dict("list")
 
     def update_wars(self):
-        # self.fetch_and_save_current_leaguegroup()
+        self.fetch_and_save_current_leaguegroup()
         self.fetch_and_save_current_war()
 
         return self
 
     def fetch_and_save_current_leaguegroup(self):
-        return clan_current_leaguegroup(self.tag)
+        current_war = None
+        try:
+            current_war = War(**clan_current_leaguegroup(self.tag))
+            existing_war = War.find_by_clan_and_season(tag=self.tag, season=current_war.season)
+            if existing_war:
+                existing_war.update(**dict(current_war.to_mongo()))
+                current_war = existing_war
+            else:
+                current_war.clan = dict(tag=self.tag)
+                current_war.save()
+
+        except api.WarNotFound:
+            pass
+
+        return current_war
 
     def fetch_and_save_current_war(self) -> Optional[War]:
         current_war = None
