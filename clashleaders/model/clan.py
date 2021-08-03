@@ -175,7 +175,7 @@ class Clan(DynamicDocument):
             if current_war.state != "notInWar":
                 existing_war = War.find_by_clan_and_start_time(tag=self.tag, start_time=current_war.startTime)
                 if existing_war:
-                    existing_war.update(**current_war.to_dict())
+                    existing_war.update(**dict(current_war.to_mongo()))
                     current_war = existing_war
                 else:
                     current_war.save()
