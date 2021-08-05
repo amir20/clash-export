@@ -58,20 +58,15 @@ async def __fetch_all(urls, loop=None):
     async with timeout(8):
         async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=headers()) as session:
             futures = [__fetch_with_session(url, session) for url in urls]
-            responses = await asyncio.gather(*futures)
-
-            return [response for status, response in responses if status == 200]
+            return await asyncio.gather(*futures)
 
 
 def find_clan_by_tag(tag):
     tag = correct_tag(tag)
     logger.info(f"Fetching clan from API {tag}.")
 
-    future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}")
-
     try:
-
-        code, response = asyncio.get_event_loop().run_until_complete(future)
+        code, response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}"))
     except asyncio.TimeoutError:
         raise ApiTimeout(f"API timed while fetching {tag} clan.")
 
@@ -91,10 +86,8 @@ def find_player_by_tag(tag):
     tag = correct_tag(tag)
     logger.info(f"Fetching player from API {tag}.")
 
-    future = __fetch(f"https://api.clashofclans.com/v1/players/{quote(tag)}")
-
     try:
-        code, response = asyncio.get_event_loop().run_until_complete(future)
+        code, response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/players/{quote(tag)}"))
     except asyncio.TimeoutError:
         raise ApiTimeout(f"API timed while fetching {tag} clan.")
 
@@ -112,8 +105,7 @@ def find_player_by_tag(tag):
 
 def search_by_name(name, limit=10):
     logger.info(f"Searching for clan name '{name}'.")
-    future = __fetch("https://api.clashofclans.com/v1/clans", params={"name": name, "limit": limit})
-    code, response = asyncio.get_event_loop().run_until_complete(future)
+    code, response = asyncio.run(__fetch("https://api.clashofclans.com/v1/clans", params={"name": name, "limit": limit}))
 
     if code != 200:
         return []
@@ -132,8 +124,7 @@ def top_players_and_clan():
 def clan_warlog(tag):
     tag = correct_tag(tag)
     logger.info(f"Fetching clan warlog from API {tag}.")
-    future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog")
-    code, response = asyncio.get_event_loop().run_until_complete(future)
+    code, response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog"))
 
     if code != 200:
         raise ClanNotFound(f"Clan [{tag}] not found.")
@@ -144,8 +135,7 @@ def clan_warlog(tag):
 def clan_current_leaguegroup(tag):
     tag = correct_tag(tag)
     logger.info(f"Fetching clan current leaguegroup from API {tag}.")
-    future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup")
-    code, response = asyncio.get_event_loop().run_until_complete(future)
+    code, response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup"))
 
     if code != 200:
         raise WarNotFound(f"Clan leaguegroup [{tag}] not found.")
@@ -156,8 +146,7 @@ def clan_current_leaguegroup(tag):
 def clan_current_war(tag):
     tag = correct_tag(tag)
     logger.info(f"Fetching clan current war from API {tag}.")
-    future = __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar")
-    code, response = asyncio.get_event_loop().run_until_complete(future)
+    code, response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar"))
 
     if code != 200:
         raise WarNotFound(f"War for clan [{tag}] not found.")
@@ -165,19 +154,25 @@ def clan_current_war(tag):
     return response
 
 
-def cwl_war_by_tag(tag):
+def clan_current_war_and_leaguegroup(tag):
     tag = correct_tag(tag)
-    logger.info(f"Fetching war from API with {tag}.")
-    future = __fetch(f"https://api.clashofclans.com/v1/clanwarleagues/wars/{quote(tag)}")
-    code, response = asyncio.get_event_loop().run_until_complete(future)
+    logger.info(f"Fetching clan current war and leaguegroup from API {tag}.")
 
-    if code != 200:
-        raise WarNotFound(f"War [{tag}] not found.")
+    current_war_url = f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar"
+    current_league_url = f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup"
+    current_war_response, current_league_response = asyncio.run(__fetch_all([current_war_url, current_league_url]))
 
-    return response
+    return [response if status == 200 else None for status, response in [current_war_response, current_league_response]]
+
+
+def cwl_war_by_tag(*tags):
+    logger.info(f"Fetching war from API with {tags}.")
+    urls = [f"https://api.clashofclans.com/v1/clanwarleagues/wars/{quote(tag)}" for tag in tags]
+    responses = asyncio.run(__fetch_all(urls))
+    return [response for status, response in responses if status == 200]
 
 
 def fetch_all_players(tags: List):
-    urls = ["https://api.clashofclans.com/v1/players/" + quote(tag) for tag in tags]
-    future = __fetch_all(urls, loop=asyncio.get_event_loop())
-    return asyncio.get_event_loop().run_until_complete(future)
+    urls = [f"https://api.clashofclans.com/v1/players/{quote(tag)}" for tag in tags]
+    responses = asyncio.run(__fetch_all(urls))
+    return [response for status, response in responses if status == 200]

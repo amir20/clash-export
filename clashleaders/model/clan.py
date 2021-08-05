@@ -160,15 +160,16 @@ class Clan(DynamicDocument):
         return df.to_dict("list")
 
     def update_wars(self):
-        self.fetch_and_save_current_leaguegroup()
-        self.fetch_and_save_current_war()
+        war_response, league_response = api.clan_current_war_and_leaguegroup(self.tag)
+        self.save_current_leaguegroup(league_response)
+        self.save_current_war(war_response)
 
         return self
 
-    def fetch_and_save_current_leaguegroup(self):
+    def save_current_leaguegroup(self, league_response) -> Optional[War]:
         current_war = None
-        try:
-            current_war = War(**clan_current_leaguegroup(self.tag))
+        if league_response:
+            current_war = War(**league_response)
             existing_war = War.find_by_clan_and_season(tag=self.tag, season=current_war.season)
             if existing_war:
                 existing_war.update(**dict(current_war.to_mongo()))
@@ -177,15 +178,12 @@ class Clan(DynamicDocument):
                 current_war.clan = dict(tag=self.tag)
                 current_war.save()
 
-        except api.WarNotFound:
-            pass
-
         return current_war
 
-    def fetch_and_save_current_war(self) -> Optional[War]:
+    def save_current_war(self, war_response) -> Optional[War]:
         current_war = None
-        try:
-            current_war = War(**clan_current_war(self.tag))
+        if war_response:
+            current_war = War(**war_response)
             if current_war.state != "notInWar":
                 existing_war = War.find_by_clan_and_start_time(tag=self.tag, start_time=current_war.startTime)
                 if existing_war:
@@ -194,9 +192,6 @@ class Clan(DynamicDocument):
                 else:
                     current_war.save()
                     clashleaders.queue.war.schedule_war_update(current_war.endTime, self.tag)
-
-        except api.WarNotFound:
-            pass
 
         return current_war
 
