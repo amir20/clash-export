@@ -165,11 +165,11 @@ def clan_current_war_and_leaguegroup(tag):
     return [response if status == 200 else None for status, response in [current_war_response, current_league_response]]
 
 
-def cwl_war_by_tag(*tags):
+def cwl_war_by_tags(tags):
     logger.info(f"Fetching war from API with {tags}.")
     urls = [f"https://api.clashofclans.com/v1/clanwarleagues/wars/{quote(tag)}" for tag in tags]
     responses = asyncio.run(__fetch_all(urls))
-    return [response for status, response in responses if status == 200]
+    return [response if status == 200 else None for status, response in responses]
 
 
 def fetch_all_players(tags: List):

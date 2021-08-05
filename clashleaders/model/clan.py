@@ -176,9 +176,32 @@ class Clan(DynamicDocument):
                 current_war = existing_war
             else:
                 current_war.clan = dict(tag=self.tag)
+                current_war.is_cwl = True
                 current_war.save()
-
+        if current_war:
+            self.save_cwl_wars(current_war)
         return current_war
+
+    def save_cwl_wars(self, war):
+        round_tags = []
+        for rnd in war.rounds:
+            round_tags.extend(rnd["warTags"])
+
+        round_tags = [tag for tag in round_tags if tag != "#0"]
+        found_wars = War.find_by_war_tags(round_tags)
+        found_wars_by_tag = {w.war_tag: war for w in found_wars}
+        tags_to_update = [round_tag for round_tag in round_tags if round_tag not in found_wars_by_tag or found_wars_by_tag[round_tag].state == "inWar"]
+        war_responses = api.cwl_war_by_tags(tags_to_update)
+
+        for tag, response in zip(tags_to_update, war_responses):
+            if response:
+                if tag in found_wars_by_tag:
+                    found_wars_by_tag[tag].update(**response)
+                else:
+                    war = War(**response)
+                    war.clan = dict(tag=self.tag)
+                    war.is_cwl_war = True
+                    war.save()
 
     def save_current_war(self, war_response) -> Optional[War]:
         current_war = None
