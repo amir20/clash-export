@@ -23,7 +23,7 @@ logger.setLevel(logging.DEBUG if app.debug else logging.INFO)
 logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
 logger.addHandler(handler)
 
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+uvloop.install()
 
 tags_indexed = []
 

@@ -13,9 +13,12 @@ from clashleaders.util import correct_tag
 
 logger = logging.getLogger(__name__)
 
+WORKER_OFFSET = int(os.getenv("WORKER_OFFSET", 1)) - 1
+API_TOKEN = os.getenv("API_TOKEN").split(",")[WORKER_OFFSET]
+
 
 def headers():
-    return dict(authorization=f"Bearer {os.getenv('API_TOKEN')}")
+    return dict(authorization=f"Bearer {API_TOKEN}")
 
 
 class ApiException(Exception):

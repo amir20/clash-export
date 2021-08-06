@@ -170,21 +170,21 @@ class Clan(DynamicDocument):
         current_war = None
         if league_response:
             current_war = War(**league_response)
+            current_war.is_cwl = True
             existing_war = War.find_by_clan_and_season(tag=self.tag, season=current_war.season)
             if existing_war:
                 existing_war.update(**dict(current_war.to_mongo()))
                 current_war = existing_war
             else:
-                current_war.clan = dict(tag=self.tag)
-                current_war.is_cwl = True
                 current_war.save()
         if current_war:
             self.save_cwl_wars(current_war)
+
         return current_war
 
-    def save_cwl_wars(self, war):
+    def save_cwl_wars(self, cwl_war):
         round_tags = []
-        for rnd in war.rounds:
+        for rnd in cwl_war.rounds:
             round_tags.extend(rnd["warTags"])
 
         round_tags = [tag for tag in round_tags if tag != "#0"]
@@ -192,16 +192,22 @@ class Clan(DynamicDocument):
         found_wars_by_tag = {w.war_tag: war for w in found_wars}
         tags_to_update = [round_tag for round_tag in round_tags if round_tag not in found_wars_by_tag or found_wars_by_tag[round_tag].state == "inWar"]
         war_responses = api.cwl_war_by_tags(tags_to_update)
+        round_wars = []
 
         for tag, response in zip(tags_to_update, war_responses):
             if response:
                 if tag in found_wars_by_tag:
                     found_wars_by_tag[tag].update(**response)
+                    round_wars.append(found_wars_by_tag[tag])
                 else:
                     war = War(**response)
-                    war.clan = dict(tag=self.tag)
+                    war.war_tag = tag
                     war.is_cwl_war = True
                     war.save()
+                    round_wars.append(war)
+
+        cwl_war.round_wars = round_wars
+        cwl_war.save()
 
     def save_current_war(self, war_response) -> Optional[War]:
         current_war = None
@@ -218,8 +224,8 @@ class Clan(DynamicDocument):
 
         return current_war
 
-    def wars(self) -> List[War]:
-        return War.objects(clan__tag=self.tag)
+    def cwl_wars(self) -> List[War]:
+        return War.objects(clans__tag=self.tag, is_cwl=True).order_by("-startTime")
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())

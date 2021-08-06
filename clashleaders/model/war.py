@@ -4,7 +4,7 @@ from mongoengine import DynamicDocument, signals
 from datetime import datetime
 from typing import List
 
-from mongoengine.fields import BooleanField, StringField
+from mongoengine.fields import BooleanField, ListField, ReferenceField, StringField
 from clashleaders.util import correct_tag, from_timestamp
 
 
@@ -12,6 +12,7 @@ class War(DynamicDocument):
     is_cwl = BooleanField(default=False)
     is_cwl_war = BooleanField(default=False)
     war_tag = StringField()
+    round_wars = ListField(ReferenceField("War"))
 
     meta = {
         "index_background": True,
@@ -32,7 +33,9 @@ class War(DynamicDocument):
 
     def __repr__(self):
         if self.is_cwl:
-            return "<War clan={} season={} is_cwl=true>".format(self.clan["tag"], self.season)
+            return "<War season={} is_cwl=true>".format(self.season)
+        elif self.is_cwl_war:
+            return "<War clan={} war_tag={} is_cwl_war=true>".format(self.clan["tag"], self.war_tag)
         else:
             return "<War clan={}>".format(self.clan["tag"])
 
@@ -51,7 +54,7 @@ class War(DynamicDocument):
     @classmethod
     def find_by_clan_and_season(cls, tag: str, season: str) -> Optional[War]:
         tag = correct_tag(tag)
-        return cls.objects(clan__tag=tag, season=season).first()
+        return cls.objects(clans__tag=tag, season=season).first()
 
     @classmethod
     def find_by_war_tags(cls, *war_tags) -> List[War]:
