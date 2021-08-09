@@ -7,6 +7,8 @@ from typing import List
 from mongoengine.fields import BooleanField, ListField, ReferenceField, StringField
 from clashleaders.util import correct_tag, from_timestamp
 
+import pandas as pd
+
 
 class CWLWar(DynamicDocument):
     war_tag = StringField(required=True, unique=True)
@@ -20,6 +22,15 @@ class CWLWar(DynamicDocument):
 
     def __repr__(self):
         return "<CWLWar war_tag={} clan={} opponent={}>".format(self.war_tag, self.clan["tag"], self.opponent["tag"])
+
+    def to_df(self) -> pd.DataFrame:
+        df = pd.DataFrame.from_dict(self.clan["members"])
+        return (
+            df.join(df["attacks"].apply(lambda column: pd.Series(column[0])).add_prefix("attack."))
+            .join(df["bestOpponentAttack"].apply(lambda column: pd.Series(column)).add_prefix("bestOpponentAttack."))
+            .drop(["attacks", "bestOpponentAttack"], axis=1)
+            .set_index("tag")
+        )
 
     @classmethod
     def init(cls, sender, document, **kwargs):
