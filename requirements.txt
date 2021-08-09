@@ -41,7 +41,7 @@ Flask-GraphQL==2.0.1
 flask-shell-ipython==0.4.1
 Flask-WTF==0.15.1
 freezegun==1.1.0
-gevent==21.1.2
+gevent==21.8.0
 graphene==2.1.9
 graphql-core==2.3.2
 graphql-relay==2.0.1
