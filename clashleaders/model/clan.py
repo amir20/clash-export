@@ -11,13 +11,16 @@ from slugify import slugify
 import clashleaders.clash.clan_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
+from clashleaders.model import cwl_group
 import clashleaders.queue.calculation
 import clashleaders.queue.player
 import clashleaders.queue.war
 from clashleaders.clash import api
 from clashleaders.clash.api import clan_warlog, clan_current_leaguegroup, clan_current_war
 from clashleaders.model.clan_delta import ClanDelta
-from clashleaders.model.war import War
+from clashleaders.model.cwl_group import CWLGroup
+from clashleaders.model.cwl_war import CWLWar
+from clashleaders.model.clan_war import ClanWar
 from clashleaders.insights.clan_activity import clan_status
 from clashleaders.text.clan_description_processor import transform_description
 from clashleaders.util import correct_tag
@@ -166,12 +169,11 @@ class Clan(DynamicDocument):
 
         return self
 
-    def save_current_leaguegroup(self, league_response) -> Optional[War]:
+    def save_current_leaguegroup(self, league_response) -> Optional[CWLGroup]:
         current_war = None
         if league_response:
-            current_war = War(**league_response)
-            current_war.is_cwl = True
-            existing_war = War.find_by_clan_and_season(tag=self.tag, season=current_war.season)
+            current_war = CWLGroup(**league_response)
+            existing_war = CWLGroup.find_by_clan_and_season(tag=self.tag, season=current_war.season)
             if existing_war:
                 existing_war.update(**dict(current_war.to_mongo()))
                 current_war = existing_war
@@ -182,14 +184,14 @@ class Clan(DynamicDocument):
 
         return current_war
 
-    def save_cwl_wars(self, cwl_war):
+    def save_cwl_wars(self, cwl_war: CWLGroup):
         round_tags = []
         for rnd in cwl_war.rounds:
             round_tags.extend(rnd["warTags"])
 
         round_tags = [tag for tag in round_tags if tag != "#0"]
-        found_wars = War.find_by_war_tags(round_tags)
-        found_wars_by_tag = {w.war_tag: war for w in found_wars}
+        found_wars = CWLWar.find_by_war_tags(round_tags)
+        found_wars_by_tag = {war.war_tag: war for war in found_wars}
         tags_to_update = [round_tag for round_tag in round_tags if round_tag not in found_wars_by_tag or found_wars_by_tag[round_tag].state == "inWar"]
         war_responses = api.cwl_war_by_tags(tags_to_update)
         round_wars = []
@@ -200,21 +202,20 @@ class Clan(DynamicDocument):
                     found_wars_by_tag[tag].update(**response)
                     round_wars.append(found_wars_by_tag[tag])
                 else:
-                    war = War(**response)
+                    war = CWLWar(**response)
                     war.war_tag = tag
-                    war.is_cwl_war = True
                     war.save()
                     round_wars.append(war)
 
         cwl_war.round_wars = round_wars
         cwl_war.save()
 
-    def save_current_war(self, war_response) -> Optional[War]:
+    def save_current_war(self, war_response) -> Optional[ClanWar]:
         current_war = None
         if war_response:
-            current_war = War(**war_response)
-            if current_war.state != "notInWar":
-                existing_war = War.find_by_clan_and_start_time(tag=self.tag, start_time=current_war.startTime)
+            if war_response["state"] != "notInWar":
+                current_war = ClanWar(**war_response)
+                existing_war = ClanWar.find_by_clan_and_start_time(tag=self.tag, start_time=current_war.startTime)
                 if existing_war:
                     existing_war.update(**dict(current_war.to_mongo()))
                     current_war = existing_war
@@ -224,8 +225,8 @@ class Clan(DynamicDocument):
 
         return current_war
 
-    def cwl_wars(self) -> List[War]:
-        return War.objects(clans__tag=self.tag, is_cwl=True).order_by("-startTime")
+    def cwl_wars(self) -> List[CWLGroup]:
+        return CWLGroup.objects(clans__tag=self.tag).order_by("-startTime")
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())

@@ -3,8 +3,6 @@ from flask import render_template
 
 from clashleaders import app, cache
 
-client = contentful.Client("zmnodi6xws9d", "8017b7370aaf68e6caefc204d56fc6f2b3cee22adc907ebf0b4fbc40d7d98799")
-
 
 @app.context_processor
 def inject_changelog():
@@ -35,4 +33,5 @@ def about():
 
 @cache.memoize(600)
 def fetch_changelog():
+    client = contentful.Client("zmnodi6xws9d", "8017b7370aaf68e6caefc204d56fc6f2b3cee22adc907ebf0b4fbc40d7d98799")
     return list(client.entries({"content_type": "changelog", "order": "-fields.publishedOn"}))

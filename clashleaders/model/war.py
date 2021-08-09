@@ -28,6 +28,8 @@ class War(DynamicDocument):
             ("clan.tag", "is_cwl"),
             ("clan.tag", "is_cwl_war"),
             ("war_tag"),
+            "is_cwl",
+            "is_cwl_war",
         ],
     }
 
