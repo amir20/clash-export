@@ -28,7 +28,7 @@ class CWLWar(DynamicDocument):
         document.endTime = from_timestamp(document.endTime)
 
     @classmethod
-    def find_by_war_tags(cls, *war_tags) -> List[CWLWar]:
+    def find_by_war_tags(cls, war_tags) -> List[CWLWar]:
         return cls.objects(war_tag__in=war_tags)
 
 
