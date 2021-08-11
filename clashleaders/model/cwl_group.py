@@ -35,7 +35,7 @@ class CWLGroup(DynamicDocument):
         data = {day: df for day, df in zip(range(1, 8), dfs)}
         return pd.concat(data, axis=1)
 
-    def aggregate_stars_and_destruction(self, clan: Clan):
+    def aggregate_stars_and_destruction(self, clan: Clan, flat=True) -> pd.DataFrame:
         df = self.to_df_for_clan(clan)
         stars = df.loc[:, (slice(None), "attack.stars")]
         stars = stars.droplevel(level=1, axis=1)
@@ -45,9 +45,14 @@ class CWLGroup(DynamicDocument):
         destruction = destruction.droplevel(level=1, axis=1)
         destruction.loc[:, "avg"] = destruction.mean(axis=1)
 
-        name = df.droplevel(axis=1, level=0)["name"].dropna().iloc[:, 0]
+        name = df.droplevel(axis=1, level=0)["name"].fillna(method="bfill", axis=1).iloc[:, 0]
 
-        return pd.concat([name, stars, destruction], axis=1, keys=["name", "stars", "destruction"])
+        df = pd.concat([name, stars, destruction], axis=1, keys=["name", "stars", "destruction"])
+        if not flat:
+            return df
+        else:
+            df.columns = [f"{column}_day_{day}" for column, day in df.columns.to_flat_index()]
+            return df.rename(columns={"name_day_name": "name", "stars_day_avg": "stars_avg", "destruction_day_avg": "destruction_avg"})
 
     @classmethod
     def find_by_clan_and_season(cls, tag: str, season: str) -> Optional[CWLGroup]:
