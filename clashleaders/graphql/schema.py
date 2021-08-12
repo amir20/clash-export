@@ -167,6 +167,17 @@ class ClanLabel(graphene.ObjectType):
         return BadgeUrls(**self.iconUrls)
 
 
+class CWLGroup(graphene.ObjectType):
+    state = graphene.String()
+    season = graphene.String()
+    clans = GenericScalar()
+    aggregated = GenericScalar()
+
+    def resolve_aggregated(self, info):
+        df = self.aggregate_stars_and_destruction(self.clan)
+        return df.reset_index().to_dict(orient="records")
+
+
 class Clan(graphene.ObjectType):
     name = graphene.String()
     slug = graphene.String()
@@ -205,6 +216,8 @@ class Clan(graphene.ObjectType):
     war_win_ratio = graphene.Float()
     war_total = graphene.Int()
 
+    recent_cwl_group = graphene.Field(CWLGroup)
+
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)
         return self.historical_near_now().clan_delta(previous_clan)
@@ -220,6 +233,11 @@ class Clan(graphene.ObjectType):
 
     def resolve_player_matrix(self, info, days=0):
         return self.historical_near_days_ago(days).to_matrix()
+
+    def resolve_recent_cwl_group(self, info):
+        [cwl_war] = self.cwl_wars()
+        cwl_war.clan = self
+        return cwl_war
 
     def resolve_players(self, info):
         df = self.historical_near_now().to_df(formatted=False).reset_index()

@@ -1,13 +1,15 @@
 from __future__ import annotations
-from typing import Optional
+
+from typing import List, TYPE_CHECKING
 from mongoengine import DynamicDocument, signals
-from datetime import datetime
-from typing import List
 
 from mongoengine.fields import BooleanField, ListField, ReferenceField, StringField
 from clashleaders.util import correct_tag, from_timestamp
 
 import pandas as pd
+
+if TYPE_CHECKING:
+    from clashleaders.model.clan import Clan
 
 
 class CWLWar(DynamicDocument):
@@ -23,10 +25,22 @@ class CWLWar(DynamicDocument):
     def __repr__(self):
         return "<CWLWar war_tag={} clan={} opponent={}>".format(self.war_tag, self.clan["tag"], self.opponent["tag"])
 
-    def to_df(self) -> pd.DataFrame:
-        df = pd.DataFrame.from_dict(self.clan["members"])
+    def contains_clan(self, clan: Clan) -> bool:
+        return clan.tag in (self.clan["tag"], self.opponent["tag"])
+
+    def to_df(self, clan: Clan) -> pd.DataFrame:
+        if not self.contains_clan(clan):
+            raise ValueError("Clan not found")
+
+        members = None
+        if self.clan["tag"] == clan.tag:
+            members = self.clan["members"]
+        else:
+            members = self.opponent["members"]
+
+        df = pd.DataFrame.from_dict(members)
         return (
-            df.join(df["attacks"].apply(lambda column: pd.Series(column[0])).add_prefix("attack."))
+            df.join(df["attacks"].apply(lambda col: pd.Series(col[0]) if pd.notnull(col) else pd.Series(dtype=object)).add_prefix("attack."))
             .join(df["bestOpponentAttack"].apply(lambda column: pd.Series(column)).add_prefix("bestOpponentAttack."))
             .drop(["attacks", "bestOpponentAttack"], axis=1)
             .set_index("tag")
