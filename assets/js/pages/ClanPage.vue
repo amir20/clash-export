@@ -3,7 +3,8 @@
     <section class="hero is-warning">
       <clan-page-header></clan-page-header>
       <div class="hero-footer">
-        <table-nav></table-nav>
+        <router-link :to="{ name: 'players' }">Member Details</router-link>
+        <router-link :to="{ name: 'cwl' }">CWL Analytics</router-link>
       </div>
     </section>
     <router-view></router-view>
@@ -12,12 +13,10 @@
 
 <script>
 import ClanPageHeader from "../components/ClanPageHeader";
-import TableNav from "../components/TableNav";
 
 export default {
   components: {
     ClanPageHeader,
-    TableNav,
   },
   name: "ClanPage",
 };

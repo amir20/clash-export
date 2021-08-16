@@ -113,7 +113,7 @@ export default {
     },
     handleVisibilityChange() {
       if (!document.hidden) {
-        this.fetchClanData();
+        // this.fetchClanData();
       }
     },
   },

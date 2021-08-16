@@ -14,8 +14,8 @@ Vue.use(Buefy, { defaultIconPack: "fa" });
 Vue.use(VueRouter);
 
 const routes = [
-  { path: "/cwl", component: ClanCWL },
-  { path: "/", component: ClanPlayers },
+  { path: "/cwl", component: ClanCWL, name: "cwl" },
+  { path: "/", component: ClanPlayers, name: "players" },
 ];
 
 const router = new VueRouter({
