@@ -7,7 +7,9 @@
         <router-link :to="{ name: 'cwl' }">CWL Analytics</router-link>
       </div>
     </section>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
