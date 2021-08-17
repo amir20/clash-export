@@ -20,6 +20,8 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  mode: "history",
+  base: new URL(document.querySelector('link[rel="canonical"]').href).pathname,
 });
 
 new Vue({

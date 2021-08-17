@@ -175,7 +175,8 @@ class CWLGroup(graphene.ObjectType):
 
     def resolve_aggregated(self, info):
         df = self.aggregate_stars_and_destruction(self.clan)
-        return df.reset_index().to_dict(orient="records")
+
+        return df.fillna("na").reset_index().to_dict(orient="records")
 
 
 class Clan(graphene.ObjectType):
