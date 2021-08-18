@@ -120,21 +120,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .b-table {
-  & /deep/ thead th {
-    position: sticky;
-    top: 0;
-    z-index: 11;
-    background-color: #00d1b2;
-    color: #fff;
-  }
-
-  & /deep/ td[data-label="Name"] {
+  td[data-label="Name"] {
     white-space: nowrap;
   }
 
-  & /deep/ .table {
+  .table {
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 11;
+      background-color: #00d1b2;
+      color: #fff;
+    }
+
     &.is-striped tbody tr:not(.is-selected):nth-child(even) {
       background-color: #eee;
     }
@@ -152,11 +152,11 @@ export default {
     }
   }
 
-  & /deep/ table {
+  table {
     font-size: 90%;
   }
 
-  & /deep/ b {
+  b {
     white-space: nowrap;
     display: block;
     line-height: 1;
@@ -176,7 +176,7 @@ export default {
     }
   }
 
-  & .tag {
+  .tag {
     font-size: 10px;
 
     &.inactive {

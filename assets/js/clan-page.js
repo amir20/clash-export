@@ -1,40 +1,36 @@
 import Vue from "vue";
 import Buefy from "buefy";
-import ClanTable from "./components/ClanTable";
-import ClanPageHeader from "./components/ClanPageHeader";
-import TableNav from "./components/TableNav";
+import VueRouter from "vue-router";
+
 import bugsnag from "./bugsnag";
 import store from "./store/clan-page";
+import ClanPage from "./pages/ClanPage";
+import ClanCWL from "./pages/ClanCWL";
+import ClanPlayers from "./pages/ClanPlayers";
 
 bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
+Vue.use(VueRouter);
 
-new Vue({
-  el: "#clan-page-header",
-  store,
-  components: {
-    ClanPageHeader,
-  },
-  render: (h) => h(ClanPageHeader),
+const routes = [
+  { path: "/cwl", component: ClanCWL, name: "cwl" },
+  { path: "/", component: ClanPlayers, name: "players" },
+];
+
+const router = new VueRouter({
+  routes,
+  mode: "history",
+  base: new URL(document.querySelector('link[rel="canonical"]').href).pathname,
 });
 
 new Vue({
-  el: "#table-nav",
+  router,
   store,
   components: {
-    TableNav,
+    ClanPage,
   },
-  render: (h) => h(TableNav),
-});
-
-new Vue({
-  el: "#clan-table",
-  store,
-  components: {
-    ClanTable,
-  },
-  render: (h) => h(ClanTable),
-});
+  render: (h) => h(ClanPage),
+}).$mount("#app");
 
 store.dispatch("FETCH_CLAN_DATA");

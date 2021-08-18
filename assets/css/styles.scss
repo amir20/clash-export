@@ -43,8 +43,9 @@ header {
   body.clan_detail_page {
     display: grid;
 
-    & header > nav.navbar,
-    & main > #app > section.hero > div,
+    & header nav.navbar,
+    & main .hero-body,
+    & main .hero-footer,
     & footer > section {
       width: 100vw;
       position: sticky;

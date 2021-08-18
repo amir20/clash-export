@@ -12,8 +12,9 @@ def inject_most_popular():
     return dict(status=status, popular_countries=status.top_countries, reddit_clans=status.reddit_clans)
 
 
-@app.route("/clan/<slug>")
-def clan_detail_page(slug):
+@app.route("/clan/<slug>", strict_slashes=False)
+@app.route("/clan/<slug>/<page>")
+def clan_detail_page(slug, page=None):
     try:
         clan = Clan.find_by_slug(slug)
         initial_state = dict(
