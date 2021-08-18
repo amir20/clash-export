@@ -1,6 +1,6 @@
 <template>
   <section>
-    <b-table ref="table" striped narrowed mobile-cards :data="cwlData">
+    <b-table ref="table" striped mobile-cards :data="cwlData">
       <b-table-column field="name" label="Name" v-slot="props" sortable>
         {{ props.row.name }}
       </b-table-column>
@@ -9,65 +9,43 @@
         {{ props.row.tag }}
       </b-table-column>
 
-      <b-table-column field="stars_day_1" label="Day 1" v-slot="props" numeric sortable>
-        {{ props.row.stars_day_1 }}
+      <b-table-column
+        :field="`stars_day_${i}`"
+        :label="`Day ${i}`"
+        v-slot="props"
+        numeric
+        sortable
+        centered
+        v-for="i in [1, 2, 3, 4, 5, 6, 7]"
+        :key="'stars' + i"
+      >
+        <span class="stars" :class="`stars_${props.row[`stars_day_${i}`]}`">
+          {{ props.row[`stars_day_${i}`] != "na" ? props.row[`stars_day_${i}`] : "-" }}
+        </span>
       </b-table-column>
 
-      <b-table-column field="stars_day_2" label="Day 2" v-slot="props" numeric sortable>
-        {{ props.row.stars_day_2 }}
-      </b-table-column>
-
-      <b-table-column field="stars_day_3" label="Day 3" v-slot="props" numeric sortable>
-        {{ props.row.stars_day_3 }}
-      </b-table-column>
-
-      <b-table-column field="stars_day_4" label="Day 4" v-slot="props" numeric sortable>
-        {{ props.row.stars_day_4 }}
-      </b-table-column>
-
-      <b-table-column field="stars_day_5" label="Day 5" v-slot="props" numeric sortable>
-        {{ props.row.stars_day_5 }}
-      </b-table-column>
-      <b-table-column field="stars_day_6" label="Day 6" v-slot="props" numeric sortable>
-        {{ props.row.stars_day_6 }}
-      </b-table-column>
-
-      <b-table-column field="stars_day_7" label="Day 7" v-slot="props" numeric sortable>
-        {{ props.row.stars_day_7 }}
-      </b-table-column>
-
-      <b-table-column field="stars_avg" label="Stars Average" v-slot="props" numeric sortable>
+      <b-table-column field="stars_avg" label="Stars Average" v-slot="props" numeric sortable centered>
         {{ props.row.stars_avg.toLocaleString(undefined, { minimumFractionDigits: 2 }) }}
       </b-table-column>
 
-      <b-table-column field="destruction_day_1" label="Day 1" v-slot="props" numeric sortable>
-        {{ Number(props.row.destruction_day_1 / 100).toLocaleString(undefined, { style: "percent" }) }}
+      <b-table-column
+        :field="`destruction_day_${i}`"
+        :label="`Day ${i}`"
+        v-slot="props"
+        numeric
+        sortable
+        centered
+        v-for="i in [1, 2, 3, 4, 5, 6, 7]"
+        :key="'destruction' + i"
+      >
+        {{
+          props.row[`destruction_day_${i}`] != "na"
+            ? Number(props.row[`destruction_day_${i}`] / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 1 })
+            : "-"
+        }}
       </b-table-column>
 
-      <b-table-column field="destruction_day_2" label="Day 2" v-slot="props" numeric sortable>
-        {{ Number(props.row.destruction_day_2 / 100).toLocaleString(undefined, { style: "percent" }) }}
-      </b-table-column>
-
-      <b-table-column field="destruction_day_3" label="Day 3" v-slot="props" numeric sortable>
-        {{ Number(props.row.destruction_day_3 / 100).toLocaleString(undefined, { style: "percent" }) }}
-      </b-table-column>
-
-      <b-table-column field="destruction_day_4" label="Day 4" v-slot="props" numeric sortable>
-        {{ Number(props.row.destruction_day_4 / 100).toLocaleString(undefined, { style: "percent" }) }}
-      </b-table-column>
-
-      <b-table-column field="destruction_day_5" label="Day 5" v-slot="props" numeric sortable>
-        {{ Number(props.row.destruction_day_5 / 100).toLocaleString(undefined, { style: "percent" }) }}
-      </b-table-column>
-      <b-table-column field="destruction_day_6" label="Day 6" v-slot="props" numeric sortable>
-        {{ Number(props.row.destruction_day_6 / 100).toLocaleString(undefined, { style: "percent" }) }}
-      </b-table-column>
-
-      <b-table-column field="destruction_day_7" label="Day 7" v-slot="props" numeric sortable>
-        {{ Number(props.row.destruction_day_7 / 100).toLocaleString(undefined, { style: "percent" }) }}
-      </b-table-column>
-
-      <b-table-column field="destruction_avg" label="Destruction Average" v-slot="props" numeric sortable>
+      <b-table-column field="destruction_avg" label="Destruction Average" v-slot="props" numeric sortable centered>
         {{ Number(props.row.destruction_avg / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 1 }) }}
       </b-table-column>
     </b-table>
@@ -93,4 +71,16 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.b-table /deep/ th {
+  padding: 1em;
+}
+
+.stars_1 {
+  color: hsl(348, 100%, 61%);
+}
+
+.stars_3 {
+  color: hsl(141, 71%, 48%);
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div>
+    <div class="tools">
       <table-nav></table-nav>
     </div>
     <clan-table></clan-table>
@@ -18,4 +18,11 @@ export default {
   name: "ClanPlayers",
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.tools {
+  width: 100vw;
+  position: sticky;
+  left: 0;
+  padding: 0.6em 1em;
+}
+</style>

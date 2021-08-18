@@ -2,11 +2,21 @@
   <div>
     <section class="hero is-warning">
       <clan-page-header></clan-page-header>
-      <div class="hero-footer">
-        <router-link :to="{ name: 'players' }">Member Details</router-link>
-        <router-link :to="{ name: 'cwl' }">CWL Analytics</router-link>
-      </div>
     </section>
+    <div class="tabs is-centered is-boxed">
+      <ul>
+        <router-link :to="{ name: 'players' }" custom v-slot="{ href, navigate, isActive, isExactActive }">
+          <li :class="[isActive && '', isExactActive && 'is-active']">
+            <a :href="href" @click="navigate">Members</a>
+          </li>
+        </router-link>
+        <router-link :to="{ name: 'cwl' }" custom v-slot="{ href, navigate, isActive, isExactActive }">
+          <li :class="[isActive && '', isExactActive && 'is-active']">
+            <a :href="href" @click="navigate">Clan League Wars</a>
+          </li>
+        </router-link>
+      </ul>
+    </div>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
@@ -23,4 +33,12 @@ export default {
   name: "ClanPage",
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.tabs {
+  width: 100vw;
+  position: sticky;
+  left: 0;
+  margin-bottom: 3px !important;
+  background-color: #ffe08a;
+}
+</style>
