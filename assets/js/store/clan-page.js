@@ -65,6 +65,7 @@ const actions = {
             warWinRatio
             recentCwlGroup {
               season
+              aggregated
             }
             warLeague {
               name
