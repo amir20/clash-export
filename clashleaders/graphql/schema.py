@@ -235,10 +235,14 @@ class Clan(graphene.ObjectType):
     def resolve_player_matrix(self, info, days=0):
         return self.historical_near_days_ago(days).to_matrix()
 
-    def resolve_recent_cwl_group(self, info):
-        [cwl_war] = self.cwl_wars()
-        cwl_war.clan = self
-        return cwl_war
+    def resolve_recent_cwl_group(self, info, update_wars=False):
+        wars = self.cwl_wars()
+        if wars:
+            [cwl_war] = wars
+            cwl_war.clan = self
+            return cwl_war
+        else:
+            return None
 
     def resolve_players(self, info):
         df = self.historical_near_now().to_df(formatted=False).reset_index()

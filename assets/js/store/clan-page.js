@@ -63,6 +63,9 @@ const actions = {
             trophyHistory
             warWins
             warWinRatio
+            recentCwlGroup {
+              season
+            }
             warLeague {
               name
             }
@@ -119,25 +122,28 @@ const actions = {
     commit("SET_CLAN_DATA", data);
   },
   async FETCH_CLAN_CWL({ commit, state: { clan } }) {
-    commit("START_LOADING");
-
-    const data = await request(
-      gql`
-        query GetClanCWL($tag: String!) {
-          clan(tag: $tag) {
-            recentCwlGroup {
-              season
-              aggregated
+    try {
+      commit("START_LOADING");
+      const data = await request(
+        gql`
+          query GetClanCWL($tag: String!) {
+            clan(tag: $tag) {
+              recentCwlGroup {
+                season
+                aggregated
+              }
             }
           }
+        `,
+        {
+          tag: clan.tag,
         }
-      `,
-      {
-        tag: clan.tag,
-      }
-    );
-    commit("STOP_LOADING");
-    commit("SET_CLAN_CWL", data);
+      );
+      commit("SET_CLAN_CWL", data);
+    } catch (error) {
+    } finally {
+      commit("STOP_LOADING");
+    }
   },
   async FETCH_SAVED_CLAN({ commit, state: { clan, days } }) {
     const savedTag = store.get("lastTag");
