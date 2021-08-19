@@ -43,6 +43,7 @@ def clan_detail_page(slug, page=None):
             warLeague=clan.warLeague,
             warWinRatio=clan.war_win_ratio,
             warWins=clan.warWins,
+            recentCwlGroup=recent_cwl_group(clan),
         )
     except DoesNotExist:
         return render_template("404.html"), 404
@@ -60,3 +61,13 @@ def labels(clan):
         label["iconUrls"] = {key: clashleaders.views.imgproxy_url(value) for key, value in label["iconUrls"].items()}
 
     return labels
+
+
+def recent_cwl_group(clan: Clan):
+    wars = clan.cwl_wars()
+    if wars:
+        return dict(
+            season=wars[0].season,
+        )
+    else:
+        return None

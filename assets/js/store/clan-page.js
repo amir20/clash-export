@@ -63,10 +63,6 @@ const actions = {
             trophyHistory
             warWins
             warWinRatio
-            recentCwlGroup {
-              season
-              aggregated
-            }
             warLeague {
               name
             }
@@ -110,6 +106,10 @@ const actions = {
               avgElixirGrab
               avgGoldGrab
             }
+            recentCwlGroup {
+              season
+              aggregated
+            }
           }
         }
       `,
@@ -127,8 +127,8 @@ const actions = {
       commit("START_LOADING");
       const data = await request(
         gql`
-          query GetClanCWL($tag: String!) {
-            clan(tag: $tag) {
+          query GetClanCWL($tag: String!, $update_war: Boolean!) {
+            clan(tag: $tag, update_war: $update_war) {
               recentCwlGroup {
                 season
                 aggregated
@@ -138,6 +138,7 @@ const actions = {
         `,
         {
           tag: clan.tag,
+          update_war: true,
         }
       );
       commit("SET_CLAN_CWL", data);

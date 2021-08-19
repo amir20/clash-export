@@ -227,6 +227,9 @@ class Clan(DynamicDocument):
     def cwl_wars(self) -> List[CWLGroup]:
         return CWLGroup.objects(clans__tag=self.tag).order_by("-startTime")
 
+    def wars(self) -> List[ClanWar]:
+        return ClanWar.objects(clan_tag=self.tag).order_by("-start_time")
+
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
         data["computed"] = dict(data["computed"])
