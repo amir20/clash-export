@@ -119,41 +119,14 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.b-table {
+<style lang="scss" scoped>
+.b-table /deep/ {
   td[data-label="Name"] {
     white-space: nowrap;
   }
 
-  .table {
-    thead th {
-      position: sticky;
-      top: 0;
-      z-index: 11;
-      background-color: #00d1b2;
-      color: #fff;
-    }
-
-    &.is-striped tbody tr:not(.is-selected):nth-child(even) {
-      background-color: #eee;
-    }
-
-    tr.detail .detail-container {
-      padding: 0;
-    }
-
-    th.is-sortable {
-      padding-right: 1em;
-
-      .is-relative {
-        padding-left: 0.2em;
-      }
-    }
-  }
-
-  table {
-    font-size: 90%;
+  tr.detail .detail-container {
+    padding: 0 !important;
   }
 
   b {
@@ -193,6 +166,36 @@ export default {
       background-color: #23d160;
       color: #fff;
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.b-table {
+  .table {
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 11;
+      background-color: #00d1b2;
+      color: #fff;
+    }
+
+    &.is-striped tbody tr:not(.is-selected):nth-child(even) {
+      background-color: #eee;
+    }
+
+    th.is-sortable {
+      padding-right: 1em;
+
+      .is-relative {
+        padding-left: 0.2em;
+      }
+    }
+  }
+
+  table {
+    font-size: 90%;
   }
 }
 </style>
