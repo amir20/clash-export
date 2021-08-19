@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="tools">
+    <div class="tools is-hidden-mobile">
       <table-nav></table-nav>
     </div>
     <clan-table></clan-table>
@@ -24,5 +24,6 @@ export default {
   position: sticky;
   left: 0;
   padding: 0.6em 1em;
+  z-index: 1000;
 }
 </style>
