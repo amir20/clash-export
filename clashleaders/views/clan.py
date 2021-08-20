@@ -1,9 +1,12 @@
+import logging
 import clashleaders.views
 from flask import render_template
 from mongoengine import DoesNotExist
 
 from clashleaders import app
 from clashleaders.model import Clan, Status
+
+logger = logging.getLogger(__name__)
 
 
 @app.context_processor
@@ -64,10 +67,14 @@ def labels(clan):
 
 
 def recent_cwl_group(clan: Clan):
-    wars = clan.cwl_wars()
-    if wars:
-        return dict(
-            season=wars[0].season,
-        )
-    else:
+    try:
+        wars = clan.cwl_wars()
+        if wars:
+            [war] = wars
+            war.to_df_for_clan(clan)  # do nothing with value
+            return dict(season=war.season)
+        else:
+            return None
+    except:
+        logger.error("Error getting recent CWL group", exc_info=True)
         return None
