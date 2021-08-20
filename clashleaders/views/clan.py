@@ -76,5 +76,5 @@ def recent_cwl_group(clan: Clan):
         else:
             return None
     except:
-        logger.error("Error getting recent CWL group", exc_info=True)
+        logger.error(f"Error getting recent CWL group for clan tag {clan.tag}", exc_info=True)
         return None
