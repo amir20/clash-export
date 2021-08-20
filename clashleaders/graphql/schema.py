@@ -1,3 +1,5 @@
+import logging
+
 from datetime import datetime, timedelta
 from time import sleep
 
@@ -11,6 +13,8 @@ import base64
 import clashleaders.model as model
 from clashleaders.clash import api
 from clashleaders.views import imgproxy_url
+
+logger = logging.getLogger(__name__)
 
 
 class PlayerActivity(graphene.ObjectType):
@@ -174,9 +178,12 @@ class CWLGroup(graphene.ObjectType):
     aggregated = GenericScalar()
 
     def resolve_aggregated(self, info):
-        df = self.aggregate_stars_and_destruction(self.clan)
-
-        return df.fillna("na").reset_index().to_dict(orient="records")
+        try:
+            df = self.aggregate_stars_and_destruction(self.clan)
+            return df.fillna("na").reset_index().to_dict(orient="records")
+        except:
+            logger.error("Failed to aggregate clan data for {}".format(self.clan))
+            return None
 
 
 class Clan(graphene.ObjectType):
