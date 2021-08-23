@@ -38,11 +38,10 @@ class CWLWar(DynamicDocument):
         else:
             members = self.opponent["members"]
 
-        df = pd.DataFrame.from_dict(members)
+        df = pd.json_normalize(members)
         return (
             df.join(df["attacks"].apply(lambda col: pd.Series(col[0]) if pd.notnull(col) else pd.Series(dtype=object)).add_prefix("attack."))
-            .join(df["bestOpponentAttack"].apply(lambda column: pd.Series(column)).add_prefix("bestOpponentAttack."))
-            .drop(["attacks", "bestOpponentAttack"], axis=1)
+            .drop(["attacks"], axis=1)
             .set_index("tag")
         )
 
