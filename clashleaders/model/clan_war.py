@@ -7,6 +7,8 @@ from typing import List
 from mongoengine.fields import BooleanField, ListField, ReferenceField, StringField
 from clashleaders.util import correct_tag, from_timestamp
 
+import pandas as pd
+
 
 class ClanWar(DynamicDocument):
     meta = {
@@ -23,6 +25,18 @@ class ClanWar(DynamicDocument):
 
     def __repr__(self):
         return "<ClanWar clan={} opponent={}>".format(self.clan["tag"], self.opponent["tag"])
+
+    def to_df(self) -> pd.DataFrame:
+        members = self.clan["members"]
+        for member in members:
+            if "attacks" not in member:
+                member["attacks"] = []
+            member["attack_1"] = member["attacks"][0] if len(member["attacks"]) > 0 else None
+            member["attack_2"] = member["attacks"][1] if len(member["attacks"]) > 1 else None
+
+        df = pd.json_normalize(members).drop(columns=["attacks", "attack_2", "attack_1"]).set_index("tag")
+
+        return df
 
     @classmethod
     def init(cls, sender, document, **kwargs):
