@@ -127,9 +127,9 @@ const actions = {
       commit("START_LOADING");
       const data = await request(
         gql`
-          query GetClanCWL($tag: String!, $update_war: Boolean!) {
-            clan(tag: $tag, update_war: $update_war) {
-              recentCwlGroup {
+          query GetClanCWL($tag: String!, $updateWars: Boolean!) {
+            clan(tag: $tag) {
+              recentCwlGroup(updateWars: $updateWars) {
                 season
                 aggregated
               }
@@ -138,7 +138,7 @@ const actions = {
         `,
         {
           tag: clan.tag,
-          update_war: true,
+          updateWars: true,
         }
       );
       commit("SET_CLAN_CWL", data);

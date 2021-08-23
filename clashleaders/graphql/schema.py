@@ -224,7 +224,7 @@ class Clan(graphene.ObjectType):
     war_win_ratio = graphene.Float()
     war_total = graphene.Int()
 
-    recent_cwl_group = graphene.Field(CWLGroup)
+    recent_cwl_group = graphene.Field(CWLGroup, update_wars=graphene.Boolean(required=False))
 
     def resolve_delta(self, info, days):
         previous_clan = self.historical_near_days_ago(days)

@@ -11,12 +11,10 @@ from slugify import slugify
 import clashleaders.clash.clan_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
-from clashleaders.model import cwl_group
 import clashleaders.queue.calculation
 import clashleaders.queue.player
 import clashleaders.queue.war
 from clashleaders.clash import api
-from clashleaders.clash.api import clan_warlog, clan_current_leaguegroup, clan_current_war
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.model.cwl_group import CWLGroup
 from clashleaders.model.cwl_war import CWLWar
@@ -220,7 +218,7 @@ class Clan(DynamicDocument):
                     current_war = existing_war
                 else:
                     current_war.save()
-                    clashleaders.queue.war.schedule_war_update(current_war.endTime, self.tag)
+                    clashleaders.queue.war.schedule_war_update(current_war.endTime + timedelta(minutes=1), self.tag)
 
         return current_war
 
