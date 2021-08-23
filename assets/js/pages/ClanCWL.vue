@@ -40,7 +40,7 @@
       >
         {{
           props.row[`destruction_day_${i}`] != "na"
-            ? Number(props.row[`destruction_day_${i}`] / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 1 })
+            ? Number(props.row[`destruction_day_${i}`] / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 0 })
             : "-"
         }}
       </b-table-column>
