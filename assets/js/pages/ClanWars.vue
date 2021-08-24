@@ -78,6 +78,9 @@ export default {
       currentWar: null,
     };
   },
+  created() {
+    this.currentWar = this.clan.wars[0];
+  },
   computed: {
     ...mapState(["clan"]),
   },
