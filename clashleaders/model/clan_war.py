@@ -34,7 +34,7 @@ class ClanWar(DynamicDocument):
             member["attack_1"] = member["attacks"][0] if len(member["attacks"]) > 0 else None
             member["attack_2"] = member["attacks"][1] if len(member["attacks"]) > 1 else None
 
-        df = pd.json_normalize(members).drop(columns=["attacks", "attack_2", "attack_1"]).set_index("tag")
+        df = pd.json_normalize(members).drop(columns=["attacks", "attack_2", "attack_1"], errors="ignore").set_index("tag")
 
         return df
 
