@@ -79,15 +79,17 @@ export default {
     };
   },
   created() {
-    this.currentWar = this.clan.wars[0];
+    if (this.clan.wars[0] && this.clan.wars[0].opponent) {
+      this.currentWar = this.clan.wars[0];
+    }
   },
   computed: {
     ...mapState(["clan"]),
   },
   watch: {
     ["clan.wars"](newValue) {
-      if (!this.currentWar) {
-        this.currentWar = newValue.wars[0];
+      if (!this.currentWar && newValue && newValue[0].opponent) {
+        this.currentWar = newValue[0];
       }
     },
   },
