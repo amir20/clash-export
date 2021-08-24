@@ -299,10 +299,6 @@ class Clan(DynamicDocument):
         return clan
 
 
-def prepend_hash(tag):
-    return "#" + tag.lstrip("#").upper()
-
-
 def save_historical_clan(clan_json, player_json):
     try:
         players = [clashleaders.model.HistoricalPlayer(**p).save() for p in player_json]

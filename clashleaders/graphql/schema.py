@@ -1,3 +1,4 @@
+from clashleaders.clash.transformer import tag_to_slug
 import logging
 
 from datetime import datetime, timedelta
@@ -62,8 +63,11 @@ class ShortClan(graphene.ObjectType):
     members = graphene.Int()
     badge_urls = graphene.Field(BadgeUrls)
 
-    def resolve_badge_urls(self, info):
-        return BadgeUrls(**self.badgeUrls)
+    def resolve_badge_urls(parent, info):
+        if hasattr(parent, "badgeUrls"):
+            return BadgeUrls(**parent.badgeUrls)
+        else:
+            return BadgeUrls(**parent["badgeUrls"])
 
 
 class Player(graphene.ObjectType):
@@ -176,12 +180,17 @@ class War(graphene.ObjectType):
     startTime = graphene.Float()
     aggregated = GenericScalar()
     state = graphene.String()
+    opponent = graphene.Field(ShortClan)
 
     def resolve_startTime(parent, info):
         return parent.startTime.timestamp() * 1000
 
     def resolve_endTime(parent, info):
         return parent.endTime.timestamp() * 1000
+
+    def resolve_opponent(parent, info):
+        slug = tag_to_slug(parent.opponent["tag"])
+        return dict(name=parent.opponent["name"], tag=parent.opponent["tag"], badgeUrls=parent.opponent["badgeUrls"], slug=slug)
 
     def resolve_aggregated(parent, info):
         df = parent.to_df()
