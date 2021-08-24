@@ -85,7 +85,7 @@ export default {
     ...mapState(["clan"]),
   },
   watch: {
-    clan(newValue) {
+    ["clan.wars"](newValue) {
       if (!this.currentWar) {
         this.currentWar = newValue.wars[0];
       }
