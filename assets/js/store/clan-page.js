@@ -110,6 +110,20 @@ const actions = {
               season
               aggregated
             }
+            wars {
+              startTime
+              endTime
+              state
+              aggregated
+              opponent {
+                name
+                slug
+                tag
+                badgeUrls {
+                  large
+                }
+              }
+            }
           }
         }
       `,
@@ -121,17 +135,32 @@ const actions = {
     );
     commit("STOP_LOADING");
     commit("SET_CLAN_DATA", data);
+    dispatch("FETCH_WARS");
   },
-  async FETCH_CLAN_CWL({ commit, state: { clan } }) {
+  async FETCH_WARS({ commit, state: { clan } }) {
     try {
       commit("START_LOADING");
       const data = await request(
         gql`
           query GetClanCWL($tag: String!, $updateWars: Boolean!) {
-            clan(tag: $tag) {
-              recentCwlGroup(updateWars: $updateWars) {
+            clan(tag: $tag, updateWars: $updateWars) {
+              recentCwlGroup {
                 season
                 aggregated
+              }
+              wars {
+                startTime
+                endTime
+                state
+                aggregated
+                opponent {
+                  name
+                  slug
+                  tag
+                  badgeUrls {
+                    large
+                  }
+                }
               }
             }
           }

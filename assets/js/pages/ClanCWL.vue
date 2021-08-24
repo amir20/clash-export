@@ -57,18 +57,13 @@ import { mapActions, mapGetters, mapState } from "vuex";
 export default {
   components: {},
   name: "ClanCWL",
-  created() {
-    this.fetchClanCWL();
-  },
   computed: {
     ...mapState(["clan"]),
     cwlData() {
       return this.clan?.recentCwlGroup?.aggregated ?? [];
     },
   },
-  methods: {
-    ...mapActions({ fetchClanCWL: "FETCH_CLAN_CWL" }),
-  },
+  methods: {},
 };
 </script>
 <style lang="scss" scoped>

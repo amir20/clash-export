@@ -7,6 +7,7 @@ import store from "./store/clan-page";
 import ClanPage from "./pages/ClanPage";
 import ClanCWL from "./pages/ClanCWL";
 import ClanPlayers from "./pages/ClanPlayers";
+import ClanWars from "./pages/ClanWars";
 
 bugsnag(Vue);
 
@@ -15,6 +16,7 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: "/cwl", component: ClanCWL, name: "cwl" },
+  { path: "/wars", component: ClanWars, name: "wars" },
   { path: "/", component: ClanPlayers, name: "players" },
 ];
 

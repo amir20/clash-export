@@ -1,3 +1,4 @@
+from clashleaders.queue.war import update_wars
 from clashleaders.clash.transformer import tag_to_slug
 import logging
 
@@ -196,15 +197,16 @@ class War(graphene.ObjectType):
         df = parent.to_df()
         df = df.drop(
             columns=[
-                "attack_1.attackerTag",
-                "attack_1.defenderTag",
-                "attack_2.attackerTag",
-                "attack_2.defenderTag",
+                "attack1.attackerTag",
+                "attack1.defenderTag",
+                "attack2.attackerTag",
+                "attack2.defenderTag",
                 "bestOpponentAttack.attackerTag",
                 "bestOpponentAttack.defenderTag",
-            ]
+            ],
+            errors="ignore",
         )
-
+        df.columns = df.columns.str.replace(".", "__")
         return df.fillna("na").reset_index().to_dict(orient="records")
 
 
@@ -343,10 +345,10 @@ class Clan(graphene.ObjectType):
 
 class Query(graphene.ObjectType):
     player = graphene.Field(Player, tag=graphene.String(required=True))
-    clan = graphene.Field(Clan, tag=graphene.String(required=True), refresh=graphene.Int(required=False))
+    clan = graphene.Field(Clan, tag=graphene.String(required=True), refresh=graphene.Int(required=False), update_wars=graphene.Boolean(required=False))
     search_clan = graphene.List(ShortClan, query=graphene.String(required=True))
 
-    def resolve_clan(self, info, tag, refresh=False):
+    def resolve_clan(self, info, tag, refresh=False, update_wars=False):
         if refresh:
             clan = model.Clan.find_by_tag(tag)
             clan.update(inc__page_views=1)
@@ -355,7 +357,11 @@ class Query(graphene.ObjectType):
                 clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
                 wait_for_job(clan.job)
 
-        return model.Clan.find_by_tag(tag)
+        clan = model.Clan.find_by_tag(tag)
+        if update_wars:
+            clan.update_wars()
+
+        return clan
 
     def resolve_player(self, info, tag):
         return model.Player.find_by_tag(tag)

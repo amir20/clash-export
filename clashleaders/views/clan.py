@@ -47,6 +47,7 @@ def clan_detail_page(slug, page=None):
             warWinRatio=clan.war_win_ratio,
             warWins=clan.warWins,
             recentCwlGroup=recent_cwl_group(clan),
+            wars=[{"state": war.state} for war in clan.wars()],
         )
     except DoesNotExist:
         return render_template("404.html"), 404
