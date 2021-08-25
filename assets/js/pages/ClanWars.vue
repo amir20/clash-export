@@ -26,7 +26,10 @@
       </b-table-column>
 
       <b-table-column field="attack1__stars" label="First Attack Stars" v-slot="props" numeric sortable centered>
-        {{ props.row.attack1__stars != "na" ? props.row.attack1__stars : "-" }}
+        <span :class="`stars_${props.row.attack1__stars}`">
+          <b-rate v-model="props.row.attack1__stars" icon-pack="fa" icon="star" :max="3" disabled v-if="props.row.attack1__stars != 'na'"> </b-rate>
+          <span v-else>-</span>
+        </span>
       </b-table-column>
 
       <b-table-column field="attack1__destructionPercentage" label="First Attack Destruction" v-slot="props" numeric sortable centered>
@@ -38,7 +41,10 @@
       </b-table-column>
 
       <b-table-column field="attack2__stars" label="Second Attack Stars" v-slot="props" numeric sortable centered>
-        {{ props.row.attack2__stars != "na" ? props.row.attack2__stars : "-" }}
+        <span :class="`stars_${props.row.attack2__stars}`">
+          <b-rate v-model="props.row.attack2__stars" icon-pack="fa" icon="star" :max="3" disabled v-if="props.row.attack2__stars != 'na'"> </b-rate>
+          <span v-else>-</span>
+        </span>
       </b-table-column>
 
       <b-table-column field="attack2__destructionPercentage" label="Second Attack Destruction" v-slot="props" numeric sortable centered>
@@ -54,7 +60,11 @@
       </b-table-column>
 
       <b-table-column field="bestOpponentAttack__stars" label="Best Opponent Stars" v-slot="props" numeric sortable centered>
-        {{ props.row.bestOpponentAttack__stars != "na" ? props.row.bestOpponentAttack__stars : "-" }}
+        <span :class="`stars_${props.row.bestOpponentAttack__stars}`">
+          <b-rate v-model="props.row.bestOpponentAttack__stars" icon-pack="fa" icon="star" :max="3" disabled v-if="props.row.bestOpponentAttack__stars != 'na'">
+          </b-rate>
+          <span v-else>-</span>
+        </span>
       </b-table-column>
 
       <b-table-column field="bestOpponentAttack__destructionPercentage" label="Best Opponent Destruction" v-slot="props" numeric sortable centered>
@@ -100,6 +110,19 @@ export default {
 .b-table /deep/ th {
   padding: 1em;
 }
+
+.rate {
+  display: inline-block;
+}
+
+.stars_1 .rate /deep/ .rate-item.set-on .icon {
+  color: hsl(348, 100%, 61%);
+}
+
+.stars_3 .rate /deep/ .rate-item.set-on .icon {
+  color: hsl(141, 71%, 48%);
+}
+
 .tools {
   width: 100vw;
   position: sticky;

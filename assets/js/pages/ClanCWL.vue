@@ -20,7 +20,8 @@
         :key="'stars' + i"
       >
         <span class="stars" :class="`stars_${props.row[`stars_day_${i}`]}`">
-          {{ props.row[`stars_day_${i}`] != "na" ? props.row[`stars_day_${i}`] : "-" }}
+          <b-rate v-model="props.row[`stars_day_${i}`]" icon-pack="fa" icon="star" :max="3" disabled v-if="props.row[`stars_day_${i}`] != 'na'"> </b-rate>
+          <span v-else>-</span>
         </span>
       </b-table-column>
 
@@ -71,11 +72,11 @@ export default {
   padding: 1em;
 }
 
-.stars_1 {
+.stars_1 .rate /deep/ .rate-item.set-on .icon {
   color: hsl(348, 100%, 61%);
 }
 
-.stars_3 {
+.stars_3 .rate /deep/ .rate-item.set-on .icon {
   color: hsl(141, 71%, 48%);
 }
 </style>
