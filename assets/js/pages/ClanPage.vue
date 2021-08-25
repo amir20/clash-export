@@ -15,7 +15,7 @@
             <a :href="href" @click="navigate">Clan League Wars</a>
           </li>
         </router-link>
-        <router-link :to="{ name: 'wars' }" custom v-slot="{ href, navigate, isActive, isExactActive }" v-if="clan.wars">
+        <router-link :to="{ name: 'wars' }" custom v-slot="{ href, navigate, isActive, isExactActive }" v-if="clan.wars.length">
           <li :class="[isActive && '', isExactActive && 'is-active']">
             <a :href="href" @click="navigate">Clan Wars</a>
           </li>
