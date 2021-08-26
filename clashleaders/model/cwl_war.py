@@ -19,6 +19,8 @@ class CWLWar(DynamicDocument):
         "index_background": True,
         "indexes": [
             "war_tag",
+            "clan.members.tag",
+            "opponent.members.tag",
         ],
     }
 
