@@ -71,6 +71,11 @@ class ShortClan(graphene.ObjectType):
             return BadgeUrls(**parent["badgeUrls"])
 
 
+class PlayerWarStats(graphene.ObjectType):
+    avg_stars = graphene.Float()
+    avg_destruction = graphene.Float()
+
+
 class Player(graphene.ObjectType):
     name = graphene.String()
     tag = graphene.String()
@@ -87,6 +92,7 @@ class Player(graphene.ObjectType):
     activity = graphene.Field(PlayerActivity)
     league = graphene.Field(PlayerLeague)
     clan = graphene.Field(ShortClan)
+    war_stats = graphene.Field(PlayerWarStats)
 
     def resolve_percentile(self, info):
         return self.player_score()
@@ -117,6 +123,9 @@ class Player(graphene.ObjectType):
 
     def resolve_clan(self, info):
         return self.most_recent_clan()
+
+    def resolve_war_stats(self, info):
+        return PlayerWarStats(**self.war_stats())
 
 
 class ClanDelta(graphene.ObjectType):

@@ -1,4 +1,5 @@
 from __future__ import annotations
+from clashleaders.model.clan_war import ClanWar
 from typing import Optional
 
 import json
@@ -49,6 +50,24 @@ class Player(DynamicDocument):
             return clan.historical_near_now().activity_score_series().get(self.tag)
         else:
             return None
+
+    def war_stats(self):
+        tag = self.tag
+        result = list(
+            ClanWar.objects.aggregate(
+                {"$match": {"clan.members.tag": tag}},
+                {"$unwind": {"path": "$clan.members"}},
+                {"$match": {"clan.members.tag": tag}},
+                {"$unwind": {"path": "$clan.members.attacks"}},
+                {
+                    "$group": {
+                        "_id": "$clan.members.tag",
+                        "avg_stars": {"$avg": "$clan.members.attacks.stars"},
+                        "avg_destruction": {"$avg": "$clan.members.attacks.destructionPercentage"},
+                    }
+                },
+            )
+        )
 
     def to_historical_df(self) -> pd.DataFrame:
         series = clashleaders.model.HistoricalPlayer.objects(tag=self.tag)
