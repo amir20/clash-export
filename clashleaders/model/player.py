@@ -68,6 +68,8 @@ class Player(DynamicDocument):
                 },
             )
         )
+        del result["_id"]
+        return result
 
     def to_historical_df(self) -> pd.DataFrame:
         series = clashleaders.model.HistoricalPlayer.objects(tag=self.tag)
