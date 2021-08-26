@@ -78,9 +78,7 @@ export default {
       openDetails: [],
     };
   },
-  created() {
-    document.addEventListener("visibilitychange", this.handleVisibilityChange, false);
-  },
+
   mounted() {
     if (this.hasUser) {
       this.openDetails = [this.userTag];
@@ -102,18 +100,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions({ fetchClanData: "FETCH_CLAN_DATA" }),
     onRowClicked(row) {
       this.gaEvent("click-row", "Click Player Row", "Row Tag", row.tag.value);
       if (this.openDetails.indexOf(row.id) === -1) {
         this.openDetails.push(row.id);
       } else {
         this.openDetails.splice(this.openDetails.indexOf(row.id), 1);
-      }
-    },
-    handleVisibilityChange() {
-      if (!document.hidden) {
-        this.fetchClanData();
       }
     },
   },

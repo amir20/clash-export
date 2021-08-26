@@ -172,6 +172,7 @@ const actions = {
       );
       commit("SET_CLAN_CWL", data);
     } catch (error) {
+      console.error(error);
     } finally {
       commit("STOP_LOADING");
     }

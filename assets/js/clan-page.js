@@ -36,3 +36,13 @@ new Vue({
 }).$mount("#app");
 
 store.dispatch("FETCH_CLAN_DATA");
+
+document.addEventListener(
+  "visibilitychange",
+  () => {
+    if (!document.hidden) {
+      store.dispatch("FETCH_CLAN_DATA");
+    }
+  },
+  false
+);
