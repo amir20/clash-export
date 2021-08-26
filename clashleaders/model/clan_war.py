@@ -15,7 +15,7 @@ class ClanWar(DynamicDocument):
         "index_background": True,
         "indexes": [
             "clan.tag",
-            "members.tag",
+            "clan.members.tag",
             "preparationStartTime",
             "startTime",
             "endTime",
