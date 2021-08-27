@@ -53,7 +53,7 @@ class Player(DynamicDocument):
 
     def war_stats(self):
         tag = self.tag
-        result = list(
+        [result] = list(
             ClanWar.objects.aggregate(
                 {"$match": {"clan.members.tag": tag}},
                 {"$unwind": {"path": "$clan.members"}},
