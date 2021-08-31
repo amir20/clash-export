@@ -10,3 +10,4 @@ from .war import War
 from .cwl_group import CWLGroup
 from .clan_war import ClanWar
 from .cwl_war import CWLWar
+from .clan_members import ClanMembers

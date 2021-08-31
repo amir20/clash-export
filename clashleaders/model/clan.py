@@ -14,11 +14,13 @@ import clashleaders.model
 import clashleaders.queue.calculation
 import clashleaders.queue.player
 import clashleaders.queue.war
+
 from clashleaders.clash import api
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.model.cwl_group import CWLGroup
 from clashleaders.model.cwl_war import CWLWar
 from clashleaders.model.clan_war import ClanWar
+from clashleaders.model.clan_members import ClanMembers
 from clashleaders.insights.clan_activity import clan_status
 from clashleaders.text.clan_description_processor import transform_description
 from clashleaders.util import correct_tag
@@ -153,6 +155,9 @@ class Clan(DynamicDocument):
 
     def player_activity(self):
         return clan_status(self)
+
+    def comparable_members(self) -> ClanMembers:
+        return ClanMembers(self)
 
     def trophy_history(self) -> Dict:
         df = self.to_historical_df()[["members", "clanPoints"]].resample("D").mean().dropna()

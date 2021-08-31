@@ -4,7 +4,6 @@ from mongoengine import DynamicDocument, signals
 from datetime import datetime
 from typing import List
 
-from mongoengine.fields import BooleanField, ListField, ReferenceField, StringField
 from clashleaders.util import correct_tag, from_timestamp
 
 import pandas as pd
