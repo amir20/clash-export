@@ -234,6 +234,21 @@ class CWLGroup(graphene.ObjectType):
             return None
 
 
+class ClanMembers(graphene.ObjectType):
+    header = GenericScalar()
+    most_recent = GenericScalar()
+    delta = GenericScalar()
+
+    def resolve_header(parent, info):
+        return parent.header()
+
+    def resolve_most_recent(parent, info):
+        return parent.most_recent().to_dict(orient="records")
+
+    def resolve_delta(parent, info):
+        return parent.delta().to_dict(orient="index")
+
+
 class Clan(graphene.ObjectType):
     name = graphene.String()
     slug = graphene.String()
@@ -272,6 +287,8 @@ class Clan(graphene.ObjectType):
     war_win_ratio = graphene.Float()
     war_total = graphene.Int()
 
+    comparable_members = graphene.Field(ClanMembers, delta_days=graphene.Int(required=True))
+
     recent_cwl_group = graphene.Field(CWLGroup, update_wars=graphene.Boolean(required=False))
     wars = graphene.List(War)
 
@@ -304,6 +321,9 @@ class Clan(graphene.ObjectType):
 
     def resolve_wars(self, info):
         return self.wars()
+
+    def resolve_comparable_members(self, info, delta_days):
+        return self.comparable_members(delta_days)
 
     def resolve_players(self, info):
         df = self.historical_near_now().to_df(formatted=False).reset_index()

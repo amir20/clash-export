@@ -18,7 +18,7 @@ class ClanMembers(object):
     def header(self) -> Dict[str, str]:
         return {camel_cased(col): col for col in self.now_df.reset_index().columns}
 
-    def most_recent_members(self) -> pd.DataFrame:
+    def most_recent(self) -> pd.DataFrame:
         df = self.now_df.reset_index()
         df.columns = [camel_cased(col) for col in df.columns]
         return df

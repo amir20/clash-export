@@ -156,8 +156,8 @@ class Clan(DynamicDocument):
     def player_activity(self):
         return clan_status(self)
 
-    def comparable_members(self) -> ClanMembers:
-        return ClanMembers(self)
+    def comparable_members(self, delta_days) -> ClanMembers:
+        return ClanMembers(self, compare_to_days=delta_days)
 
     def trophy_history(self) -> Dict:
         df = self.to_historical_df()[["members", "clanPoints"]].resample("D").mean().dropna()
