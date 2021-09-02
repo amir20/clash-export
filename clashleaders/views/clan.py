@@ -71,7 +71,7 @@ def recent_cwl_group(clan: Clan):
     try:
         wars = clan.cwl_wars()
         if wars:
-            [war] = wars
+            war = wars[0]
             war.to_df_for_clan(clan)  # do nothing with value
             return dict(season=war.season)
         else:

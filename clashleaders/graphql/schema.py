@@ -313,7 +313,7 @@ class Clan(graphene.ObjectType):
             self.update_wars()
         wars = self.cwl_wars()
         if wars:
-            [cwl_war] = wars
+            cwl_war = wars[0]
             cwl_war.clan = self
             return cwl_war
         else:
