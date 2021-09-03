@@ -195,7 +195,11 @@ class Clan(DynamicDocument):
         round_tags = [tag for tag in round_tags if tag != "#0"]
         found_wars = list(CWLWar.find_by_war_tags(round_tags))
         found_wars_by_tag = {war.war_tag: war for war in found_wars}
-        tags_to_update = [round_tag for round_tag in round_tags if round_tag not in found_wars_by_tag or found_wars_by_tag[round_tag].state == "inWar"]
+        tags_to_update = [
+            round_tag
+            for round_tag in round_tags
+            if round_tag not in found_wars_by_tag or found_wars_by_tag[round_tag].state == "inWar" or found_wars_by_tag[round_tag].state == "preparation"
+        ]
         war_responses = api.cwl_war_by_tags(tags_to_update)
         round_wars = found_wars
 
