@@ -29,7 +29,7 @@ class CWLGroup(DynamicDocument):
 
     def to_df_for_clan(self, clan: Clan) -> pd.DataFrame:
         cwl_wars = (war for war in self.round_wars if war.contains_clan(clan))
-        tuples = ((war.startTime, war.to_df(clan)) for war in cwl_wars)
+        tuples = ((war.startTime, war.to_df(clan)) for war in cwl_wars if war.state != "preparation")
         sorted_tuples = sorted(tuples, key=lambda tup: tup[0])
         dfs = (tup[1] for tup in sorted_tuples)
         data = {day: df for day, df in zip(range(1, 8), dfs)}
