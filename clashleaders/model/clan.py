@@ -228,7 +228,7 @@ class Clan(DynamicDocument):
         return current_war
 
     def cwl_wars(self) -> List[CWLGroup]:
-        return CWLGroup.objects(clans__tag=self.tag).order_by("-startTime")
+        return list(reversed(CWLGroup.objects(clans__tag=self.tag)))
 
     def wars(self) -> List[ClanWar]:
         return ClanWar.objects(clan__tag=self.tag).order_by("-startTime")
