@@ -230,7 +230,7 @@ class CWLGroup(graphene.ObjectType):
             df = self.aggregate_stars_and_destruction(self.clan)
             return df.fillna("na").reset_index().to_dict(orient="records")
         except:
-            logger.error("Failed to aggregate clan data for {}".format(self.clan))
+            logger.error("Failed to aggregate clan data for {}".format(self.clan), exc_info=True)
             return None
 
 
