@@ -9,6 +9,8 @@ from typing import List
 from mongoengine.fields import ListField, ReferenceField, StringField
 from clashleaders.util import correct_tag, from_timestamp
 
+from clashleaders.clash import api
+
 
 if TYPE_CHECKING:
     from clashleaders.model.clan import Clan
@@ -28,7 +30,7 @@ class CWLGroup(DynamicDocument):
         return "<CWLGroup season={}>".format(self.season)
 
     def to_df_for_clan(self, clan: Clan) -> pd.DataFrame:
-        cwl_wars = (war for war in self.round_wars if war.contains_clan(clan))
+        cwl_wars = (war for war in self.fetch_all_wars() if war.contains_clan(clan))
         tuples = ((war.startTime, war.to_df(clan)) for war in cwl_wars if war.state != "preparation")
         sorted_tuples = sorted(tuples, key=lambda tup: tup[0])
         dfs = (tup[1] for tup in sorted_tuples)
@@ -53,6 +55,43 @@ class CWLGroup(DynamicDocument):
         else:
             df.columns = [f"{column}_day_{day}" for column, day in df.columns.to_flat_index()]
             return df.rename(columns={"name_day_name": "name", "stars_day_avg": "stars_avg", "destruction_day_avg": "destruction_avg"})
+
+    def fetch_all_wars(self):
+        round_tags = []
+        for rnd in self.rounds:
+            round_tags.extend(rnd["warTags"])
+        round_tags = [tag for tag in round_tags if tag != "#0"]
+
+        return list(CWLWar.find_by_war_tags(round_tags))
+
+    def update_all_wars(self):
+        round_tags = []
+        for rnd in self.rounds:
+            round_tags.extend(rnd["warTags"])
+
+        round_tags = [tag for tag in round_tags if tag != "#0"]
+        found_wars = list(CWLWar.find_by_war_tags(round_tags))
+        found_wars_by_tag = {war.war_tag: war for war in found_wars}
+        tags_to_update = [
+            round_tag
+            for round_tag in round_tags
+            if round_tag not in found_wars_by_tag or found_wars_by_tag[round_tag].state == "inWar" or found_wars_by_tag[round_tag].state == "preparation"
+        ]
+        war_responses = api.cwl_war_by_tags(tags_to_update)
+        round_wars = found_wars
+
+        for tag, response in zip(tags_to_update, war_responses):
+            if response:
+                if tag in found_wars_by_tag:
+                    found_wars_by_tag[tag].update(**response)
+                else:
+                    war = CWLWar(**response)
+                    war.war_tag = tag
+                    war.save()
+                    round_wars.append(war)
+
+        self.round_wars = round_wars
+        self.save()
 
     @classmethod
     def find_by_clan_and_season(cls, tag: str, season: str) -> Optional[CWLGroup]:
