@@ -107,6 +107,10 @@ class Clan(DynamicDocument):
             "computed.avg_games_xp",
             "computed.avg_cwl_stars",
             "computed.avg_attack_wins",
+            # Text search
+            {
+                "fields": ["$description"],
+            },
         ],
     }
 
