@@ -31,8 +31,11 @@ def lookup(token):
 
 
 def clashleader_link(token):
-    if (match := TAG_REGEX.match(token)) and (slug := tag_to_slug(match.group(2))):
-        return f'{match.group(1)}<a href="{url_for("clan_detail_page", slug=slug)}" target="_blank">{match.group(2)}</a>{match.group(3)}'
+    if match := TAG_REGEX.match(token):
+        if slug := tag_to_slug(match.group(2)):
+            return f'{match.group(1)}<a href="{url_for("clan_detail_page", slug=slug)}">{match.group(2)}</a>{match.group(3)}'
+        else:
+            return f'{match.group(1)}<a href="{url_for("tagged_clans", tag=match.group(2).lower().lstrip("#"))}">{match.group(2)}</a>{match.group(3)}'
 
     return None
 
