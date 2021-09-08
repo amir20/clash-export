@@ -30,7 +30,7 @@ class CWLGroup(DynamicDocument):
         return "<CWLGroup season={}>".format(self.season)
 
     def to_df_for_clan(self, clan: Clan) -> pd.DataFrame:
-        cwl_wars = (war for war in self.fetch_all_wars() if war.contains_clan(clan))
+        cwl_wars = (war for war in self.round_wars if war.contains_clan(clan))
         tuples = ((war.startTime, war.to_df(clan)) for war in cwl_wars if war.state != "preparation")
         sorted_tuples = sorted(tuples, key=lambda tup: tup[0])
         dfs = (tup[1] for tup in sorted_tuples)
@@ -90,8 +90,7 @@ class CWLGroup(DynamicDocument):
                     war.save()
                     round_wars.append(war)
 
-        self.round_wars = round_wars
-        self.save()
+        self.update(round_wars=round_wars)
 
     @classmethod
     def find_by_clan_and_season(cls, tag: str, season: str) -> Optional[CWLGroup]:
