@@ -12,6 +12,7 @@ from markdown import markdown
 
 import clashleaders.views.badge
 import clashleaders.views.clan
+import clashleaders.views.tag
 import clashleaders.views.country
 import clashleaders.views.error
 import clashleaders.views.explore

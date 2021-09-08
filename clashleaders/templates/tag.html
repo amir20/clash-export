@@ -1,0 +1,10 @@
+{% from 'macros/list.html' import clan_list %} {% extends "layout.html" %} {% block body %}
+<main class="container section">
+  <h1 class="title is-2">{{ tag }}</h1>
+  {{ clan_list(clans) }}
+</main>
+{% endblock %} {% block title %}{{ tag }}{% endblock %}{% block meta %}
+<meta name="description" content="{{ tag }} - Clash Leaders" />
+<meta name="keywords" content="{{ tag }}, clash of clans, achievements, leaderboard" />
+<meta property="og:title" content="{{ tag }} - Clash Leaders" />
+{% endblock %}
