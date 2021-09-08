@@ -72,8 +72,8 @@ def recent_cwl_group(clan: Clan):
         wars = clan.cwl_wars()
         if wars:
             war = wars[0]
-            war.to_df_for_clan(clan)  # do nothing with value
-            return dict(season=war.season)
+            df = war.aggregate_stars_and_destruction(clan).fillna("na").reset_index()
+            return dict(season=war.season, aggregated=df.to_dict(orient="records"))
         else:
             return None
     except:

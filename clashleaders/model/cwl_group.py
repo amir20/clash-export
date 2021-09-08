@@ -50,11 +50,12 @@ class CWLGroup(DynamicDocument):
         name = df.droplevel(axis=1, level=0)["name"].fillna(method="bfill", axis=1).iloc[:, 0]
 
         df = pd.concat([name, stars, destruction], axis=1, keys=["name", "stars", "destruction"])
-        if not flat:
-            return df
-        else:
+        if flat:
             df.columns = [f"{column}_day_{day}" for column, day in df.columns.to_flat_index()]
-            return df.rename(columns={"name_day_name": "name", "stars_day_avg": "stars_avg", "destruction_day_avg": "destruction_avg"})
+            df = df.rename(columns={"name_day_name": "name", "stars_day_avg": "stars_avg", "destruction_day_avg": "destruction_avg"})
+            return df.reset_index().set_index(["tag", "name"]).dropna(how="all")
+        else:
+            return df
 
     def fetch_all_wars(self):
         round_tags = []
