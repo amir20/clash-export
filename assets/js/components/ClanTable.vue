@@ -2,7 +2,7 @@
   <section>
     <b-table
       ref="table"
-      :data="tableData"
+      :data="clan.comparableMembers.mostRecent"
       striped
       narrowed
       hoverable
@@ -15,18 +15,19 @@
       @details-open="(row) => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
       @sort="(column) => gaEvent('sort-players', 'Sort Column', 'Column', column)"
       @click="onRowClicked"
+      v-if="clan.comparableMembers"
     >
       <b-table-column
-        v-for="column in header"
-        :label="column.label"
-        :field="`${column.field}.${sortField}`"
-        :key="column.field"
-        :numeric="column.numeric"
+        v-for="key in Object.keys(clan.comparableMembers.header)"
+        :label="clan.comparableMembers.header[key]"
+        :field="key"
+        :key="key"
+        :numeric="key != 'tag' && key != 'name'"
         sortable
         v-slot="props"
       >
-        {{ props.row[column.field].value.toLocaleString() }}
-        <span
+        {{ props.row[key].value.toLocaleString() }}
+        <!-- <span
           v-if="column.field == 'name' && clan.playerStatus[props.row.tag.value]"
           class="tag is-uppercase"
           :class="clan.playerStatus[props.row.tag.value]"
@@ -48,7 +49,7 @@
             class="fa-sm fa"
           ></span>
           {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
-        </b>
+        </b> -->
       </b-table-column>
 
       <template slot="detail" slot-scope="props">
@@ -80,23 +81,22 @@ export default {
   },
 
   mounted() {
-    if (this.hasUser) {
-      this.openDetails = [this.userTag];
-    } else if (this.tableData.length > 0) {
-      this.openDetails = [this.tableData[0].id];
-    }
+    // if (this.hasUser) {
+    //   this.openDetails = [this.userTag];
+    // } else if (this.tableData.length > 0) {
+    //   this.openDetails = [this.tableData[0].id];
+    // }
   },
   beforeDestroy() {
     document.removeEventListener("visibilitychange");
   },
   computed: {
     ...mapState(["sortField", "clan"]),
-    ...mapGetters(["header", "tableData"]),
   },
   watch: {
     sortField(newValue) {
-      const column = this.$refs.table.currentSortColumn;
-      this.$nextTick(() => this.$refs.table.sort(column, true));
+      // const column = this.$refs.table.currentSortColumn;
+      // this.$nextTick(() => this.$refs.table.sort(column, true));
     },
   },
   methods: {

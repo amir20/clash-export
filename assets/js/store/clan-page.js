@@ -58,11 +58,14 @@ const actions = {
             updatedOn
             clanLevel
             playerStatus
-            recentData: playerMatrix
-            historicData: playerMatrix(days: $days)
             trophyHistory
             warWins
             warWinRatio
+            comparableMembers(deltaDays: $days) {
+              header
+              mostRecent
+              delta
+            }
             warLeague {
               name
             }
@@ -87,7 +90,6 @@ const actions = {
               totalDonations
               totalAttackWins
               totalVersusWins
-
               avgWarStarsPercentile
               avgDonationsPercentile
               avgAttackWinsPercentile
@@ -212,7 +214,11 @@ const actions = {
       gql`
         query ChangeClanHistoric($tag: String!, $days: Int!) {
           clan(tag: $tag) {
-            historicData: playerMatrix(days: $days)
+            comparableMembers(deltaDays: $days) {
+              header
+              mostRecent
+              delta
+            }
             delta(days: $days) {
               avgDeGrab
               avgElixirGrab
@@ -236,51 +242,7 @@ const actions = {
   },
 };
 
-const getters = {
-  header({ clan }) {
-    return clan.recentData[0].map((column) => ({
-      label: column,
-      field: camelCase(column),
-      numeric: !isNonNumericColumns(camelCase(column)),
-    }));
-  },
-  tableData({ clan }, getters) {
-    const data = convertToMap(getters.header, clan.recentData.slice(1));
-    const previousData = convertToMap(getters.header, clan.historicData.slice(1));
-    const previousByTag = keyBy(previousData, "tag");
-
-    return data.map((row) => {
-      const previousRow = previousByTag[row.tag];
-      return reduce(
-        row,
-        (map, value, column) => {
-          const delta = previousRow && !isNonNumericColumns(column) ? value - previousRow[column] : 0;
-          map[column] = { value, delta };
-          if (column === "tag") {
-            map["id"] = value;
-          }
-          return map;
-        },
-        {}
-      );
-    });
-  },
-};
-
-function convertToMap(header, matrix) {
-  return matrix.map((row) => {
-    return reduce(
-      row,
-      (map, value, columnIndex) => {
-        map[header[columnIndex].field] = value;
-        return map;
-      },
-      {}
-    );
-  });
-}
-
-const isNonNumericColumns = (key) => key == "tag" || key == "name";
+const getters = {};
 
 export default new Vuex.Store({
   state,
