@@ -1,4 +1,5 @@
 import logging
+from typing import OrderedDict
 import clashleaders.views
 from flask import render_template
 from mongoengine import DoesNotExist
@@ -29,8 +30,6 @@ def clan_detail_page(slug, page=None):
             monthDelta=clan.month_delta.to_dict(camel_case=True),
             computed=clan.computed.to_dict(camel_case=True),
             updatedOn=clan.updated_on.timestamp() * 1000,
-            historicData=clan.historical_near_days_ago(7).to_matrix(),
-            recentData=clan.historical_near_now().to_matrix(),
             playerStatus={},
             location=clan.location,
             members=clan.members,
@@ -48,6 +47,7 @@ def clan_detail_page(slug, page=None):
             warWins=clan.warWins,
             recentCwlGroup=recent_cwl_group(clan),
             wars=[{"state": war.state} for war in clan.wars()],
+            comparableMembers=members(clan),
         )
     except DoesNotExist:
         return render_template("404.html"), 404
@@ -65,6 +65,15 @@ def labels(clan):
         label["iconUrls"] = {key: clashleaders.views.imgproxy_url(value) for key, value in label["iconUrls"].items()}
 
     return labels
+
+
+def members(clan: Clan):
+    members = clan.comparable_members(delta_days=7)
+    return dict(
+        header=OrderedDict(members.header()),
+        mostRecent=members.most_recent().to_dict(orient="records"),
+        delta=members.delta().fillna(0).to_dict(orient="index"),
+    )
 
 
 def recent_cwl_group(clan: Clan):

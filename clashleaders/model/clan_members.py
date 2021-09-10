@@ -16,7 +16,11 @@ class ClanMembers(object):
         self.clan = clan
 
     def header(self) -> Dict[str, str]:
-        return {camel_cased(col): col for col in self.now_df.reset_index().columns}
+        headers = {camel_cased(col): col for col in self.now_df.reset_index().columns}
+        tuples = list(headers.items())
+        # put the name first
+        tuples[0], tuples[1] = tuples[1], tuples[0]
+        return dict(tuples)
 
     def most_recent(self) -> pd.DataFrame:
         df = self.now_df.reset_index()

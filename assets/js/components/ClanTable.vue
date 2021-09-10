@@ -26,7 +26,7 @@
         sortable
         v-slot="props"
       >
-        {{ props.row[key].value.toLocaleString() }}
+        {{ props.row[key].toLocaleString() }}
         <!-- <span
           v-if="column.field == 'name' && clan.playerStatus[props.row.tag.value]"
           class="tag is-uppercase"
