@@ -237,7 +237,7 @@ class Clan(DynamicDocument):
         clan = Clan.objects(tag=correct_tag(tag)).first()
 
         if not clan:
-            clan = Clan.fetch_and_update(tag, sync_calculation=True)
+            clan = Clan.fetch_and_update(tag)
 
         return clan
 
@@ -254,7 +254,7 @@ class Clan(DynamicDocument):
         return Clan.objects(query).no_cache().only("tag")
 
     @classmethod
-    def fetch_and_update(cls, tag, sync_calculation=True) -> Clan:
+    def fetch_and_update(cls, tag) -> Clan:
         tag = correct_tag(tag)
 
         # Fetch from API
@@ -275,10 +275,7 @@ class Clan(DynamicDocument):
 
         clan: Clan = Clan.objects(tag=tag).upsert_one(**clan_response)
 
-        if sync_calculation:
-            clan.update_calculations()
-        else:
-            clan.job = clashleaders.queue.calculation.update_calculations.delay(tag)
+        clan.update_calculations()
 
         return clan
 

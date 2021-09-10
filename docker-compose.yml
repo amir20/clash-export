@@ -42,12 +42,6 @@ services:
     depends_on:
       - redis
       - mongo
-  rq_calculation_worker:
-    image: "amir20/clashleaders:${TAG:-latest}"
-    command: "rq_worker calculation"
-    depends_on:
-      - redis
-      - mongo
   rq_war_worker:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "rq_worker war"

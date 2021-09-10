@@ -121,7 +121,7 @@ class HistoricalClan(Document):
             clan = HistoricalClan.objects(tag=tag).order_by("created_on").first()
 
         if clan is None:
-            clashleaders.model.Clan.fetch_and_update(tag, sync_calculation=False)
+            clashleaders.model.Clan.fetch_and_update(tag)
             clan = HistoricalClan.objects(tag=tag).first()
 
         return clan

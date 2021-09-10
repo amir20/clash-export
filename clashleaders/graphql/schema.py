@@ -215,7 +215,7 @@ class War(graphene.ObjectType):
             ],
             errors="ignore",
         )
-        df.columns = df.columns.str.replace(".", "__")
+        df.columns = df.columns.str.replace(".", "__", regex=False)
         return df.fillna("na").reset_index().to_dict(orient="records")
 
 
@@ -381,8 +381,7 @@ class Query(graphene.ObjectType):
             clan.update(inc__page_views=1)
             delta = datetime.now() - clan.updated_on
             if timedelta(minutes=refresh) < delta:
-                clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
-                wait_for_job(clan.job)
+                model.Clan.fetch_and_update(tag)
 
         clan = model.Clan.find_by_tag(tag)
         if update_wars:
@@ -410,13 +409,3 @@ class Query(graphene.ObjectType):
             c.slug = slugs.get(c.tag)
 
         return results
-
-
-def wait_for_job(job, wait_time=3):
-    start = datetime.now()
-    while (datetime.now() - start).total_seconds() < wait_time:
-        sleep(0.2)
-        try:
-            job.refresh()
-        except NoSuchJobError:
-            break
