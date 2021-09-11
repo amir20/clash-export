@@ -10,7 +10,7 @@
     "@babel/preset-env": "^7.15.6",
     "@babel/runtime-corejs3": "^7.15.3",
     "@tweenjs/tween.js": "^18.6.4",
-    "autoprefixer": "^10.3.2",
+    "autoprefixer": "^10.3.4",
     "babel-loader": "^8.2.2",
     "buefy": "^0.9.8",
     "bugsnag-js": "^4.7.3",
