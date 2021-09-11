@@ -1,5 +1,5 @@
 # Build assets
-FROM node:15 as builder
+FROM node:16 as builder
 
 WORKDIR /build
 COPY package.json yarn.lock ./
@@ -16,7 +16,7 @@ COPY clashleaders/static clashleaders/static
 RUN yarn build
 
 
-FROM python:3.9.4
+FROM python:3.9.7
 
 # Create app directoy
 WORKDIR /app
