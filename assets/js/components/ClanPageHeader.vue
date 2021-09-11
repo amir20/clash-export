@@ -124,7 +124,7 @@
           <div class="panel is-primary scorecard">
             <h3 class="panel-heading has-text-centered">Clan Scorecard&trade;</h3>
             <div class="panel-block">
-              <clan-score title="Champion War League" field="monthDelta.avgCwlStarsPercentile"></clan-score>
+              <clan-score title="Clan War League" field="monthDelta.avgCwlStarsPercentile"></clan-score>
             </div>
             <div class="panel-block">
               <clan-score title="Clan Games" field="monthDelta.avgGamesXpPercentile"></clan-score>
