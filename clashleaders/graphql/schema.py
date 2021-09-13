@@ -246,7 +246,7 @@ class ClanMembers(graphene.ObjectType):
         return parent.most_recent().to_dict(orient="records")
 
     def resolve_delta(parent, info):
-        return parent.delta().to_dict(orient="index")
+        return parent.delta().fillna(0).to_dict(orient="index")
 
 
 class Clan(graphene.ObjectType):

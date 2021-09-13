@@ -19,6 +19,8 @@ app.config.from_pyfile("config.py")
 # Template settings
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+app.jinja_env.policies["json.dumps_kwargs"] = {"sort_keys": False}
+
 
 # RQ
 app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")

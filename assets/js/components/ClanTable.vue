@@ -15,39 +15,37 @@
       @details-open="(row) => gaEvent('open-player-details', 'Click Player Details', 'Player Tag', row.tag.value)"
       @sort="(column) => gaEvent('sort-players', 'Sort Column', 'Column', column)"
       @click="onRowClicked"
+      v-if="clan.comparableMembers"
     >
       <b-table-column
-        v-for="column in header"
-        :label="column.label"
-        :field="`${column.field}.${sortField}`"
-        :key="column.field"
-        :numeric="column.numeric"
+        v-for="key in Object.keys(clan.comparableMembers.header)"
+        :label="clan.comparableMembers.header[key]"
+        :field="`${key}.${sortField}`"
+        :key="key"
+        :numeric="isNumeric(key)"
         sortable
         v-slot="props"
       >
-        {{ props.row[column.field].value.toLocaleString() }}
-        <span
-          v-if="column.field == 'name' && clan.playerStatus[props.row.tag.value]"
-          class="tag is-uppercase"
-          :class="clan.playerStatus[props.row.tag.value]"
-          >{{ clan.playerStatus[props.row.tag.value] }}</span
-        >
+        {{ props.row[key].value.toLocaleString() }}
+        <span v-if="key == 'name' && clan.playerStatus[props.row.tag.value]" class="tag is-uppercase" :class="clan.playerStatus[props.row.tag.value]">{{
+          clan.playerStatus[props.row.tag.value]
+        }}</span>
         <b
-          v-if="column.numeric && props.row[column.field].delta != 0"
+          v-if="isNumeric(key) && props.row[key].delta != 0"
           :class="{
-            up: props.row[column.field].delta > 0,
-            down: props.row[column.field].delta < 0,
+            up: props.row[key].delta > 0,
+            down: props.row[key].delta < 0,
           }"
-          :key="props.row[column.field].delta"
+          :key="props.row[key].delta"
         >
           <span
             :class="{
-              'fa-caret-up': props.row[column.field].delta > 0,
-              'fa-caret-down': props.row[column.field].delta < 0,
+              'fa-caret-up': props.row[key].delta > 0,
+              'fa-caret-down': props.row[key].delta < 0,
             }"
             class="fa-sm fa"
           ></span>
-          {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
+          {{ Math.abs(props.row[key].delta).toLocaleString() }}
         </b>
       </b-table-column>
 
@@ -60,7 +58,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import Notification from "./Notification";
 import { gaMixin } from "../ga";
 import UserMixin from "../user";
@@ -91,7 +89,18 @@ export default {
   },
   computed: {
     ...mapState(["sortField", "clan"]),
-    ...mapGetters(["header", "tableData"]),
+    tableData() {
+      const { mostRecent, delta } = this.clan.comparableMembers;
+      return mostRecent.map((player) => {
+        const row = {};
+        for (const [key, value] of Object.entries(player)) {
+          const deltaValue = delta[player.tag][key] ?? 0;
+          row[key] = { value, delta: deltaValue };
+        }
+        row.id = player.tag;
+        return row;
+      });
+    },
   },
   watch: {
     sortField(newValue) {
@@ -107,6 +116,9 @@ export default {
       } else {
         this.openDetails.splice(this.openDetails.indexOf(row.id), 1);
       }
+    },
+    isNumeric(key) {
+      return key != "tag" && key != "name";
     },
   },
 };
