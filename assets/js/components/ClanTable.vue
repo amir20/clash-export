@@ -22,34 +22,31 @@
         :label="clan.comparableMembers.header[key]"
         :field="`${key}.${sortField}`"
         :key="key"
-        :numeric="key != 'tag' && key != 'name'"
+        :numeric="isNumeric(key)"
         sortable
         v-slot="props"
       >
         {{ props.row[key].value.toLocaleString() }}
-        <!-- <span
-          v-if="column.field == 'name' && clan.playerStatus[props.row.tag.value]"
-          class="tag is-uppercase"
-          :class="clan.playerStatus[props.row.tag.value]"
-          >{{ clan.playerStatus[props.row.tag.value] }}</span
-        >
+        <span v-if="key == 'name' && clan.playerStatus[props.row.tag.value]" class="tag is-uppercase" :class="clan.playerStatus[props.row.tag.value]">{{
+          clan.playerStatus[props.row.tag.value]
+        }}</span>
         <b
-          v-if="column.numeric && props.row[column.field].delta != 0"
+          v-if="isNumeric(key) && props.row[key].delta != 0"
           :class="{
-            up: props.row[column.field].delta > 0,
-            down: props.row[column.field].delta < 0,
+            up: props.row[key].delta > 0,
+            down: props.row[key].delta < 0,
           }"
-          :key="props.row[column.field].delta"
+          :key="props.row[key].delta"
         >
           <span
             :class="{
-              'fa-caret-up': props.row[column.field].delta > 0,
-              'fa-caret-down': props.row[column.field].delta < 0,
+              'fa-caret-up': props.row[key].delta > 0,
+              'fa-caret-down': props.row[key].delta < 0,
             }"
             class="fa-sm fa"
           ></span>
-          {{ Math.abs(props.row[column.field].delta).toLocaleString() }}
-        </b> -->
+          {{ Math.abs(props.row[key].delta).toLocaleString() }}
+        </b>
       </b-table-column>
 
       <template slot="detail" slot-scope="props">
@@ -81,11 +78,11 @@ export default {
   },
 
   mounted() {
-    // if (this.hasUser) {
-    //   this.openDetails = [this.userTag];
-    // } else if (this.tableData.length > 0) {
-    //   this.openDetails = [this.tableData[0].id];
-    // }
+    if (this.hasUser) {
+      this.openDetails = [this.userTag];
+    } else if (this.tableData.length > 0) {
+      this.openDetails = [this.tableData[0].id];
+    }
   },
   beforeDestroy() {
     document.removeEventListener("visibilitychange");
@@ -106,8 +103,8 @@ export default {
   },
   watch: {
     sortField(newValue) {
-      // const column = this.$refs.table.currentSortColumn;
-      // this.$nextTick(() => this.$refs.table.sort(column, true));
+      const column = this.$refs.table.currentSortColumn;
+      this.$nextTick(() => this.$refs.table.sort(column, true));
     },
   },
   methods: {
@@ -118,6 +115,9 @@ export default {
       } else {
         this.openDetails.splice(this.openDetails.indexOf(row.id), 1);
       }
+    },
+    isNumeric(key) {
+      return key != "tag" && key != "name";
     },
   },
 };
