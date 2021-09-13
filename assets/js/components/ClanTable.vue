@@ -2,7 +2,7 @@
   <section>
     <b-table
       ref="table"
-      :data="clan.comparableMembers.mostRecent"
+      :data="tableData"
       striped
       narrowed
       hoverable
@@ -92,6 +92,19 @@ export default {
   },
   computed: {
     ...mapState(["sortField", "clan"]),
+    tableData() {
+      debugger;
+      const mostRecent = this.clan.comparableMembers.mostRecent;
+      const delta = this.clan.comparableMembers.delta;
+      for (const row of mostRecent) {
+        for (const prop in row) {
+          if (prop != "tag" && prop != "name") {
+            row[`${prop}.delta`] = delta[row.tag][prop];
+          }
+        }
+      }
+      return mostRecent;
+    },
   },
   watch: {
     sortField(newValue) {
