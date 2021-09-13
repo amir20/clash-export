@@ -2,6 +2,7 @@ version: "3.4"
 services:
   mongo:
     image: mongo:5.0.2
+    command: --wiredTigerCacheSizeGB=0.25
   redis:
     image: redis:6-alpine
   cron:
