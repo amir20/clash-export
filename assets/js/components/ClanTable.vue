@@ -97,6 +97,7 @@ export default {
           const deltaValue = delta[player.tag][key] ?? 0;
           row[key] = { value, delta: deltaValue };
         }
+        row.id = player.tag;
         return row;
       });
     },
