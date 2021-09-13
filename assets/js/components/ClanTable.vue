@@ -20,13 +20,13 @@
       <b-table-column
         v-for="key in Object.keys(clan.comparableMembers.header)"
         :label="clan.comparableMembers.header[key]"
-        :field="key"
+        :field="`${key}.${sortField}`"
         :key="key"
         :numeric="key != 'tag' && key != 'name'"
         sortable
         v-slot="props"
       >
-        {{ props.row[key].toLocaleString() }}
+        {{ props.row[key].value.toLocaleString() }}
         <!-- <span
           v-if="column.field == 'name' && clan.playerStatus[props.row.tag.value]"
           class="tag is-uppercase"
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import Notification from "./Notification";
 import { gaMixin } from "../ga";
 import UserMixin from "../user";
@@ -93,17 +93,15 @@ export default {
   computed: {
     ...mapState(["sortField", "clan"]),
     tableData() {
-      debugger;
-      const mostRecent = this.clan.comparableMembers.mostRecent;
-      const delta = this.clan.comparableMembers.delta;
-      for (const row of mostRecent) {
-        for (const prop in row) {
-          if (prop != "tag" && prop != "name") {
-            row[`${prop}.delta`] = delta[row.tag][prop];
-          }
+      const { mostRecent, delta } = this.clan.comparableMembers;
+      return mostRecent.map((player) => {
+        const row = {};
+        for (const [key, value] of Object.entries(player)) {
+          const deltaValue = delta[player.tag][key] ?? 0;
+          row[key] = { value, delta: deltaValue };
         }
-      }
-      return mostRecent;
+        return row;
+      });
     },
   },
   watch: {
