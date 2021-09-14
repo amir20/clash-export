@@ -85,9 +85,11 @@ class HistoricalClan(Document):
             df.insert(0, value=name, column="Name")
 
         if war_activity:
-            df = df.join(self.avg_war_activity())
-            columns = df.columns.tolist()
-            df = df[[columns[0]] + columns[-2:] + columns[1:-2]]
+            wars = self.avg_war_activity()
+            if not wars.empty:
+                df = df.join(wars)
+                columns = df.columns.tolist()
+                df = df[[columns[0]] + columns[-2:] + columns[1:-2]]
 
         if player_activity:
             scores = self.activity_score_series(days=7)
@@ -124,8 +126,9 @@ class HistoricalClan(Document):
             )
         )
         df = pd.DataFrame.from_dict(aggregated)
-        df.columns = ["Tag", "Avg War Stars", "Avg War Destruction"]
-        df = df.set_index("Tag")
+        if not df.empty:
+            df.columns = ["Tag", "Avg War Stars", "Avg War Destruction"]
+            df = df.set_index("Tag")
         return df
 
     def to_matrix(self):
