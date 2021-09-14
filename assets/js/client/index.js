@@ -9,7 +9,7 @@ async function request(query, variable) {
   try {
     return await client.request(query, variable);
   } catch (e) {
-    if (e.response.status == 401) {
+    if (e.response?.status == 401) {
       client.setHeader("X-CSRFToken", csrfToken());
       return client.request(query, variable);
     } else {

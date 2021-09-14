@@ -25,7 +25,7 @@ class ClanMembers(object):
         return dict(tuples)
 
     def most_recent(self) -> pd.DataFrame:
-        df = self.now_df.reset_index()
+        df = self.now_df.reset_index().fillna("na")
         df.columns = [camel_cased(col) for col in df.columns]
         return df
 
@@ -39,7 +39,7 @@ class ClanMembers(object):
         )
 
         delta = now - old
-        delta = delta.reset_index().set_index("Tag").drop(["Name"], axis=1)
+        delta = delta.reset_index().set_index("Tag").drop(["Name"], axis=1).fillna(0)
         delta.index.name = "tag"
         delta.columns = [camel_cased(col) for col in delta.columns]
         return delta

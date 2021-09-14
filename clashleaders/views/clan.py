@@ -72,7 +72,7 @@ def members(clan: Clan):
     return dict(
         header=OrderedDict(members.header()),
         mostRecent=members.most_recent().to_dict(orient="records"),
-        delta=members.delta().fillna(0).to_dict(orient="index"),
+        delta=members.delta().to_dict(orient="index"),
     )
 
 
