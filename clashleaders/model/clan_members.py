@@ -10,8 +10,10 @@ if TYPE_CHECKING:
 
 
 class ClanMembers(object):
-    def __init__(self, clan: "Clan", compare_to_days: int = 7):
-        self.now_df = clan.historical_near_now().to_df(player_activity=True)
+    def __init__(self, clan: "Clan", compare_to_days: int = 7, include_player_activity: bool = True, include_war_activity: bool = True):
+        self.include_player_activity = include_player_activity
+        self.include_war_activity = include_war_activity
+        self.now_df = clan.historical_near_now().to_df(player_activity=include_player_activity, war_activity=include_war_activity)
         self.days_ago = compare_to_days
         self.clan = clan
 
@@ -29,7 +31,12 @@ class ClanMembers(object):
 
     def delta(self) -> pd.DataFrame:
         now = self.now_df.reset_index().set_index(["Tag", "Name"])
-        old = self.clan.historical_near_days_ago(self.days_ago).to_df(player_activity=True).reset_index().set_index(["Tag", "Name"])
+        old = (
+            self.clan.historical_near_days_ago(self.days_ago)
+            .to_df(player_activity=self.include_player_activity, war_activity=self.include_war_activity)
+            .reset_index()
+            .set_index(["Tag", "Name"])
+        )
 
         delta = now - old
         delta = delta.reset_index().set_index("Tag").drop(["Name"], axis=1)

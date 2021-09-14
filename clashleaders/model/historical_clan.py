@@ -12,6 +12,7 @@ import clashleaders.model
 from clashleaders.model import ClanDelta
 from clashleaders.util import correct_tag
 from clashleaders.model.historical_player import HistoricalPlayer
+from clashleaders.model.clan_war import ClanWar
 
 
 COLUMNS = OrderedDict(
@@ -70,7 +71,7 @@ class HistoricalClan(Document):
         values = {k: v for k, v in kwargs.items() if k in self._fields_ordered}
         super().__init__(*args, **values)
 
-    def to_df(self, formatted=True, player_activity=False) -> pd.DataFrame:
+    def to_df(self, formatted=True, player_activity=False, war_activity=False) -> pd.DataFrame:
         if len(self.players) == 0:
             return pd.DataFrame(columns=list(COLUMNS.values()))
 
@@ -80,6 +81,13 @@ class HistoricalClan(Document):
         if formatted:
             df = df.reset_index()[list(COLUMNS.keys())]
             df = df.rename(columns=COLUMNS).set_index("Tag")
+            name = df.pop("Name")
+            df.insert(0, value=name, column="Name")
+
+        if war_activity:
+            df = df.join(self.avg_war_activity())
+            columns = df.columns.tolist()
+            df = df[[columns[0]] + columns[-2:] + columns[1:-2]]
 
         if player_activity:
             scores = self.activity_score_series(days=7)
@@ -97,6 +105,28 @@ class HistoricalClan(Document):
 
     def __str__(self):
         return "<HistoricalClan {0}>".format(self.tag)
+
+    def avg_war_activity(self):
+        tags = [p.tag for p in self.players]
+        aggregated = list(
+            ClanWar.objects.aggregate(
+                {"$match": {"clan.members.tag": {"$in": tags}}},
+                {"$unwind": {"path": "$clan.members"}},
+                {"$match": {"clan.members.tag": {"$in": tags}}},
+                {"$unwind": {"path": "$clan.members.attacks"}},
+                {
+                    "$group": {
+                        "_id": "$clan.members.tag",
+                        "avg_stars": {"$avg": "$clan.members.attacks.stars"},
+                        "avg_destruction": {"$avg": "$clan.members.attacks.destructionPercentage"},
+                    }
+                },
+            )
+        )
+        df = pd.DataFrame.from_dict(aggregated)
+        df.columns = ["Tag", "Avg War Stars", "Avg War Destruction"]
+        df = df.set_index("Tag")
+        return df
 
     def to_matrix(self):
         df = self.to_df(formatted=True, player_activity=True)
