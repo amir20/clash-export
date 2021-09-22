@@ -56,27 +56,13 @@
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Best Trophies</p>
-            <p class="title">{{ player.bestTrophies }}</p>
+            <p class="title">{{ player.most_recent.stats.best_trophies }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Best Versus Trophies</p>
-            <p class="title">{{ player.bestVersusTrophies }}</p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Best Season</p>
-            <p class="title">
-              {{ player.legendStatistics.bestSeason.id if player.legendStatistics and player.legendStatistics.bestSeason else '--' }}
-            </p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Legend Trophies</p>
-            <p class="title">{{ player.legendStatistics.legendTrophies if player.legendStatistics else '--' }}</p>
+            <p class="title">{{ player.most_recent.stats.best_versus_trophies }}</p>
           </div>
         </div>
       </nav>
@@ -89,25 +75,25 @@
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">XP Level</p>
-            <p class="title">{{ player.expLevel }}</p>
+            <p class="title">{{ player.most_recent.stats.exp_level }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Trophies</p>
-            <p class="title">{{ player.trophies }}</p>
+            <p class="title">{{ player.most_recent.stats.trophies }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Versus Trophies</p>
-            <p class="title">{{ player.versusTrophies }}</p>
+            <p class="title">{{ player.most_recent.stats.versus_trophies }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">War Stars</p>
-            <p class="title">{{ player.warStars }}</p>
+            <p class="title">{{ player.most_recent.stats.war_stars }}</p>
           </div>
         </div>
       </nav>
@@ -115,25 +101,25 @@
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Attack Wins</p>
-            <p class="title">{{ player.attackWins }}</p>
+            <p class="title">{{ player.most_recent.stats.attack_wins }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Defense Wins</p>
-            <p class="title">{{ player.defenseWins }}</p>
+            <p class="title">{{ player.most_recent.stats.defense_wins }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Versus Battle Wins</p>
-            <p class="title">{{ player.versusBattleWins }}</p>
+            <p class="title">{{ player.most_recent.stats.versus_battle_wins }}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Donations</p>
-            <p class="title">{{ player.donations }}</p>
+            <p class="title">{{ player.most_recent.stats.donations }}</p>
           </div>
         </div>
       </nav>

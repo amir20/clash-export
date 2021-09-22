@@ -1,8 +1,7 @@
 from typing import TYPE_CHECKING, Dict
+from inflection import camelize
 
 import pandas as pd
-
-from re import sub
 
 
 if TYPE_CHECKING:
@@ -46,5 +45,4 @@ class ClanMembers(object):
 
 
 def camel_cased(s):
-    s = sub(r"[_\-.]+", " ", s).title().replace(" ", "")
-    return "".join([s[0].lower(), s[1:]])
+    return camelize(s, uppercase_first_letter=False)

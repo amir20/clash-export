@@ -85,7 +85,10 @@ class HistoricalPlayer(Document):
 
 @lru_cache(maxsize=256)
 def to_mapping(name):
+    id = None
     if name in OTHER_STATS:
-        return underscore(name)
+        id = underscore(name)
     else:
-        return underscore(parameterize(name))
+        id = underscore(parameterize(name))
+        print(f'"{id}": "{name}"')
+    return id
