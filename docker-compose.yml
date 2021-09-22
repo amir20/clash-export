@@ -39,7 +39,7 @@ services:
       - imgproxy
   rq_player_worker:
     image: "amir20/clashleaders:${TAG:-latest}"
-    command: "rq_worker player player_request"
+    command: "rq_worker player_request"
     depends_on:
       - redis
       - mongo
