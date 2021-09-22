@@ -23,7 +23,7 @@ services:
       - mongo
       - imgproxy-cache
   imgproxy:
-    image: darthsim/imgproxy:v2.13
+    image: darthsim/imgproxy:v2.17
     environment:
       - IMGPROXY_ENFORCE_WEBP=true
       - IMGPROXY_USE_ETAG=true
