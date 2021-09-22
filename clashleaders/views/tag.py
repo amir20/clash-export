@@ -7,7 +7,7 @@ from clashleaders.model import Clan
 @app.route("/tag/<tag>")
 def tagged_clans(tag):
     tag = f"#{tag}"
-    if clans := list(Clan.objects.search_text(f'"{tag}"')):
+    if clans := list(Clan.objects.search_text(f'"{tag}"').order_by("name")):
         return render_template("tag.html", clans=clans, tag=tag)
     else:
         return render_template("404.html"), 404

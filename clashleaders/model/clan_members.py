@@ -30,16 +30,15 @@ class ClanMembers(object):
         return df
 
     def delta(self) -> pd.DataFrame:
-        now = self.now_df.reset_index().set_index(["Tag", "Name"])
+        now = self.now_df.drop(columns=["Name"])
         old = (
             self.clan.historical_near_days_ago(self.days_ago)
             .to_df(player_activity=self.include_player_activity, war_activity=self.include_war_activity)
-            .reset_index()
-            .set_index(["Tag", "Name"])
+            .drop(columns=["Name"])
         )
 
         delta = now - old
-        delta = delta.reset_index().set_index("Tag").drop(["Name"], axis=1).fillna(0)
+        delta = delta.fillna(0)
         delta.index.name = "tag"
         delta.columns = [camel_cased(col) for col in delta.columns]
         return delta
