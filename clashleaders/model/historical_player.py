@@ -65,7 +65,7 @@ class HistoricalPlayer(Document):
                 logger.info("Unrecognized keys for player: %s", new_keys)
             self.stats = PlayerStats(**valid_stats)
             clan_tag = None
-            if kwargs["clan"] is not None:
+            if "clan" in kwargs:
                 clan_tag = kwargs["clan"]["tag"]
             super().__init__(tag=kwargs["tag"], clan_tag=clan_tag, name=kwargs["name"], bytes=self.stats.SerializeToString())
 
