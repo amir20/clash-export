@@ -26,7 +26,7 @@
         sortable
         v-slot="props"
       >
-        {{ props.row[key].value == "na" ? "—" : props.row[key].value.toLocaleString() }}
+        {{ formatNumber(key, props.row[key].value) }}
         <span v-if="key == 'name' && clan.playerStatus[props.row.tag.value]" class="tag is-uppercase" :class="clan.playerStatus[props.row.tag.value]">{{
           clan.playerStatus[props.row.tag.value]
         }}</span>
@@ -45,7 +45,7 @@
             }"
             class="fa-sm fa"
           ></span>
-          {{ Math.abs(props.row[key].delta).toLocaleString() }}
+          {{ formatNumber(key, props.row[key].delta) }}
         </b>
       </b-table-column>
 
@@ -62,6 +62,8 @@ import { mapState } from "vuex";
 import Notification from "./Notification";
 import { gaMixin } from "../ga";
 import UserMixin from "../user";
+
+const compactFormatter = Intl.NumberFormat("en", { notation: "compact" });
 
 export default {
   mixins: [gaMixin, UserMixin],
@@ -119,6 +121,19 @@ export default {
     },
     isNumeric(key) {
       return key != "tag" && key != "name";
+    },
+    formatNumber(key, data) {
+      if (data == "na") return "—";
+      switch (key) {
+        case "tag":
+        case "name":
+          return data;
+        case "avgWarDestruction":
+        case "activityScore":
+          return (data / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 0 });
+        default:
+          return compactFormatter.format(data);
+      }
     },
   },
 };
