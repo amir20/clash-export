@@ -21,7 +21,7 @@
       >
         <span class="stars" :class="`stars_${props.row[`stars_day_${i}`]}`">
           <b-rate v-model="props.row[`stars_day_${i}`]" icon-pack="fa" icon="star" :max="3" disabled v-if="props.row[`stars_day_${i}`] != 'na'"> </b-rate>
-          <span v-else>-</span>
+          <span v-else>—</span>
         </span>
       </b-table-column>
 
@@ -42,7 +42,7 @@
         {{
           props.row[`destruction_day_${i}`] != "na"
             ? Number(props.row[`destruction_day_${i}`] / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 0 })
-            : "-"
+            : "—"
         }}
       </b-table-column>
 

@@ -28,7 +28,7 @@
       <b-table-column field="attack1__stars" label="First Attack Stars" v-slot="props" numeric sortable centered>
         <span :class="`stars_${props.row.attack1__stars}`">
           <b-rate v-model="props.row.attack1__stars" icon-pack="fa" icon="star" :max="3" disabled v-if="props.row.attack1__stars != 'na'"> </b-rate>
-          <span v-else>-</span>
+          <span v-else>—</span>
         </span>
       </b-table-column>
 
@@ -36,14 +36,14 @@
         {{
           props.row.attack1__destructionPercentage != "na"
             ? Number(props.row.attack1__destructionPercentage / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 0 })
-            : "-"
+            : "—"
         }}
       </b-table-column>
 
       <b-table-column field="attack2__stars" label="Second Attack Stars" v-slot="props" numeric sortable centered>
         <span :class="`stars_${props.row.attack2__stars}`">
           <b-rate v-model="props.row.attack2__stars" icon-pack="fa" icon="star" :max="3" disabled v-if="props.row.attack2__stars != 'na'"> </b-rate>
-          <span v-else>-</span>
+          <span v-else>—</span>
         </span>
       </b-table-column>
 
@@ -51,19 +51,19 @@
         {{
           props.row.attack2__destructionPercentage != "na"
             ? Number(props.row.attack2__destructionPercentage / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 0 })
-            : "-"
+            : "—"
         }}
       </b-table-column>
 
       <b-table-column field="opponentAttacks" label="Opponent Attacks" v-slot="props" numeric sortable centered>
-        {{ props.row.opponentAttacks != "na" ? props.row.opponentAttacks : "-" }}
+        {{ props.row.opponentAttacks != "na" ? props.row.opponentAttacks : "—" }}
       </b-table-column>
 
       <b-table-column field="bestOpponentAttack__stars" label="Best Opponent Stars" v-slot="props" numeric sortable centered>
         <span :class="`stars_${props.row.bestOpponentAttack__stars}`">
           <b-rate v-model="props.row.bestOpponentAttack__stars" icon-pack="fa" icon="star" :max="3" disabled v-if="props.row.bestOpponentAttack__stars != 'na'">
           </b-rate>
-          <span v-else>-</span>
+          <span v-else>—</span>
         </span>
       </b-table-column>
 
@@ -71,7 +71,7 @@
         {{
           props.row.bestOpponentAttack__destructionPercentage != "na"
             ? Number(props.row.bestOpponentAttack__destructionPercentage / 100).toLocaleString(undefined, { style: "percent", minimumFractionDigits: 0 })
-            : "-"
+            : "—"
         }}
       </b-table-column>
     </b-table>
