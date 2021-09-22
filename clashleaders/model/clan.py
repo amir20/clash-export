@@ -155,6 +155,8 @@ class Clan(DynamicDocument):
 
     def days_of_history(self) -> int:
         first: clashleaders.model.HistoricalClan = clashleaders.model.HistoricalClan.objects(tag=self.tag).order_by("created_on").first()
+        if first is None:
+            return 0
         return (datetime.now() - first.created_on).days
 
     def player_activity(self):
