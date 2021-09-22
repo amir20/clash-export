@@ -263,10 +263,7 @@ class Clan(DynamicDocument):
         players_response = api.fetch_all_players(tags)
 
         # Store all players data using historical compressed format
-        save_historical_clan(clan_response, players_response)
-
-        # Enqueue player json to queue
-        clashleaders.queue.player.update_players(players_response)
+        save_historical(clan_response, players_response)
 
         clan_response["clan_type"] = clan_response["type"]
         del clan_response["type"]
@@ -280,9 +277,9 @@ class Clan(DynamicDocument):
         return clan
 
 
-def save_historical_clan(clan_json, player_json):
+def save_historical(clan_json, players_json):
     try:
-        players = [clashleaders.model.HistoricalPlayer(**p).save() for p in player_json]
-        clashleaders.model.HistoricalClan(**clan_json, players=players).save()
+        players = [clashleaders.model.Player.upsert_player(p["tag"], **p) for p in players_json]
+        clashleaders.model.HistoricalClan(**clan_json, players=[p.most_recent for p in players]).save()
     except:
         logging.exception("Error while saving save_historical_clan")

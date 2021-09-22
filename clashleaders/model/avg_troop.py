@@ -18,7 +18,7 @@ class AverageTroop(Document):
 
     @property
     def base(self):
-        return "builderBase" if self.is_builder_base else "home"
+        return "builderbase" if self.is_builder_base else "home"
 
     @property
     def troop_id(self):
@@ -28,10 +28,9 @@ class AverageTroop(Document):
     def update_all(cls):
         good_tag = Player._get_collection().find_one(
             {
-                "lab_levels.home_Stone Slammer": {"$exists": True},
-                "lab_levels.home_Bat Spell": {"$exists": True},
-                "lab_levels.builderBase_Battle Machine": {"$exists": True},
-                "lab_levels.builderBase_Super PEKKA": {"$exists": True},
+                "lab_levels.home_unicorn": {"$exists": True},
+                "lab_levels.builderbase_battle_machine": {"$exists": True},
+                "lab_levels.builderbase_super_pekka": {"$exists": True},
             }
         )["tag"]
         good_player = Player.find_by_tag(good_tag)
@@ -48,7 +47,7 @@ class AverageTroop(Document):
             for key, value in th_avg.items():
                 if key.startswith("avg_"):
                     splits = re.split(r"_(builderBase|home)_", key)
-                    is_builder_base = "builderBase" == splits[1]
+                    is_builder_base = "builderbase" == splits[1]
                     name = splits[2]
                     AverageTroop.objects(th_level=th_level, is_builder_base=is_builder_base, name=name).update_one(
                         set__th_level=th_level,

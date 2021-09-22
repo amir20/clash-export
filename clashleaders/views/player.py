@@ -12,7 +12,13 @@ def player_html(slug):
         player = Player.find_by_slug(slug)
         fetch_players.delay([player.tag])
         clan = player.most_recent_clan()
-        initial_state = dict(tag=player.tag, troops=player.troops, heroes=player.heroes, spells=player.spells, insights=player_troops_insights(player))
+        initial_state = dict(
+            tag=player.tag,
+            # troops=player.troops,
+            # heroes=player.heroes,
+            # spells=player.spells,
+            # insights=player_troops_insights(player),
+        )
     except DoesNotExist:
         return render_template("404.html"), 404
     else:
@@ -25,7 +31,7 @@ def player_html(slug):
 
 
 @cache.memoize(28800)
-def player_troops_insights(player):
+def player_troops_insights(player: Player):
     return player.troop_insights()
 
 

@@ -7,7 +7,7 @@ import clashleaders.model
 
 
 def next_troop_recommendation(player) -> Dict:
-    troop_averages = clashleaders.model.AverageTroop.objects(th_level=player.townHallLevel)
+    troop_averages = clashleaders.model.AverageTroop.objects(th_level=player.most_recent.stats.town_hall_level)
 
     data = {
         "base": [t.base for t in troop_averages],
@@ -30,7 +30,9 @@ def next_troop_recommendation(player) -> Dict:
     df = df[df["delta"] > 0]
 
     if df.empty:
-        return dict(builderBase={}, home={}, th_ratio=th_completed / th_total, bh_ratio=bh_completed / bh_total, th_level=player.townHallLevel)
+        return dict(
+            builderBase={}, home={}, th_ratio=th_completed / th_total, bh_ratio=bh_completed / bh_total, th_level=player.most_recent.stats.town_hall_level
+        )
 
     builder_troops = {}
     if "builderBase" in df.index:
@@ -46,4 +48,10 @@ def next_troop_recommendation(player) -> Dict:
             v["name"] = k
         home_troops = list(home_troops.values())
 
-    return dict(builderBase=builder_troops, home=home_troops, th_ratio=th_completed / th_total, bh_ratio=bh_completed / bh_total, th_level=player.townHallLevel)
+    return dict(
+        builderBase=builder_troops,
+        home=home_troops,
+        th_ratio=th_completed / th_total,
+        bh_ratio=bh_completed / bh_total,
+        th_level=player.most_recent.stats.town_hall_level,
+    )

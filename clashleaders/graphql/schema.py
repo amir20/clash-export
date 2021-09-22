@@ -53,8 +53,11 @@ class PlayerLeague(graphene.ObjectType):
     id = graphene.Int()
     iconUrls = graphene.Field(BadgeUrls)
 
-    def resolve_iconUrls(self, info):
-        return BadgeUrls(**self.iconUrls)
+    def resolve_iconUrls(parent, info):
+        if hasattr(parent, "iconUrls"):
+            return BadgeUrls(**parent.iconUrls)
+        else:
+            return BadgeUrls(**parent["iconUrls"])
 
 
 class ShortClan(graphene.ObjectType):
@@ -80,15 +83,6 @@ class Player(graphene.ObjectType):
     name = graphene.String()
     tag = graphene.String()
     slug = graphene.String()
-    role = graphene.String()
-    townHallLevel = graphene.Int()
-    trophies = graphene.Int()
-    builderHallLevel = graphene.Int()
-    expLevel = graphene.Int()
-    defenseWins = graphene.Int()
-    attackWins = graphene.Int()
-    donations = graphene.Int()
-    percentile = graphene.Int()
     activity = graphene.Field(PlayerActivity)
     league = graphene.Field(PlayerLeague)
     clan = graphene.Field(ShortClan)
@@ -118,14 +112,14 @@ class Player(graphene.ObjectType):
             trophies=diffed["trophies"].tolist(),
         )
 
-    def resolve_league(self, info):
-        return PlayerLeague(**self.league) if hasattr(self, "league") else None
+    def resolve_league(parent, info):
+        return PlayerLeague(**parent.league) if hasattr(parent, "league") else None
 
-    def resolve_clan(self, info):
-        return self.most_recent_clan()
+    def resolve_clan(parent, info):
+        return parent.most_recent_clan()
 
-    def resolve_war_stats(self, info):
-        return PlayerWarStats(**self.war_stats())
+    def resolve_war_stats(parent, info):
+        return PlayerWarStats(**parent.war_stats())
 
 
 class ClanDelta(graphene.ObjectType):
