@@ -90,5 +90,5 @@ def to_mapping(name):
         id = underscore(name)
     else:
         id = underscore(parameterize(name))
-        print(f'"{id}": "{name}"')
+        # print(f'"{id}": "{name}",')
     return id
