@@ -104,6 +104,7 @@ export default {
                 name
                 tag
                 slug
+                role
                 league {
                   name
                   iconUrls {

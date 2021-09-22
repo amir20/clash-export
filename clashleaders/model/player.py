@@ -142,6 +142,7 @@ class Player(Document):
     binary_bytes = BinaryField()
     tag = StringField(required=True, unique=True)
     name = StringField(required=True)
+    role = StringField()
     lab_levels = DictField()
     slug = StringField(unique=True)
     active = BooleanField(default=True)
@@ -236,6 +237,7 @@ class Player(Document):
             "most_recent": most_recent,
             "clan": data["clan"],
             "league": data["league"],
+            "role": data["role"],
             "slug": slugify(f'{data["name"]}-{player_tag}', to_lower=True),
         }
 

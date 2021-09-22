@@ -83,6 +83,7 @@ class Player(graphene.ObjectType):
     name = graphene.String()
     tag = graphene.String()
     slug = graphene.String()
+    role = graphene.String()
     activity = graphene.Field(PlayerActivity)
     league = graphene.Field(PlayerLeague)
     clan = graphene.Field(ShortClan)
