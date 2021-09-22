@@ -272,7 +272,10 @@ class Clan(DynamicDocument):
 
         clan: Clan = Clan.objects(tag=tag).upsert_one(**clan_response)
 
-        clan.update_calculations()
+        try:
+            clan.update_calculations()
+        except Exception as e:
+            logger.exception(f"Failed to update calculations for {clan.tag}")
 
         return clan
 

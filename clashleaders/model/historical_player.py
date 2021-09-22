@@ -64,7 +64,10 @@ class HistoricalPlayer(Document):
             if new_keys := (player_stats.keys() - valid_stats.keys()):
                 logger.info("Unrecognized keys for player: %s", new_keys)
             self.stats = PlayerStats(**valid_stats)
-            super().__init__(tag=kwargs["tag"], clan_tag=kwargs["clan"]["tag"], name=kwargs["name"], bytes=self.stats.SerializeToString())
+            clan_tag = None
+            if kwargs["clan"] is not None:
+                clan_tag = kwargs["clan"]["tag"]
+            super().__init__(tag=kwargs["tag"], clan_tag=clan_tag, name=kwargs["name"], bytes=self.stats.SerializeToString())
 
     def __repr__(self):
         return "<HistoricalPlayer {0}>".format(self.tag)

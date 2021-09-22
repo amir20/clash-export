@@ -235,9 +235,9 @@ class Player(Document):
             "name": data["name"],
             "lab_levels": lab_levels(most_recent),
             "most_recent": most_recent,
-            "clan": data["clan"],
-            "league": data["league"],
-            "role": data["role"],
+            "clan": data.get("clan"),
+            "league": data.get("league"),
+            "role": data.get("role"),
             "slug": slugify(f'{data["name"]}-{player_tag}', to_lower=True),
         }
 
