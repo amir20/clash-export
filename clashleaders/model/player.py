@@ -161,7 +161,7 @@ class Player(Document):
     }
 
     def most_recent_clan(self) -> Optional[Clan]:
-        return Clan.find_by_tag(self.clan["tag"]) if "clan" in self else None
+        return Clan.find_by_tag(self.clan["tag"]) if hasattr(self, "clan") and "tag" in self.clan else None
 
     def player_score(self):
         clan = self.most_recent_clan()
