@@ -35,7 +35,7 @@ def update_calculations(clan: clashleaders.model.Clan):
             clan.month_delta = most_recent.clan_delta(last_month)
 
         if old_players := list(set(yesterday.to_df().index) - set(most_recent_df.index)):
-            fetch_players.delay(old_players)
+            fetch_players(old_players)
 
         activity = clan.player_activity()
         values = list(activity.values())

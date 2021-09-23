@@ -10,7 +10,7 @@ from clashleaders.queue.player import fetch_players
 def player_html(slug):
     try:
         player = Player.find_by_slug(slug)
-        fetch_players.delay([player.tag])
+        fetch_players([player.tag])
         clan = player.most_recent_clan()
         initial_state = dict(
             tag=player.tag,

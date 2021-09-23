@@ -11,7 +11,6 @@ from slugify import slugify
 import clashleaders.clash.clan_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
-import clashleaders.queue.calculation
 import clashleaders.queue.player
 import clashleaders.queue.war
 

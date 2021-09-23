@@ -1,22 +1,33 @@
 from __future__ import annotations
-
-import logging
-from typing import List
-
-from rq.decorators import job
-
-import clashleaders.model
 import asyncio
-from clashleaders import redis_connection
-from clashleaders.clash import api
+import logging
+import clashleaders.model
+
+from typing import List
 
 logger = logging.getLogger(__name__)
 
+import threading, queue
 
-@job("player_request", connection=redis_connection, result_ttl=0)
-def fetch_players(tags: List):
-    try:
-        for tag in tags:
+q: queue.Queue = queue.Queue()
+
+
+def worker():
+    while True:
+        tag = q.get()
+        try:
             clashleaders.model.Player.fetch_and_save(tag)
-    except asyncio.TimeoutError:
-        logger.exception(f"Received TimeoutError while fetching players in fetch_players()")
+        except asyncio.TimeoutError:
+            logger.exception(f"Received TimeoutError while fetching players in fetch_players()")
+        except:
+            logger.exception(f"Unexpected error while updating players")
+        finally:
+            q.task_done()
+
+
+threading.Thread(target=worker, daemon=True).start()
+
+
+def fetch_players(tags: List[str]):
+    for tag in tags:
+        q.put(tag)
