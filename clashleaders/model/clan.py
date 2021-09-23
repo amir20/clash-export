@@ -132,6 +132,8 @@ class Clan(DynamicDocument):
     def to_historical_df(self) -> pd.DataFrame:
         histories = clashleaders.model.HistoricalClan.objects(tag=self.tag)
         df = pd.DataFrame(h.to_dict() for h in histories)
+        if df.empty:
+            return df
         return df.set_index("created_on")
 
     def historical_near_time(self, dt) -> clashleaders.model.HistoricalClan:
@@ -166,7 +168,10 @@ class Clan(DynamicDocument):
         return ClanMembers(self, compare_to_days=delta_days)
 
     def trophy_history(self) -> Dict:
-        df = self.to_historical_df()[["members", "clanPoints"]].resample("D").mean().dropna()
+        df = self.to_historical_df()
+        if df.empty:
+            return {}
+        df = df[["members", "clanPoints"]].resample("D").mean().dropna()
         df = df.reset_index().rename(columns={"created_on": "labels"})
         df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
         return df.to_dict("list")
