@@ -132,7 +132,7 @@ const actions = {
       {
         tag: clan.tag,
         days,
-        refresh: 15,
+        refresh: 5,
       }
     );
     commit("STOP_LOADING");

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import asyncio
+import json
+from datetime import timedelta
 import logging
 import os
 from typing import List
@@ -10,6 +12,7 @@ import aiohttp
 import requests
 from async_timeout import timeout
 from clashleaders.util import correct_tag
+from clashleaders import redis_connection
 
 logger = logging.getLogger(__name__)
 
@@ -51,9 +54,17 @@ async def __fetch(url, params=None, loop=None):
 
 
 async def __fetch_with_session(url, session, params=None):
+    if data := redis_connection.get(url):
+        logger.debug(f"Fetching {url} from cache.")
+        return 200, json.loads(data)
+
     async with timeout(8):
         async with session.get(url, params=params) as response:
             data = await response.json()
+            if response.status == 200:
+                delta = int(response.headers["Cache-Control"].strip("max-age="))
+                if delta > 0:
+                    redis_connection.setex(url, timedelta(seconds=delta), json.dumps(data))
             return response.status, data
 
 

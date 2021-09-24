@@ -32,7 +32,7 @@ csrf.init_app(app)
 bugsnag.configure(api_key=app.config["BUGSNAG_API_KEY"], project_root="/app", release_stage=app.env, notify_release_stages=["production"])
 handle_exceptions(app)
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG if app.debug else logging.INFO)
 
 # Cache settings
 cache_type = "null" if app.env == "development" else "redis"
