@@ -11,12 +11,13 @@ def player_html(slug):
     try:
         player = Player.find_by_slug(slug)
         fetch_players([player.tag])
+        response = player.fetch_troops()
         clan = player.most_recent_clan()
         initial_state = dict(
             tag=player.tag,
-            # troops=player.troops,
-            # heroes=player.heroes,
-            # spells=player.spells,
+            troops=response.troops,
+            heroes=response.heroes,
+            spells=response.spells,
             # insights=player_troops_insights(player),
         )
     except DoesNotExist:

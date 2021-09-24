@@ -6,6 +6,7 @@ from typing import Optional
 import json
 from codecs import decode, encode
 from typing import Dict
+from collections import namedtuple
 
 import pandas as pd
 from mongoengine import Document, BinaryField, signals, StringField, DictField
@@ -200,8 +201,9 @@ class Player(Document):
     def troop_insights(self):
         return clashleaders.insights.troops.next_troop_recommendation(self)
 
-    def heros(self):
-        ...
+    def fetch_troops(self):
+        data = api.find_player_by_tag(self.tag)
+        return namedtuple("PlayerResponse", data.keys())(*data.values())
 
     def clan_history(self):
         history = clan_history(self).to_dict()

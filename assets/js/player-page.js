@@ -9,14 +9,14 @@ bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
 
-// new Vue({
-//   el: "#troops",
-//   store,
-//   components: {
-//     Troops,
-//   },
-//   render: (h) => h(Troops),
-// });
+new Vue({
+  el: "#troops",
+  store,
+  components: {
+    Troops,
+  },
+  render: (h) => h(Troops),
+});
 
 // new Vue({
 //   el: "#recommendation",
