@@ -1,13 +1,10 @@
-from clashleaders.queue.war import update_wars
 from clashleaders.clash.transformer import tag_to_slug
 import logging
 
 from datetime import datetime, timedelta
-from time import sleep
 
 import graphene
 from graphene.types.generic import GenericScalar
-from rq.exceptions import NoSuchJobError
 
 import pandas as pd
 from io import BytesIO
@@ -241,6 +238,7 @@ class ClanMembers(graphene.ObjectType):
     header = GenericScalar()
     most_recent = GenericScalar()
     delta = GenericScalar()
+    groups = GenericScalar()
 
     def resolve_header(parent, info):
         return parent.header()
@@ -250,6 +248,9 @@ class ClanMembers(graphene.ObjectType):
 
     def resolve_delta(parent, info):
         return parent.delta().fillna(0).to_dict(orient="index")
+
+    def resolve_groups(parent, info):
+        return parent.groups()
 
 
 class Clan(graphene.ObjectType):

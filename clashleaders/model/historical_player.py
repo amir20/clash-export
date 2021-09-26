@@ -86,7 +86,7 @@ class HistoricalPlayer(Document):
         return pd.Series(self.to_dict(), name=self.created_on)
 
 
-@lru_cache(maxsize=256)
+@lru_cache(maxsize=None)
 def to_mapping(name):
     id = None
     if name in OTHER_STATS:

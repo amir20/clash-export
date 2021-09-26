@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections import OrderedDict
+
 from datetime import datetime
 
 import pandas as pd
@@ -13,43 +13,7 @@ from clashleaders.model import ClanDelta
 from clashleaders.util import correct_tag
 from clashleaders.model.historical_player import HistoricalPlayer
 from clashleaders.model.clan_war import ClanWar
-
-
-COLUMNS = OrderedDict(
-    (
-        ("name", "Name"),
-        ("tag", "Tag"),
-        ("town_hall_level", "TH Level"),
-        ("builder_hall_level", "BH Level"),
-        ("exp_level", "XP Level"),
-        ("best_trophies", "Best Trophies"),
-        ("best_versus_trophies", "Best Versus Trophies"),
-        ("trophies", "Current Trophies"),
-        ("versus_trophies", "Builder Hall Trophies"),
-        ("attack_wins", "Attack Wins"),
-        ("versus_battle_win_count", "Versus Battle Wins"),
-        ("defense_wins", "Defense Wins"),
-        ("gold_grab", "Total Gold Grab"),
-        ("elixir_escapade", "Total Elixir Grab"),
-        ("heroic_heist", "Total DE Grab"),
-        ("friend_in_need", "Total Donations"),
-        ("war_hero", "Total War Stars"),
-        ("games_champion", "Clan Games XP"),
-        ("war_league_legend", "CWL Stars"),
-        ("sharing_is_caring", "Total Spells Donated"),
-        ("donations", "Donations"),
-        ("donations_received", "Donations Received"),
-        ("home_barbarian_king", "Barbarian King"),
-        ("home_archer_queen", "Archer Queen"),
-        ("home_grand_warden", "Grand Warden"),
-        ("home_royal_champion", "Royal Champion"),
-        ("home_lassi", "L.a.s.s.i."),
-        ("home_electro_owl", "Electro Owl"),
-        ("home_mighty_yak", "Mighty Yak"),
-        ("home_unicorn", "Unicorn"),
-        ("builderbase_battle_machine", "Battle Machine"),
-    )
-)
+from .columns import COLUMNS
 
 
 class HistoricalClan(Document):

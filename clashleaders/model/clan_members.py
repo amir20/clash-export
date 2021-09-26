@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Dict
 import pandas as pd
 
 from re import sub
+from .columns import column_group
 
 
 if TYPE_CHECKING:
@@ -23,6 +24,9 @@ class ClanMembers(object):
         # put the name first
         tuples[0], tuples[1] = tuples[1], tuples[0]
         return dict(tuples)
+
+    def groups(self) -> Dict[str, str]:
+        return {key: column_group(title) for key, title in self.header().items()}
 
     def most_recent(self) -> pd.DataFrame:
         df = self.now_df.reset_index().fillna("na")
