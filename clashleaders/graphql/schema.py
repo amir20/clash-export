@@ -122,7 +122,7 @@ class Player(graphene.ObjectType):
         )
 
     def resolve_league(parent, info):
-        return PlayerLeague(**parent.league) if hasattr(parent, "league") else None
+        return PlayerLeague(**parent.league) if hasattr(parent, "league") and len(parent.league) > 0 else None
 
     def resolve_clan(parent, info):
         return parent.most_recent_clan()
