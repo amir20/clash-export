@@ -48,15 +48,15 @@ class ApiTimeout(ApiException):
     pass
 
 
-async def __fetch(url, params=None, loop=None):
+async def __fetch(url, params=None, loop=None, enable_cache=True):
     async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=headers()) as session:
-        return await __fetch_with_session(url, session=session, params=params)
+        return await __fetch_with_session(url, session=session, params=params, enable_cache=enable_cache)
 
 
-async def __fetch_with_session(url, session, params=None):
+async def __fetch_with_session(url, session, params=None, enable_cache=True):
     cache_key = f"api:{url}:{params}"
-    if data := redis_connection.get(cache_key):
-        logger.debug(f"Fetching {url} from cache.")
+    if data := redis_connection.get(cache_key) and enable_cache:
+        logger.debug(f"Fetching {url} from cache with key {cache_key}.")
         return 200, json.loads(data)
 
     async with timeout(8):
@@ -64,7 +64,7 @@ async def __fetch_with_session(url, session, params=None):
             data = await response.json()
             if response.status == 200:
                 delta = int(response.headers["Cache-Control"].strip("max-age="))
-                if delta > 0:
+                if enable_cache and delta > 0:
                     redis_connection.setex(cache_key, timedelta(seconds=delta), json.dumps(data))
             return response.status, data
 
@@ -120,7 +120,7 @@ def find_player_by_tag(tag):
 
 def search_by_name(name, limit=10):
     logger.info(f"Searching for clan name '{name}'.")
-    code, response = asyncio.run(__fetch("https://api.clashofclans.com/v1/clans", params={"name": name, "limit": limit}))
+    code, response = asyncio.run(__fetch("https://api.clashofclans.com/v1/clans", params={"name": name, "limit": limit}, enable_cache=False))
 
     if code != 200:
         return []
