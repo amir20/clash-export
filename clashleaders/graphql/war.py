@@ -28,6 +28,7 @@ class War(graphene.ObjectType):
     aggregated = GenericScalar()
     state = graphene.String()
     opponent = graphene.Field(WarClan)
+    clan = graphene.Field(WarClan)
 
     def resolve_startTime(parent, info):
         return parent.startTime.timestamp() * 1000
@@ -36,7 +37,6 @@ class War(graphene.ObjectType):
         return parent.endTime.timestamp() * 1000
 
     def resolve_opponent(parent, info):
-        slug = tag_to_slug(parent.opponent["tag"])
         return WarClan(
             name=parent.opponent["name"],
             tag=parent.opponent["tag"],
@@ -44,6 +44,16 @@ class War(graphene.ObjectType):
             attacks=parent.opponent["attacks"],
             stars=parent.opponent["stars"],
             destruction_percentage=parent.opponent["destructionPercentage"],
+        )
+
+    def resolve_clan(parent, info):
+        return WarClan(
+            name=parent.clan["name"],
+            tag=parent.clan["tag"],
+            badge_urls=parent.clan["badgeUrls"],
+            attacks=parent.clan["attacks"],
+            stars=parent.clan["stars"],
+            destruction_percentage=parent.clan["destructionPercentage"],
         )
 
     def resolve_aggregated(parent, info):
