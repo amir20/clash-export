@@ -43,14 +43,14 @@ const mutations = {
 };
 
 const actions = {
-  async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }) {
+  async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }, { updateWars = true } = { updateWars: true }) {
     commit("START_LOADING");
     dispatch("FETCH_SAVED_CLAN");
 
     const data = await request(
       gql`
-        query GetClan($tag: String!, $days: Int!, $refresh: Int!) {
-          clan(tag: $tag, refresh: $refresh) {
+        query GetClan($tag: String!, $days: Int!, $refresh: Int!, $updateWars: Boolean!) {
+          clan(tag: $tag, refresh: $refresh, updateWars: $updateWars) {
             name
             clanPoints
             clanVersusPoints
@@ -121,8 +121,20 @@ const actions = {
                 name
                 slug
                 tag
+                attacks
+                stars
                 badgeUrls {
-                  large
+                  small
+                }
+              }
+              clan {
+                name
+                slug
+                tag
+                attacks
+                stars
+                badgeUrls {
+                  small
                 }
               }
             }
@@ -133,51 +145,11 @@ const actions = {
         tag: clan.tag,
         days,
         refresh: 5,
+        updateWars: updateWars,
       }
     );
     commit("STOP_LOADING");
     commit("SET_CLAN_DATA", data);
-    dispatch("FETCH_WARS");
-  },
-  async FETCH_WARS({ commit, state: { clan } }) {
-    try {
-      commit("START_LOADING");
-      const data = await request(
-        gql`
-          query GetClanCWL($tag: String!, $updateWars: Boolean!) {
-            clan(tag: $tag, updateWars: $updateWars) {
-              recentCwlGroup {
-                season
-                aggregated
-              }
-              wars {
-                startTime
-                endTime
-                state
-                aggregated
-                opponent {
-                  name
-                  slug
-                  tag
-                  badgeUrls {
-                    large
-                  }
-                }
-              }
-            }
-          }
-        `,
-        {
-          tag: clan.tag,
-          updateWars: true,
-        }
-      );
-      commit("SET_CLAN_CWL", data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      commit("STOP_LOADING");
-    }
   },
   async FETCH_SAVED_CLAN({ commit, state: { clan, days } }) {
     const savedTag = store.get("lastTag");

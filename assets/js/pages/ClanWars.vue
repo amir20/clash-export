@@ -1,20 +1,63 @@
 <template>
-  <section>
+  <section v-if="currentWar && currentWar.opponent">
     <div class="tools">
-      <b-dropdown scrollable v-model="currentWar" aria-role="list" v-if="currentWar && currentWar.opponent">
-        <template #trigger>
-          <b-button type="is-danger" icon-right="fa fa-angle-down"> vs {{ currentWar.opponent.name }} </b-button>
-        </template>
-
-        <b-dropdown-item v-for="(war, index) in clan.wars" :key="index" :value="war" aria-role="listitem">
-          <div class="media">
-            <!-- <b-icon class="media-left" :icon="menu.icon"></b-icon> -->
-            <div class="media-content">
-              <h3>vs {{ war.opponent.name }}</h3>
+      <div class="columns">
+        <div class="column">
+          <div class="columns">
+            <div class="column is-narrow">
+              <div class="media">
+                <div class="media-left">
+                  <span class="icon is-medium">
+                    <img :src="currentWar.clan.badgeUrls.small" />
+                  </span>
+                </div>
+                <div class="media-content has-text-right">
+                  <div>
+                    <h3 class="title is-6">{{ currentWar.clan.name }}</h3>
+                  </div>
+                  <div><b-icon pack="fa" icon="star"></b-icon> {{ currentWar.clan.stars }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-narrow">vs</div>
+            <div class="column is-narrow">
+              <div class="media">
+                <div class="media-left">
+                  <span class="icon is-medium">
+                    <img :src="currentWar.opponent.badgeUrls.small" />
+                  </span>
+                </div>
+                <div class="media-content has-text-left">
+                  <div>
+                    <h3 class="title is-6">{{ currentWar.opponent.name }}</h3>
+                  </div>
+                  <div><b-icon pack="fa" icon="star"></b-icon> {{ currentWar.opponent.stars }}</div>
+                </div>
+              </div>
             </div>
           </div>
-        </b-dropdown-item>
-      </b-dropdown>
+        </div>
+        <div class="column is-narrow">
+          <b-dropdown scrollable v-model="currentWar" aria-role="list" :triggers="['hover']" position="is-bottom-left">
+            <template #trigger>
+              <b-button type="is-danger" icon-right="fa fa-angle-down"> vs {{ currentWar.opponent.name }} </b-button>
+            </template>
+
+            <b-dropdown-item v-for="(war, index) in clan.wars" :key="index" :value="war" aria-role="listitem">
+              <div class="media">
+                <div class="media-left">
+                  <span class="icon is-medium">
+                    <img :src="war.opponent.badgeUrls.small" />
+                  </span>
+                </div>
+                <div class="media-content">
+                  <h3>vs {{ war.opponent.name }}</h3>
+                </div>
+              </div>
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
+      </div>
     </div>
     <b-table ref="table" striped mobile-cards :data="currentWar.aggregated" v-if="currentWar">
       <b-table-column field="name" label="Name" v-slot="props" sortable>

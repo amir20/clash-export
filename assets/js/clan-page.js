@@ -35,8 +35,6 @@ new Vue({
   render: (h) => h(ClanPage),
 }).$mount("#app");
 
-store.dispatch("FETCH_CLAN_DATA");
-
 document.addEventListener(
   "visibilitychange",
   () => {
@@ -46,3 +44,6 @@ document.addEventListener(
   },
   false
 );
+
+await store.dispatch("FETCH_CLAN_DATA", { updateWars: false });
+await store.dispatch("FETCH_CLAN_DATA", { updateWars: true });

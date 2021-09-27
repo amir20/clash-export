@@ -21,6 +21,9 @@ class WarClan(graphene.ObjectType):
     def resolve_slug(parent, info):
         return tag_to_slug(parent.tag)
 
+    def resolve_badge_urls(parent, info):
+        return BadgeUrls(**parent.badge_urls)
+
 
 class War(graphene.ObjectType):
     endTime = graphene.Float()

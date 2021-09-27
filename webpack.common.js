@@ -143,4 +143,7 @@ module.exports = {
     filename: "js/[name].js",
     publicPath: "/static/",
   },
+  experiments: {
+    topLevelAwait: true,
+  },
 };
