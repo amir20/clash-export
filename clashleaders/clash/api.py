@@ -55,9 +55,10 @@ async def __fetch(url, params=None, loop=None, enable_cache=True):
 
 async def __fetch_with_session(url, session, params=None, enable_cache=True):
     cache_key = f"api:{url}:{params}"
-    if data := redis_connection.get(cache_key):
-        logger.debug(f"Fetching {url} from cache with key {cache_key}.")
-        return 200, json.loads(data)
+    if enable_cache:
+        if data := redis_connection.get(cache_key):
+            logger.debug(f"Fetching {url} from cache with key {cache_key}.")
+            return 200, json.loads(data)
 
     async with timeout(8):
         async with session.get(url, params=params) as response:
