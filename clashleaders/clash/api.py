@@ -54,7 +54,8 @@ async def __fetch(url, params=None, loop=None):
 
 
 async def __fetch_with_session(url, session, params=None):
-    if data := redis_connection.get(url):
+    cache_key = f"api:{url}:{params}"
+    if data := redis_connection.get(cache_key):
         logger.debug(f"Fetching {url} from cache.")
         return 200, json.loads(data)
 
@@ -64,7 +65,7 @@ async def __fetch_with_session(url, session, params=None):
             if response.status == 200:
                 delta = int(response.headers["Cache-Control"].strip("max-age="))
                 if delta > 0:
-                    redis_connection.setex(url, timedelta(seconds=delta), json.dumps(data))
+                    redis_connection.setex(cache_key, timedelta(seconds=delta), json.dumps(data))
             return response.status, data
 
 
