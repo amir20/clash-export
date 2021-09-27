@@ -135,4 +135,5 @@ message PlayerStats {
   int32 bust_this = 130;
   int32 home_rocket_balloon = 131;
   int32 home_dragon_rider = 132;
+  int32 home_super_bowler = 133;
 }
