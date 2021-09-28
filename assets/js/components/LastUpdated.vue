@@ -1,14 +1,14 @@
 <template>
-  <div class="columns" v-if="loading">
+  <div class="columns is-mobile is-centered-mobile" v-if="loading">
     <div class="column is-narrow">
-      <div class="lds-ring mr-1">
+      <div class="lds-ring mr-1 has-text-right">
         <div></div>
         <div></div>
         <div></div>
         <div></div>
       </div>
     </div>
-    <div class="column">
+    <div class="column is-narrow">
       <span class="loading">updating</span>
     </div>
   </div>
@@ -55,6 +55,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@media screen and (max-width: 769px) {
+  .is-centered-mobile {
+    justify-content: center;
+  }
+}
+
 .loading {
   text-align: left;
   width: 80px;
