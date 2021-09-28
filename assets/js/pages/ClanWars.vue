@@ -2,8 +2,8 @@
   <section v-if="currentWar && currentWar.opponent">
     <div class="tools">
       <div class="columns">
-        <div class="column">
-          <div class="columns">
+        <div class="column has-text-centered">
+          <div class="columns is-inline-flex">
             <div class="column is-narrow">
               <div class="media">
                 <div class="media-left">
@@ -29,7 +29,11 @@
                 </div>
                 <div class="media-content has-text-left">
                   <div>
-                    <h3 class="title is-6">{{ currentWar.opponent.name }}</h3>
+                    <h3 class="title is-6">
+                      <a :href="currentWar.opponent.slug ? `/clan/${currentWar.opponent.slug}` : `/goto/${encodeURIComponent(currentWar.opponent.tag)}`">
+                        {{ currentWar.opponent.name }}
+                      </a>
+                    </h3>
                   </div>
                   <div><b-icon pack="fa" icon="star"></b-icon> {{ currentWar.opponent.stars }}</div>
                 </div>

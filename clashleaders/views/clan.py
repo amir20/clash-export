@@ -1,3 +1,5 @@
+from flask import url_for, redirect
+from clashleaders.clash.transformer import tag_to_slug
 import logging
 from typing import OrderedDict
 import clashleaders.views
@@ -14,6 +16,16 @@ logger = logging.getLogger(__name__)
 def inject_most_popular():
     status = Status.instance()
     return dict(status=status, popular_countries=status.top_countries, reddit_clans=status.reddit_clans)
+
+
+@app.route("/goto/<tag>")
+def forward_to_clan(tag):
+    slug = tag_to_slug(tag)
+
+    if not slug:
+        slug = Clan.fetch_and_update(tag).slug
+
+    return redirect(url_for("clan_detail_page", slug=slug))
 
 
 @app.route("/clan/<slug>", strict_slashes=False)
