@@ -9,10 +9,10 @@
       </div>
     </div>
     <div class="column is-narrow">
-      <span class="loading">updating</span>
+      <span class="loading is-italic">updating</span>
     </div>
   </div>
-  <time v-else>Updated {{ text }}</time>
+  <time class="is-italic" v-else>Updated {{ text }}</time>
 </template>
 
 <script>

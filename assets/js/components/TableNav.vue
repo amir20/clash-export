@@ -18,13 +18,27 @@
       </div>
     </div>
     <div class="column is-narrow is-hidden-mobile">
+      <b-dropdown multiple v-model="selectedGroups" aria-role="list" :triggers="['hover']">
+        <template #trigger>
+          <b-button type="is-primary" icon-right="fa fa-angle-down"> Columns </b-button>
+        </template>
+
+        <b-dropdown-item v-for="group in allGroups" :key="group" :value="group" aria-role="listitem">
+          <div class="media">
+            <div class="media-left"></div>
+            <div class="media-content">
+              <h3 class="is-capitalized">{{ group }}</h3>
+            </div>
+          </div>
+        </b-dropdown-item>
+      </b-dropdown>
       <download-button></download-button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import DownloadButton from "./DownloadButton";
 
 export default {
@@ -32,26 +46,45 @@ export default {
     DownloadButton,
   },
   data() {
-    return {
-      days: 7,
-      sort: "value",
-    };
+    return {};
+  },
+  computed: {
+    ...mapState(["clan", "selectedGroups", "sortField"]),
+    allGroups() {
+      const groups = new Set();
+      for (const [key, value] of Object.entries(this.clan.comparableMembers.groups)) {
+        groups.add(value);
+      }
+      return [...groups];
+    },
+    selectedGroups: {
+      get() {
+        return this.$store.state.selectedGroups;
+      },
+      set(val) {
+        this.changeGroups(val);
+      },
+    },
+    days: {
+      get() {
+        return this.$store.state.days;
+      },
+      set(val) {
+        this.loadDaysAgo(val);
+      },
+    },
+    sort: {
+      get() {
+        return this.$store.state.sortField;
+      },
+      set(val) {
+        this.changeSort(val);
+      },
+    },
   },
   methods: {
     ...mapActions({ loadDaysAgo: "SHOW_DIFFERENT_DAYS" }),
-    ...mapMutations({ changeSort: "CHANGE_SORT_FIELD" }),
-  },
-  watch: {
-    days(newValue) {
-      if (newValue) {
-        this.loadDaysAgo(newValue);
-      }
-    },
-    sort(newValue) {
-      if (newValue) {
-        this.changeSort(newValue);
-      }
-    },
+    ...mapMutations({ changeSort: "CHANGE_SORT_FIELD", changeGroups: "CHANGE_GROUPS" }),
   },
 };
 </script>

@@ -84,6 +84,7 @@ def members(clan: Clan):
     return dict(
         header=OrderedDict(members.header()),
         mostRecent=members.most_recent().to_dict(orient="records"),
+        groups=members.groups(),
         delta=members.delta().to_dict(orient="index"),
     )
 

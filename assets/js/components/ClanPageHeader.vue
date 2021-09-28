@@ -12,7 +12,7 @@
                 <div class="column">
                   <h1 class="title is-marginless">{{ clan.name }}</h1>
                   <div class="has-text-weight-light">
-                    <i> <last-updated></last-updated> </i>
+                    <last-updated></last-updated>
                   </div>
                   <div class="columns mt-2 mb-0">
                     <div class="column is-narrow pt-0 pb-0">

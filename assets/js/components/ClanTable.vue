@@ -4,7 +4,6 @@
       ref="table"
       :data="tableData"
       striped
-      narrowed
       hoverable
       mobile-cards
       detail-key="id"
@@ -25,6 +24,7 @@
         :numeric="isNumeric(key)"
         sortable
         v-slot="props"
+        :visible="isVisible(key)"
       >
         {{ formatNumber(key, props.row[key].value) }}
         <span v-if="key == 'name' && clan.playerStatus[props.row.tag.value]" class="tag is-uppercase" :class="clan.playerStatus[props.row.tag.value]">{{
@@ -90,7 +90,7 @@ export default {
     document.removeEventListener("visibilitychange");
   },
   computed: {
-    ...mapState(["sortField", "clan"]),
+    ...mapState(["sortField", "clan", "selectedGroups"]),
     tableData() {
       const { mostRecent, delta } = this.clan.comparableMembers;
       return mostRecent.map((player) => {
@@ -102,6 +102,13 @@ export default {
         row.id = player.tag;
         return row;
       });
+    },
+    visibleColumns() {
+      const visible = {};
+      for (const group of this.selectedGroups) {
+        visible[group] = true;
+      }
+      return visible;
     },
   },
   watch: {
@@ -135,11 +142,18 @@ export default {
           return compactFormatter.format(data);
       }
     },
+    isVisible(key) {
+      const group = this.clan.comparableMembers.groups[key];
+      return this.visibleColumns[group] === true;
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
 .b-table /deep/ {
+  th {
+    padding: 1em;
+  }
   td[data-label="Name"] {
     white-space: nowrap;
   }
