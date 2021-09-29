@@ -217,7 +217,7 @@ class Clan(graphene.ObjectType):
         historical = self.historical_near_days_ago(days)
 
         stream = BytesIO()
-        writer = pd.ExcelWriter(stream, engine="xlsxwriter", options={"strings_to_urls": False, "strings_to_formulas": False})
+        writer = pd.ExcelWriter(stream, engine="xlsxwriter", engine_kwargs=dict(options={"strings_to_urls": False, "strings_to_formulas": False}))
         historical.to_df(formatted=True).to_excel(writer, sheet_name=self.tag)
         writer.close()
         return "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + base64.b64encode(stream.getvalue()).decode()
