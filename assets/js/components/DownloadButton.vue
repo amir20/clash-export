@@ -1,10 +1,7 @@
 <template>
   <div class="dropdown is-hoverable is-right has-text-left">
     <div class="dropdown-trigger">
-      <button class="button is-danger" aria-haspopup="true" aria-controls="dropdown-menu">
-        <span class="icon"> <i class="fa fa-download"></i> </span> <span>Export to Excel</span>
-        <span class="icon is-small"> <i class="fa fa-angle-down" aria-hidden="true"></i> </span>
-      </button>
+      <b-button type="is-danger" icon-right="fa fa-angle-down" icon-left="fas fa-download"> Export to Excel </b-button>
     </div>
     <div class="dropdown-menu" role="menu">
       <div class="dropdown-content">

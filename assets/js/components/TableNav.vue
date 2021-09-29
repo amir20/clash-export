@@ -20,7 +20,7 @@
     <div class="column is-narrow is-hidden-mobile">
       <b-dropdown multiple v-model="selectedGroups" aria-role="list" :triggers="['hover']">
         <template #trigger>
-          <b-button type="is-primary" icon-right="fa fa-angle-down"> Columns </b-button>
+          <b-button type="is-primary" icon-right="fa fa-angle-down" icon-left="fas fa-columns"> Columns </b-button>
         </template>
 
         <b-dropdown-item v-for="group in allGroups" :key="group" :value="group" aria-role="listitem">
