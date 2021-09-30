@@ -3,7 +3,7 @@
     <div class="tools">
       <div class="columns">
         <div class="column has-text-centered">
-          <div class="columns is-inline-flex">
+          <div class="columns is-mobile is-inline-flex">
             <div class="column is-narrow">
               <div class="media">
                 <div class="media-left">
@@ -19,7 +19,7 @@
                 </div>
               </div>
             </div>
-            <div class="column is-narrow">vs</div>
+            <div class="column is-narrow has-text-weight-light is-italic">vs</div>
             <div class="column is-narrow">
               <div class="media">
                 <div class="media-left">
