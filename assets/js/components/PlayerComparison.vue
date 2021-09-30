@@ -2,7 +2,7 @@
   <div class="component">
     <div class="media" v-if="player">
       <figure class="media-left">
-        <p class="image is-64x64" v-if="player.league"><img :src="player.league.iconUrls.small" :alt="player.tag" /></p>
+        <p class="image is-64x64" v-if="player.league"><img :src="player.league.iconUrls.medium" :alt="player.tag" /></p>
       </figure>
       <div class="media-content">
         <div class="content">
@@ -108,7 +108,7 @@ export default {
                 league {
                   name
                   iconUrls {
-                    small
+                    medium
                   }
                 }
               }
