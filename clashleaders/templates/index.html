@@ -1,6 +1,6 @@
 {% from 'macros/country-leaderboard.html' import country_leaderboard %} {% from 'macros/leaderboard.html' import leaderboard %} {% extends "layout.html" %} {%
 block body %}
-<section class="hero is-light is-threequarterheight">
+<section class="hero is-light">
   <div class="hero-body container">
     <div class="columns is-centered is-vcentered">
       <div class="column is-3 is-hidden-mobile">
@@ -14,28 +14,32 @@ block body %}
         <div id="home"></div>
       </div>
     </div>
-    <div class="is-hidden-mobile">
-      <h3 class="has-text-centered subtitle is-5">Trophy Distribution</h3>
-      <div id="distribution"></div>
-    </div>
-
     <section class="level section">
       <div class="level-item has-text-centered">
         <div>
-          <p class="heading">Total Clans</p>
+          <p class="heading">Clans</p>
           <p class="title">{{ "{:,}".format(status.total_clans) }}</p>
         </div>
       </div>
+
       <div class="level-item has-text-centered">
         <div>
-          <p class="heading">Total Players</p>
+          <p class="heading">Players</p>
           <p class="title">{{ "{:,}".format(status.total_members) }}</p>
         </div>
       </div>
+
       <div class="level-item has-text-centered">
         <div>
-          <p class="heading">Total Countries</p>
-          <p class="title">{{ "{:,}".format(status.total_countries) }}</p>
+          <p class="heading">Wars</p>
+          <p class="title">{{ "{:,}".format(total_wars) }}</p>
+        </div>
+      </div>
+
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">CWL</p>
+          <p class="title">{{ "{:,}".format(total_cwl_groups) }}</p>
         </div>
       </div>
     </section>
@@ -77,9 +81,6 @@ block body %}
     {% endfor %}
     ]
   }
-</script>
-<script>
-  window.__DISTRIBUTION__ = {{ trophy_distribution | tojson | safe }};
 </script>
 <script defer src="{{ manifest_path('index.js') }}"></script>
 <link rel="prefetch" as="script" href="{{ manifest_path('clan-page.js') }}" />

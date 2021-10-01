@@ -2,7 +2,7 @@ from flask import render_template
 
 from clashleaders import app, cache
 from clashleaders.clash.transformer import to_short_clan
-from clashleaders.model import Clan, Status
+from clashleaders.model import Clan, Status, ClanWar, CWLGroup
 
 
 @app.route("/")
@@ -16,8 +16,9 @@ def index():
         most_attacks=leaderboard("week_delta.total_attack_wins"),
         gained_trophies=leaderboard("week_delta.total_trophies"),
         grabbed_gold=leaderboard("week_delta.total_gold_grab"),
+        total_wars=ClanWar.objects().count(),
+        total_cwl_groups=CWLGroup.objects().count(),
         most_trophies_country=latest_status.trophies_by_country,
-        trophy_distribution=latest_status.trophy_distribution,
     )
 
 

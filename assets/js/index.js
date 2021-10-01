@@ -18,12 +18,3 @@ new Vue({
   },
   render: (h) => h(Home),
 });
-
-new Vue({
-  el: "#distribution",
-  store,
-  components: {
-    TrophyDistribution,
-  },
-  render: (h) => h(TrophyDistribution),
-});
