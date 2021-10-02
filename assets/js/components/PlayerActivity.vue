@@ -50,12 +50,11 @@
   </div>
   <div class="container" v-else>
     <div v-if="isSameUser">Chief! Come back tomorrow. I am still collecting data to be able to show your activity.</div>
-    <div v-else>This player doesn't have any activity yet. Try again tomorrow after I've had a chance to collect some data.</div>
+    <div v-else>This player doesn't have any activity yet. Try again tomorrow after there is a chance to collect some data.</div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
 import ActivityDistribution from "./ActivityDistribution";
 import times from "lodash/times";
 import UserMixin from "../user";
@@ -67,7 +66,7 @@ export default {
     ActivityDistribution,
   },
   mixins: [UserMixin],
-  props: [],
+  props: ["tag"],
   data() {
     return {
       loading: true,
@@ -108,7 +107,7 @@ export default {
         }
       `,
       {
-        playerTag: this.player.tag,
+        playerTag: this.tag,
         userTag: this.userTag,
         hasUser: this.hasDifferentUser,
       }
@@ -142,12 +141,11 @@ export default {
     },
   },
   computed: {
-    ...mapState(["player"]),
     hasDifferentUser() {
-      return this.hasUser && this.userTag !== this.player.tag;
+      return this.hasUser && this.userTag !== this.tag;
     },
     isSameUser() {
-      return this.hasUser && this.userTag === this.player.tag;
+      return this.hasUser && this.userTag === this.tag;
     },
     hasData() {
       return this.playerActivity.labels.length > 0;

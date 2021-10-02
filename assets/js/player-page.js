@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Buefy from "buefy";
 import Troops from "./components/Troops";
-import PlayerActivity from "./components/PlayerActivity";
+import PlayerActivityWrapper from "./components/PlayerActivityWrapper";
 import PlayerRecommendation from "./components/PlayerRecommendation";
 import bugsnag from "./bugsnag";
 import store from "./store/player-page";
@@ -31,7 +31,7 @@ new Vue({
   el: "#activity",
   store,
   components: {
-    PlayerActivity,
+    PlayerActivityWrapper,
   },
-  render: (h) => h(PlayerActivity),
+  render: (h) => h(PlayerActivityWrapper),
 });

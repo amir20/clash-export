@@ -14,6 +14,7 @@ import times from "lodash/times";
 import random from "lodash/random";
 
 const dom = { chart: null };
+const compactFormatter = Intl.NumberFormat("en", { notation: "compact" });
 
 export default {
   props: {
@@ -71,7 +72,7 @@ export default {
           axisY: {
             showLabel: true,
             showGrid: false,
-            labelInterpolationFnc: (value) => value.toLocaleString(),
+            labelInterpolationFnc: (value) => compactFormatter.format(value),
           },
           width: "100%",
           fullWidth: true,
