@@ -47,7 +47,10 @@ class CWLGroup(DynamicDocument):
         destruction = destruction.droplevel(level=1, axis=1)
         destruction.loc[:, "avg"] = destruction.mean(axis=1)
 
-        name = df.droplevel(axis=1, level=0)["name"].fillna(method="bfill", axis=1).iloc[:, 0]
+        name = df.droplevel(axis=1, level=0)["name"]
+
+        if isinstance(name, pd.DataFrame):
+            name = name.bfill(axis=1).iloc[:, 0]
 
         df = pd.concat([name, stars, destruction], axis=1, keys=["name", "stars", "destruction"])
         if flat:
