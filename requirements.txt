@@ -16,7 +16,7 @@ backcall==0.2.0
 black==21.9b0
 blinker==1.4
 bugsnag==4.1.1
-cachetools==4.2.2
+cachetools==4.2.4
 cairocffi==1.2.0
 CairoSVG==2.5.2
 cchardet==2.1.7
