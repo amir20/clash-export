@@ -96,7 +96,7 @@ Pympler==0.9
 pyOpenSSL==21.0.0
 pyparsing==2.4.7
 pytest==6.2.5
-pytest-cov==2.12.1
+pytest-cov==3.0.0
 pytest-freezegun==0.4.2
 pytest-mock==3.6.1
 pytest-runner==5.3.1
