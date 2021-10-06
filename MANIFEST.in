@@ -1,2 +1,3 @@
 recursive-include clashleaders/templates *
 recursive-include clashleaders/static *
+recursive-include clashleaders/data *

@@ -54,9 +54,10 @@ COPY ./conf/gunicorn.conf.py /app/
 COPY ./clashleaders /app/clashleaders
 COPY ./tests /app/tests
 COPY ./Makefile /app/
-COPY ./setup.cfg /app/
+COPY ./setup.* /app/
 COPY ./*.json /app/
 COPY ./*.py /app/
+COPY ./*.in /app/
 
 
 # Copy the js files

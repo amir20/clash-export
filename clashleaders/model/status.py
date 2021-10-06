@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+from os.path import join
 from datetime import datetime, timedelta
 
 from mongoengine import DateTimeField, DictField, Document, FloatField, IntField, ListField, ReferenceField
@@ -11,8 +12,9 @@ from clashleaders.model import Player, Clan
 
 logger = logging.getLogger(__name__)
 
-parent = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(parent, "../data/countries.json")) as f:
+from clashleaders import site_root
+
+with open(join(site_root, "data", "countries.json")) as f:
     data = json.load(f)
     COUNTRIES = {c["countryCode"]: c for c in data if c["isCountry"]}
 
