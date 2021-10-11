@@ -57,7 +57,7 @@ ipython-genutils==0.2.0
 isort==5.9.3
 itsdangerous==2.0.1
 jedi==0.17.2
-Jinja2==3.0.1
+Jinja2==3.0.2
 joblib==1.0.1
 lazy-object-proxy==1.6.0
 loguru==0.5.3
