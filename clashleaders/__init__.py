@@ -1,3 +1,4 @@
+import sentry_sdk
 import logging
 import os
 from os.path import dirname, abspath
@@ -6,12 +7,23 @@ import bugsnag
 import rq_dashboard
 from bugsnag.flask import handle_exceptions
 from flask import Flask
+from sentry_sdk.integrations.flask import FlaskIntegration
 from flask_caching import Cache
 from flask_graphql import GraphQLView
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from graphene import Schema
 from mongoengine import connect
 from redis import Redis
+
+sentry_sdk.init(
+    dsn="https://01a0d76216d24760aeb6ae4c3a261bb2@o85378.ingest.sentry.io/6002234",
+    integrations=[FlaskIntegration()],
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+)
+
 
 app = Flask(__name__, static_folder="_does_not_exists_", static_url_path="/static")
 app.config.from_pyfile("config.py")
