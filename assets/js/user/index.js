@@ -33,21 +33,19 @@ export default {
     this.fetchUser();
   },
   mounted() {
-    document.addEventListener("user-state-changed", (e) => {
-      this.savedUser = store.get(PLAYER_KEY);
-      this.fetchUser();
-    });
+    document.addEventListener("user-state-changed", this.userStateChanged);
   },
   beforeDestroy() {
-    document.removeEventListener("user-state-changed");
+    document.removeEventListener("user-state-changed", this.userStateChanged);
   },
   methods: {
+    userStateChanged() {
+      this.savedUser = store.get(PLAYER_KEY);
+      this.fetchUser();
+    },
     async fetchUser() {
       if (this.savedUser) {
-        if (!window.userPromise) {
-          window.userPromise = this.userPromise();
-        }
-        this.userData = await window.userPromise;
+        this.userData = await this.userPromise();
       }
     },
     async userPromise() {
