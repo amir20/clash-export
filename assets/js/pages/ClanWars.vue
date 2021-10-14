@@ -56,6 +56,9 @@
                 </div>
                 <div class="media-content">
                   <h3>vs {{ war.opponent.name }}</h3>
+                  <small v-if="new Date() < war.startTime"> Starting in {{ war.startTime | formatDistance(false) }}</small>
+                  <small v-else-if="new Date() < war.endTime"> Ending in {{ war.endTime | formatDistance(false) }}</small>
+                  <small v-else> Ended {{ war.endTime | formatDistance }}</small>
                 </div>
               </div>
             </b-dropdown-item>
@@ -127,6 +130,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import formatDistance from "date-fns/formatDistance";
 export default {
   components: {},
   name: "ClanWars",
@@ -151,6 +155,14 @@ export default {
     },
   },
   methods: {},
+  filters: {
+    formatDistance(value, addSuffix = true) {
+      if (value instanceof Number) {
+        value = new Date(value);
+      }
+      return formatDistance(value, new Date(), { addSuffix });
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

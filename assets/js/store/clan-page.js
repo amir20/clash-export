@@ -120,6 +120,7 @@ const actions = {
             wars {
               startTime
               endTime
+              preparationStartTime
               state
               aggregated
               opponent {

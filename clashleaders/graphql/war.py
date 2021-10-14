@@ -28,6 +28,7 @@ class WarClan(graphene.ObjectType):
 class War(graphene.ObjectType):
     endTime = graphene.Float()
     startTime = graphene.Float()
+    preparationStartTime = graphene.Float()
     aggregated = GenericScalar()
     state = graphene.String()
     opponent = graphene.Field(WarClan)
@@ -38,6 +39,9 @@ class War(graphene.ObjectType):
 
     def resolve_endTime(parent, info):
         return parent.endTime.timestamp() * 1000
+
+    def resolve_preparationStartTime(parent, info):
+        return parent.preparationStartTime.timestamp() * 1000
 
     def resolve_opponent(parent, info):
         return WarClan(
