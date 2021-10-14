@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Optional
-from mongoengine import DynamicDocument, signals
+from mongoengine import DynamicDocument, signals, DateTimeField
 from datetime import datetime
 from typing import List
 
@@ -10,10 +10,12 @@ import pandas as pd
 
 
 class ClanWar(DynamicDocument):
+    updated_on = DateTimeField(default=datetime.now)
     meta = {
         "index_background": True,
         "indexes": [
             "clan.tag",
+            "opponent.tag",
             "clan.members.tag",
             "preparationStartTime",
             "startTime",
