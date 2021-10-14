@@ -217,7 +217,13 @@ class Clan(DynamicDocument):
         return list(reversed(CWLGroup.objects(clans__tag=self.tag)))
 
     def wars(self) -> List[ClanWar]:
-        return ClanWar.objects(clan__tag=self.tag).order_by("-startTime")
+        if wars := list(ClanWar.objects(clan__tag=self.tag).order_by("-startTime")):
+            return wars
+        else:
+            opponent_wars = list(ClanWar.objects(opponent__tag=self.tag).order_by("-startTime"))
+            for war in opponent_wars:
+                war.opponent, war.clan = war.clan, war.opponent
+            return opponent_wars
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
