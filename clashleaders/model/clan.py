@@ -209,6 +209,7 @@ class Clan(DynamicDocument):
                 else:
                     current_war.save()
                     clashleaders.queue.war.schedule_war_update(current_war.endTime + timedelta(minutes=1), self.tag)
+                    clashleaders.queue.war.schedule_war_update(current_war.endTime - timedelta(minutes=1), self.tag)
 
         return current_war
 
