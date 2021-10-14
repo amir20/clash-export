@@ -86,9 +86,6 @@ export default {
       this.openDetails = [this.tableData[0].id];
     }
   },
-  beforeDestroy() {
-    document.removeEventListener("visibilitychange");
-  },
   computed: {
     ...mapState(["sortField", "clan", "selectedGroups"]),
     tableData() {
