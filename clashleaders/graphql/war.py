@@ -2,6 +2,7 @@ from clashleaders.clash.transformer import tag_to_slug
 import logging
 import graphene
 from graphene.types.generic import GenericScalar
+from datetime import datetime
 
 import clashleaders.graphql.clan as clan
 from .badge import BadgeUrls
@@ -42,6 +43,15 @@ class War(graphene.ObjectType):
 
     def resolve_preparationStartTime(parent, info):
         return parent.preparationStartTime.timestamp() * 1000
+
+    def resolve_state(parent, info):
+        now = datetime.now()
+        if parent.startTime > now:
+            return "preparation"
+        elif parent.endTime > now:
+            return "inWar"
+        else:
+            return "warEnded"
 
     def resolve_opponent(parent, info):
         return WarClan(

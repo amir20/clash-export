@@ -56,8 +56,8 @@
                 </div>
                 <div class="media-content">
                   <h3>vs {{ war.opponent.name }}</h3>
-                  <small v-if="new Date() < war.startTime"> Starting in {{ war.startTime | formatDistance(false) }}</small>
-                  <small v-else-if="new Date() < war.endTime"> Ending in {{ war.endTime | formatDistance(false) }}</small>
+                  <small v-if="war.state == 'preparation'"> Starting in {{ war.startTime | formatDistance(false) }}</small>
+                  <small v-else-if="war.state == 'inWar'"> Ending in {{ war.endTime | formatDistance(false) }}</small>
                   <small v-else> Ended {{ war.endTime | formatDistance }}</small>
                 </div>
               </div>
