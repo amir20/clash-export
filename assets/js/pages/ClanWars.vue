@@ -136,7 +136,7 @@ export default {
   name: "ClanWars",
   data() {
     return {
-      currentWar: null,
+      currentWarIndex: null,
     };
   },
   created() {
@@ -146,6 +146,14 @@ export default {
   },
   computed: {
     ...mapState(["clan"]),
+    currentWar: {
+      get() {
+        return this.clan.wars[this.currentWarIndex];
+      },
+      set(selectedWar) {
+        this.currentWarIndex = this.clan.wars.findIndex((war) => war.startTime == selectedWar.startTime);
+      },
+    },
   },
   watch: {
     ["clan.wars"](newValue) {
