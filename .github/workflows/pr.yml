@@ -20,7 +20,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
       - name: Build Docker images
-        run: make build
+        run: DOCKER_BUILDKIT=1 make build
       - name: Run tests
         run: make test
       - name: Run integeration tests
