@@ -81,7 +81,7 @@ pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==8.4.0
 platformdirs==2.4.0
-pluggy==0.13.1
+pluggy==1.0.0
 promise==2.3
 prompt-toolkit==3.0.20
 protobuf==3.18.1
