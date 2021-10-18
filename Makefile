@@ -12,7 +12,7 @@ deploy:
 .PHONY: build
 build:
 	TAG=$(TAG) docker-compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD)
-	DOCKER_BUILDKIT=1 docker tag amir20/clashleaders:$(TAG) amir20/clashleaders:latest
+	docker tag amir20/clashleaders:$(TAG) amir20/clashleaders:latest
 
 .PHONY: push
 push: build
