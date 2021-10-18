@@ -27,16 +27,16 @@ COPY ./requirements*.txt /app/
 
 # Add caddy sources
 RUN echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \
-    | tee -a /etc/apt/sources.list.d/caddy-fury.list
+  | tee -a /etc/apt/sources.list.d/caddy-fury.list
 
 # Install caddy and clean up
 RUN apt-get update \
-    && pip install --upgrade pip \
-    && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
-    && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
-    && pip install --no-cache -r requirements.txt \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /root/.cache
+  && pip install --upgrade pip \
+  && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
+  && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
+  && pip install --no-cache -r requirements.txt \
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /root/.cache
 
 # Install cron jobs
 COPY ./conf/crontab /etc/cron.d/clashleaders
@@ -53,11 +53,10 @@ COPY ./conf/gunicorn.conf.py /app/
 
 COPY ./clashleaders /app/clashleaders
 COPY ./tests /app/tests
-COPY ./Makefile /app/
+COPY ./Makefile ./MANIFEST.in /app/
 COPY ./setup.* /app/
 COPY ./*.json /app/
 COPY ./*.py /app/
-COPY ./*.in /app/
 
 
 # Copy the js files
