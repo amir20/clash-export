@@ -18,7 +18,7 @@ jobs:
         run: make build
       - name: Run tests
         run: make test
-      - name: Run integeration tests
+      - name: Run integration tests
         run: make int
   automerge:
     needs: build
