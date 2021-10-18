@@ -7,6 +7,8 @@ jobs:
   build:
     name: Build & Test
     runs-on: ubuntu-latest
+    env:
+        DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,7 +22,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
       - name: Build Docker images
-        run: DOCKER_BUILDKIT=1 make build
+        run: make build
       - name: Run tests
         run: make test
       - name: Run integeration tests
