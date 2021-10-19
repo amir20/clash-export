@@ -31,7 +31,13 @@ app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
 csrf = CSRFProtect()
 csrf.init_app(app)
 
-bugsnag.configure(api_key=app.config["BUGSNAG_API_KEY"], project_root="/app", release_stage=app.env, notify_release_stages=["production"])
+bugsnag.configure(
+    api_key=app.config["BUGSNAG_API_KEY"],
+    project_root="/app",
+    release_stage=app.env,
+    notify_release_stages=["production"],
+    app_version=os.getenv("VERSION_TAG", "dev"),
+)
 handle_exceptions(app)
 
 logging.basicConfig(level=logging.DEBUG if app.debug else logging.INFO)
