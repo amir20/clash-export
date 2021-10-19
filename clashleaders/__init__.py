@@ -44,7 +44,7 @@ logging.basicConfig(level=logging.DEBUG if app.debug else logging.INFO)
 
 # Sentry setup
 sentry_sdk.init(
-    dsn="https://01a0d76216d24760aeb6ae4c3a261bb2@o85378.ingest.sentry.io/6002234",
+    dsn="https://01a0d76216d24760aeb6ae4c3a261bb2@o85378.ingest.sentry.io/6002234" if not app.debug else None,
     integrations=[FlaskIntegration()],
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
