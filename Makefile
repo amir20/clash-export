@@ -11,7 +11,7 @@ deploy:
 
 .PHONY: build
 build:
-	TAG=$(TAG) docker-compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD)
+	TAG=$(TAG) docker-compose -f docker-compose.yml build --build-arg SOURCE_COMMIT=$$(git rev-parse --short HEAD) --build-arg VERSION_TAG=$(TAG)
 	docker tag amir20/clashleaders:$(TAG) amir20/clashleaders:latest
 
 .PHONY: push

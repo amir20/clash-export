@@ -15,15 +15,6 @@ from graphene import Schema
 from mongoengine import connect
 from redis import Redis
 
-sentry_sdk.init(
-    dsn="https://01a0d76216d24760aeb6ae4c3a261bb2@o85378.ingest.sentry.io/6002234",
-    integrations=[FlaskIntegration()],
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
-)
-
 
 app = Flask(__name__, static_folder="_does_not_exists_", static_url_path="/static")
 app.config.from_pyfile("config.py")
@@ -32,7 +23,6 @@ app.config.from_pyfile("config.py")
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 app.jinja_env.policies["json.dumps_kwargs"] = {"sort_keys": False}
-
 
 # RQ
 app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
@@ -45,6 +35,18 @@ bugsnag.configure(api_key=app.config["BUGSNAG_API_KEY"], project_root="/app", re
 handle_exceptions(app)
 
 logging.basicConfig(level=logging.DEBUG if app.debug else logging.INFO)
+
+# Sentry setup
+sentry_sdk.init(
+    dsn="https://01a0d76216d24760aeb6ae4c3a261bb2@o85378.ingest.sentry.io/6002234",
+    integrations=[FlaskIntegration()],
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=0.2,
+    environment=app.env,
+    release=os.getenv("VERSION_TAG", "dev"),
+)
 
 # Cache settings
 cache_type = "null" if app.env == "development" else "redis"

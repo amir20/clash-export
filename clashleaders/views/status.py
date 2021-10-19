@@ -27,9 +27,7 @@ def status():
 
 @app.route("/version.json")
 def version_json():
-    with open(os.path.join(site_root, "..", "package.json")) as f:
-        data = json.load(f)
-    version = data["version"]
+    version = os.getenv("VERSION_TAG")
     commit = os.getenv("SOURCE_COMMIT")
 
     return jsonify(dict(version=version, commit=commit))
@@ -37,9 +35,7 @@ def version_json():
 
 @app.route("/healthcheck")
 def healthcheck():
-    with open(os.path.join(site_root, "..", "package.json")) as f:
-        data = json.load(f)
-    version = data["version"]
+    version = os.getenv("VERSION_TAG")
     commit = os.getenv("SOURCE_COMMIT")
     players = Player.objects.count()
     clans = Clan.objects.count()
