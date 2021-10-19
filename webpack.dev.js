@@ -9,5 +9,8 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: "css/[name].css",
     }),
+    new webpack.DefinePlugin({
+      CLASHLEADERS_VERSION: JSON.stringify("dev"),
+    }),
   ],
 });

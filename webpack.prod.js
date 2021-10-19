@@ -16,6 +16,7 @@ module.exports = merge(common, {
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
+      CLASHLEADERS_VERSION: JSON.stringify(process.env.VERSION_TAG),
     }),
     new MiniCssExtractPlugin({ filename: "css/[name].[chunkhash].css" }),
   ],

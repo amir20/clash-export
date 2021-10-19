@@ -7,6 +7,10 @@ COPY package.json yarn.lock ./
 # Install dependencies
 RUN yarn
 
+# For building js version
+ARG VERSION_TAG=DIRTY
+ENV VERSION_TAG $VERSION_TAG
+
 # Copy all files for webpack
 COPY webpack* .* ./
 COPY assets/ assets/
