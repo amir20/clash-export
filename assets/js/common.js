@@ -5,6 +5,7 @@ import bugsnag from "./bugsnag";
 import formatDistance from "date-fns/formatDistance";
 import parse from "date-fns/parse";
 import NavBarEnd from "./components/NavBarEnd";
+import { getCLS, getFID, getLCP } from "web-vitals";
 
 bugsnag(Vue);
 
@@ -33,3 +34,16 @@ document.querySelector(".navbar-burger.burger").addEventListener("click", (e) =>
   e.target.classList.toggle("is-active");
   document.querySelector(".navbar .navbar-menu").classList.toggle("is-active");
 });
+
+function sendToGoogleAnalytics({ name, delta, value, id }) {
+  gtag("event", name, {
+    value: delta,
+    metric_id: id,
+    metric_value: value,
+    metric_delta: delta,
+  });
+}
+
+getCLS(sendToGoogleAnalytics);
+getFID(sendToGoogleAnalytics);
+getLCP(sendToGoogleAnalytics);
