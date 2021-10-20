@@ -60,7 +60,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 400m
+          memory: 800m
       update_config:
         order: start-first
         failure_action: rollback
