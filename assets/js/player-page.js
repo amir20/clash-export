@@ -2,7 +2,6 @@ import Vue from "vue";
 import Buefy from "buefy";
 import Troops from "./components/Troops";
 import PlayerActivityWrapper from "./components/PlayerActivityWrapper";
-import PlayerRecommendation from "./components/PlayerRecommendation";
 import bugsnag from "./bugsnag";
 import store from "./store/player-page";
 bugsnag(Vue);
