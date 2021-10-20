@@ -8,19 +8,16 @@ import rq_dashboard
 from bugsnag.flask import handle_exceptions
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
-from sentry_sdk.integrations.redis import RedisIntegration
 from flask_caching import Cache
 from flask_graphql import GraphQLView
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from graphene import Schema
 from mongoengine import connect
 from redis import Redis
-import flask_monitoringdashboard as dashboard
 
 
 app = Flask(__name__, static_folder="_does_not_exists_", static_url_path="/static")
 app.config.from_pyfile("config.py")
-dashboard.bind(app)
 
 # Template settings
 app.jinja_env.trim_blocks = True
@@ -33,9 +30,6 @@ app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
 # CSRF
 csrf = CSRFProtect()
 csrf.init_app(app)
-csrf.exempt(rq_dashboard.blueprint)
-csrf.exempt(dashboard.blueprint)
-
 
 bugsnag.configure(
     api_key=app.config["BUGSNAG_API_KEY"],
@@ -51,7 +45,7 @@ logging.basicConfig(level=logging.DEBUG if app.debug else logging.INFO)
 # Sentry setup
 sentry_sdk.init(
     dsn="https://01a0d76216d24760aeb6ae4c3a261bb2@o85378.ingest.sentry.io/6002234" if not app.debug else None,
-    integrations=[FlaskIntegration(), RedisIntegration()],
+    integrations=[FlaskIntegration()],
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     # We recommend adjusting this value in production.
