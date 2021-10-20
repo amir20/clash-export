@@ -40,7 +40,7 @@
 import { bugsnagClient } from "../bugsnag";
 import { request } from "../client";
 import { gql } from "graphql-request";
-const PlayerActivity = () => import("./PlayerActivity.vue");
+import PlayerActivity from "./PlayerActivity.vue";
 
 const role = {
   coLeader: "Co-leader",

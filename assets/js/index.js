@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Buefy from "buefy";
 import Home from "./components/Home";
+import TrophyDistribution from "./components/TrophyDistribution";
 import bugsnag from "./bugsnag";
 import store from "./store/index-page";
 
@@ -13,6 +14,7 @@ new Vue({
   store,
   components: {
     Home,
+    TrophyDistribution,
   },
   render: (h) => h(Home),
 });

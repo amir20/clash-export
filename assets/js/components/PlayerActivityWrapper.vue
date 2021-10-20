@@ -3,7 +3,7 @@
 </template>
 
 <script>
-const PlayerActivity = () => import("./PlayerActivity.vue");
+import PlayerActivity from "./PlayerActivity.vue";
 import { mapState } from "vuex";
 
 export default {

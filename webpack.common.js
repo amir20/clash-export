@@ -11,7 +11,7 @@ module.exports = {
   entry: {
     "clan-page": "./js/clan-page.js",
     "player-page": "./js/player-page.js",
-    // "troop-page": "./js/troop-page.js",
+    "troop-page": "./js/troop-page.js",
     index: "./js/index.js",
     common: "./js/common.js",
     styles: "./css/styles.scss",
@@ -27,7 +27,7 @@ module.exports = {
 
             return true;
           },
-          chunks: "initial",
+          chunks: "all",
           name: "vendors",
         },
         shims: {
