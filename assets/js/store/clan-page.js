@@ -47,7 +47,7 @@ const mutations = {
 };
 
 const actions = {
-  async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }, { updateWars = true } = { updateWars: true }) {
+  async FETCH_CLAN_DATA({ commit, dispatch, state: { clan, days } }, { updateWars = true, refresh = 5 } = { updateWars: true, refresh: 5 }) {
     commit("START_LOADING");
     dispatch("FETCH_SAVED_CLAN");
 
@@ -150,8 +150,8 @@ const actions = {
       {
         tag: clan.tag,
         days,
-        refresh: 5,
-        updateWars: updateWars,
+        refresh,
+        updateWars,
       }
     );
     commit("STOP_LOADING");
