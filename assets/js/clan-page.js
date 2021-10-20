@@ -9,6 +9,10 @@ import ClanCWL from "./pages/ClanCWL";
 import ClanPlayers from "./pages/ClanPlayers";
 import ClanWars from "./pages/ClanWars";
 
+store.dispatch("FETCH_CLAN_DATA", { updateWars: false }).then(() => {
+  store.dispatch("FETCH_CLAN_DATA", { updateWars: true });
+});
+
 bugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
@@ -44,6 +48,3 @@ document.addEventListener(
   },
   false
 );
-
-await store.dispatch("FETCH_CLAN_DATA", { updateWars: false });
-await store.dispatch("FETCH_CLAN_DATA", { updateWars: true });
