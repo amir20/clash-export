@@ -15,7 +15,7 @@ services:
       replicas: 2
       resources:
         limits:
-          memory: 200m
+          memory: 300m
   rq_war_worker:
     environment:
       - API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQxM2I5NDE1LWQ1MmEtNGM2YS1iZTUyLTlkM2I2NjVkOWI4ZSIsImlhdCI6MTU5MTA0OTgyNywic3ViIjoiZGV2ZWxvcGVyL2EzZjUxMmFlLTVmZWQtM2Q0MC00Y2E3LTdhYzc0ZTQ0YjQyOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjY0LjIyNy4xMDIuMzEiXSwidHlwZSI6ImNsaWVudCJ9XX0.kHV83-93nISFrd_J1nltu7WK4HqgY0-VtyX8Y6tBFOyUASXPLVDtvlzCXmGTmuSr0ZT_VJYjerWM2N4dTUDLGg
