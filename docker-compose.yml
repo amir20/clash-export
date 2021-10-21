@@ -21,6 +21,7 @@ services:
       - redis
       - mongo
       - imgproxy-cache
+      - rq_calculation_worker
   imgproxy:
     image: darthsim/imgproxy:v2.17
     environment:
@@ -36,6 +37,12 @@ services:
       dockerfile: Dockerfile.imgproxy
     depends_on:
       - imgproxy
+  rq_calculation_worker:
+    image: "amir20/clashleaders:${TAG:-latest}"
+    command: "rq_worker calculation"
+    depends_on:
+      - redis
+      - mongo
   rq_war_worker:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "rq_worker war"

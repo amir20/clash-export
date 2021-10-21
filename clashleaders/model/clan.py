@@ -13,6 +13,7 @@ import clashleaders.clash.transformer
 import clashleaders.model
 import clashleaders.queue.player
 import clashleaders.queue.war
+import clashleaders.queue.calculation
 
 from clashleaders.clash import api
 from clashleaders.model.clan_delta import ClanDelta
@@ -250,7 +251,7 @@ class Clan(DynamicDocument):
         clan = Clan.objects(tag=correct_tag(tag)).first()
 
         if not clan:
-            clan = Clan.fetch_and_update(tag)
+            clan = Clan.fetch_and_update(tag, sync_calculation=True)
 
         return clan
 
@@ -267,7 +268,7 @@ class Clan(DynamicDocument):
         return Clan.objects(query).no_cache().only("tag")
 
     @classmethod
-    def fetch_and_update(cls, tag) -> Clan:
+    def fetch_and_update(cls, tag, sync_calculation=True) -> Clan:
         tag = correct_tag(tag)
 
         # Fetch from API
@@ -285,10 +286,13 @@ class Clan(DynamicDocument):
 
         clan: Clan = Clan.objects(tag=tag).upsert_one(**clan_response)
 
-        try:
-            clan.update_calculations()
-        except Exception as e:
-            logger.exception(f"Failed to update calculations for {clan.tag}")
+        if sync_calculation:
+            try:
+                clan.update_calculations()
+            except:
+                logger.exception("Exception while calculating for clan")
+        else:
+            clan.job = clashleaders.queue.calculation.update_calculations.delay(tag)
 
         return clan
 

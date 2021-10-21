@@ -15,4 +15,4 @@ def schedule_war_update(datetime, tag):
 
 
 def update_wars(tag):
-    clashleaders.model.Clan.fetch_and_update(tag).update_wars()
+    clashleaders.model.Clan.fetch_and_update(tag, sync_calculation=True).update_wars()

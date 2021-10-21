@@ -4,9 +4,11 @@ import graphene
 import clashleaders.model as model
 
 from clashleaders.clash import api
+from rq.exceptions import NoSuchJobError
 
 from .clan import Clan, ShortClan
 from .player import Player
+from time import sleep
 
 
 logger = logging.getLogger(__name__)
@@ -28,7 +30,8 @@ class Query(graphene.ObjectType):
             clan.update(inc__page_views=1)
             delta = datetime.now() - clan.updated_on
             if timedelta(minutes=refresh) < delta:
-                model.Clan.fetch_and_update(tag)
+                clan = model.Clan.fetch_and_update(tag, sync_calculation=False)
+                wait_for_job(clan.job)
 
         clan = model.Clan.find_by_tag(tag)
         if update_wars:
@@ -54,3 +57,13 @@ class Query(graphene.ObjectType):
             c.slug = slugs.get(c.tag)
 
         return results
+
+
+def wait_for_job(job, wait_time=3):
+    start = datetime.now()
+    while (datetime.now() - start).total_seconds() < wait_time:
+        sleep(0.2)
+        try:
+            job.refresh()
+        except NoSuchJobError:
+            break

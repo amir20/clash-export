@@ -37,7 +37,7 @@ def update_single_clan():
         clan = Clan.active(twenty_hours_ago).skip(max(INDEX - 1, 0)).limit(1).first()
         if clan:
             logger.debug(f"Worker #%d: Updating clan %s.", WORKER_OFFSET, clan.tag)
-            capture_duration(lambda: Clan.fetch_and_update(clan.tag).update_wars())
+            capture_duration(lambda: Clan.fetch_and_update(clan.tag, sync_calculation=True).update_wars())
             tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:
                 total = Clan.active(twenty_hours_ago).count()
