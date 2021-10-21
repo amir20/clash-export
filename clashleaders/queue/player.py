@@ -2,6 +2,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import clashleaders.model
+import time
 
 from typing import List
 
@@ -23,6 +24,7 @@ def worker():
             logger.exception(f"Unexpected error while updating players")
         finally:
             q.task_done()
+            time.sleep(0.100)
 
 
 threading.Thread(target=worker, daemon=True).start()
