@@ -6,7 +6,6 @@ from .trained_model import TrainedModel
 from .avg_troop import AverageTroop
 from .historical_clan import HistoricalClan
 from .historical_player import HistoricalPlayer
-from .war import War
 from .cwl_group import CWLGroup
 from .clan_war import ClanWar
 from .cwl_war import CWLWar

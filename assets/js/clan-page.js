@@ -9,9 +9,8 @@ import ClanCWL from "./pages/ClanCWL";
 import ClanPlayers from "./pages/ClanPlayers";
 import ClanWars from "./pages/ClanWars";
 
-store.dispatch("FETCH_CLAN_DATA", { updateWars: false, refresh: 0 }).then(() => {
-  store.dispatch("FETCH_CLAN_DATA", { updateWars: true, refresh: 5 });
-});
+// Load latest data here
+store.dispatch("FETCH_CLAN_DATA", { updateWars: true, refresh: 5 });
 
 bugsnag(Vue);
 
