@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-from typing import List, Tuple, Dict, Optional
-from clashleaders import cache
+from typing import Iterable, List, Tuple, Dict, Optional
 
 import pandas as pd
 from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
@@ -16,6 +15,7 @@ import clashleaders.queue.player
 import clashleaders.queue.war
 import clashleaders.queue.calculation
 
+from clashleaders import cache
 from clashleaders.clash import api
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.model.cwl_group import CWLGroup
@@ -218,17 +218,18 @@ class Clan(DynamicDocument):
 
         return current_war
 
-    def cwl_wars(self) -> List[CWLGroup]:
-        return list(reversed(CWLGroup.objects(clans__tag=self.tag)))
+    def cwl_wars(self) -> Iterable[CWLGroup]:
+        return CWLGroup.objects(clans__tag=self.tag)
 
-    def wars(self) -> List[ClanWar]:
-        if wars := list(ClanWar.objects(clan__tag=self.tag).order_by("-startTime")):
+    def wars(self) -> Iterable[ClanWar]:
+        wars = ClanWar.objects(clan__tag=self.tag)
+        if wars.first():
             return wars
         else:
-            opponent_wars = list(ClanWar.objects(opponent__tag=self.tag).order_by("-startTime"))
+            opponent_wars = ClanWar.objects(opponent__tag=self.tag).order_by("-startTime")
             for war in opponent_wars:
                 war.opponent, war.clan = war.clan, war.opponent
-            return opponent_wars
+                yield war
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())

@@ -177,7 +177,7 @@ class Clan(graphene.ObjectType):
             return None
 
     def resolve_wars(self, info):
-        return self.wars()
+        return self.wars().limit(10)
 
     def resolve_comparable_members(self, info, delta_days):
         return self.comparable_members(delta_days)

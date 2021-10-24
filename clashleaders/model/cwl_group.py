@@ -21,6 +21,7 @@ class CWLGroup(DynamicDocument):
 
     meta = {
         "index_background": True,
+        "ordering": ["-id"],
         "indexes": [
             ("clans.tag", "season"),
         ],

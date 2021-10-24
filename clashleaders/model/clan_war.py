@@ -13,6 +13,7 @@ class ClanWar(DynamicDocument):
     updated_on = DateTimeField(default=datetime.now)
     meta = {
         "index_background": True,
+        "ordering": ["-startTime"],
         "indexes": [
             "clan.tag",
             "opponent.tag",
