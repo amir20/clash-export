@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
-    "husky": "^7.0.2",
+    "husky": "^7.0.4",
     "lint-staged": "^11.2.4",
     "prettier": "^2.4.1",
     "webpack-bundle-analyzer": "^4.5.0"
