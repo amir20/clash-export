@@ -55,8 +55,6 @@ services:
         - traefik.http.middlewares.i_headers.headers.stsSeconds=315360000
         - traefik.http.middlewares.i_headers.headers.sslredirect=true
         - traefik.http.middlewares.i_headers.headers.sslForceHost=true
-
-
     networks:
       - web
       - default
@@ -66,11 +64,13 @@ services:
     volumes:
       - /data/caddy:/root/.caddy
     deploy:
+      replicas: 2
       resources:
         limits:
           memory: 400m
       update_config:
-        order: start-first
+      parallelism: 1
+        order: stop-first
         failure_action: rollback
         delay: 10s
       rollback_config:
