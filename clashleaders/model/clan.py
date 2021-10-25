@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from datetime import datetime, timedelta
 from typing import List, Tuple, Dict, Optional
+from clashleaders import cache
 
 import pandas as pd
 from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
@@ -136,13 +137,16 @@ class Clan(DynamicDocument):
             return df
         return df.set_index("created_on")
 
+    @cache.memoize(timeout=15)
     def historical_near_time(self, dt) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
+    @cache.memoize(timeout=15)
     def historical_near_days_ago(self, days) -> clashleaders.model.HistoricalClan:
         dt = datetime.now() - timedelta(days=int(days))
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
+    @cache.memoize(timeout=15)
     def historical_near_now(self) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
 
@@ -241,10 +245,10 @@ class Clan(DynamicDocument):
         return data
 
     def __repr__(self):
-        return "<Clan {0}>".format(self.tag)
+        return f"<Clan tag={self.tag} updated_on={self.updated_on:%Y-%m-%d %H:%M:%S}>"
 
     def __str__(self):
-        return "<Clan {0}>".format(self.tag)
+        return f"<Clan tag={self.tag}>"
 
     @classmethod
     def find_by_tag(cls, tag) -> Clan:

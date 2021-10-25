@@ -9,6 +9,7 @@ from mongoengine import Document, StringField, IntField, DateTimeField, Referenc
 import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity
 import clashleaders.model
+from clashleaders import cache
 from clashleaders.model import ClanDelta
 from clashleaders.util import correct_tag
 from clashleaders.model.historical_player import HistoricalPlayer
@@ -35,6 +36,7 @@ class HistoricalClan(Document):
         values = {k: v for k, v in kwargs.items() if k in self._fields_ordered}
         super().__init__(*args, **values)
 
+    @cache.memoize(timeout=15)
     def to_df(self, formatted=True, player_activity=False, war_activity=False) -> pd.DataFrame:
         if len(self.players) == 0:
             return pd.DataFrame(columns=list(COLUMNS.values()))
@@ -67,10 +69,10 @@ class HistoricalClan(Document):
         return {name: getattr(self, name) for name in fields}
 
     def __repr__(self):
-        return "<HistoricalClan {0}>".format(self.tag)
+        return f"<HistoricalClan tag={self.tag} created_on={self.created_on:%Y-%m-%d %H:%M:%S}>"
 
     def __str__(self):
-        return "<HistoricalClan {0}>".format(self.tag)
+        return f"<HistoricalClan tag={self.tag} created_on={self.created_on:%Y-%m-%d %H:%M:%S}>"
 
     def avg_war_activity(self):
         tags = [p.tag for p in self.players]
