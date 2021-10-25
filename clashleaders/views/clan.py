@@ -58,7 +58,7 @@ def clan_detail_page(slug, page=None):
             warWinRatio=clan.war_win_ratio,
             warWins=clan.warWins,
             recentCwlGroup=recent_cwl_group(clan),
-            wars=[{"state": war.state} for war in clan.wars()],
+            wars=[{"state": war.state for war in clan.wars(limit=1)}],
             comparableMembers=members(clan),
         )
     except DoesNotExist:
@@ -91,9 +91,7 @@ def members(clan: Clan):
 
 def recent_cwl_group(clan: Clan):
     try:
-        wars = clan.cwl_wars()
-        if wars:
-            war = wars[0]
+        if war := clan.cwl_wars().first():
             df = war.aggregate_stars_and_destruction(clan).fillna("na").reset_index()
             return dict(season=war.season, aggregated=df.to_dict(orient="records"))
         else:
