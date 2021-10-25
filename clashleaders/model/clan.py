@@ -221,15 +221,15 @@ class Clan(DynamicDocument):
     def cwl_wars(self) -> Iterable[CWLGroup]:
         return CWLGroup.objects(clans__tag=self.tag)
 
-    def wars(self) -> Iterable[ClanWar]:
-        wars = ClanWar.objects(clan__tag=self.tag)
+    def wars(self, limit: int = 15) -> List[ClanWar]:
+        wars = ClanWar.objects(clan__tag=self.tag).limit(limit)
         if wars.first():
-            return wars
+            return list(wars)
         else:
-            opponent_wars = ClanWar.objects(opponent__tag=self.tag).order_by("-startTime")
+            opponent_wars = ClanWar.objects(opponent__tag=self.tag).limit(limit)
             for war in opponent_wars:
                 war.opponent, war.clan = war.clan, war.opponent
-                yield war
+            return list(opponent_wars)
 
     def to_dict(self, short=False) -> Dict:
         data = dict(self.to_mongo())
