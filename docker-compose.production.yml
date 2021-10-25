@@ -69,7 +69,7 @@ services:
         limits:
           memory: 400m
       update_config:
-      parallelism: 1
+        parallelism: 1
         order: stop-first
         failure_action: rollback
         delay: 10s
