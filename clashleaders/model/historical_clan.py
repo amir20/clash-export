@@ -5,11 +5,11 @@ from datetime import datetime
 
 import pandas as pd
 from mongoengine import Document, StringField, IntField, DateTimeField, ReferenceField, ListField
+from functools import cache
 
 import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity
 import clashleaders.model
-from clashleaders import cache
 from clashleaders.model import ClanDelta
 from clashleaders.util import correct_tag
 from clashleaders.model.historical_player import HistoricalPlayer
@@ -36,7 +36,7 @@ class HistoricalClan(Document):
         values = {k: v for k, v in kwargs.items() if k in self._fields_ordered}
         super().__init__(*args, **values)
 
-    @cache.memoize(timeout=15)
+    @cache
     def to_df(self, formatted=True, player_activity=False, war_activity=False) -> pd.DataFrame:
         if len(self.players) == 0:
             return pd.DataFrame(columns=list(COLUMNS.values()))
