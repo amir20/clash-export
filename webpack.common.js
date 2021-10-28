@@ -21,7 +21,10 @@ module.exports = {
       cacheGroups: {
         commons: {
           test(mod /* , chunk */) {
-            if (!mod.context.includes("node_modules") || ["node_modules/core-js-pure", "node_modules/whatwg-fetch"].some((str) => mod.context.includes(str))) {
+            if (
+              mod.context &&
+              (!mod.context.includes("node_modules") || ["node_modules/core-js-pure", "node_modules/whatwg-fetch"].some((str) => mod.context.includes(str)))
+            ) {
               return false;
             }
 
@@ -32,7 +35,7 @@ module.exports = {
         },
         shims: {
           test(mod /* , chunk */) {
-            return ["node_modules/core-js-pure", "node_modules/whatwg-fetch"].some((str) => mod.context.includes(str));
+            return mod.context && ["node_modules/core-js-pure", "node_modules/whatwg-fetch"].some((str) => mod.context.includes(str));
           },
           chunks: "all",
           name: "shims",
