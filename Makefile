@@ -25,15 +25,16 @@ test: build
 
 .PHONY: start
 start:
-	@npm start
+	docker-compose stop web
+	nr start
 
 .PHONY: release_patch
 release_patch:
-	@npm version patch
+	pnpm version patch
 
 .PHONY: release_minor
 release_minor:
-	@npm version minor
+	pnpm version minor
 
 .PHONY: int
 int:

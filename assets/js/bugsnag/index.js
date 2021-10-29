@@ -1,10 +1,13 @@
-const bugsnag = require("bugsnag-js");
-const bugsnagVue = require("bugsnag-vue");
+const Bugsnag = require("@bugsnag/js");
+const BugsnagPluginVue = require("@bugsnag/plugin-vue");
 
-export const bugsnagClient = bugsnag({
-  apiKey: "cdb173414b6d879639165cedcc730d73",
-  notifyReleaseStages: ["production"],
-  appVersion: CLASHLEADERS_VERSION,
-});
+let bugsnagClient = null;
+export default (instance) =>
+  (bugsnagClient = Bugsnag.start({
+    apiKey: "cdb173414b6d879639165cedcc730d73",
+    notifyReleaseStages: ["production"],
+    appVersion: CLASHLEADERS_VERSION,
+    plugins: [new BugsnagPluginVue(instance)],
+  }));
 
-export default (instance) => bugsnagClient.use(bugsnagVue(instance));
+export { bugsnagClient };

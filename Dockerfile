@@ -1,11 +1,15 @@
 # Build assets
 FROM node:16 as builder
 
-WORKDIR /build
-COPY package.json yarn.lock ./
+RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 
-# Install dependencies
-RUN yarn
+WORKDIR /build
+COPY pnpm-lock.yaml ./
+RUN pnpm fetch
+
+# Install build dependencies
+COPY package.json ./
+RUN pnpm install -r --offline
 
 # For building js version
 ARG VERSION_TAG=DIRTY
@@ -17,7 +21,7 @@ COPY assets/ assets/
 COPY clashleaders/static clashleaders/static
 
 # Do the build
-RUN yarn build
+RUN pnpm build
 
 
 FROM python:3.9.7-slim
@@ -62,11 +66,12 @@ COPY ./setup.* /app/
 COPY ./*.json /app/
 COPY ./*.py /app/
 
+RUN pip install -e .
 
 # Copy the js files
 COPY --from=builder /build/clashleaders/static /app/clashleaders/static
 
-RUN pip install -e .
+
 ENV FLASK_APP=clashleaders
 ARG SOURCE_COMMIT=DIRTY
 ENV SOURCE_COMMIT $SOURCE_COMMIT

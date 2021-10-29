@@ -1,12 +1,12 @@
 import "whatwg-fetch";
 import Vue from "vue";
 import { Dropdown, Autocomplete, Icon } from "buefy";
-import bugsnag from "./bugsnag";
+import useBugsnag from "./bugsnag";
 import formatDistance from "date-fns/formatDistance";
 import parse from "date-fns/parse";
 import NavBarEnd from "./components/NavBarEnd";
 
-bugsnag(Vue);
+useBugsnag(Vue);
 
 Vue.use(Dropdown);
 Vue.use(Autocomplete);

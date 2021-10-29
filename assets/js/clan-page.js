@@ -2,7 +2,7 @@ import Vue from "vue";
 import Buefy from "buefy";
 import VueRouter from "vue-router";
 
-import bugsnag from "./bugsnag";
+import useBugsnag from "./bugsnag";
 import store from "./store/clan-page";
 import ClanPage from "./pages/ClanPage";
 import ClanCWL from "./pages/ClanCWL";
@@ -12,7 +12,7 @@ import ClanWars from "./pages/ClanWars";
 // Load latest data here
 store.dispatch("FETCH_CLAN_DATA", { updateWars: true, refresh: 5 });
 
-bugsnag(Vue);
+useBugsnag(Vue);
 
 Vue.use(Buefy, { defaultIconPack: "fa" });
 Vue.use(VueRouter);
