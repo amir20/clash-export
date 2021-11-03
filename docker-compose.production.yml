@@ -64,13 +64,13 @@ services:
     volumes:
       - /data/caddy:/root/.caddy
     deploy:
-      replicas: 2
+      replicas: 1
       resources:
         limits:
           memory: 400m
       update_config:
         parallelism: 1
-        order: stop-first
+        order: start-first
         failure_action: rollback
         delay: 10s
       restart_policy:
