@@ -112,7 +112,7 @@ rq==1.10.0
 rq-dashboard==0.6.1
 Rx==1.6.1
 scikit-learn==1.0.1
-scipy==1.7.1
+scipy==1.7.2
 semantic-version==2.8.5
 setuptools-rust==0.12.1
 six==1.16.0
