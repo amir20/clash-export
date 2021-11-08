@@ -35,7 +35,7 @@
     "es6-map": "^0.1.5",
     "file-loader": "^6.2.0",
     "flag-icon-css": "^3.5.0",
-    "graphql": "^15.6.1",
+    "graphql": "^16.0.1",
     "graphql-request": "^3.6.1",
     "jpeg-js": "^0.4.3",
     "js-cookie": "^3.0.1",
