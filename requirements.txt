@@ -61,7 +61,7 @@ Jinja2==3.0.3
 joblib==1.1.0
 lazy-object-proxy==1.6.0
 loguru==0.5.3
-Mako==1.1.5
+Mako==1.1.6
 Markdown==3.3.4
 MarkupSafe==2.0.1
 matplotlib-inline==0.1.3
