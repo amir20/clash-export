@@ -13,7 +13,7 @@ atomicwrites==1.4.0
 attrs==21.2.0
 awesome-slugify==1.6.5
 backcall==0.2.0
-black==21.10b0
+black==21.11b1
 blinker==1.4
 bugsnag==4.1.1
 cachetools==4.2.4
