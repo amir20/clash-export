@@ -12,14 +12,14 @@ specifiers:
   '@tweenjs/tween.js': ^18.6.4
   autoprefixer: ^10.3.7
   babel-loader: ^8.2.3
-  buefy: ^0.9.10
+  buefy: ^0.9.13
   bulma: ^0.9.3
   bulma-badge: ^3.0.1
-  caniuse-lite: ^1.0.30001271
+  caniuse-lite: ^1.0.30001286
   chartist: ^0.11.4
   chartist-plugin-legend: ^0.6.2
   clean-webpack-plugin: ^4.0.0
-  concurrently: ^6.3.0
+  concurrently: ^6.4.0
   core-js: ^3.19.0
   css-loader: ^5.2.6
   css-minimizer-webpack-plugin: ^3.1.1
@@ -35,8 +35,8 @@ specifiers:
   es6-map: ^0.1.5
   file-loader: ^6.2.0
   flag-icon-css: ^3.5.0
-  graphql: ^15.6.1
-  graphql-request: ^3.6.1
+  graphql: ^16.1.0
+  graphql-request: ^3.7.0
   husky: ^7.0.4
   jpeg-js: ^0.4.3
   js-cookie: ^3.0.1
@@ -48,7 +48,7 @@ specifiers:
   postcss-font-magician: ^3.0.0
   postcss-loader: ^6.2.0
   postcss-safe-parser: ^6.0.0
-  prettier: ^2.4.1
+  prettier: ^2.5.1
   promise-polyfill: ^8.2.1
   regenerator-runtime: ^0.13.9
   sass-loader: ^12.2.0
@@ -83,10 +83,10 @@ dependencies:
   '@tweenjs/tween.js': 18.6.4
   autoprefixer: 10.4.0_postcss@8.3.11
   babel-loader: 8.2.3_8dd2b11efd9b7265f9b7da54f0e73ab1
-  buefy: 0.9.10_vue@2.6.14
+  buefy: 0.9.13_vue@2.6.14
   bulma: 0.9.3
   bulma-badge: 3.0.1
-  caniuse-lite: 1.0.30001272
+  caniuse-lite: 1.0.30001286
   chartist: 0.11.4
   chartist-plugin-legend: 0.6.2
   clean-webpack-plugin: 4.0.0_webpack@5.65.0
@@ -105,8 +105,8 @@ dependencies:
   es6-map: 0.1.5
   file-loader: 6.2.0_webpack@5.65.0
   flag-icon-css: 3.5.0
-  graphql: 15.7.2
-  graphql-request: 3.6.1_graphql@15.7.2
+  graphql: 16.1.0
+  graphql-request: 3.7.0_graphql@16.1.0
   jpeg-js: 0.4.3
   js-cookie: 3.0.1
   lodash: 4.17.21
@@ -138,10 +138,10 @@ dependencies:
   whatwg-fetch: 3.6.2
 
 devDependencies:
-  concurrently: 6.3.0
+  concurrently: 6.4.0
   husky: 7.0.4
   lint-staged: 11.2.6
-  prettier: 2.4.1
+  prettier: 2.5.1
   webpack-bundle-analyzer: 4.5.0
 
 packages:
@@ -1735,7 +1735,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.17.5
-      caniuse-lite: 1.0.30001272
+      caniuse-lite: 1.0.30001286
       fraction.js: 4.1.1
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1873,7 +1873,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001272
+      caniuse-lite: 1.0.30001286
       electron-to-chromium: 1.3.884
       escalade: 3.1.1
       node-releases: 2.0.1
@@ -1892,8 +1892,8 @@ packages:
       picocolors: 1.0.0
     dev: false
 
-  /buefy/0.9.10_vue@2.6.14:
-    resolution: {integrity: sha512-xXEoy/NTgBNiIfBTCdHi2Vu5SJJdB046py6ekUvYuUgYwRvulySZksdecVNNWdfEVU8iD4esZaRbTLwCegFcVQ==}
+  /buefy/0.9.13_vue@2.6.14:
+    resolution: {integrity: sha512-W8QhvAz+YlKhxDQe/oag4Fl/zYTvXOPoNVr4pseYDR7r52Ta6s51iedBdvw4It68Sq+g7mcxIzwK7mv3PR6O4g==}
     engines: {node: '>= 4.0.0', npm: '>= 3.0.0'}
     peerDependencies:
       vue: ^2.6.11
@@ -1953,10 +1953,6 @@ packages:
       caniuse-lite: 1.0.30001286
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
-    dev: false
-
-  /caniuse-lite/1.0.30001272:
-    resolution: {integrity: sha512-DV1j9Oot5dydyH1v28g25KoVm7l8MTxazwuiH3utWiAS6iL/9Nh//TGwqFEeqqN8nnWYQ8HHhUq+o4QPt9kvYw==}
     dev: false
 
   /caniuse-lite/1.0.30001286:
@@ -2149,13 +2145,13 @@ packages:
       typedarray: 0.0.6
     dev: false
 
-  /concurrently/6.3.0:
-    resolution: {integrity: sha512-k4k1jQGHHKsfbqzkUszVf29qECBrkvBKkcPJEUDTyVR7tZd1G/JOfnst4g1sYbFvJ4UjHZisj1aWQR8yLKpGPw==}
+  /concurrently/6.4.0:
+    resolution: {integrity: sha512-HZ3D0RTQMH3oS4gvtYj1P+NBc6PzE2McEra6yEFcQKrUQ9HvtTGU4Dbne083F034p+LRb7kWU0tPRNvSGs1UCQ==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     dependencies:
       chalk: 4.1.2
-      date-fns: 2.25.0
+      date-fns: 2.27.0
       lodash: 4.17.21
       rxjs: 6.6.7
       spawn-command: 0.0.2-1
@@ -2667,6 +2663,12 @@ packages:
   /date-fns/2.25.0:
     resolution: {integrity: sha512-ovYRFnTrbGPD4nqaEqescPEv1mNwvt+UTqI3Ay9SzNtey9NZnYu6E2qCcBBgJ6/2VF1zGGygpyTDITqpQQ5e+w==}
     engines: {node: '>=0.11'}
+    dev: false
+
+  /date-fns/2.27.0:
+    resolution: {integrity: sha512-sj+J0Mo2p2X1e306MHq282WS4/A8Pz/95GIFcsPNMPMZVI3EUrAdSv90al1k+p74WGLCruMXk23bfEDZa71X9Q==}
+    engines: {node: '>=0.11'}
+    dev: true
 
   /de-indent/1.0.2:
     resolution: {integrity: sha1-sgOOhG3DO6pXlhKNCAS0VbjB4h0=}
@@ -3249,20 +3251,20 @@ packages:
     resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}
     dev: false
 
-  /graphql-request/3.6.1_graphql@15.7.2:
-    resolution: {integrity: sha512-Nm1EasrAQVZllyNTlHDLnLZjlhC6eRWnWP6KH//ytnAL08pjlLkdI2K+s6OV92p45hn5b/kUlLbDwACmRoLwrQ==}
+  /graphql-request/3.7.0_graphql@16.1.0:
+    resolution: {integrity: sha512-dw5PxHCgBneN2DDNqpWu8QkbbJ07oOziy8z+bK/TAXufsOLaETuVO4GkXrbs0WjhdKhBMN3BkpN/RIvUHkmNUQ==}
     peerDependencies:
-      graphql: 14.x || 15.x
+      graphql: 14 - 16
     dependencies:
       cross-fetch: 3.1.4
       extract-files: 9.0.0
       form-data: 3.0.1
-      graphql: 15.7.2
+      graphql: 16.1.0
     dev: false
 
-  /graphql/15.7.2:
-    resolution: {integrity: sha512-AnnKk7hFQFmU/2I9YSQf3xw44ctnSFCfp3zE0N6W174gqe9fWG/2rKaKxROK7CcI3XtERpjEKFqts8o319Kf7A==}
-    engines: {node: '>= 10.x'}
+  /graphql/16.1.0:
+    resolution: {integrity: sha512-+PIjmhqGHMIxtnlEirRXDHIzs0cAHAozKG5M2w2N4TnS8VzCxO3bbv1AW9UTeycBfl2QsPduxcVrBvANFKQhiw==}
+    engines: {node: ^12.22.0 || ^14.16.0 || >=16.0.0}
     dev: false
 
   /gzip-size/6.0.0:
@@ -4773,18 +4775,10 @@ packages:
       source-map-js: 0.6.2
     dev: false
 
-  /prettier/2.4.1:
-    resolution: {integrity: sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    dev: true
-
   /prettier/2.5.1:
     resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: false
-    optional: true
 
   /process-nextick-args/1.0.7:
     resolution: {integrity: sha1-FQ4gt1ZZCtP5EJPyWk8q2L/zC6M=}
