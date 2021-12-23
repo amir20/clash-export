@@ -136,4 +136,6 @@ message PlayerStats {
   int32 home_rocket_balloon = 131;
   int32 home_dragon_rider = 132;
   int32 home_super_bowler = 133;
+  int32 home_flame_flinger = 134;
+  int32 home_super_dragon = 135;
 }

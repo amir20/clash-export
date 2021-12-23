@@ -1,15 +1,14 @@
 {
-  "python.pythonPath": "/Users/amirraminfar/Workspace/clashstats/.direnv/python-3.9.4/bin/python",
   "python.linting.enabled": true,
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["--line-length", "160"],
   "editor.renderWhitespace": "all",
-  "python.linting.mypyEnabled": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.linting.pylintEnabled": true,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "python.linting.pylintEnabled": false
+  }
 }

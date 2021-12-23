@@ -95,16 +95,15 @@ def find_clan_by_tag(tag):
     except asyncio.TimeoutError:
         raise ApiTimeout(f"API timed while fetching {tag} clan.")
 
-    code = response.status
+    match response.status:
+        case 404:
+            raise ClanNotFound(f"Clan [{tag}] not found.")
 
-    if code == 404:
-        raise ClanNotFound(f"Clan [{tag}] not found.")
+        case 429:
+            raise TooManyRequests(f"Too many requests when fetching clan [{tag}].")
 
-    if code == 429:
-        raise TooManyRequests(f"Too many requests when fetching clan [{tag}].")
-
-    if code != 200:
-        raise ApiException(f"API returned non-200 status code: {code}")
+        case code if code != 200:
+            raise ApiException(f"API returned non-200 status code: {code}")
 
     return response.data
 

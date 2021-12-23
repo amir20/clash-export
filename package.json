@@ -86,7 +86,7 @@
       "prettier --write"
     ],
     "*.py": [
-      "direnv exec . black -l 160"
+      "direnv exec . black -l 160 --target-version py310"
     ]
   },
   "repository": {
