@@ -68,7 +68,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "concurrently": "^6.5.1",
+    "concurrently": "^7.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.3",
     "prettier": "^2.5.1",
