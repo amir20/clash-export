@@ -32,7 +32,7 @@ coverage==6.2
 cryptography==36.0.1
 cssselect2==0.4.1
 Cython==0.29.26
-decorator==5.1.0
+decorator==5.1.1
 defusedxml==0.7.1
 fastdiff==0.3.0
 Flask==2.0.2
