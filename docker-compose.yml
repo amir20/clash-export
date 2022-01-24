@@ -26,6 +26,7 @@ services:
     image: darthsim/imgproxy:v2.17
     environment:
       - IMGPROXY_ENFORCE_WEBP=true
+      - IMGPROXY_ENFORCE_AVIF=true
       - IMGPROXY_USE_ETAG=true
       - IMGPROXY_MAX_CLIENTS=100
       - IMGPROXY_DOWNLOAD_TIMEOUT=10
