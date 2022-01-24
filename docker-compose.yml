@@ -28,8 +28,9 @@ services:
       - IMGPROXY_ENFORCE_WEBP=true
       - IMGPROXY_ENFORCE_AVIF=true
       - IMGPROXY_USE_ETAG=true
-      - IMGPROXY_MAX_CLIENTS=100
-      - IMGPROXY_DOWNLOAD_TIMEOUT=10
+      - IMGPROXY_MAX_CLIENTS=50
+      - IMGPROXY_DOWNLOAD_TIMEOUT=60
+      - IMGPROXY_KEEP_ALIVE_TIMEOUT=60
       - IMGPROXY_TTL=31622400
   imgproxy-cache:
     image: "amir20/imgproxy-cache:${TAG:-latest}"
