@@ -84,7 +84,7 @@ platformdirs==2.4.1
 pluggy==1.0.0
 promise==2.3
 prompt-toolkit==3.0.24
-protobuf==3.19.1
+protobuf==3.19.4
 ptyprocess==0.7.0
 py==1.11.0
 pycares==4.1.2
