@@ -83,7 +83,7 @@ Pillow==9.0.1
 platformdirs==2.5.0
 pluggy==1.0.0
 promise==2.3
-prompt-toolkit==3.0.26
+prompt-toolkit==3.0.28
 protobuf==3.19.4
 ptyprocess==0.7.0
 py==1.11.0
