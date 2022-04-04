@@ -138,7 +138,7 @@ wcwidth==0.2.5
 webencodings==0.5.1
 WebOb==1.8.7
 Werkzeug==2.1.1
-wrapt==1.13.3
+wrapt==1.14.0
 WTForms==3.0.1
 xlrd==2.0.1
 XlsxWriter==3.0.3
