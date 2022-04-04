@@ -143,6 +143,6 @@ WTForms==3.0.1
 xlrd==2.0.1
 XlsxWriter==3.0.3
 yarl==1.7.2
-zipp==3.7.0
+zipp==3.8.0
 zope.event==4.5.0
 zope.interface==5.4.0
