@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List, TYPE_CHECKING
 from mongoengine import DynamicDocument, signals
 
-from mongoengine.fields import BooleanField, ListField, ReferenceField, StringField
+from mongoengine.fields import StringField
 from clashleaders.util import correct_tag, from_timestamp
 
 import pandas as pd
@@ -21,6 +21,7 @@ class CWLWar(DynamicDocument):
             "war_tag",
             "clan.members.tag",
             "opponent.members.tag",
+            "endTime",
         ],
     }
 

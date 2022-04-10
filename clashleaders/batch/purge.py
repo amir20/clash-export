@@ -1,7 +1,7 @@
 import logging
 from datetime import timedelta, datetime
 
-from clashleaders.model import Clan, HistoricalClan, HistoricalPlayer
+from clashleaders.model import Clan, HistoricalClan, HistoricalPlayer, CWLWar, ClanWar
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +14,11 @@ def delete_outdated():
     logger.info("Deleting 0 member clans...")
     Clan.objects(members=0).delete()
     HistoricalClan.objects(members=0).delete()
+
+    logger.info("Deleting outdated wars...")
+    dt = datetime.now() - timedelta(days=180)
+    CWLWar.objects(endTime__lt=dt).delete()
+    ClanWar.objects(endTime__lt=dt).delete()
 
 
 def reset_stats():
