@@ -62,6 +62,8 @@ def clan_detail_page(slug, page=None):
             comparableMembers=members(clan),
         )
     except DoesNotExist:
+        tag = slug.split("-")[-1]
+        Clan.find_by_tag(tag)
         return render_template("404.html"), 404
     else:
         return render_template(
