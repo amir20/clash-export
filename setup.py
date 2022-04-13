@@ -19,6 +19,7 @@ setup(
             "update_troops=clashleaders.model:AverageTroop.update_all",
             "index_random_war_clan=clashleaders.cli:index_random_war_clan",
             "fetch_clan_leaderboards=clashleaders.cli:fetch_clan_leaderboards",
+            "fetch_tags=clashleaders.cli:fetch_tags",
         ],
     },
 )
