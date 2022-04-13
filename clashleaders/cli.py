@@ -4,6 +4,7 @@ import sys
 
 from clashleaders.clash import api
 from clashleaders.model import Clan
+from clashleaders.util import correct_tag
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -55,7 +56,7 @@ def fetch_clan_leaderboards():
 
 
 def fetch_tags():
-    tags = set(line.rstrip("\n") for line in sys.stdin.readlines())
+    tags = set(correct_tag(line.rstrip("\n")) for line in sys.stdin.readlines())
     existing = set(clan.tag for clan in Clan.objects(tag__in=tags).only("tag"))
     logging.info(f"Found {len(tags)} tags, {len(existing)} already exist.")
 
@@ -63,9 +64,10 @@ def fetch_tags():
     success = 0
     for tag in new_tags:
         try:
+            logger.info(f"Fetching clan {tag}.")
             Clan.fetch_and_update(tag)
             success += 1
         except Exception:
             logger.exception(f"Error while fetching clan {tag}.")
 
-    logger.info(f"Found {success} new tags.")
+    logger.info(f"Successfully imported {success} new tags.")
