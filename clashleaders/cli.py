@@ -1,5 +1,6 @@
 import logging
 from random import randrange
+import sys
 
 from clashleaders.clash import api
 from clashleaders.model import Clan
@@ -51,3 +52,20 @@ def fetch_clan_leaderboards():
         tag = clan["tag"]
         if tag:
             Clan.fetch_and_update(tag)
+
+
+def fetch_tags():
+    tags = set(line.rstrip("\n") for line in sys.stdin.readlines())
+    existing = set(clan.tag for clan in Clan.objects(tag__in=tags).only("tag"))
+    logging.info(f"Found {len(tags)} tags, {len(existing)} already exist.")
+
+    new_tags = tags - existing
+    success = 0
+    for tag in new_tags:
+        try:
+            Clan.fetch_and_update(tag)
+            success += 1
+        except Exception:
+            logger.exception(f"Error while fetching clan {tag}.")
+
+    logger.info(f"Found {success} new tags.")
