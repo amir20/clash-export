@@ -2,7 +2,7 @@ from math import ceil
 
 from flask import make_response, render_template, url_for
 
-from clashleaders import app
+from clashleaders import app, cache
 from clashleaders.model import Clan
 
 TOTAL_PER_PAGE = 10000
@@ -24,6 +24,7 @@ def sitemap_index():
 
 
 @app.route("/sitemap_<page>.xml")
+@cache.cached(36000)
 def sitemap(page):
     start = int(page) * TOTAL_PER_PAGE
     end = start + TOTAL_PER_PAGE
