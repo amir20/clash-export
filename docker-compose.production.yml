@@ -65,9 +65,9 @@ services:
       - /data/caddy:/root/.caddy
     deploy:
       replicas: 1
-      resources:
-        limits:
-          memory: 400m
+      # resources:
+      #   limits:
+      #     memory: 800m
       update_config:
         parallelism: 1
         order: start-first
