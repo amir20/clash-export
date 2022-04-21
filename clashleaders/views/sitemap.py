@@ -35,6 +35,6 @@ def stream_template(template_name, **context):
 def sitemap(page):
     start = int(page) * TOTAL_PER_PAGE
     end = start + TOTAL_PER_PAGE
-    pages = ({"url": url_for("clan_detail_page", slug=clan.slug, _external=True)} for clan in Clan.objects[start:end].only("slug"))
+    pages = ({"url": url_for("clan_detail_page", slug=clan.slug, _external=True)} for clan in Clan.objects[start:end].no_cache().only("slug"))
 
     return app.response_class(stream_with_context(stream_template("sitemap.xml", pages=pages)))
