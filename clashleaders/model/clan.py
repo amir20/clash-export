@@ -7,7 +7,7 @@ from typing import Iterable, List, Tuple, Dict, Optional
 import pandas as pd
 from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
 from slugify import slugify
-from functools import cache
+from functools import lru_cache
 
 import clashleaders.clash.clan_calculation
 import clashleaders.clash.transformer
@@ -137,16 +137,16 @@ class Clan(DynamicDocument):
             return df
         return df.set_index("created_on")
 
-    @cache
+    @lru_cache
     def historical_near_time(self, dt) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
-    @cache
+    @lru_cache
     def historical_near_days_ago(self, days) -> clashleaders.model.HistoricalClan:
         dt = datetime.now() - timedelta(days=int(days))
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
 
-    @cache
+    @lru_cache
     def historical_near_now(self) -> clashleaders.model.HistoricalClan:
         return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
 
