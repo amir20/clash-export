@@ -10,7 +10,7 @@ services:
     command: "cron.sh"
   worker:
     image: "amir20/clashleaders:${TAG:-latest}"
-    command: "python3 -m memray run clashleaders/worker.py"
+    command: "worker"
     depends_on:
       - mongo
       - redis
