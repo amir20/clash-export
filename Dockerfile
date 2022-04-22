@@ -46,6 +46,8 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /root/.cache
 
+RUN pip install memray
+
 # Install cron jobs
 COPY ./conf/crontab /etc/cron.d/clashleaders
 COPY ./conf/cron.sh /usr/local/bin/cron.sh
