@@ -138,4 +138,6 @@ message PlayerStats {
   int32 home_super_bowler = 133;
   int32 home_flame_flinger = 134;
   int32 home_super_dragon = 135;
+  int32 most_valuable_clanmate = 136;
+  int32 aggressive_capitalism = 137;
 }
