@@ -132,7 +132,7 @@ tomli==2.0.1
 traitlets==5.2.1
 typed-ast==1.5.3
 types-requests==2.27.20
-types-urllib3==1.26.13
+types-urllib3==1.26.14
 typing==3.7.4.3
 typing_extensions==4.2.0
 ua-parser==0.10.0
