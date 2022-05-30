@@ -54,7 +54,7 @@ graphql-server-core==1.2.0
 greenlet==1.1.2
 gunicorn==20.1.0
 idna==3.3
-importlib-metadata==4.11.3
+importlib-metadata==4.11.4
 inflection==0.5.1
 iniconfig==1.1.1
 ipython==8.4.0
