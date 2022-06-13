@@ -113,7 +113,7 @@ pytz==2022.1
 redis==4.3.3
 regex==2022.6.2
 relativetimebuilder==2.0.1
-requests==2.27.1
+requests==2.28.0
 rq==1.10.1
 rq-dashboard==0.6.1
 Rx==1.6.1
