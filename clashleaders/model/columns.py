@@ -24,6 +24,8 @@ COLUMNS = OrderedDict(
         ("friend_in_need", "Total Donations"),
         ("sharing_is_caring", "Total Spells Donated"),
         ("donations", "Donations"),
+        ("most_valuable_clanmate", "Capital Gold Contribution"),
+        ("aggressive_capitalism", "Capital Gold Raided"),
         ("donations_received", "Donations Received"),
         ("home_barbarian_king", "Barbarian King"),
         ("home_archer_queen", "Archer Queen"),
@@ -67,5 +69,7 @@ def column_group(column):
         return "loot"
     elif column in ("war_hero", "games_champion", "war_league_legend") or "war" in column:
         return "war"
+    elif column in ("most_valuable_clanmate", "aggressive_capitalism") or "war" in column:
+        return "capital"
     else:
         return "unknown"

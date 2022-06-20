@@ -76,7 +76,7 @@ class HistoricalPlayer(Document):
         return "<HistoricalPlayer {0}>".format(self.tag)
 
     def to_dict(self):
-        d = {f: getattr(self.stats, f) for f in self.stats.DESCRIPTOR.fields_by_name}
+        d = {f.name: getattr(self.stats, f.name) for f in PlayerStats.DESCRIPTOR.fields}
         d["name"] = self.name
         d["tag"] = self.tag
         d["clan_tag"] = self.clan_tag
