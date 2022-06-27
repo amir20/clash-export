@@ -89,7 +89,7 @@ platformdirs==2.5.2
 pluggy==1.0.0
 promise==2.3
 prompt-toolkit==3.0.29
-protobuf==4.21.1
+protobuf==4.21.2
 ptyprocess==0.7.0
 pure-eval==0.2.2
 py==1.11.0
