@@ -28,12 +28,15 @@ class HistoricalClan(Document):
     warWins: int = IntField()
     warTies: int = IntField()
     warLosses: int = IntField()
+    warLeagueId: int = IntField()
     players = ListField(ReferenceField(HistoricalPlayer))
 
-    meta = {"index_background": True, "indexes": ["tag", "created_on", ("tag", "created_on"), "members"]}
+    meta = {"index_background": True, "indexes": ["tag", "created_on", ("tag", "created_on"), ("tag", "warLeagueId"), "members"]}
 
     def __init__(self, *args, **kwargs):
         values = {k: v for k, v in kwargs.items() if k in self._fields_ordered}
+        if "warLeagueId" not in values:
+            values["warLeagueId"] = kwargs.get("warLeague", {}).get("id")
         super().__init__(*args, **values)
 
     @cache
