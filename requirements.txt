@@ -12,7 +12,7 @@ astroid==2.8.5
 asttokens==2.0.5
 async-timeout==4.0.2
 atomicwrites==1.4.0
-attrs==21.4.0
+attrs==22.1.0
 awesome-slugify==1.6.5
 backcall==0.2.0
 black==22.3.0
@@ -133,7 +133,7 @@ tomli==2.0.1
 traitlets==5.2.2.post1
 typed-ast==1.5.4
 types-requests==2.27.30
-types-urllib3==1.26.15
+types-urllib3==1.26.21
 typing==3.7.4.3
 typing_extensions==4.2.0
 ua-parser==0.10.0
