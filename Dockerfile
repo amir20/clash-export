@@ -24,7 +24,7 @@ COPY clashleaders/static clashleaders/static
 RUN pnpm build
 
 
-FROM python:3.10.1
+FROM python:3.10.6
 
 # Create app directoy
 WORKDIR /app
