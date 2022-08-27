@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   mongo:
-    image: mongo:5.0.2
+    image: mongo:6.0
     command: --wiredTigerCacheSizeGB=0.25
   redis:
     image: redis:6-alpine
