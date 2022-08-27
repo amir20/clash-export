@@ -18,7 +18,8 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 
 WORKER_OFFSET = int(os.getenv("WORKER_OFFSET", 1)) - 1
-API_TOKEN = os.getenv("API_TOKEN", "").split(",")[WORKER_OFFSET]
+TOKENS = os.getenv("API_TOKEN", "").split(",")
+API_TOKEN = TOKENS[WORKER_OFFSET % len(TOKENS)]
 
 if not API_TOKEN:
     raise ValueError("API_TOKEN is not set.")
