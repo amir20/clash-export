@@ -4,7 +4,7 @@ services:
     image: mongo:6.0
     command: --wiredTigerCacheSizeGB=0.25
   redis:
-    image: redis:6-alpine
+    image: redis:7-alpine
   cron:
     image: "amir20/clashleaders:${TAG:-latest}"
     command: "cron.sh"
