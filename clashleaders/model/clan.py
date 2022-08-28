@@ -245,6 +245,10 @@ class Clan(DynamicDocument):
 
         return data
 
+    @classmethod
+    def estimated_count(cls) -> int:
+        return cls._get_collection().estimated_document_count()
+
     def __repr__(self):
         return f"<Clan tag={self.tag} updated_on={self.updated_on:%Y-%m-%d %H:%M:%S}>"
 

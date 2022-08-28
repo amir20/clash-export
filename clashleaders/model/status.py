@@ -41,7 +41,7 @@ class Status(Document):
     def update_status(cls):
         logging.info("Updating status calculations...")
         twenty_hours_ago = datetime.now() - timedelta(hours=20)
-        total_clans = Clan.objects.count()
+        total_clans = Clan.estimated_count()
         total_eligible_clans = Clan.active().count()
         not_indexed_clans = Clan.active(twenty_hours_ago).count()
         ratio_indexed = 100 * ((total_eligible_clans - not_indexed_clans) / total_eligible_clans)
@@ -50,7 +50,7 @@ class Status(Document):
             set__total_clans=total_clans,
             set__total_active_clans=total_eligible_clans,
             set__last_updated=datetime.now(),
-            set__total_members=Player.objects.count(),
+            set__total_members=Player.estimated_count(),
             set__total_active_members=Clan.active().sum("members"),
             set__total_countries=len(Clan.objects.distinct("location.countryCode")),
             set__popular_clans=Clan.objects.order_by("-page_views").limit(10),

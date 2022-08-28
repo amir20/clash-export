@@ -16,8 +16,8 @@ def index():
         most_attacks=leaderboard("week_delta.total_attack_wins"),
         gained_trophies=leaderboard("week_delta.total_trophies"),
         grabbed_gold=leaderboard("week_delta.total_gold_grab"),
-        total_wars=ClanWar.objects().count(),
-        total_cwl_groups=CWLGroup.objects().count(),
+        total_wars=ClanWar.estimated_count(),
+        total_cwl_groups=CWLGroup.estimated_count(),
         most_trophies_country=latest_status.trophies_by_country,
     )
 

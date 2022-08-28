@@ -12,7 +12,7 @@ TOTAL_PER_PAGE = 10000
 def sitemap_index():
     sitemaps = []
 
-    pages = ceil(Clan.objects.count() / TOTAL_PER_PAGE)
+    pages = ceil(Clan.estimated_count() / TOTAL_PER_PAGE)
     for i in range(pages):
         sitemaps.append({"url": url_for("sitemap", page=i, _external=True)})
 

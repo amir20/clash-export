@@ -94,6 +94,10 @@ class Player(Document):
 
         return history
 
+    @classmethod
+    def estimated_count(cls) -> int:
+        return cls._get_collection().estimated_document_count()
+
     def __repr__(self):
         return "<Player {0}>".format(self.tag)
 

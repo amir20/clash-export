@@ -41,6 +41,10 @@ class ClanWar(DynamicDocument):
         return df
 
     @classmethod
+    def estimated_count(cls) -> int:
+        return cls._get_collection().estimated_document_count()
+
+    @classmethod
     def init(cls, sender, document, **kwargs):
         document.preparationStartTime = from_timestamp(document.preparationStartTime)
         document.startTime = from_timestamp(document.startTime)

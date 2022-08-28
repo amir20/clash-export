@@ -12,7 +12,7 @@ logging.getLogger("clashleaders.clash.api").setLevel(logging.WARNING)
 
 
 def update_all_calculations():
-    total = Clan.objects.count()
+    total = Clan.estimated_count()
 
     i = 0
     for clan in Clan.objects.no_cache():
@@ -25,7 +25,7 @@ def update_all_calculations():
 
 
 def index_random_war_clan():
-    count: Clan = Clan.objects(isWarLogPublic=True).count()
+    count: int = Clan.objects(isWarLogPublic=True).count()
     random_clan: Clan = Clan.objects(isWarLogPublic=True)[randrange(0, count)]
 
     logger.info(f"Indexing random clan war log ({random_clan.tag}).")

@@ -94,6 +94,10 @@ class CWLGroup(DynamicDocument):
         self.update(round_wars=round_wars)
 
     @classmethod
+    def estimated_count(cls) -> int:
+        return cls._get_collection().estimated_document_count()
+
+    @classmethod
     def find_by_clan_and_season(cls, tag: str, season: str) -> Optional[CWLGroup]:
         tag = correct_tag(tag)
         return cls.objects(clans__tag=tag, season=season).first()

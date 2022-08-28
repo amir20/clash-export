@@ -37,8 +37,8 @@ def version_json():
 def healthcheck():
     version = os.getenv("VERSION_TAG")
     commit = os.getenv("SOURCE_COMMIT")
-    players = Player.objects.count()
-    clans = Clan.objects.count()
+    players = Player.estimated_count()
+    clans = Clan.estimated_count()
 
     return f"""
 Version: {version}
