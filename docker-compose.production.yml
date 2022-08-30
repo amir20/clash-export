@@ -12,7 +12,7 @@ services:
       - BUGSNAG_API_KEY=cdb173414b6d879639165cedcc730d73
       - WORKER_OFFSET={{.Task.Slot}}
     deploy:
-      replicas: 2
+      replicas: 3
       resources:
         limits:
           memory: 400m
