@@ -1,7 +1,7 @@
 default: start
 
 TAG := $(shell cat package.json | jq -r .version)
-MACHINE := clashleaders20
+MACHINE := clashleaders22
 
 .PHONY: deploy
 deploy:
