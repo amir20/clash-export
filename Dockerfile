@@ -39,6 +39,7 @@ RUN echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \
 
 # Install caddy and clean up
 RUN apt-get update \
+  && apt-get upgrade -y \
   && pip install --upgrade pip \
   && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
   && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
@@ -46,7 +47,6 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /root/.cache
 
-RUN pip install memray
 
 # Install cron jobs
 COPY ./conf/crontab /etc/cron.d/clashleaders
