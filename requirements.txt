@@ -140,7 +140,7 @@ ua-parser==0.16.1
 Unidecode==0.4.21
 urllib3==1.26.12
 user-agents==2.2.0
-uvloop==0.16.0
+uvloop==0.17.0
 wasmer==1.1.0
 wasmer_compiler_cranelift==1.1.0
 wcwidth==0.2.5
