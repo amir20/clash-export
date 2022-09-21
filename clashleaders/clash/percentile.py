@@ -20,7 +20,7 @@ def clan_percentile(clan: clashleaders.model.Clan, field: str):
         return values[index]
 
 
-@cache.memoize(timeout=3600)
+@cache.memoize(timeout=36000)
 def field_percentiles(field: str):
     max_value = deep_getattr(clashleaders.model.Clan.objects.order_by(f"-{field}").first(), field)
     step = max(int(max_value / 500), 1)

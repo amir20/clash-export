@@ -1,4 +1,4 @@
-from clashleaders.clash.transformer import tag_to_slug
+from clashleaders.clash.similar import similar_clans_avg
 import logging
 
 
@@ -8,7 +8,6 @@ from graphene.types.generic import GenericScalar
 import pandas as pd
 from io import BytesIO
 import base64
-import clashleaders.model as model
 
 from .badge import BadgeUrls
 
@@ -196,9 +195,9 @@ class Clan(graphene.ObjectType):
     def resolve_similar(self, info, days):
         key = {1: "day_delta", 7: "week_delta"}[days]
         cluster_label = self.cluster_label
-        gold = model.Clan.objects(cluster_label=cluster_label).average(f"{key}.avg_gold_grab")
-        elixir = model.Clan.objects(cluster_label=cluster_label).average(f"{key}.avg_elixir_grab")
-        de = model.Clan.objects(cluster_label=cluster_label).average(f"{key}.avg_de_grab")
+        gold = similar_clans_avg(cluster_label=cluster_label, column=f"{key}.avg_gold_grab")
+        elixir = similar_clans_avg(cluster_label=cluster_label, column=f"{key}.avg_elixir_grab")
+        de = similar_clans_avg(cluster_label=cluster_label, column=f"{key}.avg_de_grab")
         return SimilarClanDelta(avg_de_grab=de, avg_gold_grab=elixir, avg_elixir_grab=gold)
 
     def resolve_activity(self, info):
