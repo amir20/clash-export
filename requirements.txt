@@ -20,7 +20,7 @@ blinker==1.5
 bugsnag==4.2.1
 cachelib==0.9.0
 cachetools==5.2.0
-cairocffi==1.3.0
+cairocffi==1.4.0
 CairoSVG==2.5.2
 cchardet==2.1.7
 certifi==2022.9.24
