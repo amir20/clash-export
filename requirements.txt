@@ -115,7 +115,7 @@ redis==4.3.4
 regex==2022.9.13
 relativetimebuilder==2.0.1
 requests==2.28.1
-rq==1.11.0
+rq==1.11.1
 rq-dashboard==0.6.1
 Rx==1.6.1
 scikit-learn==1.1.2
