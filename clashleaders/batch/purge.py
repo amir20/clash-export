@@ -8,11 +8,11 @@ logger = logging.getLogger(__name__)
 
 def delete_outdated():
     logger.info("Deleting outdated historical clans...")
-    dt = datetime.now() - timedelta(days=31)
+    dt = datetime.now() - timedelta(days=7)
     HistoricalClan.objects(created_on__lt=dt).delete()
     HistoricalPlayer.objects(created_on__lt=dt).delete()
-    logger.info("Deleting 0 member clans...")
-    Clan.objects(members=0).delete()
+    logger.info("Deleting 0 active_members clans...")
+    Clan.objects(active_members=0).delete()
     HistoricalClan.objects(members=0).delete()
 
     logger.info("Deleting outdated wars...")
