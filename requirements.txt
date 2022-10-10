@@ -154,4 +154,4 @@ XlsxWriter==3.0.3
 yarl==1.8.1
 zipp==3.8.1
 zope.event==4.5.0
-zope.interface==5.4.0
+zope.interface==5.5.0
