@@ -38,7 +38,7 @@ Cython==0.29.32
 decorator==5.1.1
 defusedxml==0.7.1
 Deprecated==1.2.13
-executing==1.1.0
+executing==1.1.1
 fastdiff==0.3.0
 Flask==2.2.2
 Flask-Caching==2.0.1
