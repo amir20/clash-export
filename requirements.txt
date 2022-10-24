@@ -127,7 +127,7 @@ snapshottest==0.6.0
 stack-data==0.5.1
 termcolor==2.0.1
 threadpoolctl==3.1.0
-tinycss2==1.1.1
+tinycss2==1.2.1
 toml==0.10.2
 tomli==2.0.1
 traitlets==5.5.0
