@@ -38,6 +38,7 @@ Cython==0.29.32
 decorator==5.1.1
 defusedxml==0.7.1
 Deprecated==1.2.13
+dnspython==2.2.1
 executing==1.1.1
 fastdiff==0.3.0
 Flask==2.2.2
@@ -142,7 +143,7 @@ urllib3==1.26.12
 user-agents==2.2.0
 uvloop==0.17.0
 wasmer==1.1.0
-wasmer_compiler_cranelift==1.1.0
+wasmer-compiler-cranelift==1.1.0
 wcwidth==0.2.5
 webencodings==0.5.1
 WebOb==1.8.7
