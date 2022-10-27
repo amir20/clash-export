@@ -140,4 +140,11 @@ message PlayerStats {
   int32 home_super_dragon = 135;
   int32 most_valuable_clanmate = 136;
   int32 aggressive_capitalism = 137;
+  int32 home_poison_lizard = 138;
+  int32 home_frosty = 139;
+  int32 home_recall_spell = 140;
+  int32 home_phoenix = 141;
+  int32 home_diggy = 142;
+  int32 home_electro_titan = 143;
+  int32 home_battle_drill = 144;
 }
