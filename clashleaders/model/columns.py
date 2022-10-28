@@ -35,6 +35,10 @@ COLUMNS = OrderedDict(
         ("home_electro_owl", "Electro Owl"),
         ("home_mighty_yak", "Mighty Yak"),
         ("home_unicorn", "Unicorn"),
+        ("home_frosty", "Frosty"),
+        ("home_diggy", "Diggy"),
+        ("home_poison_lizard", "Poison Lizard"),
+        ("home_phoenix", "Phonix"),
         ("builderbase_battle_machine", "Battle Machine"),
     )
 )
@@ -60,6 +64,10 @@ def column_group(column):
         "home_electro_owl",
         "home_mighty_yak",
         "home_unicorn",
+        "home_poison_lizard",
+        "home_frosty",
+        "home_phoenix",
+        "home_diggy",
         "builderbase_battle_machine",
     ):
         return "heroes"
