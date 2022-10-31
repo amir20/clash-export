@@ -30,12 +30,14 @@ FROM python:3.11.0
 WORKDIR /app
 
 # Copy requirements file
-COPY ./requirements*.txt /app/
+COPY ./poetry.lock ./pyproject.toml /app/
 
 
 # Add caddy sources
 RUN echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \
   | tee -a /etc/apt/sources.list.d/caddy-fury.list
+
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Install caddy and clean up
 RUN apt-get update \
@@ -43,7 +45,7 @@ RUN apt-get update \
   && pip install --upgrade pip \
   && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
   && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
-  && pip install --no-cache -r requirements.txt \
+  && /root/.local/bin/poetry config virtualenvs.create false && /root/.local/bin/poetry install --no-dev \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /root/.cache
 

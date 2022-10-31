@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "clashleaders"
+version = "0.1.0"
+description = ""
+authors = ["Amir Raminfar <findamir@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.8.3"
+awesome-slugify = "^1.6.5"
+black = "^22.10.0"
+bugsnag = "^4.2.1"
+CairoSVG = "^2.5.2"
+Flask = "^2.2.2"
+Flask-Caching = "^2.0.1"
+Flask-GraphQL = "^2.0.1"
+Flask-WTF = "^1.0.1"
+graphene = "2.1.9"
+mypy = "^0.982"
+numpy = "^1.23.4"
+pandas = "^1.5.1"
+pymongo = "^4.3.2"
+mongoengine = "^0.24.2"
+redis = "^4.3.4"
+rq = "^1.11.1"
+rq-dashboard = "^0.6.1"
+scikit-learn = "^1.1.3"
+scipy = "^1.9.3"
+uvloop = "^0.17.0"
+XlsxWriter = "^3.0.3"
+gunicorn = "^20.1.0"
+blinker = "^1.5"
+markdown = "^3.4.1"
+requests = "^2.28.1"
+cachetools = "^5.2.0"
+inflection = "^0.5.1"
+protobuf = "^4.21.9"
+contentful = "^1.13.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+worker = "clashleaders.worker:main"
+rq_worker = "clashleaders.rq_worker:main"
+
