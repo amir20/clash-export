@@ -2,7 +2,7 @@ version: "3.4"
 services:
   test:
     image: "amir20/clashleaders:${TAG:-latest}"
-    command: "python setup.py test"
+    command: "poetry run pytest"
     environment:
       - API_TOKEN=not-valid
       - FLASK_APP=clashleaders

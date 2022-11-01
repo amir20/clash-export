@@ -1,29 +1,29 @@
 :80 {
-    root * /app/clashleaders
-    file_server
+	root * /app/clashleaders
+	file_server
 
-    @proxy {
-        not {
-            path /static/*
-        }
+	@proxy {
+		not {
+			path /static/*
+		}
 
-        not {
-            path /robots.txt
-        }
-    }
+		not {
+			path /robots.txt
+		}
+	}
 
-    header /static/* {
-        Cache-Control "public, max-age=31536000"
-    }
+	header /static/* {
+		Cache-Control "public, max-age=31536000"
+	}
 
-    header /* {
-        -server
-    }
+	header /* {
+		-server
+	}
 
-    reverse_proxy @proxy unix//tmp/gunicorn.sock
+	reverse_proxy @proxy unix//tmp/gunicorn.sock
 
-    encode gzip
-    log {
-        output stdout
-    }
+	encode gzip
+	log {
+		output stdout
+	}
 }
