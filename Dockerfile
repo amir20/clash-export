@@ -38,6 +38,7 @@ RUN echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \
   | tee -a /etc/apt/sources.list.d/caddy-fury.list
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
+ENV PATH="/root/.local/bin/:${PATH}"
 
 # Install caddy and clean up
 RUN apt-get update \
@@ -45,7 +46,8 @@ RUN apt-get update \
   && pip install --upgrade pip \
   && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
   && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
-  && /root/.local/bin/poetry config virtualenvs.create false && /root/.local/bin/poetry install --no-dev \
+  && poetry config virtualenvs.create false \
+  && poetry install \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /root/.cache
 
@@ -66,7 +68,6 @@ COPY ./conf/gunicorn.conf.py /app/
 COPY ./clashleaders /app/clashleaders
 COPY ./tests /app/tests
 COPY ./Makefile ./MANIFEST.in /app/
-COPY ./setup.* /app/
 COPY ./*.json /app/
 COPY ./*.py /app/
 
