@@ -12,7 +12,7 @@
     "@bugsnag/plugin-vue": "^7.17.0",
     "@tweenjs/tween.js": "^18.6.4",
     "autoprefixer": "^10.4.8",
-    "babel-loader": "^8.2.4",
+    "babel-loader": "^9.1.0",
     "buefy": "^0.9.21",
     "bulma": "^0.9.4",
     "bulma-badge": "^3.0.1",
