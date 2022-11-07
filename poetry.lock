@@ -123,7 +123,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "bugsnag"
-version = "4.2.1"
+version = "4.3.0"
 description = "Automatic error monitoring for django, flask, etc."
 category = "main"
 optional = false
@@ -1091,7 +1091,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11"
-content-hash = "713f03e8294685079580e8f68f532c21fdad2f6d0b540b1dbc702baeb65da562"
+content-hash = "9540d70072e20079d415fce152add5338e45355ed3438349ddce6e21089b49d3"
 
 [metadata.files]
 aiohttp = [
@@ -1238,8 +1238,8 @@ blinker = [
     {file = "blinker-1.5.tar.gz", hash = "sha256:923e5e2f69c155f2cc42dafbbd70e16e3fde24d2d4aa2ab72fbe386238892462"},
 ]
 bugsnag = [
-    {file = "bugsnag-4.2.1-py3-none-any.whl", hash = "sha256:7bd4fb4cd20a1babcd0164c37f3dc248776c37c2e11b531dbb535684428386d7"},
-    {file = "bugsnag-4.2.1.tar.gz", hash = "sha256:3d3e9768acf7405004842992ee35ca2bbc71b1c365a5b846a42290211b92b7a5"},
+    {file = "bugsnag-4.3.0-py3-none-any.whl", hash = "sha256:bf4ca75d85d9ffd18fa844570cd1ad56b2175810dbb7c6f214417b750debf7db"},
+    {file = "bugsnag-4.3.0.tar.gz", hash = "sha256:f6ae82a7fade5092775c6313f4157ee33e40c4974ff22cdfce08cea52f38fd37"},
 ]
 cachelib = [
     {file = "cachelib-0.9.0-py3-none-any.whl", hash = "sha256:811ceeb1209d2fe51cd2b62810bd1eccf70feba5c52641532498be5c675493b3"},
@@ -1689,6 +1689,8 @@ pathspec = [
     {file = "pathspec-0.10.1.tar.gz", hash = "sha256:7ace6161b621d31e7902eb6b5ae148d12cfd23f4a249b9ffb6b9fee12084323d"},
 ]
 pillow = [
+    {file = "Pillow-9.3.0-1-cp37-cp37m-win32.whl", hash = "sha256:e6ea6b856a74d560d9326c0f5895ef8050126acfdc7ca08ad703eb0081e82b74"},
+    {file = "Pillow-9.3.0-1-cp37-cp37m-win_amd64.whl", hash = "sha256:32a44128c4bdca7f31de5be641187367fe2a450ad83b833ef78910397db491aa"},
     {file = "Pillow-9.3.0-cp310-cp310-macosx_10_10_x86_64.whl", hash = "sha256:0b7257127d646ff8676ec8a15520013a698d1fdc48bc2a79ba4e53df792526f2"},
     {file = "Pillow-9.3.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:b90f7616ea170e92820775ed47e136208e04c967271c9ef615b6fbd08d9af0e3"},
     {file = "Pillow-9.3.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:68943d632f1f9e3dce98908e873b3a090f6cba1cbb1b892a9e8d97c938871fbe"},
