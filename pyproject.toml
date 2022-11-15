@@ -38,7 +38,7 @@ contentful = "^1.13.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
-mypy = "^0.982"
+mypy = "^0.991"
 pytest = "^7.2.0"
 snapshottest = "^0.6.0"
 aioresponses = "^0.7.3"
