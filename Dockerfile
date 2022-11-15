@@ -1,5 +1,5 @@
 # Build assets
-FROM node:18 as builder
+FROM node:19 as builder
 
 RUN npm i -g pnpm
 
