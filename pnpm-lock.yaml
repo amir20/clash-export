@@ -46,7 +46,7 @@ specifiers:
   node-sass: ^7.0.1
   postcss: ^8.4.12
   postcss-font-magician: ^3.0.0
-  postcss-loader: ^6.2.1
+  postcss-loader: ^7.0.0
   postcss-safe-parser: ^6.0.0
   prettier: ^2.7.1
   promise-polyfill: ^8.2.3
@@ -114,7 +114,7 @@ dependencies:
   node-sass: 7.0.1
   postcss: 8.4.12
   postcss-font-magician: 3.0.0_postcss@8.4.12
-  postcss-loader: 6.2.1_l7cnarxuwtifxq3zndacrkp2tq
+  postcss-loader: 7.0.1_l7cnarxuwtifxq3zndacrkp2tq
   postcss-safe-parser: 6.0.0_postcss@8.4.12
   promise-polyfill: 8.2.3
   regenerator-runtime: 0.13.9
@@ -3860,7 +3860,7 @@ packages:
     dev: false
 
   /is-arrayish/0.2.1:
-    resolution: {integrity: sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0=}
+    resolution: {integrity: sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==}
     dev: false
 
   /is-buffer/1.1.6:
@@ -4927,9 +4927,9 @@ packages:
       postcss: 8.4.12
     dev: false
 
-  /postcss-loader/6.2.1_l7cnarxuwtifxq3zndacrkp2tq:
-    resolution: {integrity: sha512-WbbYpmAaKcux/P66bZ40bpWsBucjx/TTgVVzRZ9yUO8yQfVBlameJ0ZGVaPfH64hNSBh63a+ICP5nqOpBA0w+Q==}
-    engines: {node: '>= 12.13.0'}
+  /postcss-loader/7.0.1_l7cnarxuwtifxq3zndacrkp2tq:
+    resolution: {integrity: sha512-VRviFEyYlLjctSM93gAZtcJJ/iSkPZ79zWbN/1fSH+NisBByEiVLqpdVDrPLVSi8DX0oJo12kL/GppTBdKVXiQ==}
+    engines: {node: '>= 14.15.0'}
     peerDependencies:
       postcss: ^7.0.0 || ^8.0.1
       webpack: ^5.0.0
