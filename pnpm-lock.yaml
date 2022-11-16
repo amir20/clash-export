@@ -66,7 +66,7 @@ specifiers:
   webpack: ^5.74.0
   webpack-bundle-analyzer: ^4.5.0
   webpack-cli: ^4.10.0
-  webpack-manifest-plugin: ^4.1.1
+  webpack-manifest-plugin: ^5.0.0
   webpack-merge: ^5.8.0
   webpack-spritesmith: ^1.1.0
   whatwg-fetch: ^3.6.2
@@ -132,7 +132,7 @@ dependencies:
   vuex: 3.6.2_vue@2.6.14
   webpack: 5.74.0_webpack-cli@4.10.0
   webpack-cli: 4.10.0_xwrjqo4cossfvo5jhyloqpvyzi
-  webpack-manifest-plugin: 4.1.1_webpack@5.74.0
+  webpack-manifest-plugin: 5.0.0_webpack@5.74.0
   webpack-merge: 5.8.0
   webpack-spritesmith: 1.1.0
   whatwg-fetch: 3.6.2
@@ -6766,11 +6766,11 @@ packages:
       webpack-merge: 5.8.0
     dev: false
 
-  /webpack-manifest-plugin/4.1.1_webpack@5.74.0:
-    resolution: {integrity: sha512-YXUAwxtfKIJIKkhg03MKuiFAD72PlrqCiwdwO4VEXdRO5V0ORCNwaOwAZawPZalCbmH9kBDmXnNeQOw+BIEiow==}
+  /webpack-manifest-plugin/5.0.0_webpack@5.74.0:
+    resolution: {integrity: sha512-8RQfMAdc5Uw3QbCQ/CBV/AXqOR8mt03B6GJmRbhWopE8GzRfEpn+k0ZuWywxW+5QZsffhmFDY1J6ohqJo+eMuw==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
-      webpack: ^4.44.2 || ^5.47.0
+      webpack: ^5.47.0
     dependencies:
       tapable: 2.2.1
       webpack: 5.74.0_webpack-cli@4.10.0
