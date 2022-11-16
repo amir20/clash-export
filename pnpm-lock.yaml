@@ -55,7 +55,7 @@ specifiers:
   semver: ^7.3.7
   store: ^2.0.12
   style-loader: ^3.3.1
-  svg-url-loader: ^7.1.1
+  svg-url-loader: ^8.0.0
   terser-webpack-plugin: ^5.3.3
   vue: ^2.6.14
   vue-loader: ^15.9.8
@@ -122,7 +122,7 @@ dependencies:
   semver: 7.3.7
   store: 2.0.12
   style-loader: 3.3.1_webpack@5.74.0
-  svg-url-loader: 7.1.1_webpack@5.74.0
+  svg-url-loader: 8.0.0_webpack@5.74.0
   terser-webpack-plugin: 5.3.3_webpack@5.74.0
   vue: 2.6.14
   vue-loader: 15.9.8_o6jwv4es5fvove5qep6vemmuw4
@@ -6144,14 +6144,13 @@ packages:
     engines: {node: '>= 0.4'}
     dev: false
 
-  /svg-url-loader/7.1.1_webpack@5.74.0:
-    resolution: {integrity: sha512-NlsMCePODm7FQhU9aEZyGLPx5Xe1QRI1cSEUE6vTq5LJc9l9pStagvXoEIyZ9O3r00w6G3+Wbkimb+SC3DI/Aw==}
-    engines: {node: '>=10'}
+  /svg-url-loader/8.0.0_webpack@5.74.0:
+    resolution: {integrity: sha512-5doSXvl18hY1fGsRLdhWAU5jgzgxJ06/gc/26cpuDnN0xOz1HmmfhkpL29SSrdIvhtxQ1UwGzmk7wTT/l48mKw==}
+    engines: {node: '>=14'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^5.0.0
     dependencies:
       file-loader: 6.2.0_webpack@5.74.0
-      loader-utils: 2.0.1
       webpack: 5.74.0_webpack-cli@4.10.0
     dev: false
 
