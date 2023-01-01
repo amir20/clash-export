@@ -147,4 +147,9 @@ message PlayerStats {
   int32 home_diggy = 142;
   int32 home_electro_titan = 143;
   int32 home_battle_drill = 144;
+  int32 ungrateful_child = 145;
+  int32 home_super_miner = 146;
+  int32 counterspell = 147;
+  int32 monolith_masher = 148;
+  int32 get_even_more_goblins = 149;
 }
