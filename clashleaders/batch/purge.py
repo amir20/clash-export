@@ -17,8 +17,11 @@ def delete_outdated():
 
     logger.info("Deleting outdated wars...")
     dt = datetime.now() - timedelta(days=180)
-    CWLWar.objects(endTime__lt=dt).delete()
     ClanWar.objects(endTime__lt=dt).delete()
+
+    logger.info("Deleting outdated CWLs...")
+    dt = datetime.now() - timedelta(days=90)
+    CWLWar.objects(endTime__lt=dt).delete()
 
 
 def reset_stats():
