@@ -1,8 +1,8 @@
 # Update status every minute
 */5 * * * * /bin/bash -l -c 'update_status > /proc/1/fd/1 2>/proc/1/fd/2'
 
-# delete_outdated on every day
-0 1 * * * /bin/bash -l -c 'delete_outdated > /proc/1/fd/1 2>/proc/1/fd/2'
+# delete_outdated on every hour
+0 */1 * * * /bin/bash -l -c 'delete_outdated > /proc/1/fd/1 2>/proc/1/fd/2'
 
 # reset_stats on every day
 0 2 * * * /bin/bash -l -c 'reset_stats > /proc/1/fd/1 2>/proc/1/fd/2'
