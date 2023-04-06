@@ -329,14 +329,14 @@ xcb = ["xcffib (>=0.3.2)"]
 
 [[package]]
 name = "cairosvg"
-version = "2.5.2"
+version = "2.7.0"
 description = "A Simple SVG Converter based on Cairo"
 category = "main"
 optional = false
 python-versions = ">=3.5"
 files = [
-    {file = "CairoSVG-2.5.2-py3-none-any.whl", hash = "sha256:98c276b7e4f0caf01e5c7176765c104ffa1aa1461d63b2053b04ab663cf7052b"},
-    {file = "CairoSVG-2.5.2.tar.gz", hash = "sha256:b0b9929cf5dba005178d746a8036fcf0025550f498ca54db61873322384783bc"},
+    {file = "CairoSVG-2.7.0-py3-none-any.whl", hash = "sha256:17cb96423a896258848322a95c80160e714a58f1af3dd73b8e1750994519b9f9"},
+    {file = "CairoSVG-2.7.0.tar.gz", hash = "sha256:ac4dc7c1d38b3a15717db2633a3a383012e0be664c727c911637e6af6a49293c"},
 ]
 
 [package.dependencies]
@@ -348,7 +348,7 @@ tinycss2 = "*"
 
 [package.extras]
 doc = ["sphinx", "sphinx-rtd-theme"]
-test = ["pytest-cov", "pytest-flake8", "pytest-isort", "pytest-runner"]
+test = ["flake8", "isort", "pytest"]
 
 [[package]]
 name = "certifi"
@@ -2192,4 +2192,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "da2190f262e6d1b1181b6dbf6e729ba150319e59ae126a591b6b1632b23fc198"
+content-hash = "c6780a0be9c5b97a5e32205084927b678980a24766bd07e024a721dbe864f190"
