@@ -6,7 +6,6 @@ MACHINE := clashleaders22
 .PHONY: deploy
 deploy:
 	eval $$(docker-machine env $(MACHINE) --shell bash); docker pull amir20/clashleaders:$(TAG)
-	eval $$(docker-machine env $(MACHINE) --shell bash); docker pull amir20/imgproxy-cache:$(TAG)
 	eval $$(docker-machine env $(MACHINE) --shell bash); TAG=$(TAG) docker stack deploy -c docker-compose.yml -c docker-compose.production.yml clashleaders
 
 .PHONY: build
@@ -17,7 +16,6 @@ build:
 .PHONY: push
 push: build
 	docker push amir20/clashleaders:$(TAG)
-	docker push amir20/imgproxy-cache:$(TAG)
 
 .PHONY: test
 test: build
