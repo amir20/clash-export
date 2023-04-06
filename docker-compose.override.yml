@@ -37,6 +37,8 @@ services:
       - "8888:2015"
   imgproxy:
     env_file: .env
+    ports:
+      - "9090:8080"
   cron:
     env_file: .env
     volumes:
