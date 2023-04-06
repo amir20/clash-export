@@ -31,10 +31,9 @@ services:
       - IMGPROXY_DOWNLOAD_TIMEOUT=10
       - IMGPROXY_TTL=31622400
   imgproxy-cache:
-    image: "amir20/imgproxy-cache:${TAG:-latest}"
-    build:
-      context: .
-      dockerfile: Dockerfile.imgproxy
+    image: decentralize/caching-proxy
+    environment:
+      - UPSTREAM=http://imgproxy:8080
     depends_on:
       - imgproxy
   rq_calculation_worker:

@@ -34,7 +34,7 @@ services:
       - .ipython/web:/root/.ipython/profile_default
   imgproxy-cache:
     ports:
-      - "8888:2015"
+      - "8888:80"
   imgproxy:
     env_file: .env
     ports:
