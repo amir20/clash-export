@@ -164,8 +164,8 @@ dependencies:
     specifier: ^15.9.8
     version: 15.9.8(css-loader@5.2.7)(lodash@4.17.21)(vue-template-compiler@2.6.14)(webpack@5.74.0)
   vue-router:
-    specifier: ^3.5.2
-    version: 3.5.3(vue@2.6.14)
+    specifier: ^4.0.0
+    version: 4.0.0(vue@2.6.14)
   vue-style-loader:
     specifier: ^4.1.3
     version: 4.1.3
@@ -6730,10 +6730,10 @@ packages:
       - whiskers
     dev: false
 
-  /vue-router@3.5.3(vue@2.6.14):
-    resolution: {integrity: sha512-FUlILrW3DGitS2h+Xaw8aRNvGTwtuaxrRkNSHWTizOfLUie7wuYwezeZ50iflRn8YPV5kxmU2LQuu3nM/b3Zsg==}
+  /vue-router@4.0.0(vue@2.6.14):
+    resolution: {integrity: sha512-RiAsDsSV73TBqppgpAKghb5exHHKsFuTii7hbhj9QHjWJNDE4lBDTr7bVALG9DH9vVcFI+7PUTBGYbytBFsWsQ==}
     peerDependencies:
-      vue: ^2
+      vue: ^3.0.0
     dependencies:
       vue: 2.6.14
     dev: false
