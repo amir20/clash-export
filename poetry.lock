@@ -491,13 +491,14 @@ files = [
 
 [[package]]
 name = "contentful"
-version = "1.13.1"
+version = "2.1.1"
 description = "Contentful Delivery API Client"
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "contentful-1.13.1.tar.gz", hash = "sha256:5d0a2ac8fe2d8fb1e8d5295a65228cc785a14e2fd21a9231dd0299894a384d4c"},
+    {file = "contentful-2.1.1-py3-none-any.whl", hash = "sha256:6be3fe980cc68cf2eab2b39958df3ae9b7c4d2b26ee92a4926dd8fdd88bf20c0"},
+    {file = "contentful-2.1.1.tar.gz", hash = "sha256:7e83776577326c5f088771a83455c2e0eb23c5ee571d024812159b39bb03d206"},
 ]
 
 [package.dependencies]
@@ -2210,4 +2211,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "72e406ea9f7dd0f4d5e870fdd6dc3ad654845a613fa008d0b31295e340d33b6f"
+content-hash = "7e3c490413ddcf7d77a7420b1f9d46175d61c5d6269de8170a9a39a2802e1e8d"
