@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import Chartist from "chartist";
+import { Bar } from "chartist";
 
 export default {
   props: ["averages"],
   mounted() {
-    new Chartist.Bar(
+    new Bar(
       this.$refs.chart,
       {
         labels: this.data.levels,

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Chartist from "chartist";
+import { Line } from "chartist";
 import "chartist-plugin-legend";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -46,7 +46,7 @@ export default {
     },
     draw() {
       const data = this.loading ? fakeData : this.data;
-      dom.chart = new Chartist.Line(
+      dom.chart = new Line(
         this.$refs.chart,
         {
           labels: data.labels,

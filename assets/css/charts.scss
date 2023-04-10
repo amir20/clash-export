@@ -1,44 +1,44 @@
-@import "~chartist/dist/scss/chartist";
+@import "~chartist/dist/index.css";
 
 .ct-area {
   fill-opacity: 0.4;
 }
 
-.ct-legend {
-  position: relative;
-  z-index: 10;
+// .ct-legend {
+//   position: relative;
+//   z-index: 10;
 
-  li {
-    position: relative;
-    padding-left: 23px;
-    margin-bottom: 3px;
-  }
+//   li {
+//     position: relative;
+//     padding-left: 23px;
+//     margin-bottom: 3px;
+//   }
 
-  li:before {
-    width: 12px;
-    height: 12px;
-    position: absolute;
-    left: 0;
-    top: 5px;
-    content: "";
-    border: 3px solid transparent;
-    border-radius: 2px;
-  }
+//   li:before {
+//     width: 12px;
+//     height: 12px;
+//     position: absolute;
+//     left: 0;
+//     top: 5px;
+//     content: "";
+//     border: 3px solid transparent;
+//     border-radius: 2px;
+//   }
 
-  li.inactive:before {
-    background-color: transparent !important;
-  }
+//   li.inactive:before {
+//     background-color: transparent !important;
+//   }
 
-  &.ct-legend-inside {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
+//   &.ct-legend-inside {
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//   }
 
-  @for $i from 0 to length($ct-series-colors) {
-    .ct-series-#{$i}:before {
-      background-color: nth($ct-series-colors, $i + 1);
-      border-color: nth($ct-series-colors, $i + 1);
-    }
-  }
-}
+//   @for $i from 0 to length($ct-series-colors) {
+//     .ct-series-#{$i}:before {
+//       background-color: nth($ct-series-colors, $i + 1);
+//       border-color: nth($ct-series-colors, $i + 1);
+//     }
+//   }
+// }

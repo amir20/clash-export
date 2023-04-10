@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Chartist from "chartist";
+import { Bar, easings } from "chartist";
 import debounce from "lodash/debounce";
 import { mapState } from "vuex";
 
@@ -16,7 +16,7 @@ export default {
   },
   mounted() {
     const { labels } = this.data;
-    const chart = new Chartist.Bar(
+    const chart = new Bar(
       this.$refs.chart,
       {
         labels: this.data.labels,
@@ -53,7 +53,7 @@ export default {
               dur: "350ms",
               from: data.y1,
               to: data.y2,
-              easing: Chartist.Svg.Easing.easeOutQuint,
+              easing: easings.easeOutQuint,
             },
           });
         }
