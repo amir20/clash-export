@@ -34,6 +34,10 @@ cachetools = "^5.2.0"
 inflection = "^0.5.1"
 protobuf = "^4.21.9"
 contentful = "^2.0.0"
+cachelib = "^0.10.2"
+setuptools = "^67.6.1"
+pillow = "^9.5.0"
+multidict = "^6.0.4"
 
 
 [tool.poetry.group.dev.dependencies]
