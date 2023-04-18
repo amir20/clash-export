@@ -23,7 +23,7 @@ services:
       - imgproxy-cache
       - rq_calculation_worker
   imgproxy:
-    image: darthsim/imgproxy:v3.15
+    image: darthsim/imgproxy:v3.16
     environment:
       - IMGPROXY_ENFORCE_WEBP=true
       - IMGPROXY_USE_ETAG=true
