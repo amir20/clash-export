@@ -750,6 +750,31 @@ files = [
 graphql-core = ">=3.2,<3.3"
 
 [[package]]
+name = "graphql-server"
+version = "3.0.0b5"
+description = "GraphQL Server tools for powering your server"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "graphql-server-3.0.0b5.tar.gz", hash = "sha256:85c12c421e14f339883865d75fe316f626f3f875c70f8c366a93d50c5b1c8a23"},
+]
+
+[package.dependencies]
+graphql-core = ">=3.2,<3.3"
+typing-extensions = ">=4,<5"
+
+[package.extras]
+aiohttp = ["aiohttp (>=3.8,<4)"]
+all = ["aiohttp (>=3.8,<4)", "flask (>=1,<2)", "graphql-core (>=3.2,<3.3)", "quart (>=0.6.15,<0.15)", "sanic (>=20.3,<21)", "typing-extensions (>=4,<5)", "webob (>=1.8.7,<2)"]
+dev = ["Jinja2 (>=2.11,<3)", "aiohttp (>=3.8,<4)", "aiohttp (>=3.8,<4)", "black (>=19.10b0)", "check-manifest (>=0.47,<1)", "flake8 (>=4,<5)", "flask (>=1,<2)", "graphql-core (>=3.2,<3.3)", "isort (>=5,<6)", "mypy (>=0.931,<1)", "pytest (>=6.2,<6.3)", "pytest-asyncio (>=0.16,<1)", "pytest-cov (>=3,<4)", "quart (>=0.6.15,<0.15)", "sanic (>=20.3,<21)", "typing-extensions (>=4,<5)", "webob (>=1.8.7,<2)"]
+flask = ["flask (>=1,<2)"]
+quart = ["quart (>=0.6.15,<0.15)"]
+sanic = ["sanic (>=20.3,<21)"]
+test = ["Jinja2 (>=2.11,<3)", "aiohttp (>=3.8,<4)", "aiohttp (>=3.8,<4)", "flask (>=1,<2)", "graphql-core (>=3.2,<3.3)", "pytest (>=6.2,<6.3)", "pytest-asyncio (>=0.16,<1)", "pytest-cov (>=3,<4)", "quart (>=0.6.15,<0.15)", "sanic (>=20.3,<21)", "typing-extensions (>=4,<5)", "webob (>=1.8.7,<2)"]
+webob = ["webob (>=1.8.7,<2)"]
+
+[[package]]
 name = "gunicorn"
 version = "20.1.0"
 description = "WSGI HTTP Server for UNIX"
@@ -1872,7 +1897,7 @@ test = ["flake8", "isort", "pytest"]
 name = "typing-extensions"
 version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2181,4 +2206,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "ecdcdad1ebb051ed087db46e4cdbe4eaa126e87e76891a2f2b0f020f944c3449"
+content-hash = "1d7187672e9eb121e030e41b8132d2e7be1745700daacaec1df122efbb10a4c5"

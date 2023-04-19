@@ -37,6 +37,7 @@ cachelib = "^0.10.2"
 setuptools = "^67.6.1"
 pillow = "^9.5.0"
 multidict = "^6.0.4"
+graphql-server = "^3.0.0b5"
 
 
 [tool.poetry.group.dev.dependencies]
