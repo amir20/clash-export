@@ -4,11 +4,5 @@
   "python.formatting.blackArgs": ["--line-length", "160"],
   "editor.renderWhitespace": "all",
   "python.analysis.typeCheckingMode": "basic",
-  "python.linting.mypyEnabled": true,
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "python.linting.mypyEnabled": true
 }
