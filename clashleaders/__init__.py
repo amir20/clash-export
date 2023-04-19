@@ -7,11 +7,12 @@ import rq_dashboard
 from bugsnag.flask import handle_exceptions
 from flask import Flask
 from flask_caching import Cache
-from flask_graphql import GraphQLView
+
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from graphene import Schema
 from mongoengine import connect
 from redis import Redis
+from clashleaders.graphql.graphqlview import GraphQLView
 
 
 app = Flask(__name__, static_folder="_does_not_exists_", static_url_path="/static")
