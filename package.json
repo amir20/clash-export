@@ -11,7 +11,7 @@
     "@babel/runtime-corejs3": "^7.21.0",
     "@bugsnag/js": "^7.20.0",
     "@bugsnag/plugin-vue": "^7.19.0",
-    "@tweenjs/tween.js": "^19.0.0",
+    "@tweenjs/tween.js": "^20.0.0",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^9.1.2",
     "buefy": "^0.9.23",
