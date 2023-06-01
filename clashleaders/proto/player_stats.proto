@@ -152,4 +152,7 @@ message PlayerStats {
   int32 counterspell = 147;
   int32 monolith_masher = 148;
   int32 get_even_more_goblins = 149;
+  int32 builderbase_power_pekka = 150;
+  int32 builderbase_battle_copter = 151;
+  int32 builderbase_electrofire_wizard = 152;
 }
