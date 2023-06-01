@@ -7,7 +7,7 @@ from clashleaders import redis_connection
 
 logger = logging.getLogger(__name__)
 
-queue = Queue(name="war", connection=redis_connection)
+queue = Queue(name="war", connection=redis_connection, failure_ttl=None)
 
 
 def schedule_war_update(datetime, tag):
