@@ -274,14 +274,14 @@ files = [
 
 [[package]]
 name = "bugsnag"
-version = "4.4.0"
+version = "4.5.0"
 description = "Automatic error monitoring for django, flask, etc."
 category = "main"
 optional = false
 python-versions = ">=3.5, <4"
 files = [
-    {file = "bugsnag-4.4.0-py3-none-any.whl", hash = "sha256:c0cbc68e7c71fab170bd55871bbd9af4035a7cc72cb4d3921a84bda16c7a6776"},
-    {file = "bugsnag-4.4.0.tar.gz", hash = "sha256:d6fb680e6cae95f1f760374ca13f6a045691778f279d3042b74896b90b64de2c"},
+    {file = "bugsnag-4.5.0-py3-none-any.whl", hash = "sha256:dee98c0f461e7197edd3feda93d0fccab72322504e20dcf3666e25f82b27ebd4"},
+    {file = "bugsnag-4.5.0.tar.gz", hash = "sha256:47f160d4e33247ccf4b43503c2abb54a1dec6efab7dc05e005272bdd6366fd06"},
 ]
 
 [package.dependencies]
