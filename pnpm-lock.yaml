@@ -30,8 +30,8 @@ dependencies:
     specifier: ^7.19.0
     version: 7.19.0
   '@tweenjs/tween.js':
-    specifier: ^20.0.0
-    version: 20.0.0
+    specifier: ^21.0.0
+    version: 21.0.0
   autoprefixer:
     specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.27)
@@ -1661,8 +1661,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: false
 
-  /@tweenjs/tween.js@20.0.0:
-    resolution: {integrity: sha512-jc3yqQZ4n1vOaf+lpzKOZw6/CqkdQjnl/pGmaW/WfQri5rGfLNe7laqBx62mXst+VQ2MUWbCV9/A1Tak3tlpDA==}
+  /@tweenjs/tween.js@21.0.0:
+    resolution: {integrity: sha512-qVfOiFh0U8ZSkLgA6tf7kj2MciqRbSCWaJZRwftVO7UbtVDNsZAXpWXqvCDtIefvjC83UJB+vHTDOGm5ibXjEA==}
     dev: false
 
   /@types/eslint-scope@3.7.4:
