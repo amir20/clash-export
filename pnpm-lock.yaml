@@ -123,8 +123,8 @@ dependencies:
     specifier: ^2.7.6
     version: 2.7.6(webpack@5.78.0)
   node-sass:
-    specifier: ^8.0.0
-    version: 8.0.0
+    specifier: ^9.0.0
+    version: 9.0.0
   postcss:
     specifier: ^8.4.27
     version: 8.4.27
@@ -145,7 +145,7 @@ dependencies:
     version: 0.13.11
   sass-loader:
     specifier: ^13.3.2
-    version: 13.3.2(node-sass@8.0.0)(webpack@5.78.0)
+    version: 13.3.2(node-sass@9.0.0)(webpack@5.78.0)
   semver:
     specifier: ^7.3.8
     version: 7.3.8
@@ -3889,10 +3889,6 @@ packages:
       postcss: 7.0.39
     dev: false
 
-  /graceful-fs@4.2.10:
-    resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
-    dev: false
-
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
     dev: false
@@ -4140,12 +4136,6 @@ packages:
 
   /is-buffer@1.1.6:
     resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
-    dev: false
-
-  /is-core-module@2.10.0:
-    resolution: {integrity: sha512-Erxj2n/LDAZ7H8WNJXd9tw38GYM3dv8rk8Zcs+jJuxYTW7sozH+SS8NtrSjVL1/vpLvWi1hxy96IzjJ3EHTJJg==}
-    dependencies:
-      has: 1.0.3
     dev: false
 
   /is-core-module@2.11.0:
@@ -4876,7 +4866,7 @@ packages:
     dependencies:
       env-paths: 2.2.1
       glob: 7.2.0
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       make-fetch-happen: 9.1.0
       nopt: 5.0.0
       npmlog: 6.0.0
@@ -4897,9 +4887,9 @@ packages:
     resolution: {integrity: sha512-uYr7J37ae/ORWdZeQ1xxMJe3NtdmqMC/JZK+geofDrkLUApKRHPd18/TxtBOJ4A0/+uUIliorNrfYV6s1b02eQ==}
     dev: false
 
-  /node-sass@8.0.0:
-    resolution: {integrity: sha512-jPzqCF2/e6JXw6r3VxfIqYc8tKQdkj5Z/BDATYyG6FL6b/LuYBNFGFVhus0mthcWifHm/JzBpKAd+3eXsWeK/A==}
-    engines: {node: '>=14'}
+  /node-sass@9.0.0:
+    resolution: {integrity: sha512-yltEuuLrfH6M7Pq2gAj5B6Zm7m+gdZoG66wTqG6mIZV/zijq3M2OO2HswtT6oBspPyFhHDcaxWpsBm0fRNDHPg==}
+    engines: {node: '>=16'}
     hasBin: true
     requiresBuild: true
     dependencies:
@@ -4944,7 +4934,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       hosted-git-info: 4.1.0
-      is-core-module: 2.10.0
+      is-core-module: 2.11.0
       semver: 7.3.8
       validate-npm-package-license: 3.0.4
     dev: false
@@ -5957,7 +5947,7 @@ packages:
       yargs: 17.7.1
     dev: false
 
-  /sass-loader@13.3.2(node-sass@8.0.0)(webpack@5.78.0):
+  /sass-loader@13.3.2(node-sass@9.0.0)(webpack@5.78.0):
     resolution: {integrity: sha512-CQbKl57kdEv+KDLquhC+gE3pXt74LEAzm+tzywcA0/aHZuub8wTErbjAoNI57rPUWRYRNC5WUnNl8eGJNbDdwg==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -5977,7 +5967,7 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      node-sass: 8.0.0
+      node-sass: 9.0.0
       webpack: 5.78.0(webpack-cli@5.0.1)
     dev: false
 
