@@ -189,8 +189,8 @@ dependencies:
     specifier: ^5.0.0
     version: 5.0.0(webpack@5.88.2)
   webpack-merge:
-    specifier: ^5.8.0
-    version: 5.8.0
+    specifier: ^5.9.0
+    version: 5.9.0
   webpack-spritesmith:
     specifier: ^1.1.0
     version: 1.1.0
@@ -4251,7 +4251,7 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
   /isobject@3.0.1:
-    resolution: {integrity: sha1-TkMekrEalzFjaqH5yNHMvP2reN8=}
+    resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
     engines: {node: '>=0.10.0'}
     dev: false
 
@@ -6915,7 +6915,7 @@ packages:
       rechoir: 0.8.0
       webpack: 5.88.2(webpack-cli@5.0.1)
       webpack-bundle-analyzer: 4.5.0
-      webpack-merge: 5.8.0
+      webpack-merge: 5.9.0
     dev: false
 
   /webpack-manifest-plugin@5.0.0(webpack@5.88.2):
@@ -6929,8 +6929,8 @@ packages:
       webpack-sources: 2.3.1
     dev: false
 
-  /webpack-merge@5.8.0:
-    resolution: {integrity: sha512-/SaI7xY0831XwP6kzuwhKWVKDP9t1QY1h65lAFLbZqMPIuYcD9QAW4u9STIbU9kaJbPBB/geU/gLr1wDjOhQ+Q==}
+  /webpack-merge@5.9.0:
+    resolution: {integrity: sha512-6NbRQw4+Sy50vYNTw7EyOn41OZItPiXB8GNv3INSoe3PSFaHJEz3SHTrYVaRm2LilNGnFUzh0FAwqPEmU/CwDg==}
     engines: {node: '>=10.0.0'}
     dependencies:
       clone-deep: 4.0.1
