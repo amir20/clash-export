@@ -41,7 +41,7 @@ graphql-server = {extras = ["flask"], version = "^3.0.0b6"}
 
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.0.0"
+black = "^23.7.0"
 mypy = "^1.0.0"
 pytest = "^7.2.0"
 snapshottest = "^0.6.0"
