@@ -63,7 +63,7 @@ dependencies:
     specifier: ^3.32.2
     version: 3.32.2
   css-loader:
-    specifier: ^5.2.6
+    specifier: ^5.2.7
     version: 5.2.7(webpack@5.88.2)
   css-minimizer-webpack-plugin:
     specifier: ^5.0.1
@@ -1723,10 +1723,6 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: false
 
-  /@types/json-schema@7.0.11:
-    resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
-    dev: false
-
   /@types/json-schema@7.0.12:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
     dev: false
@@ -2911,8 +2907,8 @@ packages:
       postcss-modules-local-by-default: 4.0.0(postcss@8.4.27)
       postcss-modules-scope: 3.0.0(postcss@8.4.27)
       postcss-modules-values: 4.0.0(postcss@8.4.27)
-      postcss-value-parser: 4.1.0
-      schema-utils: 3.1.1
+      postcss-value-parser: 4.2.0
+      schema-utils: 3.3.0
       semver: 7.5.2
       webpack: 5.88.2(webpack-cli@5.1.4)
     dev: false
@@ -5389,7 +5385,7 @@ packages:
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.27)
       postcss: 8.4.27
-      postcss-selector-parser: 6.0.10
+      postcss-selector-parser: 6.0.13
       postcss-value-parser: 4.2.0
     dev: false
 
@@ -5400,7 +5396,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       postcss: 8.4.27
-      postcss-selector-parser: 6.0.10
+      postcss-selector-parser: 6.0.13
     dev: false
 
   /postcss-modules-values@4.0.0(postcss@8.4.27):
@@ -5579,10 +5575,6 @@ packages:
     dependencies:
       postcss: 8.4.27
       postcss-selector-parser: 6.0.13
-    dev: false
-
-  /postcss-value-parser@4.1.0:
-    resolution: {integrity: sha512-97DXOFbQJhk71ne5/Mt6cOu6yxsSfM0QGQyl0L25Gca4yGWEGJaig7l7gbCX623VqTBNGLRLaVUCnNkcedlRSQ==}
     dev: false
 
   /postcss-value-parser@4.2.0:
@@ -5995,7 +5987,7 @@ packages:
     resolution: {integrity: sha512-Y5PQxS4ITlC+EahLuXaY86TXfR7Dc5lw294alXOq86JAHCihAIZfqv8nNCWvaEJvaC51uN9hbLGeV0cFBdH+Fw==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/json-schema': 7.0.11
+      '@types/json-schema': 7.0.12
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
     dev: false
