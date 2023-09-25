@@ -1624,9 +1624,6 @@ files = [
     {file = "redis-4.6.0.tar.gz", hash = "sha256:585dc516b9eb042a619ef0a39c3d7d55fe81bdb4df09a52c9cdde0d07bf1aa7d"},
 ]
 
-[package.dependencies]
-async-timeout = {version = ">=4.0.2", markers = "python_full_version <= \"3.11.2\""}
-
 [package.extras]
 hiredis = ["hiredis (>=1.0.0)"]
 ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
@@ -2274,5 +2271,5 @@ multidict = ">=4.0"
 
 [metadata]
 lock-version = "2.0"
-python-versions = "~3.11"
-content-hash = "ae45f0e498116b42ac1375d889b7419793161c5905dd7b112f3ae2266b6468bc"
+python-versions = "~3.11.5"
+content-hash = "d3d0263f426063d21a17a97e336fb7ef50af83c319629cf10d51708bfced442f"
