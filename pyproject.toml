@@ -5,7 +5,7 @@ description = ""
 authors = ["Amir Raminfar <findamir@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "~3.11"
+python = "~3.11.5"
 aiohttp = "^3.8.5"
 awesome-slugify = "^1.6.5"
 bugsnag = "^4.5.0"
