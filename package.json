@@ -14,7 +14,7 @@
     "@tweenjs/tween.js": "^21.0.0",
     "autoprefixer": "^10.4.16",
     "babel-loader": "^9.1.3",
-    "buefy": "^0.9.23",
+    "buefy": "^0.9.25",
     "bulma": "^0.9.4",
     "bulma-badge": "^3.0.1",
     "caniuse-lite": "^1.0.30001535",
