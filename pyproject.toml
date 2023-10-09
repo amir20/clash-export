@@ -35,7 +35,7 @@ protobuf = "^4.21.9"
 contentful = "^2.0.0"
 cachelib = "^0.10.2"
 setuptools = "^68.0.0"
-pillow = "^10.0.0"
+pillow = "^10.0.1"
 multidict = "^6.0.4"
 graphql-server = {extras = ["flask"], version = "^3.0.0b6"}
 
