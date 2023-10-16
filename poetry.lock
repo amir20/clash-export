@@ -2169,14 +2169,14 @@ email = ["email-validator"]
 
 [[package]]
 name = "xlsxwriter"
-version = "3.1.6"
+version = "3.1.8"
 description = "A Python module for creating Excel XLSX files."
 category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "XlsxWriter-3.1.6-py3-none-any.whl", hash = "sha256:fc3838232f9f50763c1e81a3b381c6ad559dcdcd0983ee239bf54556392b4f3f"},
-    {file = "XlsxWriter-3.1.6.tar.gz", hash = "sha256:2087abdaa4a5e981a3ae50b5c21ff1adae59c8fecb6157808585fc169a6bfcd9"},
+    {file = "XlsxWriter-3.1.8-py3-none-any.whl", hash = "sha256:2d8d1f392b3e041adf90042dd2f7b5f7468181a45e5e9a7d8376e64b374104f1"},
+    {file = "XlsxWriter-3.1.8.tar.gz", hash = "sha256:059d0786fbfa3055588e81e9d5acf4ace28394bf09353a31ae2cae635740fc15"},
 ]
 
 [[package]]
@@ -2270,4 +2270,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11.5"
-content-hash = "d73d5dad46dc5f787105682b437c56ac41013c42acb5237dcd624c8a3772359a"
+content-hash = "edd8cd3f06c18cded08095ffc62493f406790f5b67a47a6d7380e7a13af957e5"
