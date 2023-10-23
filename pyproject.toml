@@ -37,7 +37,7 @@ cachelib = "^0.10.2"
 setuptools = "^68.0.0"
 pillow = "^10.0.1"
 multidict = "^6.0.4"
-graphql-server = {extras = ["flask"], version = "^3.0.0b6"}
+graphql-server = {extras = ["flask"], version = "^3.0.0-beta.7"}
 
 
 [tool.poetry.group.dev.dependencies]
