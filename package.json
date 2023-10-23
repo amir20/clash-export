@@ -43,7 +43,7 @@
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.7.6",
     "node-sass": "^9.0.0",
-    "postcss": "^8.4.27",
+    "postcss": "^8.4.31",
     "postcss-font-magician": "^3.0.0",
     "postcss-loader": "^7.3.3",
     "postcss-safe-parser": "^6.0.0",
