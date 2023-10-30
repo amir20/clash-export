@@ -1,6 +1,6 @@
 {
   "name": "clashleaders",
-  "version": "2.64.0",
+  "version": "2.65.0",
   "packageManager": "pnpm@8.6.12",
   "dependencies": {
     "@babel/core": "^7.22.20",
