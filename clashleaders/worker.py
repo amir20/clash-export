@@ -61,8 +61,8 @@ def update_single_clan():
     except ApiTimeout:
         logger.warning(f"Timeout error when fetching [{clan.tag}]. Waiting 1 second and trying again.")
         time.sleep(1)
-    except ApiException:
-        logger.warning(f"API exception when fetching {clan.tag}. Pausing for 10 seconds.")
+    except ApiException as e:
+        logger.exception(f"Error while fetching {clan.tag}. Pausing for 10 seconds.")
         try_again_clan(clan)
         time.sleep(10)
     except Exception:
