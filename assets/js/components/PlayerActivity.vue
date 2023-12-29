@@ -110,7 +110,7 @@ export default {
         playerTag: this.tag,
         userTag: this.userTag,
         hasUser: this.hasDifferentUser,
-      }
+      },
     );
 
     const { user, player } = data;
@@ -156,7 +156,7 @@ export default {
 
 <style lang="scss" scoped>
 @media screen and (max-width: 769px) {
-  /deep/ .b-tabs .tab-content {
+  ::v-deep .b-tabs .tab-content {
     padding-left: 0;
     padding-right: 0;
     margin-left: -1em;

@@ -37,7 +37,7 @@ export default {
         width: "100%",
         fullWidth: true,
         distributeSeries: true,
-      }
+      },
     );
 
     chart.on("created", () => {
@@ -97,7 +97,7 @@ export default {
   width: 960px;
   margin: 0 auto;
 
-  & /deep/ .ct-bar {
+  & ::v-deep .ct-bar {
     stroke-width: 6px;
     stroke: #bbb;
 

@@ -147,7 +147,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.b-table /deep/ {
+.b-table ::v-deep {
   th {
     padding: 1em;
   }

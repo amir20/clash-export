@@ -137,7 +137,7 @@ export default {
         d3
           .axisBottom(x)
           .tickFormat(d3.timeFormat("%b %-d"))
-          .ticks(d3.timeDay.every(width > 1000 ? 2 : 3))
+          .ticks(d3.timeDay.every(width > 1000 ? 2 : 3)),
       );
 
       leftAxis.call(d3.axisLeft(yLeft).ticks(4, "s"));
@@ -155,42 +155,42 @@ export default {
 .trophy-chart {
   margin-top: 3.5em;
 
-  /deep/ .members-line {
+  ::v-deep .members-line {
     fill: none;
     stroke: hsl(204, 86%, 53%);
     stroke-width: 1px;
     stroke-dasharray: 4, 2;
   }
 
-  /deep/ .trophy-legend {
+  ::v-deep .trophy-legend {
     fill: #d70206;
     fill-opacity: 0.4;
   }
 
-  /deep/ .members-legend {
+  ::v-deep .members-legend {
     fill: hsl(204, 86%, 53%);
   }
 
-  /deep/ .area {
+  ::v-deep .area {
     fill: #d70206;
     fill-opacity: 0.4;
   }
 
-  /deep/ text {
+  ::v-deep text {
     fill: rgba(0, 0, 0, 0.6);
     font-family: "Titillium Web";
     font-size: 13px;
   }
 
-  /deep/ .axis.x .domain {
+  ::v-deep .axis.x .domain {
     stroke: rgba(0, 0, 0, 0.25);
   }
 
-  /deep/ .axis.y .domain {
+  ::v-deep .axis.y .domain {
     stroke: none;
   }
 
-  /deep/ .axis line {
+  ::v-deep .axis line {
     stroke: none;
   }
 }

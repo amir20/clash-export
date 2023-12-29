@@ -89,7 +89,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-/deep/ .switch {
+::v-deep .switch {
   margin-left: 2em;
 }
 </style>

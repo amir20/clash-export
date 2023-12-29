@@ -96,7 +96,7 @@ export default {
               },
             },
           ],
-        ]
+        ],
       );
     },
   },
@@ -116,35 +116,35 @@ const fakeData = {
   &.is-loading {
     opacity: 0.25;
 
-    & /deep/ .ct-area {
+    & ::v-deep .ct-area {
       fill: #333;
     }
   }
 
-  & /deep/ .player-activity .ct-area {
+  & ::v-deep .player-activity .ct-area {
     fill: #00d1b2;
     fill-opacity: 0.85;
   }
 
-  & /deep/ .player-activity .ct-line {
+  & ::v-deep .player-activity .ct-line {
     stroke: none;
   }
 
-  & /deep/ .user-activity .ct-area {
+  & ::v-deep .user-activity .ct-area {
     fill: none;
   }
 
-  & /deep/ .user-activity .ct-line {
+  & ::v-deep .user-activity .ct-line {
     stroke: hsl(348, 100%, 61%);
     stroke-width: 2px;
     stroke-dasharray: 4, 2;
   }
 
-  & /deep/ .ct-chart-line .ct-label {
+  & ::v-deep .ct-chart-line .ct-label {
     white-space: nowrap;
   }
 
-  & /deep/ .ct-legend {
+  & ::v-deep .ct-legend {
     font-size: 85%;
     position: absolute;
     right: 1em;

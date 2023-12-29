@@ -18,7 +18,7 @@
 </template>
 
 <style lang="scss" scoped>
-.changelog /deep/ .dropdown-menu {
+.changelog ::v-deep .dropdown-menu {
   min-width: 20em;
 }
 </style>

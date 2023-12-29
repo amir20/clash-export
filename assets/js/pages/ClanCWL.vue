@@ -68,15 +68,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.b-table /deep/ th {
+.b-table :deep(th) {
   padding: 1em;
 }
 
-.stars_1 .rate /deep/ .rate-item.set-on .icon {
+.stars_1 .rate :deep(.rate-item.set-on .icon) {
   color: hsl(348, 100%, 61%);
 }
 
-.stars_3 .rate /deep/ .rate-item.set-on .icon {
+.stars_3 .rate :deep(.rate-item.set-on .icon) {
   color: hsl(141, 71%, 48%);
 }
 </style>

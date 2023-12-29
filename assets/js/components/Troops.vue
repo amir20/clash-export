@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/deep/ .troop {
+::v-deep .troop {
   margin: 2px;
   position: relative;
   cursor: default;

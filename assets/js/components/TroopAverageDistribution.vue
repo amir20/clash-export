@@ -26,7 +26,7 @@ export default {
         width: "100%",
         height: "300px",
         stackBars: true,
-      }
+      },
     );
   },
   computed: {
@@ -48,14 +48,14 @@ export default {
 
 <style lang="scss" scoped>
 .troops-average {
-  & /deep/ .ct-bar {
+  & ::v-deep .ct-bar {
     stroke-width: 50px;
   }
 
-  & /deep/ .ct-series-a .ct-bar {
+  & ::v-deep .ct-series-a .ct-bar {
     stroke: hsl(348, 100%, 61%);
   }
-  & /deep/ .ct-series-b .ct-bar {
+  & ::v-deep .ct-series-b .ct-bar {
     stroke: hsl(0, 0%, 85%);
   }
 }
