@@ -62,7 +62,7 @@ class HistoricalPlayer(Document):
 
             valid_stats = {k: v for k, v in player_stats.items() if k in VALID_NAMES}
             if new_keys := (player_stats.keys() - valid_stats.keys()):
-                logger.info("Unrecognized keys for player: %s", new_keys)
+                logger.debug("Unrecognized keys for player: %s", new_keys)
             self.stats = PlayerStats(**valid_stats)
             clan_tag = None
             if "clan" in kwargs:
