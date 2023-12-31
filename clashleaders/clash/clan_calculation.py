@@ -108,7 +108,7 @@ def calculate_delta(now: clashleaders.model.HistoricalClan, start: clashleaders.
         avg_games_xp=avg_column("Clan Games XP", now_df, start_df),
         avg_cwl_stars=avg_column("CWL Stars", now_df, start_df, remove_zero=True),
         total_trophies=now.clanPoints - start.clanPoints,
-        total_bh_trophies=now.clanVersusPoints - start.clanVersusPoints,
+        # total_bh_trophies=now.clanVersusPoints - start.clanVersusPoints,
         total_gold_grab=sum_column("Total Gold Grab", now_df, start_df),
         total_elixir_grab=sum_column("Total Elixir Grab", now_df, start_df),
         total_de_grab=sum_column("Total DE Grab", now_df, start_df),
