@@ -688,7 +688,7 @@ zstd = ["zstandard"]
 
 [[package]]
 name = "pytest"
-version = "7.4.3"
+version = "7.4.4"
 description = "pytest: simple powerful testing with Python"
 category = "dev"
 optional = false
@@ -1066,7 +1066,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.12.1"
-content-hash = "8c78a5378824d77cf91552f413e7f8b2908e47e16267bb16fbfb0c3cb1cc1c50"
+content-hash = "1c91c935c727cb43736121bebc8371e583007e814dde98775127d173adea99f0"
 
 [metadata.files]
 aiohttp = [
@@ -1934,8 +1934,8 @@ pymongo = [
     {file = "pymongo-4.5.0.tar.gz", hash = "sha256:681f252e43b3ef054ca9161635f81b730f4d8cadd28b3f2b2004f5a72f853982"},
 ]
 pytest = [
-    {file = "pytest-7.4.3-py3-none-any.whl", hash = "sha256:0d009c083ea859a71b76adf7c1d502e4bc170b80a8ef002da5806527b9591fac"},
-    {file = "pytest-7.4.3.tar.gz", hash = "sha256:d989d136982de4e3b29dabcc838ad581c64e8ed52c11fbe86ddebd9da0818cd5"},
+    {file = "pytest-7.4.4-py3-none-any.whl", hash = "sha256:b090cdf5ed60bf4c45261be03239c2c1c22df034fbffe691abe93cd80cea01d8"},
+    {file = "pytest-7.4.4.tar.gz", hash = "sha256:2cf0005922c6ace4a3e2ec8b4080eb0d9753fdc93107415332f50ce9e7994280"},
 ]
 pytest-mock = [
     {file = "pytest-mock-3.12.0.tar.gz", hash = "sha256:31a40f038c22cad32287bb43932054451ff5583ff094bca6f675df2f8bc1a6e9"},
