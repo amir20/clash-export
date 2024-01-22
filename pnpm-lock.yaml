@@ -60,8 +60,8 @@ dependencies:
     specifier: ^4.0.0
     version: 4.0.0(webpack@5.89.0)
   core-js:
-    specifier: ^3.35.0
-    version: 3.35.0
+    specifier: ^3.35.1
+    version: 3.35.1
   css-loader:
     specifier: ^5.2.7
     version: 5.2.7(webpack@5.89.0)
@@ -2666,8 +2666,8 @@ packages:
     requiresBuild: true
     dev: false
 
-  /core-js@3.35.0:
-    resolution: {integrity: sha512-ntakECeqg81KqMueeGJ79Q5ZgQNR+6eaE8sxGCx62zMbAIj65q+uYvatToew3m6eAGdU4gNZwpZ34NMe4GYswg==}
+  /core-js@3.35.1:
+    resolution: {integrity: sha512-IgdsbxNyMskrTFxa9lWHyMwAJU5gXOPP+1yO+K59d50VLVAIDAbs7gIv705KzALModfK3ZrSZTPNpC0PQgIZuw==}
     requiresBuild: true
     dev: false
 
