@@ -1,6 +1,6 @@
 from math import ceil
 
-from flask import make_response, render_template, url_for
+from flask import make_response, render_template, url_for, stream_with_context
 
 from clashleaders import app, cache
 from clashleaders.model import Clan
@@ -24,15 +24,19 @@ def sitemap_index():
 
 
 @app.route("/sitemap_<page>.xml")
-@cache.cached(36000)
+# @cache.cached(36000)
 def sitemap(page):
     start = int(page) * TOTAL_PER_PAGE
     end = start + TOTAL_PER_PAGE
 
-    pages = ({"url": url_for("clan_detail_page", slug=clan.slug, _external=True)} for clan in Clan.objects[start:end].no_cache().only("slug"))
+    pages = ({"url": url_for("clan_detail_page", slug=clan.slug, _external=True, _scheme="https")} for clan in Clan.objects[start:end].no_cache().only("slug"))
 
-    sitemap_xml = render_template("sitemap.xml", pages=pages)
-    response = make_response(sitemap_xml)
-    response.headers["Content-Type"] = "application/xml"
+    return app.response_class(stream_template("sitemap.xml", pages=stream_with_context(pages)), mimetype="application/xml")
 
-    return response
+
+def stream_template(template_name, **context):
+    app.update_template_context(context)
+    t = app.jinja_env.get_template(template_name)
+    rv = t.stream(context)
+    rv.enable_buffering(5)
+    return rv
