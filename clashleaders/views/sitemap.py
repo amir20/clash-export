@@ -5,7 +5,7 @@ from flask import make_response, render_template, url_for, stream_with_context
 from clashleaders import app, cache
 from clashleaders.model import Clan
 
-TOTAL_PER_PAGE = 7000
+TOTAL_PER_PAGE = 1500
 
 
 @app.route("/sitemap_index.xml")
