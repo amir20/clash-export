@@ -5,7 +5,7 @@ from flask import make_response, render_template, url_for, stream_with_context
 from clashleaders import app, cache
 from clashleaders.model import Clan
 
-TOTAL_PER_PAGE = 10000
+TOTAL_PER_PAGE = 7000
 
 
 @app.route("/sitemap_index.xml")
@@ -14,7 +14,7 @@ def sitemap_index():
 
     pages = ceil(Clan.estimated_count() / TOTAL_PER_PAGE)
     for i in range(pages):
-        sitemaps.append({"url": url_for("sitemap", page=i, _external=True)})
+        sitemaps.append({"url": url_for("sitemap", page=i, _external=True, _scheme="https")})
 
     sitemap_xml = render_template("sitemap_index.xml", sitemaps=sitemaps)
     response = make_response(sitemap_xml)
