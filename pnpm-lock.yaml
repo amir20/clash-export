@@ -39,8 +39,8 @@ dependencies:
     specifier: ^9.1.3
     version: 9.1.3(@babel/core@7.23.9)(webpack@5.89.0)
   buefy:
-    specifier: ^0.9.27
-    version: 0.9.27(vue@2.7.14)
+    specifier: ^0.9.28
+    version: 0.9.28(vue@2.7.14)
   bulma:
     specifier: ^0.9.4
     version: 0.9.4
@@ -2238,8 +2238,8 @@ packages:
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: false
 
-  /buefy@0.9.27(vue@2.7.14):
-    resolution: {integrity: sha512-1ppk5D5Scb6/vl25nTZVpTFN8UE9ylDjM5dM8zVvvmJhLIOFfx9a7v8aJrzrt/g/48PvucJs/JbhpVMu/1dzjg==}
+  /buefy@0.9.28(vue@2.7.14):
+    resolution: {integrity: sha512-5K3UuZT2v4Gv3OXKrjZjlYNZJISwvzDHYYwNiBVzXY6c2QYxI1BmwQuXjSPqyvH5x7JvY9r38I6MRht5UurRVg==}
     engines: {node: '>= 4.0.0', npm: '>= 3.0.0'}
     peerDependencies:
       vue: ^2.6.11
