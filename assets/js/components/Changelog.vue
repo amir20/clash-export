@@ -1,5 +1,5 @@
 <template>
-  <b-dropdown class="changelog" position="is-bottom-left">
+  <!-- <b-dropdown class="changelog" position="is-bottom-left">
     <a class="navbar-item" slot="trigger" @click="onMenuClick">
       <span class="badge has-badge-warning has-badge-rounded has-badge-small" :data-badge="hasUpdates ? '' : false"> Updates </span>
     </a>
@@ -14,7 +14,7 @@
     <b-dropdown-item custom paddingless>
       <a href="/updates" class="button is-text is-fullwidth">See all updates</a>
     </b-dropdown-item>
-  </b-dropdown>
+  </b-dropdown> -->
 </template>
 
 <style lang="scss" scoped>
@@ -32,7 +32,7 @@ export default {
     return { items: [], hasUpdates: false };
   },
   created() {
-    this.items = this.data = __UPDATES__;
+    this.items = this.data = [];
   },
   mounted() {
     if (store.get(KEY) != this.items[0].id) {

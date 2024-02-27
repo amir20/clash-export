@@ -40,9 +40,7 @@
 
       gtag('config', 'G-2MMNK6HD8L');
     </script>
-    <script>
-      const __UPDATES__ = {{ updates | first(3) | tojson | safe }};
-    </script>
+    
 
     <link rel="manifest" href="{{ url_for('static', filename='web-manifest.json') }}" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -179,7 +177,6 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/status">Status</a></li>
-                <li><a href="/updates">Updates</a></li>
                 <li><a href="/verified/reddit">Verified Reddit Clans</a></li>
               </ul>
             </div>
