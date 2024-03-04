@@ -17,7 +17,7 @@
     "buefy": "^0.9.28",
     "bulma": "^0.9.4",
     "bulma-badge": "^3.0.1",
-    "caniuse-lite": "^1.0.30001588",
+    "caniuse-lite": "^1.0.30001593",
     "chartist": "^0.11.4",
     "chartist-plugin-legend": "^0.6.2",
     "clean-webpack-plugin": "^4.0.0",
