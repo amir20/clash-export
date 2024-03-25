@@ -1,12 +1,12 @@
 from __future__ import annotations
-from typing import Optional
-from mongoengine import DynamicDocument, signals, DateTimeField
-from datetime import datetime
-from typing import List
 
-from clashleaders.util import correct_tag, from_timestamp
+from datetime import datetime
+from typing import Optional
 
 import pandas as pd
+from mongoengine import DateTimeField, DynamicDocument, signals
+
+from clashleaders.util import correct_tag, from_timestamp
 
 
 class ClanWar(DynamicDocument):
@@ -26,17 +26,27 @@ class ClanWar(DynamicDocument):
     }
 
     def __repr__(self):
-        return "<ClanWar clan={} opponent={}>".format(self.clan["tag"], self.opponent["tag"])
+        return "<ClanWar clan={} opponent={}>".format(
+            self.clan["tag"], self.opponent["tag"]
+        )
 
     def to_df(self) -> pd.DataFrame:
         members = self.clan["members"]
         for member in members:
             if "attacks" not in member:
                 member["attacks"] = []
-            member["attack1"] = member["attacks"][0] if len(member["attacks"]) > 0 else None
-            member["attack2"] = member["attacks"][1] if len(member["attacks"]) > 1 else None
+            member["attack1"] = (
+                member["attacks"][0] if len(member["attacks"]) > 0 else None
+            )
+            member["attack2"] = (
+                member["attacks"][1] if len(member["attacks"]) > 1 else None
+            )
 
-        df = pd.json_normalize(members).drop(columns=["attacks", "attack2", "attack1"], errors="ignore").set_index("tag")
+        df = (
+            pd.json_normalize(members)
+            .drop(columns=["attacks", "attack2", "attack1"], errors="ignore")
+            .set_index("tag")
+        )
 
         return df
 
@@ -51,7 +61,9 @@ class ClanWar(DynamicDocument):
         document.endTime = from_timestamp(document.endTime)
 
     @classmethod
-    def find_by_clan_and_start_time(cls, tag: str, start_time: datetime) -> Optional[ClanWar]:
+    def find_by_clan_and_start_time(
+        cls, tag: str, start_time: datetime
+    ) -> Optional[ClanWar]:
         tag = correct_tag(tag)
         return cls.objects(clan__tag=tag, startTime=start_time).first()
 

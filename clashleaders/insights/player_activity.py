@@ -19,10 +19,16 @@ def clan_percentiles(previous, most_recent):
     return ranks.mean(axis=1)
 
 
-def player_activity_scores(clan: clashleaders.model.HistoricalClan, days: int = 7) -> pd.Series:
+def player_activity_scores(
+    clan: clashleaders.model.HistoricalClan, days: int = 7
+) -> pd.Series:
     previous_dt = clan.created_on - timedelta(days=days)
-    previous_clan = clashleaders.model.HistoricalClan.find_by_tag_near_time(clan.tag, previous_dt)
-    score_series = clan_percentiles(most_recent=clan, previous=previous_clan).to_frame("Activity Score")
+    previous_clan = clashleaders.model.HistoricalClan.find_by_tag_near_time(
+        clan.tag, previous_dt
+    )
+    score_series = clan_percentiles(most_recent=clan, previous=previous_clan).to_frame(
+        "Activity Score"
+    )
     return np.ceil(score_series["Activity Score"] * 100)
 
 

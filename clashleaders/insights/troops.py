@@ -1,19 +1,24 @@
 from __future__ import annotations
 
-import pandas as pd
 from typing import Dict
+
+import pandas as pd
 
 import clashleaders.model
 
 
 def next_troop_recommendation(player) -> Dict:
-    troop_averages = clashleaders.model.AverageTroop.objects(th_level=player.most_recent.stats.town_hall_level)
+    troop_averages = clashleaders.model.AverageTroop.objects(
+        th_level=player.most_recent.stats.town_hall_level
+    )
 
     data = {
         "base": [t.base for t in troop_averages],
         "name": [t.name for t in troop_averages],
         "avg": [t.avg for t in troop_averages],
-        "player": [player.lab_levels.get(troop.troop_id, 0) for troop in troop_averages],
+        "player": [
+            player.lab_levels.get(troop.troop_id, 0) for troop in troop_averages
+        ],
     }
 
     df = pd.DataFrame(data).set_index(["base", "name"])
@@ -31,7 +36,11 @@ def next_troop_recommendation(player) -> Dict:
 
     if df.empty:
         return dict(
-            builderBase={}, home={}, th_ratio=th_completed / th_total, bh_ratio=bh_completed / bh_total, th_level=player.most_recent.stats.town_hall_level
+            builderBase={},
+            home={},
+            th_ratio=th_completed / th_total,
+            bh_ratio=bh_completed / bh_total,
+            th_level=player.most_recent.stats.town_hall_level,
         )
 
     builder_troops = {}

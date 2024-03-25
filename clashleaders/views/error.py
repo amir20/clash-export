@@ -1,8 +1,8 @@
 from flask import render_template
 from flask.globals import request
+from flask_wtf.csrf import CSRFError
 
 from clashleaders import app
-from flask_wtf.csrf import CSRFError
 
 
 @app.errorhandler(404)

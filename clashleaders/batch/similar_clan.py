@@ -11,11 +11,11 @@ logger = logging.getLogger(__name__)
 def compute_similar_clans():
     filename = "/tmp/clans.csv"
 
-    logger.info(f"Writing clans to csv file.")
+    logger.info("Writing clans to csv file.")
     with open(filename, "w") as f:
         clans_to_csv(f)
 
-    logger.info(f"Computing kmeans for clans and saving model.")
+    logger.info("Computing kmeans for clans and saving model.")
     labels = train_model(filename)
 
     os.remove(filename)

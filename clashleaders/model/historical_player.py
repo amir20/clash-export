@@ -4,7 +4,7 @@ from functools import lru_cache
 
 import pandas as pd
 from inflection import *
-from mongoengine import Document, StringField, DateTimeField, BinaryField
+from mongoengine import BinaryField, DateTimeField, Document, StringField
 
 from clashleaders.proto.player_stats_pb2 import PlayerStats
 
@@ -39,7 +39,10 @@ class HistoricalPlayer(Document):
     name = StringField(required=True)
     bytes = BinaryField(required=True)
 
-    meta = {"index_background": True, "indexes": ["tag", "clan_tag", "created_on", ("tag", "created_on")]}
+    meta = {
+        "index_background": True,
+        "indexes": ["tag", "clan_tag", "created_on", ("tag", "created_on")],
+    }
 
     def __init__(self, *args, **kwargs):
         if "bytes" in kwargs:
@@ -67,7 +70,12 @@ class HistoricalPlayer(Document):
             clan_tag = None
             if "clan" in kwargs:
                 clan_tag = kwargs["clan"]["tag"]
-            super().__init__(tag=kwargs["tag"], clan_tag=clan_tag, name=kwargs["name"], bytes=self.stats.SerializeToString())
+            super().__init__(
+                tag=kwargs["tag"],
+                clan_tag=clan_tag,
+                name=kwargs["name"],
+                bytes=self.stats.SerializeToString(),
+            )
 
     def __repr__(self):
         return "<HistoricalPlayer {0}>".format(self.tag)

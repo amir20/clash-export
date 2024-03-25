@@ -2,7 +2,7 @@ from flask import render_template
 
 from clashleaders import app, cache
 from clashleaders.clash.transformer import to_short_clan
-from clashleaders.model import Clan, Status, ClanWar, CWLGroup
+from clashleaders.model import Clan, ClanWar, CWLGroup, Status
 
 
 @app.route("/")
@@ -23,7 +23,9 @@ def index():
 
 
 def leaderboard(field):
-    return clans_leaderboard(Clan.objects(members__gt=20).order_by(f"-{field}").limit(10), field)
+    return clans_leaderboard(
+        Clan.objects(members__gt=20).order_by(f"-{field}").limit(10), field
+    )
 
 
 def clans_leaderboard(clans, prop):

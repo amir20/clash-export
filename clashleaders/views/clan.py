@@ -1,12 +1,12 @@
-from flask import url_for, redirect
-from clashleaders.clash.transformer import tag_to_slug
 import logging
 from typing import OrderedDict
-import clashleaders.views
-from flask import render_template
+
+from flask import redirect, render_template, url_for
 from mongoengine import DoesNotExist
 
+import clashleaders.views
 from clashleaders import app
+from clashleaders.clash.transformer import tag_to_slug
 from clashleaders.model import Clan, Status
 
 logger = logging.getLogger(__name__)
@@ -15,7 +15,11 @@ logger = logging.getLogger(__name__)
 @app.context_processor
 def inject_most_popular():
     status = Status.instance()
-    return dict(status=status, popular_countries=status.top_countries, reddit_clans=status.reddit_clans)
+    return dict(
+        status=status,
+        popular_countries=status.top_countries,
+        reddit_clans=status.reddit_clans,
+    )
 
 
 @app.route("/goto/<tag>")
@@ -49,7 +53,9 @@ def clan_detail_page(slug, page=None):
             delta=clan.week_delta.to_dict(camel_case=True),
             similar=clan.week_delta.to_dict(camel_case=True),
             oldestDays=clan.days_of_history(),
-            badgeUrls=dict(large=clashleaders.views.imgproxy_url(clan.badgeUrls["large"])),
+            badgeUrls=dict(
+                large=clashleaders.views.imgproxy_url(clan.badgeUrls["large"])
+            ),
             richDescription=clan.rich_description,
             trophyHistory=clan.trophy_history(),
             verifiedAccounts=clan.verified_accounts,
@@ -74,7 +80,10 @@ def clan_detail_page(slug, page=None):
 def labels(clan):
     labels = clan.labels
     for label in labels:
-        label["iconUrls"] = {key: clashleaders.views.imgproxy_url(value) for key, value in label["iconUrls"].items()}
+        label["iconUrls"] = {
+            key: clashleaders.views.imgproxy_url(value)
+            for key, value in label["iconUrls"].items()
+        }
 
     return labels
 
@@ -97,5 +106,7 @@ def recent_cwl_group(clan: Clan):
         else:
             return None
     except:
-        logger.error(f"Error getting recent CWL group for clan tag {clan.tag}", exc_info=True)
+        logger.error(
+            f"Error getting recent CWL group for clan tag {clan.tag}", exc_info=True
+        )
         return None

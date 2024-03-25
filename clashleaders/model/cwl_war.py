@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import List, TYPE_CHECKING
-from mongoengine import DynamicDocument, signals
-
-from mongoengine.fields import StringField
-from clashleaders.util import correct_tag, from_timestamp
+from typing import TYPE_CHECKING, List
 
 import pandas as pd
+from mongoengine import DynamicDocument, signals
+from mongoengine.fields import StringField
+
+from clashleaders.util import from_timestamp
 
 if TYPE_CHECKING:
     from clashleaders.model.clan import Clan
@@ -26,7 +26,9 @@ class CWLWar(DynamicDocument):
     }
 
     def __repr__(self):
-        return "<CWLWar war_tag={} clan={} opponent={}>".format(self.war_tag, self.clan["tag"], self.opponent["tag"])
+        return "<CWLWar war_tag={} clan={} opponent={}>".format(
+            self.war_tag, self.clan["tag"], self.opponent["tag"]
+        )
 
     def contains_clan(self, clan: Clan) -> bool:
         return clan.tag in (self.clan["tag"], self.opponent["tag"])
@@ -43,7 +45,15 @@ class CWLWar(DynamicDocument):
 
         df = pd.json_normalize(members)
         return (
-            df.join(df["attacks"].apply(lambda col: pd.Series(col[0]) if pd.notnull(col) else pd.Series(dtype=object)).add_prefix("attack."))
+            df.join(
+                df["attacks"]
+                .apply(
+                    lambda col: pd.Series(col[0])
+                    if pd.notnull(col)
+                    else pd.Series(dtype=object)
+                )
+                .add_prefix("attack.")
+            )
             .drop(["attacks"], axis=1)
             .set_index("tag")
         )

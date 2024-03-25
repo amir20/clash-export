@@ -1,6 +1,6 @@
 import logging
 import os
-from os.path import dirname, abspath
+from os.path import abspath, dirname
 
 import bugsnag
 
@@ -8,13 +8,11 @@ import bugsnag
 from bugsnag.flask import handle_exceptions
 from flask import Flask
 from flask_caching import Cache
-
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from graphene import Schema
+from graphql_server.flask import GraphQLView
 from mongoengine import connect
 from redis import Redis
-from graphql_server.flask import GraphQLView
-
 
 app = Flask(__name__, static_folder="_does_not_exists_", static_url_path="/static")
 app.config.from_pyfile("config.py")
@@ -60,7 +58,9 @@ import clashleaders.views  # noqa
 import clashleaders.graphql.schema
 
 # GraphQL
-view_func = GraphQLView.as_view("graphql", schema=Schema(query=clashleaders.graphql.schema.Query))
+view_func = GraphQLView.as_view(
+    "graphql", schema=Schema(query=clashleaders.graphql.schema.Query)
+)
 app.add_url_rule("/graphql", view_func=view_func)
 
 

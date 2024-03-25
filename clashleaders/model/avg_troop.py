@@ -1,7 +1,14 @@
 import re
 from datetime import datetime
 
-from mongoengine import BooleanField, DateTimeField, Document, FloatField, IntField, StringField
+from mongoengine import (
+    BooleanField,
+    DateTimeField,
+    Document,
+    FloatField,
+    IntField,
+    StringField,
+)
 
 from clashleaders.model import Player
 
@@ -49,7 +56,9 @@ class AverageTroop(Document):
                     splits = re.split(r"_(builderBase|home)_", key)
                     is_builder_base = "builderbase" == splits[1]
                     name = splits[2]
-                    AverageTroop.objects(th_level=th_level, is_builder_base=is_builder_base, name=name).update_one(
+                    AverageTroop.objects(
+                        th_level=th_level, is_builder_base=is_builder_base, name=name
+                    ).update_one(
                         set__th_level=th_level,
                         set__is_builder_base=is_builder_base,
                         set__name=name,

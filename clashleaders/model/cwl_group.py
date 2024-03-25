@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-import pandas as pd
-from clashleaders.model.cwl_war import CWLWar
-from typing import Optional, TYPE_CHECKING
-from mongoengine import DynamicDocument
-from typing import List
+from typing import TYPE_CHECKING, List, Optional
 
-from mongoengine.fields import ListField, ReferenceField, StringField
-from clashleaders.util import correct_tag, from_timestamp
+import pandas as pd
+from mongoengine import DynamicDocument
+from mongoengine.fields import ListField, ReferenceField
 
 from clashleaders.clash import api
-
+from clashleaders.model.cwl_war import CWLWar
+from clashleaders.util import correct_tag
 
 if TYPE_CHECKING:
     from clashleaders.model.clan import Clan
@@ -32,7 +30,11 @@ class CWLGroup(DynamicDocument):
 
     def to_df_for_clan(self, clan: Clan) -> pd.DataFrame:
         cwl_wars = (war for war in self.round_wars if war.contains_clan(clan))
-        tuples = ((war.startTime, war.to_df(clan)) for war in cwl_wars if war.state != "preparation")
+        tuples = (
+            (war.startTime, war.to_df(clan))
+            for war in cwl_wars
+            if war.state != "preparation"
+        )
         sorted_tuples = sorted(tuples, key=lambda tup: tup[0])
         dfs = (tup[1] for tup in sorted_tuples)
         data = {day: df for day, df in zip(range(1, 8), dfs)}
@@ -53,10 +55,20 @@ class CWLGroup(DynamicDocument):
         if isinstance(name, pd.DataFrame):
             name = name.bfill(axis=1).iloc[:, 0]
 
-        df = pd.concat([name, stars, destruction], axis=1, keys=["name", "stars", "destruction"])
+        df = pd.concat(
+            [name, stars, destruction], axis=1, keys=["name", "stars", "destruction"]
+        )
         if flat:
-            df.columns = [f"{column}_day_{day}" for column, day in df.columns.to_flat_index()]
-            df = df.rename(columns={"name_day_name": "name", "stars_day_avg": "stars_avg", "destruction_day_avg": "destruction_avg"})
+            df.columns = [
+                f"{column}_day_{day}" for column, day in df.columns.to_flat_index()
+            ]
+            df = df.rename(
+                columns={
+                    "name_day_name": "name",
+                    "stars_day_avg": "stars_avg",
+                    "destruction_day_avg": "destruction_avg",
+                }
+            )
             return df.reset_index().set_index(["tag", "name"]).dropna(how="all")
         else:
             return df
@@ -77,7 +89,12 @@ class CWLGroup(DynamicDocument):
         round_tags = [tag for tag in round_tags if tag != "#0"]
         found_wars = list(CWLWar.find_by_war_tags(round_tags))
         found_wars_by_tag = {war.war_tag: war for war in found_wars}
-        tags_to_update = [round_tag for round_tag in round_tags if round_tag not in found_wars_by_tag or found_wars_by_tag[round_tag].state != "warEnded"]
+        tags_to_update = [
+            round_tag
+            for round_tag in round_tags
+            if round_tag not in found_wars_by_tag
+            or found_wars_by_tag[round_tag].state != "warEnded"
+        ]
         war_responses = api.cwl_war_by_tags(tags_to_update)
         round_wars = found_wars
 

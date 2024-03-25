@@ -7,7 +7,10 @@ import pandas as pd
 import clashleaders.model
 
 
-def clan_diff(previous: clashleaders.model.HistoricalClan, most_recent: clashleaders.model.HistoricalClan) -> pd.DataFrame:
+def clan_diff(
+    previous: clashleaders.model.HistoricalClan,
+    most_recent: clashleaders.model.HistoricalClan,
+) -> pd.DataFrame:
     pd_df = previous.to_df()
     mr_df = most_recent.to_df()
     columns = [

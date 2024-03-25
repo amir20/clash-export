@@ -1,8 +1,12 @@
 {
-  "python.linting.enabled": true,
-  "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--line-length", "160"],
   "editor.renderWhitespace": "all",
   "python.analysis.typeCheckingMode": "basic",
-  "python.linting.mypyEnabled": true
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  }
 }

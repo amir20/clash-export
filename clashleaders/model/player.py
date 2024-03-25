@@ -1,15 +1,11 @@
 from __future__ import annotations
-from clashleaders.model.historical_player import HistoricalPlayer
-from clashleaders.model.clan_war import ClanWar
-from typing import Optional
 
-import json
-from codecs import decode, encode
-from typing import Dict
 from collections import namedtuple
+from typing import Dict, Optional
 
 import pandas as pd
-from mongoengine import Document, BinaryField, signals, StringField, DictField
+from mongoengine import BinaryField, DictField, Document, StringField
+from mongoengine.fields import BooleanField, ReferenceField
 from slugify import slugify
 
 import clashleaders.insights.troops
@@ -17,8 +13,9 @@ import clashleaders.model
 from clashleaders.clash import api
 from clashleaders.insights.player_activity import clan_history
 from clashleaders.model import Clan
+from clashleaders.model.clan_war import ClanWar
+from clashleaders.model.historical_player import HistoricalPlayer
 from clashleaders.util import correct_tag
-from mongoengine.fields import BooleanField, ReferenceField
 
 
 class Player(Document):
@@ -44,7 +41,11 @@ class Player(Document):
     }
 
     def most_recent_clan(self) -> Optional[Clan]:
-        return Clan.find_by_tag(self.clan["tag"]) if hasattr(self, "clan") and "tag" in self.clan else None
+        return (
+            Clan.find_by_tag(self.clan["tag"])
+            if hasattr(self, "clan") and "tag" in self.clan
+            else None
+        )
 
     def player_score(self):
         clan = self.most_recent_clan()
@@ -65,7 +66,9 @@ class Player(Document):
                     "$group": {
                         "_id": "$clan.members.tag",
                         "avg_stars": {"$avg": "$clan.members.attacks.stars"},
-                        "avg_destruction": {"$avg": "$clan.members.attacks.destructionPercentage"},
+                        "avg_destruction": {
+                            "$avg": "$clan.members.attacks.destructionPercentage"
+                        },
                     }
                 },
             )
@@ -152,4 +155,8 @@ class Player(Document):
 
 
 def lab_levels(most_recent):
-    return {key: value for key, value in most_recent.to_dict().items() if key.startswith("home_") or key.startswith("builderbase_")}
+    return {
+        key: value
+        for key, value in most_recent.to_dict().items()
+        if key.startswith("home_") or key.startswith("builderbase_")
+    }

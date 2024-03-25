@@ -1,6 +1,4 @@
-import multiprocessing
 import os
-
 
 name = "clashleaders.com"
 bind = "unix:/tmp/gunicorn.sock"

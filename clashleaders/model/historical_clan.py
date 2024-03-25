@@ -1,19 +1,26 @@
 from __future__ import annotations
 
-
 from datetime import datetime
+from functools import cache
 
 import pandas as pd
-from mongoengine import Document, StringField, IntField, DateTimeField, ReferenceField, ListField
-from functools import cache
+from mongoengine import (
+    DateTimeField,
+    Document,
+    IntField,
+    ListField,
+    ReferenceField,
+    StringField,
+)
 
 import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity
 import clashleaders.model
 from clashleaders.model import ClanDelta
-from clashleaders.util import correct_tag
-from clashleaders.model.historical_player import HistoricalPlayer
 from clashleaders.model.clan_war import ClanWar
+from clashleaders.model.historical_player import HistoricalPlayer
+from clashleaders.util import correct_tag
+
 from .columns import COLUMNS
 
 
@@ -31,7 +38,16 @@ class HistoricalClan(Document):
     warLeagueId: int = IntField()
     players = ListField(ReferenceField(HistoricalPlayer))
 
-    meta = {"index_background": True, "indexes": ["tag", "created_on", ("tag", "created_on"), ("tag", "warLeagueId"), "members"]}
+    meta = {
+        "index_background": True,
+        "indexes": [
+            "tag",
+            "created_on",
+            ("tag", "created_on"),
+            ("tag", "warLeagueId"),
+            "members",
+        ],
+    }
 
     def __init__(self, *args, **kwargs):
         values = {k: v for k, v in kwargs.items() if k in self._fields_ordered}
@@ -40,7 +56,9 @@ class HistoricalClan(Document):
         super().__init__(*args, **values)
 
     @cache
-    def to_df(self, formatted=True, player_activity=False, war_activity=False) -> pd.DataFrame:
+    def to_df(
+        self, formatted=True, player_activity=False, war_activity=False
+    ) -> pd.DataFrame:
         if len(self.players) == 0:
             return pd.DataFrame(columns=list(COLUMNS.values()))
 
@@ -89,7 +107,9 @@ class HistoricalClan(Document):
                     "$group": {
                         "_id": "$clan.members.tag",
                         "avg_stars": {"$avg": "$clan.members.attacks.stars"},
-                        "avg_destruction": {"$avg": "$clan.members.attacks.destructionPercentage"},
+                        "avg_destruction": {
+                            "$avg": "$clan.members.attacks.destructionPercentage"
+                        },
                     }
                 },
             )
@@ -117,7 +137,11 @@ class HistoricalClan(Document):
     @classmethod
     def find_by_tag_near_time(cls, tag, dt) -> HistoricalClan:
         tag = correct_tag(tag)
-        clan = HistoricalClan.objects(tag=tag, created_on__lte=dt).order_by("-created_on").first()
+        clan = (
+            HistoricalClan.objects(tag=tag, created_on__lte=dt)
+            .order_by("-created_on")
+            .first()
+        )
 
         if clan is None:
             clan = HistoricalClan.objects(tag=tag).order_by("created_on").first()

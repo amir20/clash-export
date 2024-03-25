@@ -1,4 +1,5 @@
 import logging
+
 import graphene
 
 from clashleaders.views import imgproxy_url

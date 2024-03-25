@@ -2,28 +2,28 @@ import base64
 import hashlib
 import hmac
 import json
-from math import ceil
 import os
 import re
 import textwrap
+from math import ceil
 from os.path import join
 
 from markdown import markdown
 
 import clashleaders.views.badge
 import clashleaders.views.clan
-import clashleaders.views.tag
 import clashleaders.views.country
 import clashleaders.views.error
 import clashleaders.views.explore
 import clashleaders.views.index
+import clashleaders.views.multi_export
 import clashleaders.views.player
 import clashleaders.views.sitemap
 import clashleaders.views.static
 import clashleaders.views.status
+import clashleaders.views.tag
 import clashleaders.views.troop
 import clashleaders.views.verified
-import clashleaders.views.multi_export
 from clashleaders import app, site_root
 
 MANIFEST_FILE = join(site_root, "static", "manifest.json")
@@ -31,7 +31,25 @@ IMGPROXY_KEY = bytes.fromhex(os.getenv("IMGPROXY_KEY", "01"))
 IMGPROXY_SALT = bytes.fromhex(os.getenv("IMGPROXY_SALT", "01"))
 IMGPROXY_BASE = os.getenv("IMGPROXY_BASE", "https://i.clashleaders.com/")
 
-GRADES = ["Max", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "E", "E", "E", "F"]
+GRADES = [
+    "Max",
+    "A+",
+    "A",
+    "A-",
+    "B+",
+    "B",
+    "B-",
+    "C+",
+    "C",
+    "C-",
+    "D+",
+    "D",
+    "D-",
+    "E",
+    "E",
+    "E",
+    "F",
+]
 CLASSES = {
     "M": "has-text-success",
     "A": "has-text-success",
@@ -41,6 +59,7 @@ CLASSES = {
     "E": "has-text-danger",
     "F": "has-text-danger",
 }
+
 
 # This is needed for mocking
 def manifest_map():
@@ -66,7 +85,9 @@ def imgproxy_url(url):
     encoded_url = base64.urlsafe_b64encode(url.encode()).rstrip(b"=").decode()
     encoded_url = "/".join(textwrap.wrap(encoded_url, 16))
     path = "/{encoded_url}".format(encoded_url=encoded_url).encode()
-    digest = hmac.new(IMGPROXY_KEY, msg=IMGPROXY_SALT + path, digestmod=hashlib.sha256).digest()
+    digest = hmac.new(
+        IMGPROXY_KEY, msg=IMGPROXY_SALT + path, digestmod=hashlib.sha256
+    ).digest()
     protection = base64.urlsafe_b64encode(digest).rstrip(b"=")
     return (b"%s%s%s" % (IMGPROXY_BASE.encode(), protection, path)).decode()
 
