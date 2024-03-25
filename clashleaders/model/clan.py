@@ -5,7 +5,16 @@ from datetime import datetime, timedelta
 from typing import Iterable, List, Tuple, Dict, Optional
 
 import pandas as pd
-from mongoengine import DynamicDocument, DateTimeField, StringField, IntField, ListField, EmbeddedDocumentField, DictField, Q
+from mongoengine import (
+    DynamicDocument,
+    DateTimeField,
+    StringField,
+    IntField,
+    ListField,
+    EmbeddedDocumentField,
+    DictField,
+    Q,
+)
 from slugify import slugify
 from functools import cache
 
@@ -19,7 +28,6 @@ import clashleaders.queue.calculation
 from clashleaders.clash import api
 from clashleaders.model.clan_delta import ClanDelta
 from clashleaders.model.cwl_group import CWLGroup
-from clashleaders.model.cwl_war import CWLWar
 from clashleaders.model.clan_war import ClanWar
 from clashleaders.model.clan_members import ClanMembers
 from clashleaders.insights.clan_activity import clan_status
@@ -139,28 +147,57 @@ class Clan(DynamicDocument):
 
     @cache
     def historical_near_time(self, dt) -> clashleaders.model.HistoricalClan:
-        return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
+        return clashleaders.model.HistoricalClan.find_by_tag_near_time(
+            tag=self.tag, dt=dt
+        )
 
     @cache
     def historical_near_days_ago(self, days) -> clashleaders.model.HistoricalClan:
         dt = datetime.now() - timedelta(days=int(days))
-        return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=dt)
+        return clashleaders.model.HistoricalClan.find_by_tag_near_time(
+            tag=self.tag, dt=dt
+        )
 
     @cache
     def historical_near_now(self) -> clashleaders.model.HistoricalClan:
-        return clashleaders.model.HistoricalClan.find_by_tag_near_time(tag=self.tag, dt=datetime.now())
+        return clashleaders.model.HistoricalClan.find_by_tag_near_time(
+            tag=self.tag, dt=datetime.now()
+        )
 
     def similar_clans(self) -> Tuple[int, List[Clan]]:
-        less = Clan.objects(cluster_label=self.cluster_label, clanPoints__lt=self.clanPoints).order_by("-clanPoints").limit(4)
-        more = Clan.objects(cluster_label=self.cluster_label, clanPoints__gt=self.clanPoints).order_by("clanPoints").limit(2)
+        less = (
+            Clan.objects(
+                cluster_label=self.cluster_label, clanPoints__lt=self.clanPoints
+            )
+            .order_by("-clanPoints")
+            .limit(4)
+        )
+        more = (
+            Clan.objects(
+                cluster_label=self.cluster_label, clanPoints__gt=self.clanPoints
+            )
+            .order_by("clanPoints")
+            .limit(2)
+        )
 
-        clans = sorted([*less, self, *more], key=lambda c: c.clanPoints, reverse=True)[:5]
-        start_count = Clan.objects(cluster_label=self.cluster_label, clanPoints__gt=clans[0].clanPoints).count() + 1
+        clans = sorted([*less, self, *more], key=lambda c: c.clanPoints, reverse=True)[
+            :5
+        ]
+        start_count = (
+            Clan.objects(
+                cluster_label=self.cluster_label, clanPoints__gt=clans[0].clanPoints
+            ).count()
+            + 1
+        )
 
         return start_count, clans
 
     def days_of_history(self) -> int:
-        first: clashleaders.model.HistoricalClan = clashleaders.model.HistoricalClan.objects(tag=self.tag).order_by("created_on").first()
+        first: clashleaders.model.HistoricalClan = (
+            clashleaders.model.HistoricalClan.objects(tag=self.tag)
+            .order_by("created_on")
+            .first()
+        )
         if first is None:
             return 0
         return (datetime.now() - first.created_on).days
@@ -191,7 +228,9 @@ class Clan(DynamicDocument):
         current_war = None
         if league_response:
             current_war = CWLGroup(**league_response)
-            existing_war = CWLGroup.find_by_clan_and_season(tag=self.tag, season=current_war.season)
+            existing_war = CWLGroup.find_by_clan_and_season(
+                tag=self.tag, season=current_war.season
+            )
             if existing_war:
                 existing_war.update(**dict(current_war.to_mongo()))
                 current_war = existing_war
@@ -207,14 +246,20 @@ class Clan(DynamicDocument):
         if war_response:
             if war_response["state"] != "notInWar":
                 current_war = ClanWar(**war_response)
-                existing_war = ClanWar.find_by_clan_and_start_time(tag=self.tag, start_time=current_war.startTime)
+                existing_war = ClanWar.find_by_clan_and_start_time(
+                    tag=self.tag, start_time=current_war.startTime
+                )
                 if existing_war:
                     existing_war.update(**dict(current_war.to_mongo()))
                     current_war = existing_war
                 else:
                     current_war.save()
-                    clashleaders.queue.war.schedule_war_update(current_war.endTime + timedelta(minutes=1), self.tag)
-                    clashleaders.queue.war.schedule_war_update(current_war.endTime - timedelta(minutes=1), self.tag)
+                    clashleaders.queue.war.schedule_war_update(
+                        current_war.endTime + timedelta(minutes=1), self.tag
+                    )
+                    clashleaders.queue.war.schedule_war_update(
+                        current_war.endTime - timedelta(minutes=1), self.tag
+                    )
 
         return current_war
 
@@ -240,7 +285,16 @@ class Clan(DynamicDocument):
         del data["_id"]
 
         if short:
-            keys = {"tag", "slug", "name", "description", "clanPoints", "clanVersusPoints", "members", "badgeUrls"}
+            keys = {
+                "tag",
+                "slug",
+                "name",
+                "description",
+                "clanPoints",
+                "clanVersusPoints",
+                "members",
+                "badgeUrls",
+            }
             data = {k: data[k] for k in keys}
 
         return data
@@ -298,7 +352,7 @@ class Clan(DynamicDocument):
         if sync_calculation:
             try:
                 clan.update_calculations()
-            except:
+            except Exception:
                 logger.exception("Exception while calculating for clan")
         else:
             clan.job = clashleaders.queue.calculation.update_calculations.delay(tag)
@@ -308,7 +362,11 @@ class Clan(DynamicDocument):
 
 def save_historical(clan_json, players_json):
     try:
-        players = [clashleaders.model.Player.upsert_player(p["tag"], **p) for p in players_json]
-        clashleaders.model.HistoricalClan(**clan_json, players=[p.most_recent for p in players]).save()
-    except:
+        players = [
+            clashleaders.model.Player.upsert_player(p["tag"], **p) for p in players_json
+        ]
+        clashleaders.model.HistoricalClan(
+            **clan_json, players=[p.most_recent for p in players]
+        ).save()
+    except Exception:
         logging.exception("Error while saving save_historical_clan")

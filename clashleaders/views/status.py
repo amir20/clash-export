@@ -1,9 +1,8 @@
-import json
 import os
 
 from flask import render_template, jsonify
 
-from clashleaders import app, site_root
+from clashleaders import app
 from clashleaders.clash import uptime
 from clashleaders.model import Status, Player, Clan
 

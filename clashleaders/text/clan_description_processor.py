@@ -5,7 +5,8 @@ from clashleaders.clash.transformer import tag_to_slug
 from flask import url_for
 
 URL_LINK_REGEX = re.compile(
-    r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|ga|gl|ly|co|me|gd|xyz)[/\w-]*)", flags=re.IGNORECASE
+    r"(https?://)?([a-zA-Z0-9]+\.)?([a-zA-Z0-9]+\.(com|net|org|edu|uk|jp|ir|ru|us|ca|gg|ga|gl|ly|co|me|gd|xyz)[/\w-]*)",
+    flags=re.IGNORECASE,
 )
 
 REDDIT_LINK_REGEX = re.compile(r"((reddit.com)?(/r/\w+))", flags=re.IGNORECASE)
@@ -42,7 +43,9 @@ def clashleader_link(token):
 
 def reddit_link(token):
     if REDDIT_LINK_REGEX.match(token):
-        return REDDIT_LINK_REGEX.sub(r'<a href="https://www.reddit.com\3/" target="_blank">\1</a>', token)
+        return REDDIT_LINK_REGEX.sub(
+            r'<a href="https://www.reddit.com\3/" target="_blank">\1</a>', token
+        )
 
     return None
 

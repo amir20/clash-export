@@ -4,7 +4,6 @@ import graphene
 from graphene.types.generic import GenericScalar
 from datetime import datetime
 
-import clashleaders.graphql.clan as clan
 from .badge import BadgeUrls
 
 logger = logging.getLogger(__name__)
@@ -101,5 +100,7 @@ class CWLGroup(graphene.ObjectType):
             df = self.aggregate_stars_and_destruction(self.clan)
             return df.fillna("na").reset_index().to_dict(orient="records")
         except:
-            logger.error("Failed to aggregate clan data for {}".format(self.clan), exc_info=True)
+            logger.error(
+                "Failed to aggregate clan data for {}".format(self.clan), exc_info=True
+            )
             return None

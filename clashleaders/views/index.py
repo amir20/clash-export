@@ -23,7 +23,9 @@ def index():
 
 
 def leaderboard(field):
-    return clans_leaderboard(Clan.objects(members__gt=20).order_by(f"-{field}").limit(10), field)
+    return clans_leaderboard(
+        Clan.objects(members__gt=20).order_by(f"-{field}").limit(10), field
+    )
 
 
 def clans_leaderboard(clans, prop):

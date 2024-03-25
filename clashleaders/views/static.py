@@ -1,6 +1,6 @@
 from flask import render_template
 
-from clashleaders import app, cache
+from clashleaders import app
 
 
 @app.route("/privacy")

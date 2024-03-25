@@ -8,7 +8,8 @@ from typing import List
 
 logger = logging.getLogger(__name__)
 
-import threading, queue
+import threading
+import queue
 
 q: queue.Queue = queue.Queue()
 
@@ -19,9 +20,11 @@ def worker():
         try:
             clashleaders.model.Player.fetch_and_save(tag)
         except asyncio.TimeoutError:
-            logger.exception(f"Received TimeoutError while fetching players in fetch_players()")
+            logger.exception(
+                "Received TimeoutError while fetching players in fetch_players()"
+            )
         except:
-            logger.exception(f"Unexpected error while updating players")
+            logger.exception("Unexpected error while updating players")
         finally:
             q.task_done()
             time.sleep(0.100)

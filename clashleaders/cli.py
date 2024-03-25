@@ -41,7 +41,7 @@ def index_random_war_clan():
 
 
 def fetch_clan_leaderboards():
-    logger.info(f"Updating clan leaderboards from CoC website.")
+    logger.info("Updating clan leaderboards from CoC website.")
     players, clans = api.top_players_and_clan()
 
     for player in players:

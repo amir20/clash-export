@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import os
 import time
@@ -8,7 +7,12 @@ import uvloop
 from bugsnag.handlers import BugsnagHandler
 
 from clashleaders import app
-from clashleaders.clash.api import ApiException, ApiTimeout, ClanNotFound, TooManyRequests
+from clashleaders.clash.api import (
+    ApiException,
+    ApiTimeout,
+    ClanNotFound,
+    TooManyRequests,
+)
 from clashleaders.model import Clan
 
 handler = BugsnagHandler()
@@ -36,8 +40,12 @@ def update_single_clan():
     try:
         clan = Clan.active(twenty_hours_ago).skip(max(INDEX - 1, 0)).limit(1).first()
         if clan:
-            logger.debug(f"Worker #%d: Updating clan %s.", WORKER_OFFSET, clan.tag)
-            capture_duration(lambda: Clan.fetch_and_update(clan.tag, sync_calculation=True).update_wars())
+            logger.debug("Worker #%d: Updating clan %s.", WORKER_OFFSET, clan.tag)
+            capture_duration(
+                lambda: Clan.fetch_and_update(
+                    clan.tag, sync_calculation=True
+                ).update_wars()
+            )
             tags_indexed.append(clan.tag)
             if len(tags_indexed) > 99:
                 total = Clan.active(twenty_hours_ago).count()
@@ -59,9 +67,11 @@ def update_single_clan():
         logger.warning(f"Too many requests for {clan.tag}. Trying again in 3 seconds.")
         time.sleep(3)
     except ApiTimeout:
-        logger.warning(f"Timeout error when fetching [{clan.tag}]. Waiting 1 second and trying again.")
+        logger.warning(
+            f"Timeout error when fetching [{clan.tag}]. Waiting 1 second and trying again."
+        )
         time.sleep(1)
-    except ApiException as e:
+    except ApiException:
         logger.exception(f"Error while fetching {clan.tag}. Pausing for 10 seconds.")
         try_again_clan(clan)
         time.sleep(10)
@@ -69,7 +79,7 @@ def update_single_clan():
         if clan:
             logger.exception(f"Error while fetching {clan.tag}. Pausing for 5 seconds.")
         else:
-            logger.exception(f"Error while fetching clan. Pausing for 5 seconds.")
+            logger.exception("Error while fetching clan. Pausing for 5 seconds.")
         time.sleep(5)
 
 

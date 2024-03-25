@@ -34,7 +34,9 @@ def update_calculations(clan: clashleaders.model.Clan):
             clan.week_delta = most_recent.clan_delta(last_week)
             clan.month_delta = most_recent.clan_delta(last_month)
 
-        if old_players := list(set(yesterday.to_df().index) - set(most_recent_df.index)):
+        if old_players := list(
+            set(yesterday.to_df().index) - set(most_recent_df.index)
+        ):
             fetch_players(old_players)
 
         activity = clan.player_activity()
@@ -51,11 +53,25 @@ def update_calculations(clan: clashleaders.model.Clan):
             "avg_cwl_stars",
             "avg_war_stars",
         ]:
-            setattr(clan.computed, f"{field}_percentile", clan_percentile(clan, f"computed.{field}"))
-            setattr(clan.week_delta, f"{field}_percentile", clan_percentile(clan, f"week_delta.{field}"))
-            setattr(clan.month_delta, f"{field}_percentile", clan_percentile(clan, f"month_delta.{field}"))
+            setattr(
+                clan.computed,
+                f"{field}_percentile",
+                clan_percentile(clan, f"computed.{field}"),
+            )
+            setattr(
+                clan.week_delta,
+                f"{field}_percentile",
+                clan_percentile(clan, f"week_delta.{field}"),
+            )
+            setattr(
+                clan.month_delta,
+                f"{field}_percentile",
+                clan_percentile(clan, f"month_delta.{field}"),
+            )
 
-        inactive_tags = set([tag for tag, status in activity.items() if status == "inactive"])
+        inactive_tags = set(
+            [tag for tag, status in activity.items() if status == "inactive"]
+        )
         active_tags = set(most_recent_df.index.to_list()) - inactive_tags
         clashleaders.model.Player.objects(tag__in=inactive_tags).update(active=False)
         clashleaders.model.Player.objects(tag__in=active_tags).update(active=True)
@@ -92,7 +108,9 @@ def calculate_data(df):
     )
 
 
-def calculate_delta(now: clashleaders.model.HistoricalClan, start: clashleaders.model.HistoricalClan) -> ClanDelta:
+def calculate_delta(
+    now: clashleaders.model.HistoricalClan, start: clashleaders.model.HistoricalClan
+) -> ClanDelta:
     now_df = now.to_df()
     start_df = start.to_df()
 
@@ -100,7 +118,9 @@ def calculate_delta(now: clashleaders.model.HistoricalClan, start: clashleaders.
         avg_donations=avg_column("Total Donations", now_df, start_df),
         avg_donations_received=avg_column("Donations Received", now_df, start_df),
         avg_gold_grab=avg_column("Total Gold Grab", now_df, start_df, remove_zero=True),
-        avg_elixir_grab=avg_column("Total Elixir Grab", now_df, start_df, remove_zero=True),
+        avg_elixir_grab=avg_column(
+            "Total Elixir Grab", now_df, start_df, remove_zero=True
+        ),
         avg_de_grab=avg_column("Total DE Grab", now_df, start_df),
         avg_war_stars=avg_column("Total War Stars", now_df, start_df, remove_zero=True),
         avg_attack_wins=avg_column("Attack Wins", now_df, start_df),

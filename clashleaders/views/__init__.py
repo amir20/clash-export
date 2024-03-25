@@ -31,7 +31,25 @@ IMGPROXY_KEY = bytes.fromhex(os.getenv("IMGPROXY_KEY", "01"))
 IMGPROXY_SALT = bytes.fromhex(os.getenv("IMGPROXY_SALT", "01"))
 IMGPROXY_BASE = os.getenv("IMGPROXY_BASE", "https://i.clashleaders.com/")
 
-GRADES = ["Max", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "E", "E", "E", "F"]
+GRADES = [
+    "Max",
+    "A+",
+    "A",
+    "A-",
+    "B+",
+    "B",
+    "B-",
+    "C+",
+    "C",
+    "C-",
+    "D+",
+    "D",
+    "D-",
+    "E",
+    "E",
+    "E",
+    "F",
+]
 CLASSES = {
     "M": "has-text-success",
     "A": "has-text-success",
@@ -41,6 +59,7 @@ CLASSES = {
     "E": "has-text-danger",
     "F": "has-text-danger",
 }
+
 
 # This is needed for mocking
 def manifest_map():
@@ -66,7 +85,9 @@ def imgproxy_url(url):
     encoded_url = base64.urlsafe_b64encode(url.encode()).rstrip(b"=").decode()
     encoded_url = "/".join(textwrap.wrap(encoded_url, 16))
     path = "/{encoded_url}".format(encoded_url=encoded_url).encode()
-    digest = hmac.new(IMGPROXY_KEY, msg=IMGPROXY_SALT + path, digestmod=hashlib.sha256).digest()
+    digest = hmac.new(
+        IMGPROXY_KEY, msg=IMGPROXY_SALT + path, digestmod=hashlib.sha256
+    ).digest()
     protection = base64.urlsafe_b64encode(digest).rstrip(b"=")
     return (b"%s%s%s" % (IMGPROXY_BASE.encode(), protection, path)).decode()
 

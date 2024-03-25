@@ -60,11 +60,17 @@ class ApiResponse:
 
 
 async def __fetch(url, params=None, loop=None, enable_cache=True):
-    async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=headers()) as session:
-        return await __fetch_with_session(url, session=session, params=params, enable_cache=enable_cache)
+    async with aiohttp.ClientSession(
+        loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=headers()
+    ) as session:
+        return await __fetch_with_session(
+            url, session=session, params=params, enable_cache=enable_cache
+        )
 
 
-async def __fetch_with_session(url, session, params=None, enable_cache=True) -> ApiResponse:
+async def __fetch_with_session(
+    url, session, params=None, enable_cache=True
+) -> ApiResponse:
     cache_key = f"api:{url}:{params}"
     if enable_cache:
         if data := redis_connection.get(cache_key):
@@ -75,14 +81,20 @@ async def __fetch_with_session(url, session, params=None, enable_cache=True) -> 
         async with session.get(url, params=params) as response:
             data = await response.json()
             if response.status == 200:
-                delta = int(response.headers["Cache-Control"].strip("public ").strip("max-age="))
+                delta = int(
+                    response.headers["Cache-Control"].strip("public ").strip("max-age=")
+                )
                 if enable_cache and delta > 0:
-                    redis_connection.setex(cache_key, timedelta(seconds=delta), json.dumps(data))
+                    redis_connection.setex(
+                        cache_key, timedelta(seconds=delta), json.dumps(data)
+                    )
             return ApiResponse(response.status, data)
 
 
 async def __fetch_all(urls, loop=None) -> List[ApiResponse]:
-    async with aiohttp.ClientSession(loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=headers()) as session:
+    async with aiohttp.ClientSession(
+        loop=loop, cookie_jar=aiohttp.DummyCookieJar(), headers=headers()
+    ) as session:
         futures = [__fetch_with_session(url, session) for url in urls]
         return await asyncio.gather(*futures, return_exceptions=True)
 
@@ -92,7 +104,9 @@ def find_clan_by_tag(tag):
     logger.info(f"Fetching clan from API {tag}.")
 
     try:
-        response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}"))
+        response = asyncio.run(
+            __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}")
+        )
     except asyncio.TimeoutError:
         raise ApiTimeout(f"API timed while fetching {tag} clan.")
 
@@ -114,7 +128,9 @@ def find_player_by_tag(tag):
     logger.info(f"Fetching player from API {tag}.")
 
     try:
-        response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/players/{quote(tag)}"))
+        response = asyncio.run(
+            __fetch(f"https://api.clashofclans.com/v1/players/{quote(tag)}")
+        )
     except asyncio.TimeoutError:
         raise ApiTimeout(f"API timed while fetching {tag} clan.")
 
@@ -134,7 +150,13 @@ def find_player_by_tag(tag):
 
 def search_by_name(name, limit=10):
     logger.info(f"Searching for clan name '{name}'.")
-    response = asyncio.run(__fetch("https://api.clashofclans.com/v1/clans", params={"name": name, "limit": limit}, enable_cache=False))
+    response = asyncio.run(
+        __fetch(
+            "https://api.clashofclans.com/v1/clans",
+            params={"name": name, "limit": limit},
+            enable_cache=False,
+        )
+    )
 
     if response.status != 200:
         return []
@@ -153,7 +175,9 @@ def top_players_and_clan():
 def clan_warlog(tag):
     tag = correct_tag(tag)
     logger.info(f"Fetching clan warlog from API {tag}.")
-    response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog"))
+    response = asyncio.run(
+        __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/warlog")
+    )
 
     if response.status != 200:
         raise ClanNotFound(f"Clan [{tag}] not found.")
@@ -164,7 +188,11 @@ def clan_warlog(tag):
 def clan_current_leaguegroup(tag):
     tag = correct_tag(tag)
     logger.info(f"Fetching clan current leaguegroup from API {tag}.")
-    response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup"))
+    response = asyncio.run(
+        __fetch(
+            f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup"
+        )
+    )
 
     if response.status != 200:
         raise WarNotFound(f"Clan leaguegroup [{tag}] not found.")
@@ -175,7 +203,9 @@ def clan_current_leaguegroup(tag):
 def clan_current_war(tag):
     tag = correct_tag(tag)
     logger.info(f"Fetching clan current war from API {tag}.")
-    response = asyncio.run(__fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar"))
+    response = asyncio.run(
+        __fetch(f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar")
+    )
 
     if response.status != 200:
         raise WarNotFound(f"War for clan [{tag}] not found.")
@@ -188,22 +218,39 @@ def clan_current_war_and_leaguegroup(tag):
     logger.info(f"Fetching clan current war and leaguegroup from API {tag}.")
 
     current_war_url = f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar"
-    current_league_url = f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup"
-    current_war_response, current_league_response = asyncio.run(__fetch_all([current_war_url, current_league_url]))
+    current_league_url = (
+        f"https://api.clashofclans.com/v1/clans/{quote(tag)}/currentwar/leaguegroup"
+    )
+    current_war_response, current_league_response = asyncio.run(
+        __fetch_all([current_war_url, current_league_url])
+    )
 
     return [
-        response.data if response.status == 200 else None for response in [current_war_response, current_league_response] if isinstance(response, ApiResponse)
+        response.data if response.status == 200 else None
+        for response in [current_war_response, current_league_response]
+        if isinstance(response, ApiResponse)
     ]
 
 
 def cwl_war_by_tags(tags):
     logger.info(f"Fetching war from API with {tags}.")
-    urls = [f"https://api.clashofclans.com/v1/clanwarleagues/wars/{quote(tag)}" for tag in tags]
+    urls = [
+        f"https://api.clashofclans.com/v1/clanwarleagues/wars/{quote(tag)}"
+        for tag in tags
+    ]
     responses = asyncio.run(__fetch_all(urls))
-    return [response.data if response.status == 200 else None for response in responses if isinstance(response, ApiResponse)]
+    return [
+        response.data if response.status == 200 else None
+        for response in responses
+        if isinstance(response, ApiResponse)
+    ]
 
 
 def fetch_all_players(tags: List):
     urls = [f"https://api.clashofclans.com/v1/players/{quote(tag)}" for tag in tags]
     responses = asyncio.run(__fetch_all(urls))
-    return [response.data for response in responses if isinstance(response, ApiResponse) and response.status == 200]
+    return [
+        response.data
+        for response in responses
+        if isinstance(response, ApiResponse) and response.status == 200
+    ]

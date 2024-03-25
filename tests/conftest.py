@@ -26,7 +26,10 @@ def clan(mocker, historical_clan_now, historical_clan_before):
     clan.historical_near_now = lambda: historical_clan_now
     clan.historical_near_now = lambda: historical_clan_now
 
-    mocker.patch("clashleaders.model.HistoricalClan.find_by_tag_near_time", return_value=historical_clan_before)
+    mocker.patch(
+        "clashleaders.model.HistoricalClan.find_by_tag_near_time",
+        return_value=historical_clan_before,
+    )
 
     return clan
 

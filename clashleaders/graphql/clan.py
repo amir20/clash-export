@@ -145,9 +145,13 @@ class Clan(graphene.ObjectType):
     war_win_ratio = graphene.Float()
     war_total = graphene.Int()
 
-    comparable_members = graphene.Field(ClanMembers, delta_days=graphene.Int(required=True))
+    comparable_members = graphene.Field(
+        ClanMembers, delta_days=graphene.Int(required=True)
+    )
 
-    recent_cwl_group = graphene.Field(lambda: war.CWLGroup, update_wars=graphene.Boolean(required=False))
+    recent_cwl_group = graphene.Field(
+        lambda: war.CWLGroup, update_wars=graphene.Boolean(required=False)
+    )
     wars = graphene.List(lambda: war.War)
 
     def resolve_delta(self, info, days):
@@ -181,7 +185,19 @@ class Clan(graphene.ObjectType):
 
     def resolve_players(self, info):
         df = self.historical_near_now().to_df(formatted=False).reset_index()
-        df = df[["name", "tag", "town_hall_level", "exp_level", "trophies", "builder_hall_level", "defense_wins", "attack_wins", "donations"]].rename(
+        df = df[
+            [
+                "name",
+                "tag",
+                "town_hall_level",
+                "exp_level",
+                "trophies",
+                "builder_hall_level",
+                "defense_wins",
+                "attack_wins",
+                "donations",
+            ]
+        ].rename(
             columns={
                 "town_hall_level": "townHallLevel",
                 "exp_level": "expLevel",
@@ -195,13 +211,24 @@ class Clan(graphene.ObjectType):
     def resolve_similar(self, info, days):
         key = {1: "day_delta", 7: "week_delta"}[days]
         cluster_label = self.cluster_label
-        gold = similar_clans_avg(cluster_label=cluster_label, column=f"{key}.avg_gold_grab")
-        elixir = similar_clans_avg(cluster_label=cluster_label, column=f"{key}.avg_elixir_grab")
+        gold = similar_clans_avg(
+            cluster_label=cluster_label, column=f"{key}.avg_gold_grab"
+        )
+        elixir = similar_clans_avg(
+            cluster_label=cluster_label, column=f"{key}.avg_elixir_grab"
+        )
         de = similar_clans_avg(cluster_label=cluster_label, column=f"{key}.avg_de_grab")
-        return SimilarClanDelta(avg_de_grab=de, avg_gold_grab=elixir, avg_elixir_grab=gold)
+        return SimilarClanDelta(
+            avg_de_grab=de, avg_gold_grab=elixir, avg_elixir_grab=gold
+        )
 
     def resolve_activity(self, info):
-        df = self.to_historical_df()[["members", "clanPoints"]].resample("D").mean().dropna()
+        df = (
+            self.to_historical_df()[["members", "clanPoints"]]
+            .resample("D")
+            .mean()
+            .dropna()
+        )
         df.index.name = "labels"
         df = df.reset_index().rename(columns={"clanPoints": "trophies"})
         df["labels"] = df["labels"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00Z")
@@ -214,10 +241,19 @@ class Clan(graphene.ObjectType):
         historical = self.historical_near_days_ago(days)
 
         stream = BytesIO()
-        writer = pd.ExcelWriter(stream, engine="xlsxwriter", engine_kwargs=dict(options={"strings_to_urls": False, "strings_to_formulas": False}))
+        writer = pd.ExcelWriter(
+            stream,
+            engine="xlsxwriter",
+            engine_kwargs=dict(
+                options={"strings_to_urls": False, "strings_to_formulas": False}
+            ),
+        )
         historical.to_df(formatted=True).to_excel(writer, sheet_name=self.tag)
         writer.close()
-        return "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + base64.b64encode(stream.getvalue()).decode()
+        return (
+            "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,"
+            + base64.b64encode(stream.getvalue()).decode()
+        )
 
     def resolve_trophy_history(self, info):
         return self.trophy_history()

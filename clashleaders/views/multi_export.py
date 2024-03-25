@@ -1,5 +1,4 @@
 from io import BytesIO
-from re import split
 
 from flask import send_file
 from clashleaders import app
@@ -13,12 +12,18 @@ def export_clans(tags):
     dfs = [clan.historical_near_days_ago(0).to_df(formatted=True) for clan in clans]
     merged = pd.concat(dfs)
     stream = BytesIO()
-    writer = pd.ExcelWriter(stream, engine="xlsxwriter", options={"strings_to_urls": False, "strings_to_formulas": False})
+    writer = pd.ExcelWriter(
+        stream,
+        engine="xlsxwriter",
+        options={"strings_to_urls": False, "strings_to_formulas": False},
+    )
     merged.to_excel(writer, sheet_name="merged")
     writer.close()
     stream.seek(0)
 
-    return send_file(stream, attachment_filename="merged_clans.xlsx", as_attachment=True)
+    return send_file(
+        stream, attachment_filename="merged_clans.xlsx", as_attachment=True
+    )
 
 
 @app.route("/exporttag/<tag>")
@@ -28,9 +33,15 @@ def export_tag(tag):
     dfs = [clan.historical_near_days_ago(0).to_df(formatted=True) for clan in clans]
     merged = pd.concat(dfs)
     stream = BytesIO()
-    writer = pd.ExcelWriter(stream, engine="xlsxwriter", options={"strings_to_urls": False, "strings_to_formulas": False})
+    writer = pd.ExcelWriter(
+        stream,
+        engine="xlsxwriter",
+        options={"strings_to_urls": False, "strings_to_formulas": False},
+    )
     merged.to_excel(writer, sheet_name="merged")
     writer.close()
     stream.seek(0)
 
-    return send_file(stream, attachment_filename="merged_clans.xlsx", as_attachment=True)
+    return send_file(
+        stream, attachment_filename="merged_clans.xlsx", as_attachment=True
+    )

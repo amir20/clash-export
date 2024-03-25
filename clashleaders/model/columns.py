@@ -49,11 +49,28 @@ REVERSE_LABELS = {value: key for key, value in COLUMNS.items()}
 @lru_cache(maxsize=None)
 def column_group(column):
     column = REVERSE_LABELS.get(column, column).lower()
-    if column in ("name", "tag", "town_hall_level", "builder_hall_level", "exp_level", "activity score"):
+    if column in (
+        "name",
+        "tag",
+        "town_hall_level",
+        "builder_hall_level",
+        "exp_level",
+        "activity score",
+    ):
         return "basic"
-    elif column in ("best_trophies", "best_versus_trophies", "trophies", "versus_trophies"):
+    elif column in (
+        "best_trophies",
+        "best_versus_trophies",
+        "trophies",
+        "versus_trophies",
+    ):
         return "trophies"
-    elif column in ("donations", "donations_received", "friend_in_need", "sharing_is_caring"):
+    elif column in (
+        "donations",
+        "donations_received",
+        "friend_in_need",
+        "sharing_is_caring",
+    ):
         return "donations"
     elif column in (
         "home_barbarian_king",
@@ -75,9 +92,13 @@ def column_group(column):
         return "wins"
     elif column in ("gold_grab", "elixir_escapade", "heroic_heist"):
         return "loot"
-    elif column in ("war_hero", "games_champion", "war_league_legend") or "war" in column:
+    elif (
+        column in ("war_hero", "games_champion", "war_league_legend") or "war" in column
+    ):
         return "war"
-    elif column in ("most_valuable_clanmate", "aggressive_capitalism") or "war" in column:
+    elif (
+        column in ("most_valuable_clanmate", "aggressive_capitalism") or "war" in column
+    ):
         return "capital"
     else:
         return "unknown"

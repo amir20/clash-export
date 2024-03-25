@@ -40,4 +40,6 @@ def explore_clans(sort):
     if sort == "most-donations":
         return redirect(url_for("explore_clans", sort="donations"), code=301)
     clans = Clan.objects(active_members__gte=10).order_by(ORDER_MAPPING[sort]).limit(50)
-    return render_template("explore.html", clans=clans, sort=sort, title=TITLE_MAPPING[sort])
+    return render_template(
+        "explore.html", clans=clans, sort=sort, title=TITLE_MAPPING[sort]
+    )

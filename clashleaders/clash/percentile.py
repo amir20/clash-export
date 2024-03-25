@@ -22,12 +22,22 @@ def clan_percentile(clan: clashleaders.model.Clan, field: str):
 
 @cache.memoize(timeout=36000)
 def field_percentiles(field: str):
-    max_value = deep_getattr(clashleaders.model.Clan.objects.order_by(f"-{field}").first(), field)
+    max_value = deep_getattr(
+        clashleaders.model.Clan.objects.order_by(f"-{field}").first(), field
+    )
     step = max(int(max_value / 500), 1)
     exists_field = field.replace(".", "__")
     distribution = list(
-        clashleaders.model.Clan.objects(**{f"{exists_field}__exists": True, "active_members__gte": 8}).aggregate(
-            {"$group": {"_id": {"$subtract": [f"${field}", {"$mod": [f"${field}", step]}]}, "count": {"$sum": 1}}}, {"$sort": {"_id": 1}}
+        clashleaders.model.Clan.objects(
+            **{f"{exists_field}__exists": True, "active_members__gte": 8}
+        ).aggregate(
+            {
+                "$group": {
+                    "_id": {"$subtract": [f"${field}", {"$mod": [f"${field}", step]}]},
+                    "count": {"$sum": 1},
+                }
+            },
+            {"$sort": {"_id": 1}},
         )
     )
     total = sum([e["count"] for e in distribution])

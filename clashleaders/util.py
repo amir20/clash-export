@@ -1,6 +1,9 @@
 from functools import wraps
 from datetime import datetime
-from typing import Any, Callable, Generic, Iterable, List, Optional, Type, TypeVar, Union
+from typing import (
+    Callable,
+    TypeVar,
+)
 
 
 T = TypeVar("T")

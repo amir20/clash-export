@@ -3,13 +3,11 @@ from clashleaders.model.historical_player import HistoricalPlayer
 from clashleaders.model.clan_war import ClanWar
 from typing import Optional
 
-import json
-from codecs import decode, encode
 from typing import Dict
 from collections import namedtuple
 
 import pandas as pd
-from mongoengine import Document, BinaryField, signals, StringField, DictField
+from mongoengine import Document, BinaryField, StringField, DictField
 from slugify import slugify
 
 import clashleaders.insights.troops
@@ -44,7 +42,11 @@ class Player(Document):
     }
 
     def most_recent_clan(self) -> Optional[Clan]:
-        return Clan.find_by_tag(self.clan["tag"]) if hasattr(self, "clan") and "tag" in self.clan else None
+        return (
+            Clan.find_by_tag(self.clan["tag"])
+            if hasattr(self, "clan") and "tag" in self.clan
+            else None
+        )
 
     def player_score(self):
         clan = self.most_recent_clan()
@@ -65,7 +67,9 @@ class Player(Document):
                     "$group": {
                         "_id": "$clan.members.tag",
                         "avg_stars": {"$avg": "$clan.members.attacks.stars"},
-                        "avg_destruction": {"$avg": "$clan.members.attacks.destructionPercentage"},
+                        "avg_destruction": {
+                            "$avg": "$clan.members.attacks.destructionPercentage"
+                        },
                     }
                 },
             )
@@ -152,4 +156,8 @@ class Player(Document):
 
 
 def lab_levels(most_recent):
-    return {key: value for key, value in most_recent.to_dict().items() if key.startswith("home_") or key.startswith("builderbase_")}
+    return {
+        key: value
+        for key, value in most_recent.to_dict().items()
+        if key.startswith("home_") or key.startswith("builderbase_")
+    }

@@ -2,11 +2,18 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 from os.path import join
 from datetime import datetime, timedelta
 
-from mongoengine import DateTimeField, DictField, Document, FloatField, IntField, ListField, ReferenceField
+from mongoengine import (
+    DateTimeField,
+    DictField,
+    Document,
+    FloatField,
+    IntField,
+    ListField,
+    ReferenceField,
+)
 
 from clashleaders.model import Player, Clan
 
@@ -44,7 +51,9 @@ class Status(Document):
         total_clans = Clan.estimated_count()
         total_eligible_clans = Clan.active().count()
         not_indexed_clans = Clan.active(twenty_hours_ago).count()
-        ratio_indexed = 100 * ((total_eligible_clans - not_indexed_clans) / total_eligible_clans)
+        ratio_indexed = 100 * (
+            (total_eligible_clans - not_indexed_clans) / total_eligible_clans
+        )
         Status.objects.upsert_one(
             set__ratio_indexed=ratio_indexed,
             set__total_clans=total_clans,
@@ -55,7 +64,9 @@ class Status(Document):
             set__total_countries=len(Clan.objects.distinct("location.countryCode")),
             set__popular_clans=Clan.objects.order_by("-page_views").limit(10),
             set__top_countries=_aggregate_by_country("week_delta.avg_attack_wins"),
-            set__reddit_clans=Clan.objects(verified_accounts="reddit").order_by("-clanPoints").limit(10),
+            set__reddit_clans=Clan.objects(verified_accounts="reddit")
+            .order_by("-clanPoints")
+            .limit(10),
             set__trophy_distribution=_trophy_distribution(),
             set__trophies_by_country=_aggregate_by_country("clanPoints"),
         )
@@ -63,7 +74,17 @@ class Status(Document):
 
 def _trophy_distribution():
     counts = list(
-        Clan.objects.aggregate({"$group": {"_id": {"$subtract": ["$clanPoints", {"$mod": ["$clanPoints", 500]}]}, "count": {"$sum": 1}}}, {"$sort": {"_id": 1}})
+        Clan.objects.aggregate(
+            {
+                "$group": {
+                    "_id": {
+                        "$subtract": ["$clanPoints", {"$mod": ["$clanPoints", 500]}]
+                    },
+                    "count": {"$sum": 1},
+                }
+            },
+            {"$sort": {"_id": 1}},
+        )
     )
     labels = [c["_id"] for c in counts]
     values = [c["count"] for c in counts]
@@ -71,7 +92,21 @@ def _trophy_distribution():
 
 
 def _aggregate_by_country(score_column):
-    group = {"$group": {"_id": "$location.countryCode", "score": {"$sum": f"${score_column}"}}}
+    group = {
+        "$group": {
+            "_id": "$location.countryCode",
+            "score": {"$sum": f"${score_column}"},
+        }
+    }
     sort = {"$sort": {"score": -1}}
-    aggregated = list(Clan.objects(location__countryCode__ne=None).aggregate(group, sort))
-    return [{"code": c["_id"].lower(), "name": COUNTRIES[c["_id"]]["name"], "score": c["score"]} for c in aggregated[:10]]
+    aggregated = list(
+        Clan.objects(location__countryCode__ne=None).aggregate(group, sort)
+    )
+    return [
+        {
+            "code": c["_id"].lower(),
+            "name": COUNTRIES[c["_id"]]["name"],
+            "score": c["score"],
+        }
+        for c in aggregated[:10]
+    ]

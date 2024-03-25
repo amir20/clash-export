@@ -60,7 +60,9 @@ import clashleaders.views  # noqa
 import clashleaders.graphql.schema
 
 # GraphQL
-view_func = GraphQLView.as_view("graphql", schema=Schema(query=clashleaders.graphql.schema.Query))
+view_func = GraphQLView.as_view(
+    "graphql", schema=Schema(query=clashleaders.graphql.schema.Query)
+)
 app.add_url_rule("/graphql", view_func=view_func)
 
 

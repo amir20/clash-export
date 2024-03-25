@@ -56,14 +56,34 @@ class Player(graphene.ObjectType):
         return self.player_score()
 
     def resolve_activity(self, info):
-        df = self.to_historical_df()[["attack_wins", "donations", "gold_grab", "elixir_escapade", "heroic_heist", "trophies"]]
+        df = self.to_historical_df()[
+            [
+                "attack_wins",
+                "donations",
+                "gold_grab",
+                "elixir_escapade",
+                "heroic_heist",
+                "trophies",
+            ]
+        ]
         resampled = df.resample("D").mean().dropna()
         diffed = resampled.diff().dropna().clip(lower=0)
 
         if diffed.empty:
-            return PlayerActivity(labels=[], attack_wins=[], donations=[], gold_grab=[], elixir_grab=[], de_grab=[], trophies=[])
+            return PlayerActivity(
+                labels=[],
+                attack_wins=[],
+                donations=[],
+                gold_grab=[],
+                elixir_grab=[],
+                de_grab=[],
+                trophies=[],
+            )
 
-        diffed.rename(columns={"elixir_escapade": "elixir_grab", "heroic_heist": "de_grab"}, inplace=True)
+        diffed.rename(
+            columns={"elixir_escapade": "elixir_grab", "heroic_heist": "de_grab"},
+            inplace=True,
+        )
         diffed["trophies"] = resampled["trophies"]  # Undo trophies
 
         return PlayerActivity(
@@ -77,7 +97,11 @@ class Player(graphene.ObjectType):
         )
 
     def resolve_league(parent, info):
-        return PlayerLeague(**parent.league) if hasattr(parent, "league") and len(parent.league) > 0 else None
+        return (
+            PlayerLeague(**parent.league)
+            if hasattr(parent, "league") and len(parent.league) > 0
+            else None
+        )
 
     def resolve_clan(parent, info):
         return parent.most_recent_clan()
