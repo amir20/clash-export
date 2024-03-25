@@ -1,6 +1,8 @@
-from clashleaders.model import *
 from datetime import datetime, timedelta
+
 import pandas as pd
+
+from clashleaders.model import *
 
 last_week = datetime.now() - timedelta(days=7)
 tags = HistoricalClan.objects(warLeagueId=48000017, created_on__lte=last_week).distinct(

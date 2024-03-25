@@ -1,6 +1,6 @@
 import logging
-from random import randrange
 import sys
+from random import randrange
 
 from clashleaders.clash import api
 from clashleaders.model import Clan

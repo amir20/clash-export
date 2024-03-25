@@ -2,18 +2,19 @@ from __future__ import annotations
 
 import asyncio
 import json
-from datetime import timedelta
 import logging
 import os
+from dataclasses import dataclass
+from datetime import timedelta
 from typing import List
 from urllib.parse import quote
 
 import aiohttp
 import requests
 from async_timeout import timeout
-from clashleaders.util import correct_tag
+
 from clashleaders import redis_connection
-from dataclasses import dataclass
+from clashleaders.util import correct_tag
 
 logger = logging.getLogger(__name__)
 

@@ -1,11 +1,12 @@
 from __future__ import annotations
-from typing import Optional
-from mongoengine import DynamicDocument, signals, DateTimeField
-from datetime import datetime
 
-from clashleaders.util import correct_tag, from_timestamp
+from datetime import datetime
+from typing import Optional
 
 import pandas as pd
+from mongoengine import DateTimeField, DynamicDocument, signals
+
+from clashleaders.util import correct_tag, from_timestamp
 
 
 class ClanWar(DynamicDocument):

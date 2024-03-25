@@ -1,15 +1,16 @@
 from __future__ import annotations
+
 import asyncio
 import logging
-import clashleaders.model
 import time
-
 from typing import List
+
+import clashleaders.model
 
 logger = logging.getLogger(__name__)
 
-import threading
 import queue
+import threading
 
 q: queue.Queue = queue.Queue()
 

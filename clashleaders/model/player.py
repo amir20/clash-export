@@ -1,13 +1,11 @@
 from __future__ import annotations
-from clashleaders.model.historical_player import HistoricalPlayer
-from clashleaders.model.clan_war import ClanWar
-from typing import Optional
 
-from typing import Dict
 from collections import namedtuple
+from typing import Dict, Optional
 
 import pandas as pd
-from mongoengine import Document, BinaryField, StringField, DictField
+from mongoengine import BinaryField, DictField, Document, StringField
+from mongoengine.fields import BooleanField, ReferenceField
 from slugify import slugify
 
 import clashleaders.insights.troops
@@ -15,8 +13,9 @@ import clashleaders.model
 from clashleaders.clash import api
 from clashleaders.insights.player_activity import clan_history
 from clashleaders.model import Clan
+from clashleaders.model.clan_war import ClanWar
+from clashleaders.model.historical_player import HistoricalPlayer
 from clashleaders.util import correct_tag
-from mongoengine.fields import BooleanField, ReferenceField
 
 
 class Player(Document):

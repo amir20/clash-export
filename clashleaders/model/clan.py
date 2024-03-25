@@ -2,35 +2,34 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-from typing import Iterable, List, Tuple, Dict, Optional
+from functools import cache
+from typing import Dict, Iterable, List, Optional, Tuple
 
 import pandas as pd
 from mongoengine import (
-    DynamicDocument,
     DateTimeField,
-    StringField,
+    DictField,
+    DynamicDocument,
+    EmbeddedDocumentField,
     IntField,
     ListField,
-    EmbeddedDocumentField,
-    DictField,
     Q,
+    StringField,
 )
 from slugify import slugify
-from functools import cache
 
 import clashleaders.clash.clan_calculation
 import clashleaders.clash.transformer
 import clashleaders.model
+import clashleaders.queue.calculation
 import clashleaders.queue.player
 import clashleaders.queue.war
-import clashleaders.queue.calculation
-
 from clashleaders.clash import api
-from clashleaders.model.clan_delta import ClanDelta
-from clashleaders.model.cwl_group import CWLGroup
-from clashleaders.model.clan_war import ClanWar
-from clashleaders.model.clan_members import ClanMembers
 from clashleaders.insights.clan_activity import clan_status
+from clashleaders.model.clan_delta import ClanDelta
+from clashleaders.model.clan_members import ClanMembers
+from clashleaders.model.clan_war import ClanWar
+from clashleaders.model.cwl_group import CWLGroup
 from clashleaders.text.clan_description_processor import transform_description
 from clashleaders.util import correct_tag
 

@@ -1,10 +1,9 @@
-from functools import wraps
 from datetime import datetime
+from functools import wraps
 from typing import (
     Callable,
     TypeVar,
 )
-
 
 T = TypeVar("T")
 T_co = TypeVar("T_co", covariant=True)

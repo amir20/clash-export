@@ -1,7 +1,7 @@
 import logging
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
-from clashleaders.model import Clan, HistoricalClan, HistoricalPlayer, CWLWar, ClanWar
+from clashleaders.model import Clan, ClanWar, CWLWar, HistoricalClan, HistoricalPlayer
 
 logger = logging.getLogger(__name__)
 

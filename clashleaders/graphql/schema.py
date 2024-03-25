@@ -1,15 +1,15 @@
 import logging
 from datetime import datetime, timedelta
-import graphene
-import clashleaders.model as model
+from time import sleep
 
-from clashleaders.clash import api
+import graphene
 from rq.exceptions import NoSuchJobError
+
+import clashleaders.model as model
+from clashleaders.clash import api
 
 from .clan import Clan, ShortClan
 from .player import Player
-from time import sleep
-
 
 logger = logging.getLogger(__name__)
 

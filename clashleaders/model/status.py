@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import json
 import logging
-from os.path import join
 from datetime import datetime, timedelta
+from os.path import join
 
 from mongoengine import (
     DateTimeField,
@@ -15,7 +15,7 @@ from mongoengine import (
     ReferenceField,
 )
 
-from clashleaders.model import Player, Clan
+from clashleaders.model import Clan, Player
 
 logger = logging.getLogger(__name__)
 

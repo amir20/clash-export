@@ -1,9 +1,10 @@
 from io import BytesIO
 
+import pandas as pd
 from flask import send_file
+
 from clashleaders import app
 from clashleaders.model import Clan
-import pandas as pd
 
 
 @app.route("/exportclans/<tags>")

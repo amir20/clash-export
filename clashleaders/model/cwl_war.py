@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import List, TYPE_CHECKING
-from mongoengine import DynamicDocument, signals
-
-from mongoengine.fields import StringField
-from clashleaders.util import from_timestamp
+from typing import TYPE_CHECKING, List
 
 import pandas as pd
+from mongoengine import DynamicDocument, signals
+from mongoengine.fields import StringField
+
+from clashleaders.util import from_timestamp
 
 if TYPE_CHECKING:
     from clashleaders.model.clan import Clan

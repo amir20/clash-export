@@ -1,6 +1,5 @@
 import os
 
-
 name = "clashleaders.com"
 bind = "unix:/tmp/gunicorn.sock"
 workers = 2

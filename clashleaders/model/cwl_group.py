@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-import pandas as pd
-from clashleaders.model.cwl_war import CWLWar
-from typing import Optional, TYPE_CHECKING
-from mongoengine import DynamicDocument
-from typing import List
+from typing import TYPE_CHECKING, List, Optional
 
+import pandas as pd
+from mongoengine import DynamicDocument
 from mongoengine.fields import ListField, ReferenceField
-from clashleaders.util import correct_tag
 
 from clashleaders.clash import api
-
+from clashleaders.model.cwl_war import CWLWar
+from clashleaders.util import correct_tag
 
 if TYPE_CHECKING:
     from clashleaders.model.clan import Clan

@@ -1,8 +1,10 @@
-from clashleaders.clash.transformer import tag_to_slug
 import logging
+from datetime import datetime
+
 import graphene
 from graphene.types.generic import GenericScalar
-from datetime import datetime
+
+from clashleaders.clash.transformer import tag_to_slug
 
 from .badge import BadgeUrls
 

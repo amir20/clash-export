@@ -1,26 +1,26 @@
 from __future__ import annotations
 
-
 from datetime import datetime
+from functools import cache
 
 import pandas as pd
 from mongoengine import (
-    Document,
-    StringField,
-    IntField,
     DateTimeField,
-    ReferenceField,
+    Document,
+    IntField,
     ListField,
+    ReferenceField,
+    StringField,
 )
-from functools import cache
 
 import clashleaders.clash.clan_calculation
 import clashleaders.insights.player_activity
 import clashleaders.model
 from clashleaders.model import ClanDelta
-from clashleaders.util import correct_tag
-from clashleaders.model.historical_player import HistoricalPlayer
 from clashleaders.model.clan_war import ClanWar
+from clashleaders.model.historical_player import HistoricalPlayer
+from clashleaders.util import correct_tag
+
 from .columns import COLUMNS
 
 

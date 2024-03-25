@@ -1,6 +1,5 @@
-from clashleaders import cache
-
 import clashleaders.model.clan
+from clashleaders import cache
 
 
 @cache.memoize(timeout=86400)

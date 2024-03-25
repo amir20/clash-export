@@ -1,18 +1,16 @@
-from clashleaders.clash.similar import similar_clans_avg
+import base64
 import logging
-
+from io import BytesIO
 
 import graphene
-from graphene.types.generic import GenericScalar
-
 import pandas as pd
-from io import BytesIO
-import base64
-
-from .badge import BadgeUrls
+from graphene.types.generic import GenericScalar
 
 import clashleaders.graphql.player as player
 import clashleaders.graphql.war as war
+from clashleaders.clash.similar import similar_clans_avg
+
+from .badge import BadgeUrls
 
 logger = logging.getLogger(__name__)
 

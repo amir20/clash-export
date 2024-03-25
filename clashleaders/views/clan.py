@@ -1,12 +1,12 @@
-from flask import url_for, redirect
-from clashleaders.clash.transformer import tag_to_slug
 import logging
 from typing import OrderedDict
-import clashleaders.views
-from flask import render_template
+
+from flask import redirect, render_template, url_for
 from mongoengine import DoesNotExist
 
+import clashleaders.views
 from clashleaders import app
+from clashleaders.clash.transformer import tag_to_slug
 from clashleaders.model import Clan, Status
 
 logger = logging.getLogger(__name__)

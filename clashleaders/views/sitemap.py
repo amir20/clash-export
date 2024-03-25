@@ -1,6 +1,6 @@
 from math import ceil
 
-from flask import make_response, render_template, url_for, stream_with_context
+from flask import make_response, render_template, stream_with_context, url_for
 
 from clashleaders import app
 from clashleaders.model import Clan

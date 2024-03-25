@@ -1,10 +1,9 @@
+from re import sub
 from typing import TYPE_CHECKING, Dict
 
 import pandas as pd
 
-from re import sub
 from .columns import column_group
-
 
 if TYPE_CHECKING:
     from clashleaders.model.clan import Clan

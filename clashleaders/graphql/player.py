@@ -1,8 +1,10 @@
 import logging
+
 import graphene
-from .badge import BadgeUrls
 
 import clashleaders.graphql.clan
+
+from .badge import BadgeUrls
 
 logger = logging.getLogger(__name__)
 

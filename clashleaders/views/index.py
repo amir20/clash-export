@@ -2,7 +2,7 @@ from flask import render_template
 
 from clashleaders import app, cache
 from clashleaders.clash.transformer import to_short_clan
-from clashleaders.model import Clan, Status, ClanWar, CWLGroup
+from clashleaders.model import Clan, ClanWar, CWLGroup, Status
 
 
 @app.route("/")
