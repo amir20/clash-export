@@ -90,7 +90,7 @@ numpy==1.26.4
 packaging==23.2
     # via gunicorn
 pandas==2.1.4
-pillow==10.1.0
+pillow==10.3.0
     # via cairosvg
 protobuf==4.24.4
 pycparser==2.21
