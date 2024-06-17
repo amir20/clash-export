@@ -113,7 +113,7 @@ redis-sentinel-url==1.0.1
     # via rq-dashboard
 regex==2023.10.3
     # via awesome-slugify
-requests==2.31.0
+requests==2.32.2
     # via contentful
 rq==1.15.1
     # via rq-dashboard
