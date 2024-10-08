@@ -66,8 +66,8 @@ importers:
         specifier: ^3.35.1
         version: 3.35.1
       css-loader:
-        specifier: ^5.2.7
-        version: 5.2.7(webpack@5.94.0)
+        specifier: ^7.1.2
+        version: 7.1.2(webpack@5.94.0)
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(webpack@5.94.0)
@@ -169,7 +169,7 @@ importers:
         version: 2.7.14
       vue-loader:
         specifier: ^15.9.8
-        version: 15.9.8(css-loader@5.2.7(webpack@5.94.0))(handlebars@4.7.7)(lodash@4.17.21)(underscore@1.13.1)(vue-template-compiler@2.7.14)(webpack@5.94.0)
+        version: 15.9.8(css-loader@7.1.2(webpack@5.94.0))(handlebars@4.7.7)(lodash@4.17.21)(underscore@1.13.1)(vue-template-compiler@2.7.14)(webpack@5.94.0)
       vue-router:
         specifier: ^3.5.2
         version: 3.5.3(vue@2.7.14)
@@ -1628,11 +1628,17 @@ packages:
     peerDependencies:
       postcss: ^8.0.9
 
-  css-loader@5.2.7:
-    resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
-    engines: {node: '>= 10.13.0'}
+  css-loader@7.1.2:
+    resolution: {integrity: sha512-6WvYYn7l/XEGN8Xu2vWFt9nVzrCn39vKyTEFf/ExEyoksJjjSZV/0/35XPlMbpnr6VGhZIUg5yJrL8tGfes/FA==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
-      webpack: ^4.27.0 || ^5.0.0
+      '@rspack/core': 0.x || 1.x
+      webpack: ^5.27.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+      webpack:
+        optional: true
 
   css-minimizer-webpack-plugin@5.0.1:
     resolution: {integrity: sha512-3caImjKFQkS+ws1TGcFn0V1HyDJFq1Euy589JlD6/3rV2kj+w7r5G9WDMgSHvpvXHNZ2calVypZWuEDQd9wfLg==}
@@ -2870,20 +2876,20 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
 
-  postcss-modules-extract-imports@3.0.0:
-    resolution: {integrity: sha512-bdHleFnP3kZ4NYDhuGlVK+CMrQ/pqUm8bx/oGL93K6gVwiclvX5x0n76fYMKuIGKzlABOy13zsvqjb0f92TEXw==}
+  postcss-modules-extract-imports@3.1.0:
+    resolution: {integrity: sha512-k3kNe0aNFQDAZGbin48pL2VNidTF0w4/eASDsxlyspobzU3wZQLOGj7L9gfRe0Jo9/4uud09DsjFNH7winGv8Q==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
 
-  postcss-modules-local-by-default@4.0.0:
-    resolution: {integrity: sha512-sT7ihtmGSF9yhm6ggikHdV0hlziDTX7oFoXtuVWeDd3hHObNkcHRo9V3yg7vCAY7cONyxJC/XXCmmiHHcvX7bQ==}
+  postcss-modules-local-by-default@4.0.5:
+    resolution: {integrity: sha512-6MieY7sIfTK0hYfafw1OMEG+2bg8Q1ocHCpoWLqOKj3JXlKu4G7btkmM/B7lFubYkYWmRSPLZi5chid63ZaZYw==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
 
-  postcss-modules-scope@3.0.0:
-    resolution: {integrity: sha512-hncihwFA2yPath8oZ15PZqvWGkWf+XUfQgUGamS4LqoP1anQLOsOJw0vr7J7IwLpoY9fatA2qiGUGmuZL0Iqlg==}
+  postcss-modules-scope@3.2.0:
+    resolution: {integrity: sha512-oq+g1ssrsZOsx9M96c5w8laRmvEu9C3adDSjI8oTcbfkrTE8hx/zfyobUoWIxaKPO8bt6S62kxpw5GqypEw1QQ==}
     engines: {node: ^10 || ^12 || >= 14}
     peerDependencies:
       postcss: ^8.1.0
@@ -5179,18 +5185,17 @@ snapshots:
     dependencies:
       postcss: 8.4.35
 
-  css-loader@5.2.7(webpack@5.94.0):
+  css-loader@7.1.2(webpack@5.94.0):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.35)
-      loader-utils: 2.0.1
       postcss: 8.4.35
-      postcss-modules-extract-imports: 3.0.0(postcss@8.4.35)
-      postcss-modules-local-by-default: 4.0.0(postcss@8.4.35)
-      postcss-modules-scope: 3.0.0(postcss@8.4.35)
+      postcss-modules-extract-imports: 3.1.0(postcss@8.4.35)
+      postcss-modules-local-by-default: 4.0.5(postcss@8.4.35)
+      postcss-modules-scope: 3.2.0(postcss@8.4.35)
       postcss-modules-values: 4.0.0(postcss@8.4.35)
       postcss-value-parser: 4.2.0
-      schema-utils: 3.3.0
       semver: 7.5.4
+    optionalDependencies:
       webpack: 5.94.0(webpack-cli@5.1.4)
 
   css-minimizer-webpack-plugin@5.0.1(webpack@5.94.0):
@@ -6390,18 +6395,18 @@ snapshots:
       postcss: 8.4.35
       postcss-selector-parser: 6.0.13
 
-  postcss-modules-extract-imports@3.0.0(postcss@8.4.35):
+  postcss-modules-extract-imports@3.1.0(postcss@8.4.35):
     dependencies:
       postcss: 8.4.35
 
-  postcss-modules-local-by-default@4.0.0(postcss@8.4.35):
+  postcss-modules-local-by-default@4.0.5(postcss@8.4.35):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.35)
       postcss: 8.4.35
       postcss-selector-parser: 6.0.13
       postcss-value-parser: 4.2.0
 
-  postcss-modules-scope@3.0.0(postcss@8.4.35):
+  postcss-modules-scope@3.2.0(postcss@8.4.35):
     dependencies:
       postcss: 8.4.35
       postcss-selector-parser: 6.0.13
@@ -7060,10 +7065,10 @@ snapshots:
 
   vue-hot-reload-api@2.3.4: {}
 
-  vue-loader@15.9.8(css-loader@5.2.7(webpack@5.94.0))(handlebars@4.7.7)(lodash@4.17.21)(underscore@1.13.1)(vue-template-compiler@2.7.14)(webpack@5.94.0):
+  vue-loader@15.9.8(css-loader@7.1.2(webpack@5.94.0))(handlebars@4.7.7)(lodash@4.17.21)(underscore@1.13.1)(vue-template-compiler@2.7.14)(webpack@5.94.0):
     dependencies:
       '@vue/component-compiler-utils': 3.3.0(handlebars@4.7.7)(lodash@4.17.21)(underscore@1.13.1)
-      css-loader: 5.2.7(webpack@5.94.0)
+      css-loader: 7.1.2(webpack@5.94.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.0
       vue-hot-reload-api: 2.3.4
