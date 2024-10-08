@@ -135,7 +135,7 @@ types-python-dateutil==2.8.19.14
     # via arrow
 typing-extensions==4.8.0
     # via graphql-server
-tzdata==2023.3
+tzdata==2024.2
     # via pandas
 unidecode==0.4.21
     # via awesome-slugify
