@@ -45,8 +45,8 @@ importers:
         specifier: ^0.9.29
         version: 0.9.29(vue@2.7.14)
       bulma:
-        specifier: ^0.9.4
-        version: 0.9.4
+        specifier: ^1.0.2
+        version: 1.0.2
       bulma-badge:
         specifier: ^3.0.1
         version: 3.0.1
