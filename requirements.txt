@@ -87,7 +87,7 @@ numpy==1.26.4
     #   pandas
     #   scikit-learn
     #   scipy
-packaging==23.2
+packaging==24.1
     # via gunicorn
 pandas==2.1.4
 pillow==10.3.0
