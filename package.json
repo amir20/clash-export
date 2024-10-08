@@ -37,7 +37,7 @@
     "file-loader": "^6.2.0",
     "flag-icon-css": "^3.5.0",
     "graphql": "^16.8.1",
-    "graphql-request": "^6.1.0",
+    "graphql-request": "^7.1.0",
     "jpeg-js": "^0.4.4",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
