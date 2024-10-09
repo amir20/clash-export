@@ -148,7 +148,7 @@ webencodings==0.5.1
     #   tinycss2
 webob==1.8.8
     # via bugsnag
-werkzeug==3.0.3
+werkzeug==3.0.4
     # via flask
 wtforms==3.1.0
     # via flask-wtf
