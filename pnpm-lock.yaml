@@ -211,8 +211,8 @@ importers:
         specifier: ^13.2.1
         version: 13.2.1
       prettier:
-        specifier: ^3.1.1
-        version: 3.1.1
+        specifier: ^3.3.3
+        version: 3.3.3
       webpack-bundle-analyzer:
         specifier: ^4.10.1
         version: 4.10.1
@@ -3012,8 +3012,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.1.1:
-    resolution: {integrity: sha512-22UbSzg8luF4UuZtzgiUOfcGM8s4tjBv6dJRT7j275NXsy2jb4aJa4NNveul5x4eqlF1wuhuR2RElK71RvmVaw==}
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -6528,7 +6528,7 @@ snapshots:
   prettier@2.8.8:
     optional: true
 
-  prettier@3.1.1: {}
+  prettier@3.3.3: {}
 
   process-nextick-args@1.0.7: {}
 
