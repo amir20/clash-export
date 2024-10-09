@@ -17,7 +17,7 @@ bugsnag==4.6.1
 cachelib==0.10.2
     # via flask-caching
 cachetools==5.3.3
-cairocffi==1.6.1
+cairocffi==1.7.1
     # via cairosvg
 cairosvg==2.7.1
 certifi==2023.7.22
