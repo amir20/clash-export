@@ -63,7 +63,7 @@ idna==3.7
     #   requests
     #   yarl
 inflection==0.5.1
-itsdangerous==2.1.2
+itsdangerous==2.2.0
     # via
     #   flask
     #   flask-wtf
