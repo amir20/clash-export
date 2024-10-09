@@ -131,7 +131,7 @@ tinycss2==1.2.1
     # via
     #   cairosvg
     #   cssselect2
-types-python-dateutil==2.8.19.14
+types-python-dateutil==2.9.0.20241003
     # via arrow
 typing-extensions==4.8.0
     # via graphql-server
