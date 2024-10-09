@@ -93,7 +93,7 @@ pandas==2.1.4
 pillow==10.3.0
     # via cairosvg
 protobuf==4.24.4
-pycparser==2.21
+pycparser==2.22
     # via cffi
 pymongo==4.6.3
     # via mongoengine
