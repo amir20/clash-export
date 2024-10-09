@@ -22,7 +22,7 @@ cairocffi==1.6.1
 cairosvg==2.7.1
 certifi==2023.7.22
     # via requests
-cffi==1.16.0
+cffi==1.17.1
     # via cairocffi
 charset-normalizer==3.3.1
     # via requests
