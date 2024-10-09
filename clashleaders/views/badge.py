@@ -7,7 +7,7 @@ from flask import make_response, render_template, send_file
 from mongoengine import DoesNotExist
 
 from clashleaders import app, cache
-from clashleaders.model import Clan
+import clashleaders.model.clan
 
 TEMPLATE = dict(small="badges/small.svg", large="badges/large.svg")
 
@@ -33,7 +33,7 @@ def clan_badge_png(size, tag):
 
 def render_as_svg(template, tag):
     try:
-        clan = Clan.find_by_tag(tag)
+        clan = clashleaders.model.clan.Clan.find_by_tag(tag)
     except DoesNotExist:
         return render_template("404.html"), 404
     else:

@@ -12,10 +12,10 @@ import clashleaders.insights.troops
 import clashleaders.model
 from clashleaders.clash import api
 from clashleaders.insights.player_activity import clan_history
-from clashleaders.model import Clan
 from clashleaders.model.clan_war import ClanWar
 from clashleaders.model.historical_player import HistoricalPlayer
 from clashleaders.util import correct_tag
+import clashleaders.model.clan
 
 
 class Player(Document):
@@ -40,9 +40,9 @@ class Player(Document):
         "strict": False,
     }
 
-    def most_recent_clan(self) -> Optional[Clan]:
+    def most_recent_clan(self) -> Optional[clashleaders.model.clan.Clan]:
         return (
-            Clan.find_by_tag(self.clan["tag"])
+            clashleaders.model.clan.Clan.find_by_tag(self.clan["tag"])
             if hasattr(self, "clan") and "tag" in self.clan
             else None
         )
@@ -92,7 +92,12 @@ class Player(Document):
 
     def clan_history(self):
         history = clan_history(self).to_dict()
-        clans = {c.tag: c for c in Clan.objects(tag__in=list(history.values()))}
+        clans = {
+            c.tag: c
+            for c in clashleaders.model.clan.Clan.objects(
+                tag__in=list(history.values())
+            )
+        }
         history = {k: clans[v] for k, v in history.items()}
 
         return history
@@ -113,7 +118,9 @@ class Player(Document):
             data["percentile"] = self.player_score()
 
         if data["clan"]:
-            data["clan"]["slug"] = Clan.find_by_tag(data["clan"]["tag"]).slug
+            data["clan"]["slug"] = clashleaders.model.clan.Clan.find_by_tag(
+                data["clan"]["tag"]
+            ).slug
 
         return data
 

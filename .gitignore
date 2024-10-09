@@ -107,3 +107,6 @@ node_modules
 .bashful
 .pytest_cache
 .mypy*
+
+.direnv
+.envrc

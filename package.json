@@ -69,10 +69,10 @@
     "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.1",
     "husky": "^9.1.6",
-    "lint-staged": "^13.2.1",
-    "prettier": "^3.1.1",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
     "webpack-bundle-analyzer": "^4.10.1"
   },
   "scripts": {

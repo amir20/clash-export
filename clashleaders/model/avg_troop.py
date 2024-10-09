@@ -10,7 +10,7 @@ from mongoengine import (
     StringField,
 )
 
-from clashleaders.model import Player
+import clashleaders.model.player
 
 
 class AverageTroop(Document):
@@ -33,21 +33,21 @@ class AverageTroop(Document):
 
     @classmethod
     def update_all(cls):
-        good_tag = Player._get_collection().find_one(
+        good_tag = clashleaders.model.player.Player._get_collection().find_one(
             {
                 "lab_levels.home_unicorn": {"$exists": True},
                 "lab_levels.builderbase_battle_machine": {"$exists": True},
                 "lab_levels.builderbase_super_pekka": {"$exists": True},
             }
         )["tag"]
-        good_player = Player.find_by_tag(good_tag)
+        good_player = clashleaders.model.player.Player.find_by_tag(good_tag)
 
         group = {"$group": {"_id": "$townHallLevel"}}
         for key in good_player.lab_levels.keys():
             group["$group"][f"avg_{key}"] = {"$avg": f"$lab_levels.{key}"}
             group["$group"][f"max_{key}"] = {"$max": f"$lab_levels.{key}"}
 
-        aggregated = list(Player.objects.aggregate(group))
+        aggregated = list(clashleaders.model.player.Player.objects.aggregate(group))
 
         for th_avg in aggregated:
             th_level = th_avg["_id"]
