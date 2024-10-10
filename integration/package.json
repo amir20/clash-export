@@ -11,7 +11,7 @@
   "dependencies": {
     "jest": "^29.7.0",
     "jest-image-snapshot": "^6.4.0",
-    "puppeteer": "^14.4.1"
+    "puppeteer": "^23.5.2"
   },
   "jest": {
     "setupFilesAfterEnv": [
