@@ -24,7 +24,7 @@
 </style>
 
 <script>
-import store from "store/dist/store.modern";
+// import store from "store/dist/store.modern";
 const KEY = "changelog";
 
 export default {
@@ -35,9 +35,9 @@ export default {
     this.items = this.data = [];
   },
   mounted() {
-    if (store.get(KEY) != this.items[0].id) {
-      this.hasUpdates = true;
-    }
+    // if (store.get(KEY) != this.items[0].id) {
+    //   this.hasUpdates = true;
+    // }
   },
   methods: {
     onMenuClick() {
