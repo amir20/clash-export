@@ -35,7 +35,7 @@
     "date-fns": "^2.30.0",
     "es6-map": "^0.1.5",
     "file-loader": "^6.2.0",
-    "flag-icon-css": "^3.5.0",
+    "flag-icon-css": "^4.1.7",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "jpeg-js": "^0.4.4",
