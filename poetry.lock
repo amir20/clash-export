@@ -251,7 +251,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7
 
 [[package]]
 name = "contentful"
-version = "2.1.1"
+version = "2.2.0"
 description = "Contentful Delivery API Client"
 category = "main"
 optional = false
@@ -1090,7 +1090,7 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.12.2"
-content-hash = "d99708daed4dd6ac2866e745f1090e6b98e0d635e5f328f070994e08d999b4e8"
+content-hash = "876607b0bbad6a72f8575082483465cea3c1a0b76e804fc0426512137bc00fa0"
 
 [metadata.files]
 aiohappyeyeballs = [
@@ -1424,8 +1424,8 @@ colorama = [
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
 contentful = [
-    {file = "contentful-2.1.1-py3-none-any.whl", hash = "sha256:6be3fe980cc68cf2eab2b39958df3ae9b7c4d2b26ee92a4926dd8fdd88bf20c0"},
-    {file = "contentful-2.1.1.tar.gz", hash = "sha256:7e83776577326c5f088771a83455c2e0eb23c5ee571d024812159b39bb03d206"},
+    {file = "contentful-2.2.0-py3-none-any.whl", hash = "sha256:11a63bbb7963fd905a3408aed2064b0468cd44969c6e99ab43923073113b80af"},
+    {file = "contentful-2.2.0.tar.gz", hash = "sha256:c181c94f9d9d7fa3a9124b0538492f9c8cc01a1be9550598b170ce43402d89c0"},
 ]
 cssselect2 = [
     {file = "cssselect2-0.7.0-py3-none-any.whl", hash = "sha256:fd23a65bfd444595913f02fc71f6b286c29261e354c41d722ca7a261a49b5969"},
