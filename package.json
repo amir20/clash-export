@@ -44,7 +44,7 @@
     "mini-css-extract-plugin": "^2.7.6",
     "postcss": "^8.4.35",
     "postcss-font-magician": "^3.0.0",
-    "postcss-loader": "^7.3.4",
+    "postcss-loader": "^8.1.1",
     "postcss-safe-parser": "^6.0.0",
     "promise-polyfill": "^8.3.0",
     "regenerator-runtime": "^0.13.11",
