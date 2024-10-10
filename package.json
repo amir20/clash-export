@@ -43,7 +43,7 @@
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss": "^8.4.35",
-    "postcss-font-magician": "^3.0.0",
+    "postcss-font-magician": "^4.0.0",
     "postcss-loader": "^7.3.4",
     "postcss-safe-parser": "^6.0.0",
     "promise-polyfill": "^8.3.0",
