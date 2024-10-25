@@ -810,15 +810,15 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "rq"
-version = "1.15.1"
+version = "1.16.2"
 description = "RQ is a simple, lightweight, library for creating background jobs, and processing them."
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
-click = ">=5.0.0"
-redis = ">=4.0.0"
+click = ">=5"
+redis = ">=3.5"
 
 [[package]]
 name = "rq-dashboard"
@@ -1093,7 +1093,7 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.12.2"
-content-hash = "d99708daed4dd6ac2866e745f1090e6b98e0d635e5f328f070994e08d999b4e8"
+content-hash = "fac196367ae29e88f3e2b812411132cc94edbba8467ababa64daf934c288dc54"
 
 [metadata.files]
 aiohappyeyeballs = [
@@ -2221,8 +2221,8 @@ requests = [
     {file = "requests-2.32.3.tar.gz", hash = "sha256:55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760"},
 ]
 rq = [
-    {file = "rq-1.15.1-py2.py3-none-any.whl", hash = "sha256:6e243d8d9c4af4686ded4b01b25ea1ff4bac4fc260b02638fbe9c8c17b004bd1"},
-    {file = "rq-1.15.1.tar.gz", hash = "sha256:1f49f4ac1a084044bb8e95b3f305c0bf17e55618b08c18e0b60c080f12d6f008"},
+    {file = "rq-1.16.2-py3-none-any.whl", hash = "sha256:52e619f6cb469b00e04da74305045d244b75fecb2ecaa4f26422add57d3c5f09"},
+    {file = "rq-1.16.2.tar.gz", hash = "sha256:5c5b9ad5fbaf792b8fada25cc7627f4d206a9a4455aced371d4f501cc3f13b34"},
 ]
 rq-dashboard = [
     {file = "rq-dashboard-0.6.7.tar.gz", hash = "sha256:391eef0ae3e3f416abc128ddb85ab2ccfdc9ea3cdaac40cb2464efcbdc696973"},
