@@ -140,11 +140,11 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "bugsnag"
-version = "4.6.1"
+version = "4.7.1"
 description = "Automatic error monitoring for django, flask, etc."
 category = "main"
 optional = false
-python-versions = ">=3.5, <4"
+python-versions = "<4,>=3.5"
 
 [package.dependencies]
 webob = "*"
@@ -1093,7 +1093,7 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.12.2"
-content-hash = "d99708daed4dd6ac2866e745f1090e6b98e0d635e5f328f070994e08d999b4e8"
+content-hash = "a79eaebc3e9f414124d9e0ee935a836c36c6071ae0b2fa4bc762932853e50ff4"
 
 [metadata.files]
 aiohappyeyeballs = [
@@ -1249,8 +1249,8 @@ blinker = [
     {file = "blinker-1.6.3.tar.gz", hash = "sha256:152090d27c1c5c722ee7e48504b02d76502811ce02e1523553b4cf8c8b3d3a8d"},
 ]
 bugsnag = [
-    {file = "bugsnag-4.6.1-py3-none-any.whl", hash = "sha256:6796e5ed331bd6015e8383d1c654bf08f59c699e5cb6bedc74986b1a778de0cb"},
-    {file = "bugsnag-4.6.1.tar.gz", hash = "sha256:1b3a6ea4bfb01362493d3f763bac99356668c28e9f5f352f92e043b4a2f51daa"},
+    {file = "bugsnag-4.7.1-py3-none-any.whl", hash = "sha256:4537ff3c200890d26e28079e31729c041a9ffe84a803860ea8adefe535aac7df"},
+    {file = "bugsnag-4.7.1.tar.gz", hash = "sha256:98408fe17d4a7f300a56535407a6448b9844d9b528c44527908868fc3646e873"},
 ]
 cachelib = [
     {file = "cachelib-0.10.2-py3-none-any.whl", hash = "sha256:42d49f2fad9310dd946d7be73d46776bcd4d5fde4f49ad210cfdd447fbdfc346"},
