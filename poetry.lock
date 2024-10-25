@@ -1092,8 +1092,8 @@ propcache = ">=0.2.0"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "~3.12.2"
-content-hash = "d99708daed4dd6ac2866e745f1090e6b98e0d635e5f328f070994e08d999b4e8"
+python-versions = "~3.13.0"
+content-hash = "d31266d813bf44921b398dd7ac9d199ed7d4546daa1995b0bc12137a91e18bc4"
 
 [metadata.files]
 aiohappyeyeballs = [
