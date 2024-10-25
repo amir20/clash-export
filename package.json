@@ -47,7 +47,7 @@
     "postcss-loader": "^7.3.4",
     "postcss-safe-parser": "^6.0.0",
     "promise-polyfill": "^8.3.0",
-    "regenerator-runtime": "^0.13.11",
+    "regenerator-runtime": "^0.14.1",
     "sass": "^1.69.6",
     "sass-loader": "^13.3.3",
     "semver": "^7.5.4",
