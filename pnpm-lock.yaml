@@ -27,11 +27,11 @@ importers:
         specifier: ^7.23.9
         version: 7.25.7
       '@bugsnag/js':
-        specifier: ^7.22.4
-        version: 7.22.4
+        specifier: ^8.1.2
+        version: 8.1.2
       '@bugsnag/plugin-vue':
-        specifier: ^7.22.4
-        version: 7.22.4(@bugsnag/core@7.19.0)
+        specifier: ^8.1.1
+        version: 8.1.1(@bugsnag/core@8.1.1)
       '@tweenjs/tween.js':
         specifier: ^21.0.0
         version: 21.0.0
@@ -763,25 +763,25 @@ packages:
     resolution: {integrity: sha512-JWtuCu8VQsMladxVz/P4HzHUGCAwpuqacmowgXFs5XjxIgKuNjnLokQzuVjlTvIzODaDmpjT3oxcC48vyk9EWg==}
     engines: {node: '>=6.9.0'}
 
-  '@bugsnag/browser@7.22.4':
-    resolution: {integrity: sha512-h2o9RZhAEIgJAUsECd7a00IkLnvQvLT7dUyUYx/s8VLvcq89gKa8E59rlM7f15wtkJ5MPfozhErXDpsdOvF4Rg==}
+  '@bugsnag/browser@8.1.2':
+    resolution: {integrity: sha512-COP3OanbGCOS/K4g0rGwSYk2/RcIooG2PqxqdrF0MDY4u3Nz44iOaJg8w7WlOr8CckmDEiwSW2DVR+M7qZcoQw==}
 
-  '@bugsnag/core@7.19.0':
-    resolution: {integrity: sha512-2KGwdaLD9PhR7Wk7xPi3jGuGsKTatc/28U4TOZIDU3CgC2QhGjubwiXSECel5gwxhZ3jACKcMKSV2ovHhv1NrA==}
+  '@bugsnag/core@8.1.1':
+    resolution: {integrity: sha512-ytOWqwm4H2h8rADqYPR+tQpDHsBav3NEZ5E2VSCCxPbT2R89Q0/t0PZTbQVlOS+TRutajO29VxTV9qsAREfpSw==}
 
   '@bugsnag/cuid@3.0.2':
     resolution: {integrity: sha512-cIwzC93r3PQ/INeuwtZwkZIG2K8WWN0rRLZQhu+mr48Ay+i6sEki4GYfTsflse7hZ1BeDWrNb/Q9vgY3B31xHQ==}
 
-  '@bugsnag/js@7.22.4':
-    resolution: {integrity: sha512-GjU3YmCNxVl1QZ64e8D4hKSfhHiymHu4hyYlyKxIdqmnhpHvoFnADcdAHEnWPG82O9j9w+JoDXvL460aiOEgHg==}
+  '@bugsnag/js@8.1.2':
+    resolution: {integrity: sha512-vMl/TlMTpm0Xv4IKqYpmsjeVE4nPWAZL8uOxOi0JI6dgTaWE8+VQF6KuSpeKiA7Pr34uUxpWhSBrkZ3uSwCBdg==}
 
-  '@bugsnag/node@7.22.3':
-    resolution: {integrity: sha512-vDXu0mrduonyCjUkTp+zKSh1WHAtA2VjB49xK5s1f/HnTASiJvzUOQBRXrkqaj37sndYHUSMxUCPvLawyc75nA==}
+  '@bugsnag/node@8.1.1':
+    resolution: {integrity: sha512-Ckdgj4tQto3CH4wWo12BAG0lQuS9s5SUpZvwmYF3meW5Qxq7D8XHZzrfGQo9nb1VTvmwOB+uyMt8En6Cy86Jcg==}
 
-  '@bugsnag/plugin-vue@7.22.4':
-    resolution: {integrity: sha512-Yw9cCn3F2aMEssVIiN9YoiYhsizPO4wCDgmmuC8t0YiY0AhMZs5+PwE1WQJcaMa5wXS1HdsH5IKYnym1JMUS3g==}
+  '@bugsnag/plugin-vue@8.1.1':
+    resolution: {integrity: sha512-w6/kSgyP7Jq7J+AWI6BeMcn30SR/VkXJPAJPQ5pGROeRPuzEVcKmqBrgjjqhL22gFV0kK6+4aMpUm3PwB6ymvQ==}
     peerDependencies:
-      '@bugsnag/core': ^7.0.0
+      '@bugsnag/core': ^8.0.0
     peerDependenciesMeta:
       '@bugsnag/core':
         optional: true
@@ -4220,11 +4220,11 @@ snapshots:
       '@babel/helper-validator-identifier': 7.25.7
       to-fast-properties: 2.0.0
 
-  '@bugsnag/browser@7.22.4':
+  '@bugsnag/browser@8.1.2':
     dependencies:
-      '@bugsnag/core': 7.19.0
+      '@bugsnag/core': 8.1.1
 
-  '@bugsnag/core@7.19.0':
+  '@bugsnag/core@8.1.1':
     dependencies:
       '@bugsnag/cuid': 3.0.2
       '@bugsnag/safe-json-stringify': 6.0.0
@@ -4234,23 +4234,23 @@ snapshots:
 
   '@bugsnag/cuid@3.0.2': {}
 
-  '@bugsnag/js@7.22.4':
+  '@bugsnag/js@8.1.2':
     dependencies:
-      '@bugsnag/browser': 7.22.4
-      '@bugsnag/node': 7.22.3
+      '@bugsnag/browser': 8.1.2
+      '@bugsnag/node': 8.1.1
 
-  '@bugsnag/node@7.22.3':
+  '@bugsnag/node@8.1.1':
     dependencies:
-      '@bugsnag/core': 7.19.0
+      '@bugsnag/core': 8.1.1
       byline: 5.0.0
       error-stack-parser: 2.1.4
       iserror: 0.0.2
       pump: 3.0.0
       stack-generator: 2.0.10
 
-  '@bugsnag/plugin-vue@7.22.4(@bugsnag/core@7.19.0)':
+  '@bugsnag/plugin-vue@8.1.1(@bugsnag/core@8.1.1)':
     optionalDependencies:
-      '@bugsnag/core': 7.19.0
+      '@bugsnag/core': 8.1.1
 
   '@bugsnag/safe-json-stringify@6.0.0': {}
 
