@@ -46,7 +46,7 @@ pip==24.2
 propcache==0.2.0
 protobuf==4.24.4
 pycparser==2.22
-pymongo==4.6.3
+pymongo==4.10.1
 python-dateutil==2.9.0.post0
 pytz==2024.2
 redis==5.1.1
