@@ -67,7 +67,7 @@ typing-extensions==4.12.2
 tzdata==2024.2
 unidecode==0.4.21
 urllib3==2.2.3
-uvloop==0.20.0
+uvloop==0.21.0
 webencodings==0.5.1
 webob==1.8.8
 werkzeug==3.0.4
