@@ -1,5 +1,5 @@
 # Build assets
-FROM node:20 as builder
+FROM node:20.18.0 as builder
 
 RUN corepack enable
 
