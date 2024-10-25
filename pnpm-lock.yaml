@@ -123,7 +123,7 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       mini-css-extract-plugin:
-        specifier: ^2.7.6
+        specifier: ^2.9.1
         version: 2.9.1(webpack@5.95.0)
       postcss:
         specifier: ^8.4.35
