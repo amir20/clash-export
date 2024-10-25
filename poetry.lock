@@ -822,7 +822,7 @@ redis = ">=4.0.0"
 
 [[package]]
 name = "rq-dashboard"
-version = "0.6.7"
+version = "0.6.7.2"
 description = "rq-dashboard is a general purpose, lightweight, web interface to monitor your RQ queues, jobs, and workers in realtime."
 category = "main"
 optional = false
@@ -1093,7 +1093,7 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.12.2"
-content-hash = "d99708daed4dd6ac2866e745f1090e6b98e0d635e5f328f070994e08d999b4e8"
+content-hash = "d7bd8d60ff02a7d94388c70223b7e878aacdc2be2e16a89164b6efc562bba362"
 
 [metadata.files]
 aiohappyeyeballs = [
@@ -2225,8 +2225,8 @@ rq = [
     {file = "rq-1.15.1.tar.gz", hash = "sha256:1f49f4ac1a084044bb8e95b3f305c0bf17e55618b08c18e0b60c080f12d6f008"},
 ]
 rq-dashboard = [
-    {file = "rq-dashboard-0.6.7.tar.gz", hash = "sha256:391eef0ae3e3f416abc128ddb85ab2ccfdc9ea3cdaac40cb2464efcbdc696973"},
-    {file = "rq_dashboard-0.6.7-py2.py3-none-any.whl", hash = "sha256:9019d7074ffd132d04623c1937f9ac1b3523bdb43d0c79d6e763dc6789f0686e"},
+    {file = "rq-dashboard-0.6.7.2.tar.gz", hash = "sha256:84040923846594ab1044d54ebd1fbb480ccc601e1d9e19982eb5216044a40aa8"},
+    {file = "rq_dashboard-0.6.7.2-py2.py3-none-any.whl", hash = "sha256:dc8480d0da45d324391898e88b1b979be16974fcb8dac21c66af7f19557a5819"},
 ]
 scikit-learn = [
     {file = "scikit_learn-1.5.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:299406827fb9a4f862626d0fe6c122f5f87f8910b86fe5daa4c32dcd742139b6"},
