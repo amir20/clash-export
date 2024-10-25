@@ -150,7 +150,7 @@ importers:
         specifier: ^13.3.3
         version: 13.3.3(sass@1.79.4)(webpack@5.95.0)
       semver:
-        specifier: ^7.5.4
+        specifier: ^7.6.3
         version: 7.6.3
       store:
         specifier: ^2.0.12
