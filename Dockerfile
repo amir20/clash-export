@@ -24,7 +24,7 @@ COPY clashleaders/static clashleaders/static
 RUN pnpm build
 
 
-FROM python:3.12.2
+FROM python:3.13.0
 
 # Create app directoy
 WORKDIR /app
@@ -35,7 +35,7 @@ COPY ./requirements.txt ./pyproject.toml /app/
 
 # Add caddy sources
 RUN echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \
-  | tee -a /etc/apt/sources.list.d/caddy-fury.list
+    | tee -a /etc/apt/sources.list.d/caddy-fury.list
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
@@ -44,12 +44,12 @@ ENV UV_SYSTEM_PYTHON true
 
 # Install caddy and clean up
 RUN apt-get update \
-  && apt-get upgrade -y \
-  && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
-  && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
-  && uv pip install -r requirements.txt \
-  && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /root/.cache
+    && apt-get upgrade -y \
+    && apt-get install cron curl caddy make supervisor -y --no-install-recommends \
+    && apt-get install python3-cairo python3-cairosvg libfreetype6-dev libxft-dev -y \
+    && uv pip install -r requirements.txt \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /root/.cache
 
 
 # Install cron jobs
